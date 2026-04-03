@@ -5037,7 +5037,7 @@ function generateReadableColor(input) {
     // Escolhe preto ou branco que tem maior contraste com a cor de fundo, garantindo legibilidade. mescla esse preto ou branco com a cor original para criar uma cor de texto que seja legível sobre a cor de fundo, mas também harmoniosa com ela.
 
     const baseColor = whiteContrast > blackContrast ? '#FFFFFF' : '#000000';
-    const textColor = blendColors(baseColor, hex, 0.5);
+    const textColor = blendColors(baseColor, hex, .7);
     return [textColor, color];
 
     function blendColors(color1, color2, ratio) {
