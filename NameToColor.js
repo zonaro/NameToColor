@@ -4909,6 +4909,15 @@ function generateColor(input) {
         return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
     }
 
+    // try to set the text as a css color, if it works return its hexadecimal value
+    const s = new Option().style;
+    s.color = text;
+    if (s.color !== '') {
+        const ctx = document.createElement('canvas').getContext('2d');
+        ctx.fillStyle = text;
+        return ctx.fillStyle; // Retorna o formato #rrggbb
+    }
+
     // if text is a hex color, return it
     if (/^#?[0-9a-f]{3}$|^#?[0-9a-f]{6}$/i.test(text)) {
         return text.startsWith('#') ? text : '#' + text;
@@ -4931,14 +4940,7 @@ function generateColor(input) {
         return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('') + alphaHex;
     }
 
-    // try to set the text as a css color, if it works return its hexadecimal value
-    const s = new Option().style;
-    s.color = text;
-    if (s.color !== '') {
-        const ctx = document.createElement('canvas').getContext('2d');
-        ctx.fillStyle = text;
-        return ctx.fillStyle; // Retorna o formato #rrggbb
-    }
+
 
     // try find a color name in the colorNames array, case insensitive, ignoring non alphanumeric chars.
     // choose the closest name using Levenshtein distance (best match), with a max distance threshold.
