@@ -4891,7 +4891,7 @@ function generateColor(input) {
 
 
     // if input is an int, try get color from colorNames array
-    if (typeof input === 'number') {
+    if (typeof input === 'number' && Number.isInteger(input)) {
         const colorObj = colorNames.find(c => c.ID === input);
         if (colorObj) {
             return colorObj.Hexadecimal;
@@ -4940,28 +4940,58 @@ function generateColor(input) {
         return ctx.fillStyle; // Retorna o formato #rrggbb
     }
 
-    // try find a color name in the colorNames array, case insesitive, ignoring non alphanumeric chars. its try to found most similar name (levenshtein distance max 3), if found return its hexadecimal value
+    // try find a color name in the colorNames array, case insensitive, ignoring non alphanumeric chars.
+    // choose the closest name using Levenshtein distance (best match), with a max distance threshold.
     const normalizedText = text.replace(/[^a-z0-9]/g, '');
-    const colorObj = colorNames.find(c => {
-        const normalizedColor = c.Color.toLowerCase().replace(/[^a-z0-9]/g, '');
-        function levenshteinDistance(a, b) {
-            const matrix = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
-            for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
-            for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
-            for (let i = 1; i <= a.length; i++) {
-                for (let j = 1; j <= b.length; j++) {
-                    const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-                    matrix[i][j] = Math.min(matrix[i - 1][j] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j - 1] + cost);
-                }
-            }
-            return matrix[a.length][b.length];
-        }
+    const exactColorObj = colorNames.find(c => c.Color.toLowerCase().replace(/[^a-z0-9]/g, '') === normalizedText);
 
-        return levenshteinDistance(normalizedText, normalizedColor) <= 3; // Ajuste o limite conforme necessário
-    });
+    if (exactColorObj) {
+        return exactColorObj.Hexadecimal;
+    }
+
+    let bestMatch = null;
+    let bestDistance = Infinity;
+
+    for (const c of colorNames) {
+        const normalizedColor = c.Color.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const distance = levenshteinDistance(normalizedText, normalizedColor);
+
+        if (distance < bestDistance) {
+            bestDistance = distance;
+            bestMatch = c;
+        }
+    }
+
+    const maxDistance = 3;
+    const colorObj = bestDistance <= maxDistance ? bestMatch : null;
 
     if (colorObj) {
         return colorObj.Hexadecimal;
+    }
+
+    function levenshteinDistance(a, b) {
+        const matrix = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+
+        for (let i = 0; i <= a.length; i++) {
+            matrix[i][0] = i;
+        }
+
+        for (let j = 0; j <= b.length; j++) {
+            matrix[0][j] = j;
+        }
+
+        for (let i = 1; i <= a.length; i++) {
+            for (let j = 1; j <= b.length; j++) {
+                const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j] + 1,
+                    matrix[i][j - 1] + 1,
+                    matrix[i - 1][j - 1] + cost
+                );
+            }
+        }
+
+        return matrix[a.length][b.length];
     }
 
 
@@ -4994,37 +5024,16 @@ function getReadableColor(input) {
     const hex = normalizeToHex(color);
 
     if (!hex) {
-        return '#000000';
+        return ['#000000', color];
     }
 
     const { r, g, b } = hexToRgb(hex);
 
-    // Tons quase sem saturacao costumam perder contraste visual.
-    const channelSpread = Math.max(r, g, b) - Math.min(r, g, b);
-    if (channelSpread <= 18) {
-        return '#000000';
-    }
+    const whiteContrast = contrastRatio({ r: 255, g: 255, b: 255 }, { r, g, b });
+    const blackContrast = contrastRatio({ r: 0, g: 0, b: 0 }, { r, g, b });
+    const textColor = whiteContrast >= blackContrast ? '#ffffff' : '#000000';
 
-    const luminance = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
-    const adjustment = 0.35;
-
-    let newR;
-    let newG;
-    let newB;
-
-    if (luminance < 128) {
-        // Cor escura: aproxima os canais de branco.
-        newR = Math.round(r + (255 - r) * adjustment);
-        newG = Math.round(g + (255 - g) * adjustment);
-        newB = Math.round(b + (255 - b) * adjustment);
-    } else {
-        // Cor clara: reduz os canais para escurecer.
-        newR = Math.round(r * (1 - adjustment));
-        newG = Math.round(g * (1 - adjustment));
-        newB = Math.round(b * (1 - adjustment));
-    }
-
-    return [rgbToHex(newR, newG, newB), color];
+    return [textColor, color];
 
     function normalizeToHex(value) {
         if (typeof value !== 'string') {
@@ -5064,15 +5073,28 @@ function getReadableColor(input) {
         };
     }
 
-    function rgbToHex(rValue, gValue, bValue) {
-        return '#'
-            + clampChannel(rValue).toString(16).padStart(2, '0')
-            + clampChannel(gValue).toString(16).padStart(2, '0')
-            + clampChannel(bValue).toString(16).padStart(2, '0');
+    function contrastRatio(foreground, background) {
+        const fgLuminance = relativeLuminance(foreground.r, foreground.g, foreground.b);
+        const bgLuminance = relativeLuminance(background.r, background.g, background.b);
+        const lighter = Math.max(fgLuminance, bgLuminance);
+        const darker = Math.min(fgLuminance, bgLuminance);
+
+        return (lighter + 0.05) / (darker + 0.05);
     }
 
-    function clampChannel(channel) {
-        return Math.max(0, Math.min(255, channel));
+    function relativeLuminance(rChannel, gChannel, bChannel) {
+        const toLinear = (channel) => {
+            const srgb = channel / 255;
+            return srgb <= 0.03928
+                ? srgb / 12.92
+                : Math.pow((srgb + 0.055) / 1.055, 2.4);
+        };
+
+        const rLinear = toLinear(rChannel);
+        const gLinear = toLinear(gChannel);
+        const bLinear = toLinear(bChannel);
+
+        return (0.2126 * rLinear) + (0.7152 * gLinear) + (0.0722 * bLinear);
     }
 
 }
