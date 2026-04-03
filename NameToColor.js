@@ -5013,9 +5013,9 @@ function generateColor(input) {
 }
 
 /**
- * Gera uma cor legivel a partir de um valor de entrada, que pode ser um número, uma string representando um nome de cor, um código hexadecimal, ou uma string de formato RGB/RGBA. A função tenta interpretar o valor de entrada e retornar a cor correspondente em formato hexadecimal. Se a entrada for inválida ou não puder ser interpretada como uma cor, a função gera uma cor determinística baseada no texto da entrada.   
+ * Gera um par de cores onde a primeira cor é legível sobre a segunda a partir de um valor de entrada, que pode ser um número, uma string representando um nome de cor, um código hexadecimal, ou uma string de formato RGB/RGBA. A função tenta interpretar o valor de entrada e retornar a cor correspondente em formato hexadecimal. Se a entrada for inválida ou não puder ser interpretada como uma cor, a função gera uma cor determinística baseada no texto da entrada.   
  * @param {*} input 
- * @return {string} A cor correspondente ao valor de entrada, ou uma cor gerada a partir do texto da entrada, no formato hexadecimal.
+ * @return {Array} Um array contendo duas cores: a primeira é legível sobre a segunda, ambas no formato hexadecimal.
  */
 function getReadableColor(input) {
 
