@@ -8,9 +8,43 @@ Converte textos, IDs e formatos de cor em hexadecimal. O plugin combina uma base
 <script src="https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js"></script>
 ```
 
-Depois de incluir o script, a função global `generateColor(...)` fica disponível no navegador.
+Depois de incluir o script, as funcoes globais generateColor(...) e generateReadableColor(...) ficam disponiveis no navegador.
 
 ## Uso
+
+### generateReadableColor(input)
+
+Retorna um par de cores no formato:
+
+```js
+[textColor, backgroundColor]
+```
+
+- textColor: `#ffffff` ou `#000000`, escolhida automaticamente com base em contraste.
+- backgroundColor: cor gerada pela generateColor(input).
+
+Exemplos:
+
+```js
+generateReadableColor("tomato");
+// -> ["#000000", "#ff6347"]
+
+generateReadableColor("black");
+// -> ["#ffffff", "#000000"]
+
+generateReadableColor("Lucas");
+// -> ["#ffffff" ou "#000000", "#xxxxxx"]
+```
+
+Aplicacao pratica em elemento HTML:
+
+```js
+const el = document.getElementById("username");
+const [textColor, backgroundColor] = generateReadableColor(el.textContent);
+
+el.style.color = textColor;
+el.style.backgroundColor = backgroundColor;
+```
 
 ### 1) Nome de cor conhecido (base interna)
 
@@ -126,6 +160,7 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 - Deterministico no fallback por texto.
 - Suporte a tabela interna de cores por nome e por ID.
 - Aceita HEX, RGB e RGBA como entrada.
+- Possui helper para contraste automatico com generateReadableColor.
 - Sem dependencias externas.
 - Funciona no browser (usa `document`, `Option` e `canvas`).
 

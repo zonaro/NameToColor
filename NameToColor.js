@@ -5017,7 +5017,7 @@ function generateColor(input) {
  * @param {*} input 
  * @return {Array} Um array contendo duas cores: a primeira é legível sobre a segunda, ambas no formato hexadecimal.
  */
-function getReadableColor(input) {
+function generateReadableColor(input) {
 
     input = input || ''; // Garante que input seja uma string, mesmo que seja undefined ou null
     const color = generateColor(input);
