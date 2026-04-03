@@ -4982,6 +4982,99 @@ function generateColor(input) {
     return color;
 }
 
+/**
+ * Gera uma cor legivel a partir de um valor de entrada, que pode ser um número, uma string representando um nome de cor, um código hexadecimal, ou uma string de formato RGB/RGBA. A função tenta interpretar o valor de entrada e retornar a cor correspondente em formato hexadecimal. Se a entrada for inválida ou não puder ser interpretada como uma cor, a função gera uma cor determinística baseada no texto da entrada.   
+ * @param {*} input 
+ * @return {string} A cor correspondente ao valor de entrada, ou uma cor gerada a partir do texto da entrada, no formato hexadecimal.
+ */
+function getReadableColor(input) {
 
+    input = input || ''; // Garante que input seja uma string, mesmo que seja undefined ou null
+    const color = generateColor(input);
+    const hex = normalizeToHex(color);
+
+    if (!hex) {
+        return '#000000';
+    }
+
+    const { r, g, b } = hexToRgb(hex);
+
+    // Tons quase sem saturacao costumam perder contraste visual.
+    const channelSpread = Math.max(r, g, b) - Math.min(r, g, b);
+    if (channelSpread <= 18) {
+        return '#000000';
+    }
+
+    const luminance = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
+    const adjustment = 0.35;
+
+    let newR;
+    let newG;
+    let newB;
+
+    if (luminance < 128) {
+        // Cor escura: aproxima os canais de branco.
+        newR = Math.round(r + (255 - r) * adjustment);
+        newG = Math.round(g + (255 - g) * adjustment);
+        newB = Math.round(b + (255 - b) * adjustment);
+    } else {
+        // Cor clara: reduz os canais para escurecer.
+        newR = Math.round(r * (1 - adjustment));
+        newG = Math.round(g * (1 - adjustment));
+        newB = Math.round(b * (1 - adjustment));
+    }
+
+    return [rgbToHex(newR, newG, newB), color];
+
+    function normalizeToHex(value) {
+        if (typeof value !== 'string') {
+            return null;
+        }
+
+        const text = value.trim().toLowerCase();
+
+        if (/^#[0-9a-f]{3}$/.test(text)) {
+            return '#' + text.slice(1).split('').map(ch => ch + ch).join('');
+        }
+
+        if (/^#[0-9a-f]{6}$/.test(text)) {
+            return text;
+        }
+
+        if (/^#[0-9a-f]{8}$/.test(text)) {
+            return '#' + text.slice(1, 7);
+        }
+
+        if (/^black$/.test(text)) {
+            return '#000000';
+        }
+
+        if (/^white$/.test(text)) {
+            return '#ffffff';
+        }
+
+        return null;
+    }
+
+    function hexToRgb(hexValue) {
+        return {
+            r: parseInt(hexValue.slice(1, 3), 16),
+            g: parseInt(hexValue.slice(3, 5), 16),
+            b: parseInt(hexValue.slice(5, 7), 16)
+        };
+    }
+
+    function rgbToHex(rValue, gValue, bValue) {
+        return '#'
+            + clampChannel(rValue).toString(16).padStart(2, '0')
+            + clampChannel(gValue).toString(16).padStart(2, '0')
+            + clampChannel(bValue).toString(16).padStart(2, '0');
+    }
+
+    function clampChannel(channel) {
+        return Math.max(0, Math.min(255, channel));
+    }
+
+}
 
 
