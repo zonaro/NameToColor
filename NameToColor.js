@@ -5031,9 +5031,28 @@ function generateReadableColor(input) {
 
     const whiteContrast = contrastRatio({ r: 255, g: 255, b: 255 }, { r, g, b });
     const blackContrast = contrastRatio({ r: 0, g: 0, b: 0 }, { r, g, b });
-    const textColor = whiteContrast >= blackContrast ? '#ffffff' : '#000000';
 
+    // Escolhe preto ou branco que tem maior contraste com a cor de fundo, garantindo legibilidade. mescla esse preto ou branco com a cor original para criar uma cor de texto que seja legível sobre a cor de fundo, mas também harmoniosa com ela.
+
+    const baseColor = whiteContrast > blackContrast ? '#FFFFFF' : '#000000';
+    const textColor = blendColors(baseColor, hex, 0.5);
     return [textColor, color];
+
+    function blendColors(color1, color2, ratio) {
+        const r1 = parseInt(color1.slice(1, 3), 16);
+        const g1 = parseInt(color1.slice(3, 5), 16);
+        const b1 = parseInt(color1.slice(5, 7), 16);
+
+        const r2 = parseInt(color2.slice(1, 3), 16);
+        const g2 = parseInt(color2.slice(3, 5), 16);
+        const b2 = parseInt(color2.slice(5, 7), 16);
+
+        const r = Math.round(r1 * ratio + r2 * (1 - ratio));
+        const g = Math.round(g1 * ratio + g2 * (1 - ratio));
+        const b = Math.round(b1 * ratio + b2 * (1 - ratio));
+
+        return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+    }
 
     function normalizeToHex(value) {
         if (typeof value !== 'string') {
