@@ -288,13 +288,16 @@
         .color-table .col-swatch {
             width: 50px;
         }
+
         .color-table .col-id {
             width: 50px;
             color: var(--muted);
         }
+
         .color-table .col-name {
             min-width: 160px;
         }
+
         .color-table .col-hex {
             font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
             font-size: 0.8rem;
@@ -394,22 +397,28 @@
             body {
                 padding: 16px 10px;
             }
+
             .card {
                 padding: 18px 16px;
             }
+
             .preview-wrap {
                 flex-direction: column;
             }
+
             .swatch {
                 min-width: unset;
             }
+
             .input-row {
                 flex-direction: column;
             }
+
             .pagination {
                 flex-direction: column;
                 align-items: stretch;
             }
+
             .page-buttons {
                 justify-content: center;
             }
@@ -441,12 +450,8 @@
             <form id="test-form" autocomplete="off">
                 <label for="value-input">Digite um nome, ID, cor ou qualquer texto</label>
                 <div class="input-row">
-                    <input
-                    id="value-input"
-                    type="text"
-                    placeholder="Ex.: Lucas, #00ff7f, rgb(255,0,0), 42, random"
-                    spellcheck="false"
-                    >
+                    <input id="value-input" type="text" placeholder="Ex.: Lucas, #00ff7f, rgb(255,0,0), 42, random"
+                        spellcheck="false">
                 </div>
                 <div class="input-hint">
                     💡 Experimente: <kbd>random</kbd> ·
@@ -481,11 +486,11 @@
                     <div class="info-value" id="info-input">—</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">generateColor</div>
+                    <div class="info-label">Color</div>
                     <div class="info-value" id="info-hex">#000000</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">generateReadableColor</div>
+                    <div class="info-label">Readable</div>
                     <div class="info-value" id="info-readable">—</div>
                 </div>
                 <div class="info-item">

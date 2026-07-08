@@ -5022,7 +5022,7 @@ function generateColor(input) {
  */
 function generateReadableColor(input) {
 
-    input = input || ''; // Garante que input seja uma string, mesmo que seja undefined ou null
+    input = input || '';
     const color = generateColor(input);
     const hex = normalizeToHex(color);
 
@@ -5030,15 +5030,59 @@ function generateReadableColor(input) {
         return ['#000000', color];
     }
 
-    const { r, g, b } = hexToRgb(hex);
+    const bgRgb = hexToRgb(hex);
+    const bgLuminance = relativeLuminance(bgRgb.r, bgRgb.g, bgRgb.b);
 
-    const whiteContrast = contrastRatio({ r: 255, g: 255, b: 255 }, { r, g, b });
-    const blackContrast = contrastRatio({ r: 0, g: 0, b: 0 }, { r, g, b });
+    // ── Meta de contraste WCAG ──
+    // AA para texto normal: 4.5:1 | AA para texto grande: 3:1 | AAA: 7:1
+    const TARGET_CONTRAST = 4.5;
 
-    // Escolhe preto ou branco que tem maior contraste com a cor de fundo, garantindo legibilidade. mescla esse preto ou branco com a cor original para criar uma cor de texto que seja legível sobre a cor de fundo, mas também harmoniosa com ela.
+    // Contraste do branco (L=1.0) e do preto (L=0.0) contra o fundo
+    const contrastWithWhite = (1.0 + 0.05) / (bgLuminance + 0.05);
+    const contrastWithBlack = (bgLuminance + 0.05) / (0.0 + 0.05);
 
-    const baseColor = whiteContrast > blackContrast ? '#FFFFFF' : '#000000';
-    const textColor = blendColors(baseColor, hex, .7);
+    // Escolhe a cor base (branco ou preto) que oferece MAIOR contraste
+    const useWhite = contrastWithWhite >= contrastWithBlack;
+    const baseHex = useWhite ? '#FFFFFF' : '#000000';
+
+    // ── Cálculo da taxa de mesclagem dinâmica (busca binária) ──
+    // Como a luminância não é linear no espaço sRGB, a mesclagem em RGB
+    // não produz uma luminância que seja combinação linear das luminâncias
+    // original e base. Por isso, usamos busca binária para encontrar a
+    // menor taxa que atinge TARGET_CONTRAST.
+
+    const MIN_RATIO = 0.5; // Mínimo de 50% da cor base para harmonia visual
+    const bgRgbLocal = { r: bgRgb.r, g: bgRgb.g, b: bgRgb.b };
+
+    // Testa se o mínimo já é suficiente
+    let testColor = blendColors(baseHex, hex, MIN_RATIO);
+    let testRgb = hexToRgb(testColor);
+    let testContrast = contrastRatio(testRgb, bgRgbLocal);
+
+    let ratio;
+    if (testContrast >= TARGET_CONTRAST) {
+        ratio = MIN_RATIO;
+    } else {
+        // Busca binária: encontra a menor taxa que atinge o contraste alvo
+        let low = MIN_RATIO;
+        let high = 1.0;
+
+        for (let i = 0; i < 20; i++) {
+            const mid = (low + high) / 2;
+            const midColor = blendColors(baseHex, hex, mid);
+            const midRgb = hexToRgb(midColor);
+            const midContrast = contrastRatio(midRgb, bgRgbLocal);
+
+            if (midContrast >= TARGET_CONTRAST) {
+                high = mid;
+            } else {
+                low = mid;
+            }
+        }
+        ratio = high;
+    }
+
+    const textColor = blendColors(baseHex, hex, ratio);
     return [textColor, color];
 
     function blendColors(color1, color2, ratio) {

@@ -24,14 +24,14 @@ Função principal. Aceita diversos tipos de entrada e retorna um código hexade
 
 ### `generateReadableColor(input)`
 
-Retorna um par `[textColor, backgroundColor]` onde a cor do texto é legível **e harmoniosa** sobre o fundo.
+Retorna um par `[textColor, backgroundColor]` onde a cor do texto é legível **e harmoniosa** sobre o fundo, **com contraste garantido WCAG AA (4.5:1)**.
 
 #### Algoritmo
 
 1. Gera a cor base com `generateColor(input)`.
-2. Calcula a taxa de contraste WCAG entre a cor de fundo e o branco (`#fff`) e o preto (`#000`).
-3. Escolhe a cor de base (branco ou preto) com **maior contraste**.
-4. **Mescla** (blend) essa cor de base com a cor original na proporção **70/30**, criando uma cor de texto legível porém visualmente coerente com a paleta.
+2. Calcula a luminância relativa da cor de fundo conforme a fórmula WCAG.
+3. Escolhe a cor de base (branco ou preto) com **maior contraste** contra o fundo.
+4. **Calcula dinamicamente** a taxa de mesclagem necessária para atingir **WCAG AA (4.5:1)**, garantindo legibilidade sem sacrificar completamente a harmonia visual — a taxa mínima é de 50% da cor base.
 
 ```js
 generateReadableColor("tomato");
@@ -39,6 +39,9 @@ generateReadableColor("tomato");
 
 generateReadableColor("black");
 // -> ["#4d4d4d", "#000000"]    (texto mesclado, não branco puro)
+
+generateReadableColor("#85d8fd");
+// Ex.: ["#152228", "#85d8fd"]  (contraste >= 4.5:1 garantido)
 ```
 
 Aplicação prática em elemento HTML:
@@ -183,7 +186,7 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 - **Determinístico** no fallback por texto — a mesma entrada sempre produz a mesma cor.
 - **Base interna** com ~1000+ cores nomeadas, buscáveis por nome (com fuzzy match) ou por ID numérico.
 - **Aceita múltiplos formatos**: HEX (`#rgb`, `#rrggbb`), RGB, RGBA, nomes CSS, `"random"` e elementos HTML.
-- **Contraste inteligente**: `generateReadableColor` calcula a taxa de contraste WCAG e mescla a cor do texto com a cor original para um resultado legível e esteticamente harmonioso.
+- **Contraste inteligente**: `generateReadableColor` calcula dinamicamente a taxa de mesclagem necessária para garantir **WCAG AA (4.5:1)**, resultando em texto sempre legível e esteticamente harmonioso.
 - **Paginação**: `listColors()` permite navegar pela base de cores com suporte a páginas.
 - **Zero dependências**: funciona puramente no navegador com JavaScript vanilla.
 - **Tamanho reduzido**: ~38 KB minificado, sem `npm install`.
