@@ -5317,6 +5317,120 @@ function generateSplitComplementary(input) {
 }
 
 /**
+ * Gera uma paleta de cores monocromática a partir de uma entrada.
+ * A paleta mantém o mesmo matiz (h) e saturação (s) da cor original,
+ * variando apenas a luminosidade (l) de forma alternada: uma cor mais
+ * clara, uma mais escura, outra mais clara, e assim por diante.
+ *
+ * A primeira cor da paleta é sempre a cor gerada original. A prioridade
+ * de clara/escura depende da cor inicial: se for clara (luminância > 0.5),
+ * a próxima é escura; se for escura, a próxima é clara.
+ *
+ * O espaçamento de luminosidade é calculado automaticamente para distribuir
+ * uniformemente as cores entre os extremos (0% e 100%), garantindo que
+ * todas as cores sejam visualmente distintas.
+ *
+ * @param {*} input - Qualquer valor aceito por generateColor().
+ * @param {number} [count=5] - Número de cores na paleta (mínimo 2, máximo 21).
+ * @returns {string[]} Array com `count` cores no formato #rrggbb.
+ *
+ * @example
+ * generateMonochrome('#ff0000', 5);
+ * // → ["#ff0000", "#ff6666", "#990000", "#ffb3b3", "#4d0000"]
+ * //    (original, +claro, +escuro, ++claro, ++escuro)
+ *
+ * @example
+ * generateMonochrome('gold', 3);
+ * // → ["#ffd700", "#ffe066", "#b39800"]
+ * //    (original, +claro, +escuro — gold é clara, então próximo é escuro)
+ */
+function generateMonochrome(input, count) {
+    var hex = normalizeHex(generateColor(input));
+    if (!hex) {
+        return ['#000000'];
+    }
+
+    count = Math.max(2, Math.min(21, Math.floor(Number(count)) || 5));
+
+    var hsl = hexToHsl(hex);
+    var originalL = hsl.l;
+
+    // ── Determinar direção inicial ──
+    // Se a cor for clara (l > 50), a primeira variação é para escuro (↓)
+    // Se for escura (l <= 50), a primeira variação é para claro (↑)
+    var startDark = originalL > 50;
+
+    // ── Casos extremos: preto (l=0) ou branco (l=100) ──
+    // Só podem variar para um lado, então alternância não se aplica
+    if (originalL === 0) {
+        var paletteBlack = [hex];
+        for (var bi = 1; bi < count; bi++) {
+            var lVal = Math.round(100 * (bi / count));
+            paletteBlack.push(hslToHex(hsl.h, hsl.s, lVal));
+        }
+        return paletteBlack;
+    }
+
+    if (originalL === 100) {
+        var paletteWhite = [hex];
+        for (var wi = 1; wi < count; wi++) {
+            var lVal = Math.round(100 * (1 - wi / count));
+            paletteWhite.push(hslToHex(hsl.h, hsl.s, lVal));
+        }
+        return paletteWhite;
+    }
+
+    // ── Gerar lista de luminosidades alvo ──
+    // Distribuir uniformemente entre 0 e 100, excluindo a original
+    var totalSteps = count - 1; // quantas variações além da original
+
+    // Distribuir alternadamente: claro, escuro, claro, escuro...
+    // Calcula quantas vão para cada lado
+    var lightCount = Math.floor(totalSteps / 2);
+    var darkCount = Math.floor(totalSteps / 2);
+    if (totalSteps % 2 === 1) {
+        // Ímpar: um lado ganha 1 a mais
+        if (startDark) {
+            darkCount++;
+        } else {
+            lightCount++;
+        }
+    }
+
+    // Gerar luminosidades para o lado claro
+    var lightTargets = [];
+    for (var li = 1; li <= lightCount; li++) {
+        var lVal = originalL + (100 - originalL) * (li / (lightCount + 1));
+        lightTargets.push(Math.round(lVal));
+    }
+
+    // Gerar luminosidades para o lado escuro
+    var darkTargets = [];
+    for (var di = 1; di <= darkCount; di++) {
+        var dVal = originalL * (1 - di / (darkCount + 1));
+        darkTargets.push(Math.round(dVal));
+    }
+
+    // Intercalar: se startDark, primeiro escuro, senão primeiro claro
+    var palette = [hex];
+    var lightIdx = 0;
+    var darkIdx = 0;
+
+    for (var i = 0; i < totalSteps; i++) {
+        var useDark = startDark ? (i % 2 === 0) : (i % 2 === 1);
+        var newL;
+        if (useDark) {
+            newL = darkIdx < darkTargets.length ? darkTargets[darkIdx++] : (lightIdx < lightTargets.length ? lightTargets[lightIdx++] : originalL);
+        } else {
+            newL = lightIdx < lightTargets.length ? lightTargets[lightIdx++] : (darkIdx < darkTargets.length ? darkTargets[darkIdx++] : originalL);
+        }
+        palette.push(hslToHex(hsl.h, hsl.s, newL));
+    }
+
+    return palette;
+}
+
+/**
  * Gera um par de cores onde a primeira cor é legível sobre a segunda a partir de um valor de entrada, que pode ser um número, uma string representando um nome de cor, um código hexadecimal, ou uma string de formato RGB/RGBA. A função tenta interpretar o valor de entrada e retornar a cor correspondente em formato hexadecimal. Se a entrada for inválida ou não puder ser interpretada como uma cor, a função gera uma cor determinística baseada no texto da entrada.   
  * @param {*} input 
  * @return {Array} Um array contendo duas cores: a primeira é legível sobre a segunda, ambas no formato hexadecimal.
