@@ -1,14 +1,126 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NameToColor — Teste</title>
+
+    <!-- ═══════════════════════════════════════════
+         Primary Meta Tags
+         ═══════════════════════════════════════════ -->
+    <title>NameToColor — Convert Text to Hex Color | JavaScript Library</title>
+    <meta name="description"
+        content="NameToColor is a zero-dependency JavaScript library that converts text, IDs, HEX, RGB, RGBA, and CSS color names to hexadecimal. Features WCAG AA contrast calculation, 1000+ named colors with fuzzy matching, and deterministic hash-based color generation. Interactive API tester included.">
+    <meta name="keywords"
+        content="color converter,hex color,javascript library,color name to hex,text to color,WCAG contrast,accessibility,color picker,css color,generate color,readable color,named colors,color database">
+    <meta name="author" content="zonaro">
+    <meta name="application-name" content="NameToColor">
+    <meta name="generator" content="NameToColor">
+    <link rel="canonical" href="https://zonaro.github.io/NameToColor/">
+    <link rel="sitemap" type="application/xml" href="https://zonaro.github.io/NameToColor/sitemap.xml">
+    <link rel="alternate" hreflang="en" href="https://zonaro.github.io/NameToColor/">
+    <link rel="alternate" hreflang="x-default" href="https://zonaro.github.io/NameToColor/">
+
+    <!-- ═══════════════════════════════════════════
+           Preconnect / DNS-Prefetch
+           ═══════════════════════════════════════════ -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+    <!-- ═══════════════════════════════════════════
+           Favicon (emoji-based for simplicity)
+           ═══════════════════════════════════════════ -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+    <link rel="apple-touch-icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+
+    <!-- ═══════════════════════════════════════════
+           Robots & Indexing
+           ═══════════════════════════════════════════ -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large">
+
+    <!-- ═══════════════════════════════════════════
+           Open Graph (Facebook, LinkedIn, Discord)
+           ═══════════════════════════════════════════ -->
+    <meta property="og:title" content="NameToColor — Convert Text to Colors | JavaScript Library">
+    <meta property="og:description"
+        content="Zero-dependency JavaScript library that converts text, IDs, HEX, RGB, RGBA, and CSS color names to hexadecimal. Features WCAG AA contrast, 1000+ named colors, and deterministic hash-based generation.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zonaro.github.io/NameToColor/">
+    <meta property="og:site_name" content="NameToColor">
+    <meta property="og:locale" content="en_US">
+
+    <!-- ═══════════════════════════════════════════
+           Twitter Card
+           ═══════════════════════════════════════════ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NameToColor — Convert Text to Colors | JavaScript Library">
+    <meta name="twitter:description"
+        content="Zero-dependency JavaScript library that converts text, IDs, HEX, RGB, RGBA, and CSS color names to hexadecimal. WCAG AA contrast, 1000+ named colors.">
+
+    <!-- ═══════════════════════════════════════════
+           PWA / Mobile / Theme
+           ═══════════════════════════════════════════ -->
+    <meta name="theme-color" content="#f5f1ea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="NameToColor">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- ═══════════════════════════════════════════
+           JSON-LD Structured Data (Schema.org)
+           ═══════════════════════════════════════════ -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "NameToColor",
+            "url": "https://zonaro.github.io/NameToColor/",
+            "description": "JavaScript library that converts text, IDs, HEX, RGB, RGBA, and color names to hexadecimal colors. Features WCAG AA contrast calculation, 1000+ named colors, deterministic hash-based color generation, and fuzzy name matching.",
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "All (browser-based)",
+            "browserRequirements": "Requires JavaScript",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "author": {
+                "@type": "Person",
+                "name": "zonaro",
+                "url": "https://github.com/zonaro"
+            },
+            "softwareVersion": "1.0",
+            "license": "https://github.com/zonaro/NameToColor/blob/main/LICENSE",
+            "keywords": "color converter, hex, javascript, WCAG, CSS, named colors"
+        }
+    </script>
+
+    <!-- ═══════════════════════════════════════════
+           Breadcrumb Structured Data
+           ═══════════════════════════════════════════ -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "NameToColor",
+                    "item": "https://zonaro.github.io/NameToColor/"
+                }
+            ]
+        }
+    </script>
+
     <style>
         /* ═══════════════════════════════════════════
-           NameToColor — Página de teste interativa
-           Mostra todas as funções públicas do plugin
+           NameToColor — Interactive test page
+           Shows all public functions of the plugin
            ═══════════════════════════════════════════ */
 
         :root {
@@ -357,6 +469,304 @@
             padding: 7px 10px;
         }
 
+        /* ─── Documentation styles ─── */
+        .docs-section h3 {
+            margin: 24px 0 12px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text);
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 6px;
+        }
+
+        .docs-section h3:first-child {
+            margin-top: 0;
+        }
+
+        .docs-section h4 {
+            margin: 18px 0 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .docs-section p {
+            margin: 8px 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .docs-section code {
+            background: var(--border-light);
+            padding: 2px 7px;
+            border-radius: 5px;
+            font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+            font-size: 0.82rem;
+            color: #c7254e;
+        }
+
+        .docs-section pre {
+            background: #2f241b;
+            color: #f0e8dc;
+            padding: 16px 18px;
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+            font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            margin: 10px 0;
+            tab-size: 2;
+        }
+
+        .docs-section pre .comment {
+            color: #8a9b7a;
+        }
+
+        .docs-section pre .keyword {
+            color: #c792ea;
+        }
+
+        .docs-section pre .string {
+            color: #c3e88d;
+        }
+
+        .docs-section pre .function {
+            color: #82aaff;
+        }
+
+        .docs-section pre .built_in {
+            color: #ffcb6b;
+        }
+
+        .docs-section pre .number {
+            color: #f78c6c;
+        }
+
+        .docs-section .func-signature {
+            background: var(--border-light);
+            border-left: 4px solid var(--accent);
+            padding: 12px 16px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+            font-size: 0.9rem;
+            margin: 12px 0;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .docs-section .func-signature .param {
+            font-weight: 400;
+            color: var(--muted);
+        }
+
+        .docs-section .note {
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-size: 0.88rem;
+            color: #6d4c00;
+        }
+
+        .docs-section .note strong {
+            color: #9a6d00;
+        }
+
+        .docs-section .info-box {
+            background: #e8f0fe;
+            border: 1px solid #b3d4fc;
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-size: 0.88rem;
+            color: #004080;
+        }
+
+        .docs-section .info-box strong {
+            color: #0059b3;
+        }
+
+        .docs-section .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 8px 0;
+        }
+
+        .docs-section .tag-list .tag {
+            background: var(--border-light);
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted);
+        }
+
+        .docs-section .tag-list .tag-primary {
+            background: #e3f0e8;
+            color: var(--accent);
+        }
+
+        .docs-section table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin: 12px 0;
+        }
+
+        .docs-section table th {
+            text-align: left;
+            padding: 8px 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            border-bottom: 2px solid var(--border-light);
+            font-weight: 700;
+        }
+
+        .docs-section table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .docs-section table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .docs-section table .mono {
+            font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+            font-size: 0.8rem;
+        }
+
+        .docs-section hr {
+            border: none;
+            border-top: 1px solid var(--border-light);
+            margin: 24px 0;
+        }
+
+        .docs-section ul,
+        .docs-section ol {
+            margin: 8px 0;
+            padding-left: 22px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .docs-section li {
+            margin-bottom: 4px;
+        }
+
+        .docs-section .emoji-bullet {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .docs-section .emoji-bullet li {
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .docs-section .emoji-bullet li::before {
+            position: absolute;
+            left: 0;
+        }
+
+        /* ─── Harmony swatches ─── */
+        .harmony-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .harmony-swatch {
+            border-radius: var(--radius-sm);
+            padding: 12px 10px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.25s;
+        }
+
+        .harmony-swatch .harmony-label {
+            font-weight: 400;
+            font-size: 0.65rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .harmony-swatch .harmony-hex {
+            font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .harmony-section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin: 16px 0 8px;
+            color: var(--text);
+        }
+
+        .harmony-section-title:first-of-type {
+            margin-top: 6px;
+        }
+
+        /* ─── Monochrome palette ─── */
+        .monochrome-palette {
+            display: flex;
+            gap: 6px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .monochrome-swatch {
+            flex: 1;
+            min-width: 50px;
+            height: 70px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: background-color 0.25s;
+            text-align: center;
+            padding: 4px;
+        }
+
+        .monochrome-swatch .mono-hex {
+            font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        .monochrome-swatch .mono-label {
+            font-size: 0.6rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .monochrome-swatch.original {
+            border: 2px solid var(--focus);
+            transform: scale(1.05);
+        }
+
         /* ─── Empty state ─── */
         .empty-state {
             text-align: center;
@@ -434,27 +844,27 @@
         <section class="card hero">
             <h1>🎨 NameToColor</h1>
             <p>
-                Teste interativo do plugin — converte textos, IDs, HEX, RGB, RGBA
-                e nomes de cores em hexadecimal. Os resultados são atualizados
-                automaticamente enquanto você digita.
+                Interactive plugin tester — converts text, IDs, HEX, RGB, RGBA
+                and color names to hexadecimal. Results update automatically
+                as you type.
             </p>
         </section>
 
-        <!-- ═══════════ TESTE PRINCIPAL ═══════════ -->
+        <!-- ═══════════ MAIN TEST ═══════════ -->
         <section class="card" id="test-section">
             <div class="card-header">
-                <h2>🔍 Testar geração de cor</h2>
+                <h2><span aria-hidden="true">🔍</span> Test Color Generation</h2>
                 <span class="badge">generateColor + generateReadableColor</span>
             </div>
 
             <form id="test-form" autocomplete="off">
-                <label for="value-input">Digite um nome, ID, cor ou qualquer texto</label>
+                <label for="value-input">Enter a name, ID, color or any text</label>
                 <div class="input-row">
-                    <input id="value-input" type="text" placeholder="Ex.: Lucas, #00ff7f, rgb(255,0,0), 42, random"
+                    <input id="value-input" type="text" placeholder="e.g.: Lucas, #00ff7f, rgb(255,0,0), 42, random"
                         spellcheck="false">
                 </div>
                 <div class="input-hint">
-                    💡 Experimente: <kbd>random</kbd> ·
+                    💡 Try: <kbd>random</kbd> ·
                     <kbd>tomato</kbd> · <kbd>#ff00aa</kbd> ·
                     <kbd>rgb(100,200,50)</kbd> · <kbd>1</kbd> ·
                     <kbd>absolute zero</kbd>
@@ -464,11 +874,11 @@
             <!-- Preview das cores -->
             <div class="preview-wrap">
                 <div class="swatch" id="swatch-bg">
-                    <span class="label">Fundo</span>
+                    <span class="label">Background</span>
                     <span class="value" id="swatch-bg-value">—</span>
                 </div>
                 <div class="swatch" id="swatch-text">
-                    <span class="label">Texto</span>
+                    <span class="label">Text</span>
                     <span class="value" id="swatch-text-value">—</span>
                 </div>
             </div>
@@ -482,7 +892,7 @@
             <!-- Info grid -->
             <div class="info-grid">
                 <div class="info-item">
-                    <div class="info-label">Entrada</div>
+                    <div class="info-label">Input</div>
                     <div class="info-value" id="info-input">—</div>
                 </div>
                 <div class="info-item">
@@ -494,16 +904,64 @@
                     <div class="info-value" id="info-readable">—</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">Contraste</div>
+                    <div class="info-label">Contrast</div>
                     <div class="info-value" id="info-contrast">—</div>
                 </div>
             </div>
         </section>
 
-        <!-- ═══════════ NAVEGAR PELA BASE ═══════════ -->
+        <!-- ═══════════ HARMONY PLAYGROUND ═══════════ -->
+        <section class="card" id="harmony-section">
+            <div class="card-header">
+                <h2><span aria-hidden="true">🌈</span> Color Harmonies</h2>
+                <span class="badge">generateInvertedColor · generateComplementary · generateTriadic · generateSquare ·
+                    generateSplitComplementary</span>
+            </div>
+
+            <form id="harmony-form" autocomplete="off">
+                <label for="harmony-input">Enter a color to explore harmonies</label>
+                <div class="input-row">
+                    <input id="harmony-input" type="text" placeholder="e.g.: #ff0000, tomato, 1, blue"
+                        spellcheck="false" value="tomato">
+                </div>
+            </form>
+
+            <div id="harmony-results">
+                <!-- Renderizado via JS -->
+            </div>
+        </section>
+
+        <!-- ═══════════ MONOCHROME PLAYGROUND ═══════════ -->
+        <section class="card" id="monochrome-section">
+            <div class="card-header">
+                <h2><span aria-hidden="true">🎨</span> Monochrome Palette</h2>
+                <span class="badge">generateMonochrome</span>
+            </div>
+
+            <form id="monochrome-form" autocomplete="off">
+                <label for="monochrome-input">Enter a color to generate a monochrome palette</label>
+                <div class="input-row">
+                    <input id="monochrome-input" type="text" placeholder="e.g.: #ff0000, tomato, blue"
+                        spellcheck="false" value="tomato">
+                    <input id="monochrome-count" type="number" min="2" max="21" value="5"
+                        style="width:80px; text-align:center; border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 8px; font-size:1rem; background:#fff; outline:none;"
+                        title="Number of colors (2–21)">
+                </div>
+                <div class="input-hint">
+                    Count: <kbd id="monochrome-count-display">5</kbd> colors ·
+                    💡 Try different counts to see the alternation pattern
+                </div>
+            </form>
+
+            <div id="monochrome-results">
+                <!-- Renderizado via JS -->
+            </div>
+        </section>
+
+        <!-- ═══════════ BROWSE COLOR DATABASE ═══════════ -->
         <section class="card" id="browse-section">
             <div class="card-header">
-                <h2>📚 Navegar pela base de cores</h2>
+                <h2><span aria-hidden="true">📚</span> Browse Color Database</h2>
                 <span class="badge" id="total-colors-badge">listColors</span>
             </div>
 
@@ -511,7 +969,7 @@
                 <!-- Tabela será renderizada via JS -->
                 <div class="empty-state" id="browse-empty">
                     <span class="emoji">📖</span>
-                    <p>Carregando base de cores…</p>
+                    <p>Loading color database…</p>
                 </div>
             </div>
 
@@ -521,10 +979,526 @@
             </div>
         </section>
 
+        <!-- ═══════════ DOCUMENTATION ═══════════ -->
+        <section class="card docs-section">
+            <div class="card-header">
+                <h2 id="api-documentation"><span aria-hidden="true">📖</span> Complete API Documentation</h2>
+                <span class="badge">Reference</span>
+            </div>
+
+            <p>
+                Welcome, love! Here you'll find everything you need to use
+                <strong>NameToColor</strong> in your projects. All functions are
+                exposed globally after including the script — no imports needed.
+            </p>
+
+            <!-- ─── generateColor ─── -->
+            <h3 id="function-generateColor" data-api-function="generateColor"><span aria-hidden="true">🎯</span>
+                <code>generateColor(input)</code>
+            </h3>
+            <div class="func-signature" aria-label="Function signature: generateColor(input) returns String">
+                generateColor(<span class="param">input</span>) → <span class="param">String</span>
+            </div>
+            <p>
+                The heart of the library. Accepts a wide variety of input types and
+                always returns a hexadecimal color string (<code>#rrggbb</code> or
+                <code>#rrggbbaa</code>). The result is deterministic for the same input
+                (except for <code>"random"</code>).
+            </p>
+
+            <h4>Input Types</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mono"><strong>Known color name</strong></td>
+                        <td>Matches against an internal database of 1000+ named colors (case-insensitive, with fuzzy
+                            matching)</td>
+                        <td class="mono"><code>generateColor("Absolute Zero")</code> → <code>"#0048BA"</code></td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><strong>Numeric ID</strong></td>
+                        <td>Looks up by <code>ID</code> field in the internal table</td>
+                        <td class="mono"><code>generateColor(1)</code> → <code>"#0048BA"</code></td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><strong>HEX</strong></td>
+                        <td>Accepts <code>#rgb</code>, <code>#rrggbb</code>, with or without <code>#</code></td>
+                        <td class="mono"><code>generateColor("#ff00aa")</code> → <code>"#ff00aa"</code></td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><strong>RGB / RGBA</strong></td>
+                        <td>Parses CSS-style <code>rgb()</code> and <code>rgba()</code> strings</td>
+                        <td class="mono"><code>generateColor("rgba(255,99,71,0.5)")</code> → <code>"#ff634780"</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><strong>CSS named color</strong></td>
+                        <td>Any color name the browser recognizes (tomato, rebeccapurple, etc.)</td>
+                        <td class="mono"><code>generateColor("tomato")</code> → <code>"#ff6347"</code></td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><strong>Random</strong></td>
+                        <td>Returns a different random color each time</td>
+                        <td class="mono"><code>generateColor("random")</code> → <code>"#a3f2c1"</code></td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><strong>Generic text</strong></td>
+                        <td>Deterministic hash-based color for any arbitrary text</td>
+                        <td class="mono"><code>generateColor("Lucas")</code> → always the same color</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><strong>HTML Element</strong></td>
+                        <td>Applies the generated color to the element's <code>style.color</code> using its
+                            <code>textContent</code>
+                        </td>
+                        <td class="mono"><code>generateColor(document.getElementById("name"))</code></td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><strong>Empty / null / undefined</strong></td>
+                        <td>Returns <code>"black"</code> for falsy inputs</td>
+                        <td class="mono"><code>generateColor("")</code> → <code>"black"</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Processing Order</h4>
+            <p>When you call <code>generateColor()</code>, the library evaluates the input in this order:</p>
+            <ol>
+                <li><strong>HTML Element</strong> — extracts <code>textContent</code> and recurses</li>
+                <li><strong>Numeric ID</strong> — looks up in the internal color table</li>
+                <li><strong>Empty input</strong> — returns <code>"black"</code></li>
+                <li><strong>"random"</strong> — generates a random hex color</li>
+                <li><strong>HEX string</strong> — parses and normalizes</li>
+                <li><strong>RGB string</strong> — parses <code>rgb(r, g, b)</code></li>
+                <li><strong>RGBA string</strong> — parses <code>rgba(r, g, b, a)</code></li>
+                <li><strong>CSS valid color</strong> — lets the browser resolve it</li>
+                <li><strong>Fuzzy name match</strong> — searches the internal database for similar names</li>
+                <li><strong>Deterministic hash</strong> — fallback for any remaining text</li>
+            </ol>
+
+            <!-- ─── generateReadableColor ─── -->
+            <h3 id="function-generateReadableColor" data-api-function="generateReadableColor"><span
+                    aria-hidden="true">🎨</span> <code>generateReadableColor(input)</code></h3>
+            <div class="func-signature"
+                aria-label="Function signature: generateReadableColor(input) returns array with textColor and bgColor">
+                generateReadableColor(<span class="param">input</span>) → <span class="param">[textColor,
+                    bgColor]</span>
+            </div>
+            <p>
+                Returns a pair of colors — a background and a text color — where the text is
+                <strong>always readable</strong> against the background, with a
+                <strong>WCAG AA contrast ratio ≥ 4.5:1</strong>. And it doesn't just use pure
+                black or white — it blends the base color to keep everything <em>harmonious</em>.
+            </p>
+
+            <h4>How It Works</h4>
+            <ol>
+                <li>Generates the base background color with <code>generateColor(input)</code>.</li>
+                <li>Calculates the relative luminance of that background (WCAG formula).</li>
+                <li>Chooses white or black as the starting text color — whichever has the highest contrast.</li>
+                <li>Uses <strong>binary search</strong> to find the minimum blend ratio that achieves
+                    <strong>4.5:1</strong> contrast.
+                </li>
+                <li>Guarantees at least <strong>50% blend</strong> — so the text color always retains some of the
+                    original hue.</li>
+            </ol>
+
+            <div class="info-box">
+                <strong>💡 Pro tip:</strong> Use it directly on HTML elements for instant readable styling:
+            </div>
+
+            <pre><span class="keyword">const</span> el = <span class="built_in">document</span>.getElementById(<span class="string">"username"</span>);
+<span class="keyword">const</span> [textColor, bgColor] = generateReadableColor(el.textContent);
+el.style.color = textColor;
+el.style.backgroundColor = bgColor;
+
+<span class="comment">// Or loop through multiple elements:</span>
+document.querySelectorAll(<span class="string">".tag"</span>).forEach(el => {
+    <span class="keyword">const</span> [text, bg] = generateReadableColor(el.textContent);
+    el.style.color = text;
+    el.style.backgroundColor = bg;
+});</pre>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// With "tomato" — a warm, readable blend</span>
+generateReadableColor(<span class="string">"tomato"</span>);
+<span class="comment">// → ["#b24338", "#ff6347"]  (blended text, not pure black)</span>
+
+<span class="comment">// With "black" — still readable without pure white</span>
+generateReadableColor(<span class="string">"black"</span>);
+<span class="comment">// → ["#4d4d4d", "#000000"]  (blended text, not pure white)</span>
+
+<span class="comment">// With a light blue — contrast ≥ 4.5:1 guaranteed</span>
+generateReadableColor(<span class="string">"#85d8fd"</span>);
+<span class="comment">// → ["#152228", "#85d8fd"]  (dark text, light background)</span></pre>
+
+            <div class="note">
+                <strong>📌 Note:</strong> The returned array is always <code>[textColor, backgroundColor]</code>.
+                Apply them to <code>color</code> and <code>background-color</code> respectively.
+            </div>
+
+            <!-- ─── listColors ─── -->
+            <h3 id="function-listColors" data-api-function="listColors"><span aria-hidden="true">📚</span>
+                <code>listColors(pageNumber?, pageSize?)</code>
+            </h3>
+            <div class="func-signature"
+                aria-label="Function signature: listColors with optional pageNumber and pageSize returns paginated result object">
+                listColors(<span class="param">pageNumber?</span>, <span class="param">pageSize?</span>) → <span
+                    class="param">{ items, pageNumber, pageCount, totalItems }</span>
+            </div>
+            <p>
+                Returns the entire internal color database in a paginated format. Each item contains
+                <code>ID</code>, <code>Color</code> (name), and <code>Hexadecimal</code>.
+            </p>
+
+            <h4>Parameters</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Parameter</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Default</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mono"><code>pageNumber</code></td>
+                        <td>Number</td>
+                        <td><code>1</code></td>
+                        <td>The page to retrieve (1-indexed)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>pageSize</code></td>
+                        <td>Number</td>
+                        <td><code>all items</code></td>
+                        <td>Number of items per page</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Return Value</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Property</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mono"><code>items</code></td>
+                        <td>Array</td>
+                        <td>Array of <code>{ ID, Color, Hexadecimal }</code> objects</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>pageNumber</code></td>
+                        <td>Number</td>
+                        <td>Current page number</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>pageCount</code></td>
+                        <td>Number</td>
+                        <td>Total number of pages</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>totalItems</code></td>
+                        <td>Number</td>
+                        <td>Total items in the database</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// Get all colors (no pagination)</span>
+listColors();
+<span class="comment">// → { items: [...], pageNumber: 1, pageCount: 1, totalItems: 1023 }</span>
+
+<span class="comment">// Page 2 with 10 items per page</span>
+listColors(<span class="number">2</span>, <span class="number">10</span>);
+<span class="comment">// → { items: [...], pageNumber: 2, pageCount: 103, totalItems: 1023 }</span>
+
+<span class="comment">// Useful for building color pickers, tables, or browsers</span>
+<span class="keyword">const</span> result = listColors(<span class="number">1</span>, <span class="number">20</span>);
+result.items.forEach(item => {
+    console.log(item.ID, item.Color, item.Hexadecimal);
+});</pre>
+
+            <!-- ─── generateInvertedColor ─── -->
+            <h3 id="function-generateInvertedColor" data-api-function="generateInvertedColor"><span
+                    aria-hidden="true">🎯</span> <code>generateInvertedColor(input)</code></h3>
+            <div class="func-signature" aria-label="Function signature: generateInvertedColor(input) returns String">
+                generateInvertedColor(<span class="param">input</span>) → <span class="param">String</span>
+            </div>
+            <p>
+                Returns the <strong>negative</strong> (inverted) color of the input. Each RGB channel
+                is subtracted from 255, producing a photographic negative effect.
+            </p>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// Red → Cyan</span>
+generateInvertedColor(<span class="string">"#ff0000"</span>);
+<span class="comment">// → "#00ffff"</span>
+
+<span class="comment">// Black → White</span>
+generateInvertedColor(<span class="string">"black"</span>);
+<span class="comment">// → "#ffffff"</span>
+
+<span class="comment">// Gold → Deep blue</span>
+generateInvertedColor(<span class="string">"gold"</span>);
+<span class="comment">// → "#0028ff"</span></pre>
+
+            <!-- ─── generateComplementary ─── -->
+            <h3 id="function-generateComplementary" data-api-function="generateComplementary"><span
+                    aria-hidden="true">🔄</span> <code>generateComplementary(input)</code></h3>
+            <div class="func-signature" aria-label="Function signature: generateComplementary(input) returns String">
+                generateComplementary(<span class="param">input</span>) → <span class="param">String</span>
+            </div>
+            <p>
+                Returns the <strong>complementary</strong> color — the exact opposite on the color wheel
+                (180° away in HSL hue). Saturation and lightness are preserved.
+            </p>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// Red → Cyan</span>
+generateComplementary(<span class="string">"#ff0000"</span>);
+<span class="comment">// → "#00ffff"</span>
+
+<span class="comment">// Blue → Yellow</span>
+generateComplementary(<span class="string">"#0000ff"</span>);
+<span class="comment">// → "#ffff00"</span>
+
+<span class="comment">// Gray → Gray (no hue to complement)</span>
+generateComplementary(<span class="string">"#808080"</span>);
+<span class="comment">// → "#808080"</span></pre>
+
+            <!-- ─── generateTriadic ─── -->
+            <h3 id="function-generateTriadic" data-api-function="generateTriadic"><span aria-hidden="true">🔺</span>
+                <code>generateTriadic(input)</code></h3>
+            <div class="func-signature"
+                aria-label="Function signature: generateTriadic(input) returns Array of 3 strings">
+                generateTriadic(<span class="param">input</span>) → <span class="param">[base, 120°, 240°]</span>
+            </div>
+            <p>
+                Returns an array of <strong>3 colors</strong> equally spaced on the color wheel
+                (120° apart). The first color is the generated base color.
+            </p>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// Red → Red, Green, Blue (RGB!)</span>
+generateTriadic(<span class="string">"#ff0000"</span>);
+<span class="comment">// → ["#ff0000", "#00ff00", "#0000ff"]</span>
+
+<span class="comment">// Gold → Gold, Cyan, Purple</span>
+generateTriadic(<span class="string">"gold"</span>);
+<span class="comment">// → ["#ffd700", "#00ffd9", "#d900ff"]</span></pre>
+
+            <!-- ─── generateSquare ─── -->
+            <h3 id="function-generateSquare" data-api-function="generateSquare"><span aria-hidden="true">⬜</span>
+                <code>generateSquare(input)</code></h3>
+            <div class="func-signature"
+                aria-label="Function signature: generateSquare(input) returns Array of 4 strings">
+                generateSquare(<span class="param">input</span>) → <span class="param">[base, 90°, 180°, 270°]</span>
+            </div>
+            <p>
+                Returns an array of <strong>4 colors</strong> equally spaced on the color wheel
+                (90° apart) — a tetradic/square color scheme.
+            </p>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// Red → Red, Lime, Cyan, Violet</span>
+generateSquare(<span class="string">"#ff0000"</span>);
+<span class="comment">// → ["#ff0000", "#80ff00", "#00ffff", "#7f00ff"]</span></pre>
+
+            <!-- ─── generateSplitComplementary ─── -->
+            <h3 id="function-generateSplitComplementary" data-api-function="generateSplitComplementary"><span
+                    aria-hidden="true">✂️</span> <code>generateSplitComplementary(input)</code></h3>
+            <div class="func-signature"
+                aria-label="Function signature: generateSplitComplementary(input) returns Array of 3 strings">
+                generateSplitComplementary(<span class="param">input</span>) → <span class="param">[base, 150°,
+                    210°]</span>
+            </div>
+            <p>
+                Returns an array of <strong>3 colors</strong>: the base color and two colors adjacent
+                to its complement (150° and 210° from the original). This creates a softer contrast
+                than a direct complementary scheme.
+            </p>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// Red → Red, Spring Green, Azure</span>
+generateSplitComplementary(<span class="string">"#ff0000"</span>);
+<span class="comment">// → ["#ff0000", "#00ff80", "#007fff"]</span></pre>
+
+            <!-- ─── generateMonochrome ─── -->
+            <h3 id="function-generateMonochrome" data-api-function="generateMonochrome"><span
+                    aria-hidden="true">🎨</span> <code>generateMonochrome(input, count?)</code></h3>
+            <div class="func-signature"
+                aria-label="Function signature: generateMonochrome(input, count) returns Array of strings">
+                generateMonochrome(<span class="param">input</span>, <span class="param">count?</span>) → <span
+                    class="param">[color, …]</span>
+            </div>
+            <p>
+                Generates a <strong>monochrome palette</strong> with <code>count</code> colors
+                (default <strong>5</strong>, min 2, max 21). All colors share the same hue and
+                saturation — only lightness varies, alternating lighter and darker than the original.
+            </p>
+
+            <h4>How alternation works</h4>
+            <ul>
+                <li>If the original color is <strong>light</strong> (luminance &gt; 0.5), the first variation is
+                    <strong>darker</strong>.
+                </li>
+                <li>If the original color is <strong>dark</strong> (luminance ≤ 0.5), the first variation is
+                    <strong>lighter</strong>.
+                </li>
+                <li>Colors then alternate: light, dark, light, dark… until <code>count</code> is reached.</li>
+                <li>For pure <strong>black</strong> or <strong>white</strong>, a grayscale gradient is generated.</li>
+            </ul>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// Red, 5 colors (default)</span>
+generateMonochrome(<span class="string">"#ff0000"</span>);
+<span class="comment">// → ["#ff0000", "#ff5757", "#a80000", "#ffa8a8", "#570000"]</span>
+<span class="comment">//    original   +claro     escuro     ++claro    ++escuro</span>
+
+<span class="comment">// Gold, 3 colors</span>
+generateMonochrome(<span class="string">"gold"</span>, <span class="number">3</span>);
+<span class="comment">// → ["#ffd700", "#ffec80", "#806c00"]</span>
+<span class="comment">//    original   +claro     +escuro</span>
+
+<span class="comment">// Black, 5 colors (grayscale)</span>
+generateMonochrome(<span class="string">"black"</span>, <span class="number">5</span>);
+<span class="comment">// → ["#000000", "#333333", "#666666", "#999999", "#cccccc"]</span></pre>
+
+            <!-- ─── Utility Functions ─── -->
+            <h3 id="function-utilities" data-api-function="utilities"><span aria-hidden="true">🔧</span> Internal
+                Utilities (also exposed)</h3>
+            <p>
+                The library also exposes several helper functions that power the main API.
+                You can use them directly if you need fine-grained control:
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Function</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mono"><code>hexToRgb(hex)</code></td>
+                        <td>Converts <code>#rrggbb</code> to <code>{ r, g, b }</code> (0–255)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>hexToHsl(hex)</code></td>
+                        <td>Converts <code>#rrggbb</code> to <code>{ h, s, l }</code> (hue 0–360°, saturation 0–100%,
+                            lightness 0–100%)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>hslToHex(h, s, l)</code></td>
+                        <td>Converts HSL values back to <code>#rrggbb</code></td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>relativeLuminance(hex)</code></td>
+                        <td>Returns the WCAG relative luminance of a hex color (0–1)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>normalizeHex(value)</code></td>
+                        <td>Normalizes <code>black</code>, <code>white</code>, <code>#rgb</code>, <code>#rrggbbaa</code>
+                            to <code>#rrggbb</code></td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>isLight(input)</code></td>
+                        <td>Returns <code>true</code> if the generated color is light (luminance &gt; 0.5)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>isDark(input)</code></td>
+                        <td>Returns <code>true</code> if the generated color is dark (luminance ≤ 0.5)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>findColorName(hex)</code></td>
+                        <td>Searches the database for a color name matching the given hex</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>colorNames</code></td>
+                        <td>The full internal array of <code>{ ID, Color, Hexadecimal }</code> objects</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Luminance &amp; Light/Dark helpers</h4>
+            <pre><span class="keyword">const</span> hex = generateColor(<span class="string">"gold"</span>);
+<span class="comment">// hex → "#ffd700"</span>
+
+relativeLuminance(hex);
+<span class="comment">// → 0.699 (bright color)</span>
+
+isLight(hex);
+<span class="comment">// → true</span>
+
+isDark(hex);
+<span class="comment">// → false</span></pre>
+
+            <div class="note">
+                <strong>📌 Note:</strong> <code>isLight</code> and <code>isDark</code> are complementary
+                — a color is either light <em>or</em> dark, never both, never neither.
+                The threshold is a relative luminance of <strong>0.5</strong>.
+            </div>
+
+            <!-- ─── CDN & Setup ─── -->
+            <h3 id="cdn-installation"><span aria-hidden="true">📦</span> CDN Installation</h3>
+            <p>Add the script to your page and you're ready to go:</p>
+
+            <pre>&lt;<span class="keyword">script</span> <span class="keyword">src</span>=<span class="string">"https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;</pre>
+
+            <p>
+                No <code>npm install</code>, no bundler, no dependencies —
+                just pure vanilla JavaScript that works in every modern browser.
+            </p>
+
+            <div class="info-box">
+                <strong>✨ Highlights:</strong>
+                <ul>
+                    <li><strong>Deterministic</strong> — same text always produces the same color (except
+                        <code>"random"</code>)
+                    </li>
+                    <li><strong>1000+ named colors</strong> — with fuzzy matching and numeric ID lookup</li>
+                    <li><strong>Smart contrast</strong> — <code>generateReadableColor</code> guarantees WCAG AA (4.5:1)
+                    </li>
+                    <li><strong>Color harmonies</strong> — complementary, triadic, square, split-complementary, inverted
+                    </li>
+                    <li><strong>Monochrome palettes</strong> — <code>generateMonochrome</code> with alternating light/dark
+                    </li>
+                    <li><strong>Multiple formats</strong> — HEX, RGB, RGBA, CSS names, IDs, random, and generic text
+                    </li>
+                    <li><strong>Zero dependencies</strong> — ~38 KB minified, works everywhere</li>
+                    <li><strong>Pagination built-in</strong> — <code>listColors</code> with page &amp; size control</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <p style="text-align:center; font-size:0.85rem; color:var(--muted);">
+                That's everything, love! 💕<br>
+                If you have any questions, check out the
+                <a href="https://github.com/zonaro/NameToColor" target="_blank" rel="noopener"
+                    style="color:var(--focus);">GitHub repository</a>.
+            </p>
+        </section>
+
         <!-- ═══════════ FOOTER ═══════════ -->
         <footer class="footer">
             <a href="https://github.com/zonaro/NameToColor" target="_blank" rel="noopener">NameToColor</a>
-            &middot; Plugin sem dependências &middot; Feito com 💖
+            &middot; Zero-dependency plugin &middot; Made with 💖 by RedClaw 🦞
         </footer>
 
     </div>
@@ -533,9 +1507,9 @@
     <script src="NameToColor.js"></script>
     <script>
         // ═══════════════════════════════════════════════
-        //  NameToColor — Página de teste interativa
-        //  Demonstra: generateColor, generateReadableColor
-        //  e listColors com paginação
+        //  NameToColor — Interactive test page
+        //  Demonstrates: generateColor, generateReadableColor
+        //  and listColors with pagination
         // ═══════════════════════════════════════════════
 
         (function () {
@@ -595,7 +1569,7 @@
                 colorNameDisplay.textContent = matchedName || '';
 
                 // Info grid
-                infoInput.textContent = value || '(vazio)';
+                infoInput.textContent = value || '(empty)';
                 infoHex.textContent = bgColor;
                 infoReadable.textContent = '[' + textColor + ', ' + bgColor + ']';
 
@@ -661,6 +1635,149 @@
             updatePreview();
 
             // ══════════════════════════════════════════
+            //  HARMONY PLAYGROUND
+            // ══════════════════════════════════════════
+
+            var harmonyInput = document.getElementById('harmony-input');
+            var harmonyForm = document.getElementById('harmony-form');
+            var harmonyResults = document.getElementById('harmony-results');
+
+            harmonyForm.addEventListener('submit', function (e) { e.preventDefault(); });
+
+            function renderHarmonies() {
+                var value = harmonyInput.value.trim() || 'tomato';
+
+                var hex;
+                try { hex = generateColor(value); } catch (_) { hex = '#000000'; }
+
+                var inv, comp, tri, sq, split;
+                try { inv = generateInvertedColor(value); } catch (_) { inv = '#000000'; }
+                try { comp = generateComplementary(value); } catch (_) { comp = '#000000'; }
+                try { tri = generateTriadic(value); } catch (_) { tri = ['#000000', '#000000', '#000000']; }
+                try { sq = generateSquare(value); } catch (_) { sq = ['#000000', '#000000', '#000000', '#000000']; }
+                try { split = generateSplitComplementary(value); } catch (_) { split = ['#000000', '#000000', '#000000']; }
+
+                var textColor = '#ffffff';
+                try { textColor = generateReadableColor(hex)[0]; } catch (_) { textColor = '#ffffff'; }
+
+                var html = '';
+
+                // ── Inverted ──
+                html += '<div class="harmony-section-title">🎯 Inverted</div>';
+                html += '<div class="harmony-grid">';
+                html += swatchHtml('Original', hex, textColor);
+                html += swatchHtml('Inverted', inv, textColor);
+                html += '</div>';
+
+                // ── Complementary ──
+                html += '<div class="harmony-section-title">🔄 Complementary</div>';
+                html += '<div class="harmony-grid">';
+                html += swatchHtml('Original', hex, textColor);
+                html += swatchHtml('Complement', comp, textColor);
+                html += '</div>';
+
+                // ── Triadic ──
+                html += '<div class="harmony-section-title">🔺 Triadic</div>';
+                html += '<div class="harmony-grid">';
+                html += swatchHtml('Base', tri[0], textColor);
+                html += swatchHtml('120°', tri[1], textColor);
+                html += swatchHtml('240°', tri[2], textColor);
+                html += '</div>';
+
+                // ── Square ──
+                html += '<div class="harmony-section-title">⬜ Square (Tetradic)</div>';
+                html += '<div class="harmony-grid">';
+                html += swatchHtml('Base', sq[0], textColor);
+                html += swatchHtml('90°', sq[1], textColor);
+                html += swatchHtml('180°', sq[2], textColor);
+                html += swatchHtml('270°', sq[3], textColor);
+                html += '</div>';
+
+                // ── Split Complementary ──
+                html += '<div class="harmony-section-title">✂️ Split Complementary</div>';
+                html += '<div class="harmony-grid">';
+                html += swatchHtml('Base', split[0], textColor);
+                html += swatchHtml('150°', split[1], textColor);
+                html += swatchHtml('210°', split[2], textColor);
+                html += '</div>';
+
+                harmonyResults.innerHTML = html;
+            }
+
+            function swatchHtml(label, hex, textColor) {
+                var t = textColor;
+                // Se a cor for muito clara, usa texto escuro
+                try {
+                    var l = relativeLuminance(
+                        parseInt(hex.slice(1, 3), 16),
+                        parseInt(hex.slice(3, 5), 16),
+                        parseInt(hex.slice(5, 7), 16)
+                    );
+                    t = l > 0.5 ? '#000000' : '#ffffff';
+                } catch (_) { }
+                return '<div class="harmony-swatch" style="background:' + hex + ';color:' + t + '">' +
+                    '<span class="harmony-label">' + label + '</span>' +
+                    '<span class="harmony-hex">' + hex + '</span>' +
+                    '</div>';
+            }
+
+            harmonyInput.addEventListener('input', renderHarmonies);
+            renderHarmonies();
+
+            // ══════════════════════════════════════════
+            //  MONOCHROME PLAYGROUND
+            // ══════════════════════════════════════════
+
+            var monoInput = document.getElementById('monochrome-input');
+            var monoCount = document.getElementById('monochrome-count');
+            var monoForm = document.getElementById('monochrome-form');
+            var monoResults = document.getElementById('monochrome-results');
+            var monoCountDisplay = document.getElementById('monochrome-count-display');
+
+            monoForm.addEventListener('submit', function (e) { e.preventDefault(); });
+
+            function renderMonochrome() {
+                var value = monoInput.value.trim() || 'tomato';
+                var count = parseInt(monoCount.value, 10) || 5;
+                count = Math.max(2, Math.min(21, count));
+                monoCountDisplay.textContent = count;
+
+                var palette;
+                try { palette = generateMonochrome(value, count); } catch (_) { palette = ['#000000']; }
+
+                var html = '<div class="monochrome-palette">';
+                for (var i = 0; i < palette.length; i++) {
+                    var hex = palette[i];
+                    var isOriginal = i === 0;
+                    var label = isOriginal ? 'Original' : (i % 2 === 1 ? (relativeLuminance(
+                        parseInt(hex.slice(1, 3), 16),
+                        parseInt(hex.slice(3, 5), 16),
+                        parseInt(hex.slice(5, 7), 16)
+                    ) > 0.5 ? '☀️' : '🌙') : '');
+                    var textColor = '#ffffff';
+                    try {
+                        var l = relativeLuminance(
+                            parseInt(hex.slice(1, 3), 16),
+                            parseInt(hex.slice(3, 5), 16),
+                            parseInt(hex.slice(5, 7), 16)
+                        );
+                        textColor = l > 0.5 ? '#000000' : '#ffffff';
+                    } catch (_) { }
+                    html += '<div class="monochrome-swatch' + (isOriginal ? ' original' : '') +
+                        '" style="background:' + hex + ';color:' + textColor + '">' +
+                        '<span class="mono-hex">' + hex + '</span>' +
+                        (label ? '<span class="mono-label">' + label + '</span>' : '') +
+                        '</div>';
+                }
+                html += '</div>';
+                monoResults.innerHTML = html;
+            }
+
+            monoInput.addEventListener('input', renderMonochrome);
+            monoCount.addEventListener('input', renderMonochrome);
+            renderMonochrome();
+
+            // ══════════════════════════════════════════
             //  NAVEGADOR DE CORES (listColors)
             // ══════════════════════════════════════════
 
@@ -681,7 +1798,7 @@
                     result = listColors(page, pageSize);
                 } catch (_) {
                     browseBody.innerHTML =
-                        '<div class="empty-state"><span class="emoji">⚠️</span><p>Erro ao carregar lista.</p></div>';
+                        '<div class="empty-state"><span class="emoji">⚠️</span><p>Error loading list.</p></div>';
                     return;
                 }
 
@@ -690,7 +1807,7 @@
 
                 if (!result.items || result.items.length === 0) {
                     browseBody.innerHTML =
-                        '<div class="empty-state"><span class="emoji">📭</span><p>Nenhuma cor encontrada.</p></div>';
+                        '<div class="empty-state"><span class="emoji">📭</span><p>No colors found.</p></div>';
                     return;
                 }
 
@@ -723,13 +1840,13 @@
 
             /* ─── Renderiza botões de página ─── */
             function renderPagination(pageNumber, pageCount) {
-                pageInfo.textContent = 'Página ' + pageNumber + ' de ' + pageCount;
+                pageInfo.textContent = 'Page ' + pageNumber + ' of ' + pageCount;
 
                 var html = '';
 
                 // Botão anterior
                 html += '<button class="page-prev" ' + (pageNumber <= 1 ? 'disabled' : '') +
-                    ' data-page="' + (pageNumber - 1) + '" title="Anterior">◀</button>';
+                    ' data-page="' + (pageNumber - 1) + '" title="Previous">◀</button>';
 
                 // Lógica: mostrar até 5 botões ao redor da página atual
                 var start = Math.max(1, pageNumber - 2);
@@ -752,7 +1869,7 @@
 
                 // Botão próximo
                 html += '<button class="page-next" ' + (pageNumber >= pageCount ? 'disabled' : '') +
-                    ' data-page="' + (pageNumber + 1) + '" title="Próximo">▶</button>';
+                    ' data-page="' + (pageNumber + 1) + '" title="Next">▶</button>';
 
                 pageButtons.innerHTML = html;
 
@@ -777,8 +1894,8 @@
                 } else {
                     browseBody.innerHTML =
                         '<div class="empty-state"><span class="emoji">⚠️</span><p>' +
-                        'Função <code>listColors</code> não encontrada. ' +
-                        'Verifique se o script NameToColor.js foi carregado.</p></div>';
+                        'Function <code>listColors</code> not found. ' +
+                        'Check if NameToColor.js script was loaded.</p></div>';
                 }
             } catch (e) {
                 browseBody.innerHTML =

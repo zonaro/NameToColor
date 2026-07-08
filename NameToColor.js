@@ -5361,12 +5361,12 @@ function generateMonochrome(input, count) {
     var startDark = originalL > 50;
 
     // ── Casos extremos: preto (l=0) ou branco (l=100) ──
-    // Só podem variar para um lado, então alternância não se aplica
+    // Geram escala de cinza (saturação = 0) para uma paleta mais natural
     if (originalL === 0) {
         var paletteBlack = [hex];
         for (var bi = 1; bi < count; bi++) {
             var lVal = Math.round(100 * (bi / count));
-            paletteBlack.push(hslToHex(hsl.h, hsl.s, lVal));
+            paletteBlack.push(hslToHex(0, 0, lVal));
         }
         return paletteBlack;
     }
@@ -5375,7 +5375,7 @@ function generateMonochrome(input, count) {
         var paletteWhite = [hex];
         for (var wi = 1; wi < count; wi++) {
             var lVal = Math.round(100 * (1 - wi / count));
-            paletteWhite.push(hslToHex(hsl.h, hsl.s, lVal));
+            paletteWhite.push(hslToHex(0, 0, lVal));
         }
         return paletteWhite;
     }
