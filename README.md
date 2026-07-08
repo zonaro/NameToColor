@@ -2,41 +2,46 @@
 
 Converte textos, IDs e formatos de cor em hexadecimal. O plugin combina uma base extensa de nomes de cores com fallback determinístico para qualquer entrada.
 
+## 🔗 Página de teste interativa
+
+[https://zonaro.github.io/NameToColor/](https://zonaro.github.io/NameToColor/)
+
+Experimente todas as funções do plugin ao vivo — incluindo o navegador paginado da base de cores com `listColors`.
+
 ## Instalação via CDN
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js"></script>
 ```
 
-Depois de incluir o script, as funcoes globais generateColor(...) e generateReadableColor(...) ficam disponiveis no navegador.
+Depois de incluir o script, as funções globais `generateColor()`, `generateReadableColor()` e `listColors()` ficam disponíveis no navegador.
 
-## Uso
+## Funções
 
-### generateReadableColor(input)
+### `generateColor(input)`
 
-Retorna um par de cores no formato:
+Função principal. Aceita diversos tipos de entrada e retorna um código hexadecimal (`#rrggbb` ou `#rrggbbaa`).
 
-```js
-[textColor, backgroundColor]
-```
+### `generateReadableColor(input)`
 
-- textColor: `#ffffff` ou `#000000`, escolhida automaticamente com base em contraste.
-- backgroundColor: cor gerada pela generateColor(input).
+Retorna um par `[textColor, backgroundColor]` onde a cor do texto é legível **e harmoniosa** sobre o fundo.
 
-Exemplos:
+#### Algoritmo
+
+1. Gera a cor base com `generateColor(input)`.
+2. Calcula a taxa de contraste WCAG entre a cor de fundo e o branco (`#fff`) e o preto (`#000`).
+3. Escolhe a cor de base (branco ou preto) com **maior contraste**.
+4. **Mescla** (blend) essa cor de base com a cor original na proporção **70/30**, criando uma cor de texto legível porém visualmente coerente com a paleta.
 
 ```js
 generateReadableColor("tomato");
-// -> ["#000000", "#ff6347"]
+// Ex.: ["#b24338", "#ff6347"]  (texto mesclado, não preto puro)
 
 generateReadableColor("black");
-// -> ["#ffffff", "#000000"]
-
-generateReadableColor("Lucas");
-// -> ["#ffffff" ou "#000000", "#xxxxxx"]
+// -> ["#4d4d4d", "#000000"]    (texto mesclado, não branco puro)
 ```
 
-Aplicacao pratica em elemento HTML:
+Aplicação prática em elemento HTML:
 
 ```js
 const el = document.getElementById("username");
@@ -45,6 +50,24 @@ const [textColor, backgroundColor] = generateReadableColor(el.textContent);
 el.style.color = textColor;
 el.style.backgroundColor = backgroundColor;
 ```
+
+### `listColors(pageNumber?, pageSize?)`
+
+Retorna a base interna de cores de forma paginada.
+
+```js
+// Todas as cores em uma página
+listColors();
+// -> { items: [...], pageNumber: 1, pageCount: 1, totalItems: 1023 }
+
+// Página 2 com 10 itens
+listColors(2, 10);
+// -> { items: [...], pageNumber: 2, pageCount: 103, totalItems: 1023 }
+```
+
+Útil para construir navegadores, seletores ou tabelas de cores. A página de teste interativa usa essa função para exibir a base completa com paginação.
+
+## Tipos de entrada
 
 ### 1) Nome de cor conhecido (base interna)
 
@@ -155,14 +178,15 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 9. Busca aproximada em nomes internos
 10. Hash deterministico
 
-## Caracteristicas
+## Características
 
-- Deterministico no fallback por texto.
-- Suporte a tabela interna de cores por nome e por ID.
-- Aceita HEX, RGB e RGBA como entrada.
-- Possui helper para contraste automatico com generateReadableColor.
-- Sem dependencias externas.
-- Funciona no browser (usa `document`, `Option` e `canvas`).
+- **Determinístico** no fallback por texto — a mesma entrada sempre produz a mesma cor.
+- **Base interna** com ~1000+ cores nomeadas, buscáveis por nome (com fuzzy match) ou por ID numérico.
+- **Aceita múltiplos formatos**: HEX (`#rgb`, `#rrggbb`), RGB, RGBA, nomes CSS, `"random"` e elementos HTML.
+- **Contraste inteligente**: `generateReadableColor` calcula a taxa de contraste WCAG e mescla a cor do texto com a cor original para um resultado legível e esteticamente harmonioso.
+- **Paginação**: `listColors()` permite navegar pela base de cores com suporte a páginas.
+- **Zero dependências**: funciona puramente no navegador com JavaScript vanilla.
+- **Tamanho reduzido**: ~38 KB minificado, sem `npm install`.
 
 ## Licença
 
