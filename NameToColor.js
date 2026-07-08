@@ -5016,6 +5016,115 @@ function generateColor(input) {
 }
 
 /**
+ * Converte um valor hexadecimal de cor para o formato RGB.
+ * @param {string} hex - Cor no formato #rrggbb.
+ * @returns {{ r: number, g: number, b: number }} Objeto com canais r, g, b (0-255).
+ */
+function hexToRgb(hex) {
+    return {
+        r: parseInt(hex.slice(1, 3), 16),
+        g: parseInt(hex.slice(3, 5), 16),
+        b: parseInt(hex.slice(5, 7), 16)
+    };
+}
+
+/**
+ * Calcula a luminância relativa de uma cor no espaço sRGB.
+ * @param {string} hex - Cor no formato #rrggbb.
+ * @returns {number} Luminância relativa entre 0 (preto) e 1 (branco).
+ */
+function relativeLuminance(hex) {
+    const { r, g, b } = hexToRgb(hex);
+    const toLinear = (channel) => {
+        const srgb = channel / 255;
+        return srgb <= 0.03928
+            ? srgb / 12.92
+            : Math.pow((srgb + 0.055) / 1.055, 2.4);
+    };
+    return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+}
+
+/**
+ * Determina se uma cor gerada a partir de uma entrada qualquer é considerada CLARA.
+ * A função utiliza generateColor() para obter o hexadecimal da cor e,
+ * em seguida, calcula a luminância relativa. Uma cor é considerada clara
+ * quando sua luminância relativa é maior que 0,5 (acima do meio do espectro
+ * entre preto e branco).
+ *
+ * @param {*} input - Qualquer valor aceito por generateColor().
+ * @returns {boolean} `true` se a cor for clara, `false` caso contrário.
+ *
+ * @example
+ * isLight(1);      // false — Absolute Zero (#0048BA) é escuro
+ * isLight('gold'); // true  — gold é claro
+ * isLight('black') // false — preto é escuro
+ */
+function isLight(input) {
+    var hex = normalizeHex(generateColor(input));
+    if (!hex) {
+        return false;
+    }
+    return relativeLuminance(hex) > 0.5;
+}
+
+/**
+ * Determina se uma cor gerada a partir de uma entrada qualquer é considerada ESCURA.
+ * É o inverso lógico de isLight(). Uma cor é considerada escura
+ * quando sua luminância relativa é menor ou igual a 0,5.
+ *
+ * @param {*} input - Qualquer valor aceito por generateColor().
+ * @returns {boolean} `true` se a cor for escura, `false` caso contrário.
+ *
+ * @example
+ * isDark(1);      // true  — Absolute Zero (#0048BA) é escuro
+ * isDark('gold'); // false — gold é claro
+ * isDark('white') // false — branco é claro
+ */
+function isDark(input) {
+    var hex = normalizeHex(generateColor(input));
+    if (!hex) {
+        return false;
+    }
+    return relativeLuminance(hex) <= 0.5;
+}
+
+/**
+ * Normaliza uma string de cor para o formato hexadecimal #rrggbb.
+ * Aceita #rrggbb, #rgb, #rrggbbaa, black, white e retorna null se inválido.
+ * @param {string} value
+ * @returns {string|null} Cor no formato #rrggbb ou null.
+ */
+function normalizeHex(value) {
+    if (typeof value !== 'string') {
+        return null;
+    }
+
+    var text = value.trim().toLowerCase();
+
+    if (/^#[0-9a-f]{6}$/.test(text)) {
+        return text;
+    }
+
+    if (/^#[0-9a-f]{3}$/.test(text)) {
+        return '#' + text.slice(1).split('').map(function (ch) { return ch + ch; }).join('');
+    }
+
+    if (/^#[0-9a-f]{8}$/.test(text)) {
+        return '#' + text.slice(1, 7);
+    }
+
+    if (/^black$/.test(text)) {
+        return '#000000';
+    }
+
+    if (/^white$/.test(text)) {
+        return '#ffffff';
+    }
+
+    return null;
+}
+
+/**
  * Gera um par de cores onde a primeira cor é legível sobre a segunda a partir de um valor de entrada, que pode ser um número, uma string representando um nome de cor, um código hexadecimal, ou uma string de formato RGB/RGBA. A função tenta interpretar o valor de entrada e retornar a cor correspondente em formato hexadecimal. Se a entrada for inválida ou não puder ser interpretada como uma cor, a função gera uma cor determinística baseada no texto da entrada.   
  * @param {*} input 
  * @return {Array} Um array contendo duas cores: a primeira é legível sobre a segunda, ambas no formato hexadecimal.
