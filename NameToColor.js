@@ -5367,36 +5367,50 @@ function generateMonochrome(input, count) {
         return paletteGray;
     }
 
-    // ── Gerar paleta ordenada da mais clara para a mais escura ──
-    // Distribuir uniformemente entre 0 e 100, incluindo a original
-    var allL = [];
+    // ── Gerar paleta com a original sempre próxima ao centro ──
+    // A paleta final será ordenada da mais clara para a mais escura,
+    // mas a cor original sempre estará próxima ao centro (quando possível).
 
-    // Gerar luminosidades acima da original (mais claras)
-    var lightCount = 0;
-    for (var li = 1; ; li++) {
-        var lVal = originalL + (100 - originalL) * (li / (count + 1));
-        if (lVal >= 100) break;
-        allL.push(Math.round(lVal));
-        lightCount++;
-        if (lightCount + /* darkCount still unknown */ 0 >= count - 1) break;
-    }
+    // Quantas variações para cada lado (excluindo a original)
+    var totalVariations = count - 1;
+    var lightCount = Math.ceil(totalVariations / 2);
+    var darkCount = Math.floor(totalVariations / 2);
 
-    // Gerar luminosidades abaixo da original (mais escuras)
-    var darkCount = 0;
-    for (var di = 1; ; di++) {
-        var dVal = originalL * (1 - di / (count + 1));
-        if (dVal <= 0) break;
-        allL.push(Math.round(dVal));
+    // Se a original for muito clara, damos mais variações para o lado escuro
+    // Se for muito escura, damos mais para o lado claro
+    // Isso garante que a original fique próxima ao centro
+    if (originalL > 70 && lightCount > darkCount + 1) {
+        lightCount--;
         darkCount++;
-        if (lightCount + darkCount >= count - 1) break;
+    } else if (originalL < 30 && darkCount > lightCount + 1) {
+        darkCount--;
+        lightCount++;
     }
+
+    // Gerar luminosidades mais claras que a original
+    var lightTargets = [];
+    for (var li = 1; li <= lightCount; li++) {
+        var lVal = originalL + (100 - originalL) * (li / (lightCount + 1));
+        lightTargets.push(Math.round(lVal));
+    }
+
+    // Gerar luminosidades mais escuras que a original
+    var darkTargets = [];
+    for (var di = 1; di <= darkCount; di++) {
+        var dVal = originalL * (1 - di / (darkCount + 1));
+        darkTargets.push(Math.round(dVal));
+    }
+
+    // Montar array completo: claras + original + escuras
+    var allL = lightTargets.concat([originalL]).concat(darkTargets);
 
     // Ordenar do mais claro (maior L) para o mais escuro (menor L)
     allL.sort(function (a, b) { return b - a; });
 
-    // Se ainda não temos count cores, preencher com mais variações
-    while (allL.length < count - 1) {
-        // Adicionar no meio da faixa mais espaçada
+    // Garantir que temos exatamente count cores
+    // (pode ter menos se os ranges forem muito estreitos)
+    while (allL.length < count) {
+        // Encontrar o maior gap e inserir no meio
         var maxGap = 0;
         var gapIdx = 0;
         for (var gi = 0; gi < allL.length - 1; gi++) {
@@ -5410,12 +5424,18 @@ function generateMonochrome(input, count) {
         allL.splice(gapIdx + 1, 0, mid);
     }
 
-    // Inserir a cor original na posição correta (ordenada)
-    allL.push(originalL);
-    allL.sort(function (a, b) { return b - a; });
-
-    // Limitar a count (pode ter ultrapassado)
-    allL = allL.slice(0, count);
+    // Se ultrapassou count, remover os extremos (mais claro e mais escuro)
+    // para manter a original no centro
+    while (allL.length > count) {
+        // Remove o mais claro ou o mais escuro, qual estiver mais longe da original
+        var distLight = Math.abs(allL[0] - originalL);
+        var distDark = Math.abs(allL[allL.length - 1] - originalL);
+        if (distLight >= distDark) {
+            allL.shift();
+        } else {
+            allL.pop();
+        }
+    }
 
     // Converter para hex
     var palette = [];
