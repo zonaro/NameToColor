@@ -5355,76 +5355,72 @@ function generateMonochrome(input, count) {
     var hsl = hexToHsl(hex);
     var originalL = hsl.l;
 
-    // ── Determinar direção inicial ──
-    // Se a cor for clara (l > 50), a primeira variação é para escuro (↓)
-    // Se for escura (l <= 50), a primeira variação é para claro (↑)
-    var startDark = originalL > 50;
-
     // ── Casos extremos: preto (l=0) ou branco (l=100) ──
     // Geram escala de cinza (saturação = 0) para uma paleta mais natural
-    if (originalL === 0) {
-        var paletteBlack = [hex];
-        for (var bi = 1; bi < count; bi++) {
-            var lVal = Math.round(100 * (bi / count));
-            paletteBlack.push(hslToHex(0, 0, lVal));
+    if (originalL === 0 || originalL === 100) {
+        var paletteGray = [];
+        // Distribuir count cores uniformemente entre 0 e 100
+        for (var gi = 0; gi < count; gi++) {
+            var lVal = Math.round(100 * (count - 1 - gi) / (count - 1));
+            paletteGray.push(hslToHex(0, 0, lVal));
         }
-        return paletteBlack;
+        return paletteGray;
     }
 
-    if (originalL === 100) {
-        var paletteWhite = [hex];
-        for (var wi = 1; wi < count; wi++) {
-            var lVal = Math.round(100 * (1 - wi / count));
-            paletteWhite.push(hslToHex(0, 0, lVal));
+    // ── Gerar paleta ordenada da mais clara para a mais escura ──
+    // Distribuir uniformemente entre 0 e 100, incluindo a original
+    var allL = [];
+
+    // Gerar luminosidades acima da original (mais claras)
+    var lightCount = 0;
+    for (var li = 1; ; li++) {
+        var lVal = originalL + (100 - originalL) * (li / (count + 1));
+        if (lVal >= 100) break;
+        allL.push(Math.round(lVal));
+        lightCount++;
+        if (lightCount + /* darkCount still unknown */ 0 >= count - 1) break;
+    }
+
+    // Gerar luminosidades abaixo da original (mais escuras)
+    var darkCount = 0;
+    for (var di = 1; ; di++) {
+        var dVal = originalL * (1 - di / (count + 1));
+        if (dVal <= 0) break;
+        allL.push(Math.round(dVal));
+        darkCount++;
+        if (lightCount + darkCount >= count - 1) break;
+    }
+
+    // Ordenar do mais claro (maior L) para o mais escuro (menor L)
+    allL.sort(function (a, b) { return b - a; });
+
+    // Se ainda não temos count cores, preencher com mais variações
+    while (allL.length < count - 1) {
+        // Adicionar no meio da faixa mais espaçada
+        var maxGap = 0;
+        var gapIdx = 0;
+        for (var gi = 0; gi < allL.length - 1; gi++) {
+            var gap = Math.abs(allL[gi] - allL[gi + 1]);
+            if (gap > maxGap) {
+                maxGap = gap;
+                gapIdx = gi;
+            }
         }
-        return paletteWhite;
+        var mid = Math.round((allL[gapIdx] + allL[gapIdx + 1]) / 2);
+        allL.splice(gapIdx + 1, 0, mid);
     }
 
-    // ── Gerar lista de luminosidades alvo ──
-    // Distribuir uniformemente entre 0 e 100, excluindo a original
-    var totalSteps = count - 1; // quantas variações além da original
+    // Inserir a cor original na posição correta (ordenada)
+    allL.push(originalL);
+    allL.sort(function (a, b) { return b - a; });
 
-    // Distribuir alternadamente: claro, escuro, claro, escuro...
-    // Calcula quantas vão para cada lado
-    var lightCount = Math.floor(totalSteps / 2);
-    var darkCount = Math.floor(totalSteps / 2);
-    if (totalSteps % 2 === 1) {
-        // Ímpar: um lado ganha 1 a mais
-        if (startDark) {
-            darkCount++;
-        } else {
-            lightCount++;
-        }
-    }
+    // Limitar a count (pode ter ultrapassado)
+    allL = allL.slice(0, count);
 
-    // Gerar luminosidades para o lado claro
-    var lightTargets = [];
-    for (var li = 1; li <= lightCount; li++) {
-        var lVal = originalL + (100 - originalL) * (li / (lightCount + 1));
-        lightTargets.push(Math.round(lVal));
-    }
-
-    // Gerar luminosidades para o lado escuro
-    var darkTargets = [];
-    for (var di = 1; di <= darkCount; di++) {
-        var dVal = originalL * (1 - di / (darkCount + 1));
-        darkTargets.push(Math.round(dVal));
-    }
-
-    // Intercalar: se startDark, primeiro escuro, senão primeiro claro
-    var palette = [hex];
-    var lightIdx = 0;
-    var darkIdx = 0;
-
-    for (var i = 0; i < totalSteps; i++) {
-        var useDark = startDark ? (i % 2 === 0) : (i % 2 === 1);
-        var newL;
-        if (useDark) {
-            newL = darkIdx < darkTargets.length ? darkTargets[darkIdx++] : (lightIdx < lightTargets.length ? lightTargets[lightIdx++] : originalL);
-        } else {
-            newL = lightIdx < lightTargets.length ? lightTargets[lightIdx++] : (darkIdx < darkTargets.length ? darkTargets[darkIdx++] : originalL);
-        }
-        palette.push(hslToHex(hsl.h, hsl.s, newL));
+    // Converter para hex
+    var palette = [];
+    for (var pi = 0; pi < allL.length; pi++) {
+        palette.push(hslToHex(hsl.h, hsl.s, allL[pi]));
     }
 
     return palette;
