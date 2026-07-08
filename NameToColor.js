@@ -5125,6 +5125,198 @@ function normalizeHex(value) {
 }
 
 /**
+ * Converte uma cor hexadecimal #rrggbb para o espaço HSL (Matiz, Saturação, Luminosidade).
+ * @param {string} hex - Cor no formato #rrggbb.
+ * @returns {{ h: number, s: number, l: number }} h (0-360), s (0-100), l (0-100).
+ */
+function hexToHsl(hex) {
+    var r = parseInt(hex.slice(1, 3), 16) / 255;
+    var g = parseInt(hex.slice(3, 5), 16) / 255;
+    var b = parseInt(hex.slice(5, 7), 16) / 255;
+
+    var max = Math.max(r, g, b);
+    var min = Math.min(r, g, b);
+    var h = 0;
+    var s = 0;
+    var l = (max + min) / 2;
+
+    if (max !== min) {
+        var d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+        switch (max) {
+            case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+            case g: h = ((b - r) / d + 2) / 6; break;
+            case b: h = ((r - g) / d + 4) / 6; break;
+        }
+    }
+
+    return {
+        h: Math.round(h * 360),
+        s: Math.round(s * 100),
+        l: Math.round(l * 100)
+    };
+}
+
+/**
+ * Converte uma cor HSL (Matiz, Saturação, Luminosidade) de volta para hexadecimal #rrggbb.
+ * @param {number} h - Matiz (0-360).
+ * @param {number} s - Saturação (0-100).
+ * @param {number} l - Luminosidade (0-100).
+ * @returns {string} Cor no formato #rrggbb.
+ */
+function hslToHex(h, s, l) {
+    h = (h % 360 + 360) % 360 / 360;
+    s = Math.max(0, Math.min(100, s)) / 100;
+    l = Math.max(0, Math.min(100, l)) / 100;
+
+    var hueToRgb = function (p, q, t) {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+    };
+
+    var r, g, b;
+    if (s === 0) {
+        r = g = b = l;
+    } else {
+        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        var p = 2 * l - q;
+        r = hueToRgb(p, q, h + 1 / 3);
+        g = hueToRgb(p, q, h);
+        b = hueToRgb(p, q, h - 1 / 3);
+    }
+
+    return '#' +
+        Math.round(r * 255).toString(16).padStart(2, '0') +
+        Math.round(g * 255).toString(16).padStart(2, '0') +
+        Math.round(b * 255).toString(16).padStart(2, '0');
+}
+
+/**
+ * Gera a cor invertida (negativo) de uma entrada.
+ * A inversão é feita canal por canal no espaço RGB: cada canal (R, G, B)
+ * é subtraído de 255, produzindo o efeito de "negativo fotográfico".
+ *
+ * @param {*} input - Qualquer valor aceito por generateColor().
+ * @returns {string} Cor invertida no formato #rrggbb.
+ *
+ * @example
+ * generateInvertedColor('#ff0000'); // "#00ffff" — vermelho vira ciano
+ * generateInvertedColor('black');   // "#ffffff" — preto vira branco
+ */
+function generateInvertedColor(input) {
+    var hex = normalizeHex(generateColor(input));
+    if (!hex) {
+        return '#000000';
+    }
+    var rgb = hexToRgb(hex);
+    return '#' +
+        (255 - rgb.r).toString(16).padStart(2, '0') +
+        (255 - rgb.g).toString(16).padStart(2, '0') +
+        (255 - rgb.b).toString(16).padStart(2, '0');
+}
+
+/**
+ * Gera a cor complementar de uma entrada — a cor oposta no círculo cromático (180° de distância).
+ * Preserva a saturação e a luminosidade da cor original, alterando apenas o matiz.
+ *
+ * @param {*} input - Qualquer valor aceito por generateColor().
+ * @returns {string} Cor complementar no formato #rrggbb.
+ *
+ * @example
+ * generateComplementary('#ff0000'); // "#00ffff" — vermelho complementa ciano
+ * generateComplementary('#0000ff'); // "#ffff00" — azul complementa amarelo
+ */
+function generateComplementary(input) {
+    var hex = normalizeHex(generateColor(input));
+    if (!hex) {
+        return '#000000';
+    }
+    var hsl = hexToHsl(hex);
+    return hslToHex(hsl.h + 180, hsl.s, hsl.l);
+}
+
+/**
+ * Gera um esquema de cores triádico a partir de uma entrada.
+ * Retorna um array com 3 cores equidistantes no círculo cromático (120° entre cada).
+ * A primeira cor é a cor gerada, as demais são as duas cores triádicas.
+ *
+ * @param {*} input - Qualquer valor aceito por generateColor().
+ * @returns {string[]} Array com 3 cores no formato #rrggbb: [base, triádica 1, triádica 2].
+ *
+ * @example
+ * generateTriadic('#ff0000');
+ * // → ["#ff0000", "#00ff00", "#0000ff"] (RGB)
+ */
+function generateTriadic(input) {
+    var hex = normalizeHex(generateColor(input));
+    if (!hex) {
+        return ['#000000', '#000000', '#000000'];
+    }
+    var hsl = hexToHsl(hex);
+    return [
+        hex,
+        hslToHex(hsl.h + 120, hsl.s, hsl.l),
+        hslToHex(hsl.h + 240, hsl.s, hsl.l)
+    ];
+}
+
+/**
+ * Gera um esquema de cores quadrado (tetrádico) a partir de uma entrada.
+ * Retorna um array com 4 cores equidistantes no círculo cromático (90° entre cada).
+ * A primeira é a cor gerada, as demais são as três cores do esquema quadrado.
+ *
+ * @param {*} input - Qualquer valor aceito por generateColor().
+ * @returns {string[]} Array com 4 cores no formato #rrggbb: [base, 90°, 180°, 270°].
+ *
+ * @example
+ * generateSquare('#ff0000');
+ * // → ["#ff0000", "#ff7f00", "#00ffff", "#7f00ff"]
+ */
+function generateSquare(input) {
+    var hex = normalizeHex(generateColor(input));
+    if (!hex) {
+        return ['#000000', '#000000', '#000000', '#000000'];
+    }
+    var hsl = hexToHsl(hex);
+    return [
+        hex,
+        hslToHex(hsl.h + 90, hsl.s, hsl.l),
+        hslToHex(hsl.h + 180, hsl.s, hsl.l),
+        hslToHex(hsl.h + 270, hsl.s, hsl.l)
+    ];
+}
+
+/**
+ * Gera um esquema de cores split-complementar a partir de uma entrada.
+ * Retorna um array com 3 cores: a cor base e duas cores adjacentes ao complementar
+ * (30° antes e 30° depois do oposto, ou seja, a 150° e 210° da cor original).
+ *
+ * @param {*} input - Qualquer valor aceito por generateColor().
+ * @returns {string[]} Array com 3 cores no formato #rrggbb: [base, split 1, split 2].
+ *
+ * @example
+ * generateSplitComplementary('#ff0000');
+ * // → ["#ff0000", "#00ff7f", "#007fff"]
+ */
+function generateSplitComplementary(input) {
+    var hex = normalizeHex(generateColor(input));
+    if (!hex) {
+        return ['#000000', '#000000', '#000000'];
+    }
+    var hsl = hexToHsl(hex);
+    return [
+        hex,
+        hslToHex(hsl.h + 150, hsl.s, hsl.l),
+        hslToHex(hsl.h + 210, hsl.s, hsl.l)
+    ];
+}
+
+/**
  * Gera um par de cores onde a primeira cor é legível sobre a segunda a partir de um valor de entrada, que pode ser um número, uma string representando um nome de cor, um código hexadecimal, ou uma string de formato RGB/RGBA. A função tenta interpretar o valor de entrada e retornar a cor correspondente em formato hexadecimal. Se a entrada for inválida ou não puder ser interpretada como uma cor, a função gera uma cor determinística baseada no texto da entrada.   
  * @param {*} input 
  * @return {Array} Um array contendo duas cores: a primeira é legível sobre a segunda, ambas no formato hexadecimal.
