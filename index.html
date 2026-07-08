@@ -4,15 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste NameToColor</title>
+    <title>NameToColor — Teste</title>
     <style>
+        /* ═══════════════════════════════════════════
+           NameToColor — Página de teste interativa
+           Mostra todas as funções públicas do plugin
+           ═══════════════════════════════════════════ */
+
         :root {
             --bg: #f5f1ea;
             --card: #fffdf7;
             --border: #d7cec0;
+            --border-light: #e8e2d8;
             --text: #2f241b;
             --muted: #74665a;
             --focus: #a3652a;
+            --accent: #558b6e;
+            --radius: 16px;
+            --radius-sm: 10px;
         }
 
         * {
@@ -22,43 +31,92 @@
         body {
             margin: 0;
             min-height: 100vh;
-            display: grid;
-            place-items: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             background:
-                radial-gradient(circle at 15% 20%, #fff6e7 0%, transparent 35%),
-                radial-gradient(circle at 90% 80%, #efe4d4 0%, transparent 35%),
+                radial-gradient(circle at 15% 20%, #fff6e7 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, #efe4d4 0%, transparent 40%),
                 var(--bg);
-            font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+            font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
             color: var(--text);
-            padding: 24px;
+            padding: 32px 16px;
         }
 
+        /* ─── Container ─── */
+        .container {
+            width: min(680px, 100%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* ─── Card ─── */
         .card {
-            width: min(560px, 100%);
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 18px;
-            box-shadow: 0 18px 40px rgba(84, 60, 36, 0.12);
-            padding: 24px;
+            border-radius: var(--radius);
+            box-shadow: 0 18px 40px rgba(84, 60, 36, 0.10);
+            padding: 24px 28px;
         }
 
-        h1 {
-            margin: 0 0 14px;
-            font-size: 1.25rem;
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+
+        .card-header .badge {
+            font-size: 0.75rem;
+            background: var(--border-light);
+            color: var(--muted);
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        /* ─── Hero ─── */
+        .hero h1 {
+            margin: 0 0 6px;
+            font-size: 1.4rem;
             letter-spacing: 0.02em;
         }
 
+        .hero p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* ─── Input & Form ─── */
         label {
             display: block;
-            font-size: 0.95rem;
-            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
             color: var(--muted);
         }
 
-        input {
-            width: 100%;
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-row input {
+            flex: 1;
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: var(--radius-sm);
             padding: 12px 14px;
             font-size: 1rem;
             color: var(--text);
@@ -67,65 +125,664 @@
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
-        input:focus {
+        .input-row input:focus {
             border-color: var(--focus);
-            box-shadow: 0 0 0 4px rgba(163, 101, 42, 0.18);
+            box-shadow: 0 0 0 4px rgba(163, 101, 42, 0.15);
         }
 
-        .chip-wrap {
-            margin-top: 18px;
+        .input-row input::placeholder {
+            color: #b5aa9c;
         }
 
-        .chip {
-            display: inline-flex;
+        .input-hint {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        .input-hint kbd {
+            background: var(--border-light);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: inherit;
+        }
+
+        /* ─── Color Preview ─── */
+        .preview-wrap {
+            display: flex;
+            gap: 14px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .swatch {
+            flex: 1;
+            min-width: 140px;
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.02em;
+            text-align: center;
+            transition: background-color 0.25s, color 0.25s;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 36px;
-            border-radius: 999px;
-            padding: 8px 14px;
+            gap: 4px;
+            min-height: 70px;
+        }
+
+        .swatch .label {
+            font-weight: 400;
+            font-size: 0.7rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .swatch .value {
             font-weight: 700;
-            letter-spacing: 0.02em;
+            font-size: 0.95rem;
+        }
+
+        .result-hex {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .result-hex .hex-value {
+            font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            background: var(--border-light);
+            border-radius: 6px;
+        }
+
+        .result-hex .color-name-match {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .result-hex .color-name-match:empty {
+            display: none;
+        }
+
+        /* ─── Info Grid ─── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .info-item {
+            background: var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+        }
+
+        .info-item .info-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .info-item .info-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        /* ─── Color Table / ListColors ─── */
+        .color-table-wrap {
+            margin-top: 6px;
+            overflow-x: auto;
+        }
+
+        .color-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .color-table th {
+            text-align: left;
+            padding: 8px 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            border-bottom: 2px solid var(--border-light);
+            font-weight: 700;
+        }
+
+        .color-table td {
+            padding: 6px 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .color-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .color-swatch-dot {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
             border: 1px solid rgba(0, 0, 0, 0.08);
-            transition: background-color 0.2s, color 0.2s;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .color-table .col-swatch {
+            width: 50px;
+        }
+        .color-table .col-id {
+            width: 50px;
+            color: var(--muted);
+        }
+        .color-table .col-name {
+            min-width: 160px;
+        }
+        .color-table .col-hex {
+            font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pagination .page-info {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .pagination button {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 7px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: var(--border-light);
+            border-color: var(--border);
+        }
+
+        .pagination button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .pagination button.active-page {
+            background: var(--focus);
+            border-color: var(--focus);
+            color: #fff;
+        }
+
+        .page-buttons {
+            display: flex;
+            gap: 4px;
+        }
+
+        .page-buttons button {
+            min-width: 36px;
+            text-align: center;
+            padding: 7px 10px;
+        }
+
+        /* ─── Empty state ─── */
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--muted);
+        }
+
+        .empty-state .emoji {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* ─── Footer / Copy ─── */
+        .footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--muted);
+            padding: 8px 0 4px;
+        }
+
+        .footer a {
+            color: var(--focus);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 500px) {
+            body {
+                padding: 16px 10px;
+            }
+            .card {
+                padding: 18px 16px;
+            }
+            .preview-wrap {
+                flex-direction: column;
+            }
+            .swatch {
+                min-width: unset;
+            }
+            .input-row {
+                flex-direction: column;
+            }
+            .pagination {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .page-buttons {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 
 <body>
-    <main class="card">
-        <h1>Teste do plugin NameToColor</h1>
-        <form id="test-form" autocomplete="off">
-            <label for="value-input">Digite um nome, ID, cor ou qualquer texto</label>
-            <input id="value-input" type="text" placeholder="Ex.: Lucas, #00ff7f, rgb(255,0,0)">
-            <div class="chip-wrap">
-                <span id="color-chip" class="chip">Seu texto aparece aqui</span>
-            </div>
-        </form>
-    </main>
 
+    <div class="container">
+
+        <!-- ═══════════ HERO ═══════════ -->
+        <section class="card hero">
+            <h1>🎨 NameToColor</h1>
+            <p>
+                Teste interativo do plugin — converte textos, IDs, HEX, RGB, RGBA
+                e nomes de cores em hexadecimal. Os resultados são atualizados
+                automaticamente enquanto você digita.
+            </p>
+        </section>
+
+        <!-- ═══════════ TESTE PRINCIPAL ═══════════ -->
+        <section class="card" id="test-section">
+            <div class="card-header">
+                <h2>🔍 Testar geração de cor</h2>
+                <span class="badge">generateColor + generateReadableColor</span>
+            </div>
+
+            <form id="test-form" autocomplete="off">
+                <label for="value-input">Digite um nome, ID, cor ou qualquer texto</label>
+                <div class="input-row">
+                    <input
+                    id="value-input"
+                    type="text"
+                    placeholder="Ex.: Lucas, #00ff7f, rgb(255,0,0), 42, random"
+                    spellcheck="false"
+                    >
+                </div>
+                <div class="input-hint">
+                    💡 Experimente: <kbd>random</kbd> ·
+                    <kbd>tomato</kbd> · <kbd>#ff00aa</kbd> ·
+                    <kbd>rgb(100,200,50)</kbd> · <kbd>1</kbd> ·
+                    <kbd>absolute zero</kbd>
+                </div>
+            </form>
+
+            <!-- Preview das cores -->
+            <div class="preview-wrap">
+                <div class="swatch" id="swatch-bg">
+                    <span class="label">Fundo</span>
+                    <span class="value" id="swatch-bg-value">—</span>
+                </div>
+                <div class="swatch" id="swatch-text">
+                    <span class="label">Texto</span>
+                    <span class="value" id="swatch-text-value">—</span>
+                </div>
+            </div>
+
+            <!-- Hex e nome da cor -->
+            <div class="result-hex">
+                <span class="hex-value" id="hex-display">#000000</span>
+                <span class="color-name-match" id="color-name-display"></span>
+            </div>
+
+            <!-- Info grid -->
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Entrada</div>
+                    <div class="info-value" id="info-input">—</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">generateColor</div>
+                    <div class="info-value" id="info-hex">#000000</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">generateReadableColor</div>
+                    <div class="info-value" id="info-readable">—</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Contraste</div>
+                    <div class="info-value" id="info-contrast">—</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ NAVEGAR PELA BASE ═══════════ -->
+        <section class="card" id="browse-section">
+            <div class="card-header">
+                <h2>📚 Navegar pela base de cores</h2>
+                <span class="badge" id="total-colors-badge">listColors</span>
+            </div>
+
+            <div id="browse-body">
+                <!-- Tabela será renderizada via JS -->
+                <div class="empty-state" id="browse-empty">
+                    <span class="emoji">📖</span>
+                    <p>Carregando base de cores…</p>
+                </div>
+            </div>
+
+            <div class="pagination" id="pagination">
+                <span class="page-info" id="page-info">Página 1 de 1</span>
+                <div class="page-buttons" id="page-buttons"></div>
+            </div>
+        </section>
+
+        <!-- ═══════════ FOOTER ═══════════ -->
+        <footer class="footer">
+            <a href="https://github.com/zonaro/NameToColor" target="_blank" rel="noopener">NameToColor</a>
+            &middot; Plugin sem dependências &middot; Feito com 💖
+        </footer>
+
+    </div>
+
+    <!-- ═══════════ SCRIPTS ═══════════ -->
     <script src="NameToColor.js"></script>
     <script>
-        const input = document.getElementById('value-input');
-        const chip = document.getElementById('color-chip');
-        const form = document.getElementById('test-form');
+        // ═══════════════════════════════════════════════
+        //  NameToColor — Página de teste interativa
+        //  Demonstra: generateColor, generateReadableColor
+        //  e listColors com paginação
+        // ═══════════════════════════════════════════════
 
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-        });
+        (function () {
+            'use strict';
 
+            /* ─── DOM refs ─── */
+            var input = document.getElementById('value-input');
+            var form = document.getElementById('test-form');
+            var swatchBg = document.getElementById('swatch-bg');
+            var swatchText = document.getElementById('swatch-text');
+            var swatchBgValue = document.getElementById('swatch-bg-value');
+            var swatchTextValue = document.getElementById('swatch-text-value');
+            var hexDisplay = document.getElementById('hex-display');
+            var colorNameDisplay = document.getElementById('color-name-display');
+            var infoInput = document.getElementById('info-input');
+            var infoHex = document.getElementById('info-hex');
+            var infoReadable = document.getElementById('info-readable');
+            var infoContrast = document.getElementById('info-contrast');
 
-        function updateChip() {
-            const value = input.value.trim();
-            const source = value || 'preview';
-            const [textColor, backgroundColor] = generateReadableColor(source);
-            chip.textContent = backgroundColor;
-            chip.style.backgroundColor = backgroundColor;
-            chip.style.color = textColor;
-        }
+            /* ─── Prevent form submit ─── */
+            form.addEventListener('submit', function (e) { e.preventDefault(); });
 
-        input.addEventListener('input', updateChip);
-        updateChip();
+            /* ─── Atualiza preview ao digitar ─── */
+            function updatePreview() {
+                var value = input.value.trim();
+                var source = value || 'preview';
+
+                // Gera cores
+                var bgColor;
+                try {
+                    bgColor = generateColor(source);
+                } catch (_) {
+                    bgColor = '#000000';
+                }
+
+                var textColor;
+                try {
+                    textColor = generateReadableColor(source)[0];
+                } catch (_) {
+                    textColor = '#ffffff';
+                }
+
+                // Atualiza swatches
+                swatchBg.style.backgroundColor = bgColor;
+                swatchBg.style.color = textColor;
+                swatchBgValue.textContent = bgColor;
+
+                swatchText.style.backgroundColor = bgColor;
+                swatchText.style.color = textColor;
+                swatchTextValue.textContent = textColor;
+
+                // Hex display
+                hexDisplay.textContent = bgColor;
+
+                // Tenta encontrar nome da cor na base
+                var matchedName = findColorName(bgColor);
+                colorNameDisplay.textContent = matchedName || '';
+
+                // Info grid
+                infoInput.textContent = value || '(vazio)';
+                infoHex.textContent = bgColor;
+                infoReadable.textContent = '[' + textColor + ', ' + bgColor + ']';
+
+                // Contraste aproximado (só se bgColor for válido)
+                var contrast = estimateContrast(textColor, bgColor);
+                infoContrast.textContent = contrast !== null ? contrast.toFixed(2) + ':1' : '—';
+            }
+
+            /* ─── Busca nome da cor pelo hexadecimal ─── */
+            function findColorName(hex) {
+                if (!hex || typeof hex !== 'string') return '';
+                var normalized = hex.toLowerCase();
+                for (var i = 0; i < colorNames.length; i++) {
+                    if (colorNames[i].Hexadecimal.toLowerCase() === normalized) {
+                        return '✨ ' + colorNames[i].Color;
+                    }
+                }
+                return '';
+            }
+
+            /* ─── Estima taxa de contraste WCAG ─── */
+            function estimateContrast(fgHex, bgHex) {
+                try {
+                    var fg = parseHex(fgHex);
+                    var bg = parseHex(bgHex);
+                    if (!fg || !bg) return null;
+                    var fgLum = relativeLuminance(fg.r, fg.g, fg.b);
+                    var bgLum = relativeLuminance(bg.r, bg.g, bg.b);
+                    var lighter = Math.max(fgLum, bgLum);
+                    var darker = Math.min(fgLum, bgLum);
+                    return (lighter + 0.05) / (darker + 0.05);
+                } catch (_) {
+                    return null;
+                }
+            }
+
+            function parseHex(hex) {
+                if (typeof hex !== 'string') return null;
+                var h = hex.trim().replace(/^#/, '');
+                if (h.length === 3) {
+                    h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+                }
+                if (h.length < 6) return null;
+                return {
+                    r: parseInt(h.slice(0, 2), 16),
+                    g: parseInt(h.slice(2, 4), 16),
+                    b: parseInt(h.slice(4, 6), 16)
+                };
+            }
+
+            function relativeLuminance(r, g, b) {
+                var toLinear = function (ch) {
+                    var s = ch / 255;
+                    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+                };
+                return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+            }
+
+            /* ─── Events ─── */
+            input.addEventListener('input', updatePreview);
+
+            /* ─── Inicializa preview ─── */
+            updatePreview();
+
+            // ══════════════════════════════════════════
+            //  NAVEGADOR DE CORES (listColors)
+            // ══════════════════════════════════════════
+
+            var pageSize = 15;
+            var currentPage = 1;
+            var totalItems = 0;
+
+            var browseBody = document.getElementById('browse-body');
+            var browseEmpty = document.getElementById('browse-empty');
+            var pageInfo = document.getElementById('page-info');
+            var pageButtons = document.getElementById('page-buttons');
+            var totalBadge = document.getElementById('total-colors-badge');
+
+            /* ─── Renderiza tabela ─── */
+            function renderTable(page) {
+                var result;
+                try {
+                    result = listColors(page, pageSize);
+                } catch (_) {
+                    browseBody.innerHTML =
+                        '<div class="empty-state"><span class="emoji">⚠️</span><p>Erro ao carregar lista.</p></div>';
+                    return;
+                }
+
+                totalItems = result.totalItems;
+                totalBadge.textContent = totalItems + ' cores';
+
+                if (!result.items || result.items.length === 0) {
+                    browseBody.innerHTML =
+                        '<div class="empty-state"><span class="emoji">📭</span><p>Nenhuma cor encontrada.</p></div>';
+                    return;
+                }
+
+                var html = '<div class="color-table-wrap"><table class="color-table">' +
+                    '<thead><tr>' +
+                    '<th class="col-swatch"></th>' +
+                    '<th class="col-id">ID</th>' +
+                    '<th class="col-name">Nome</th>' +
+                    '<th class="col-hex">Hexadecimal</th>' +
+                    '</tr></thead><tbody>';
+
+                for (var i = 0; i < result.items.length; i++) {
+                    var item = result.items[i];
+                    html += '<tr>' +
+                        '<td class="col-swatch"><span class="color-swatch-dot" style="background:' +
+                        item.Hexadecimal + '"></span></td>' +
+                        '<td class="col-id">' + item.ID + '</td>' +
+                        '<td class="col-name">' + item.Color + '</td>' +
+                        '<td class="col-hex">' + item.Hexadecimal + '</td>' +
+                        '</tr>';
+                }
+
+                html += '</tbody></table></div>';
+                browseBody.innerHTML = html;
+                browseEmpty.style.display = 'none';
+
+                // Atualiza paginação
+                renderPagination(result.pageNumber, result.pageCount);
+            }
+
+            /* ─── Renderiza botões de página ─── */
+            function renderPagination(pageNumber, pageCount) {
+                pageInfo.textContent = 'Página ' + pageNumber + ' de ' + pageCount;
+
+                var html = '';
+
+                // Botão anterior
+                html += '<button class="page-prev" ' + (pageNumber <= 1 ? 'disabled' : '') +
+                    ' data-page="' + (pageNumber - 1) + '" title="Anterior">◀</button>';
+
+                // Lógica: mostrar até 5 botões ao redor da página atual
+                var start = Math.max(1, pageNumber - 2);
+                var end = Math.min(pageCount, pageNumber + 2);
+
+                if (start > 1) {
+                    html += '<button data-page="1">1</button>';
+                    if (start > 2) html += '<button disabled>…</button>';
+                }
+
+                for (var p = start; p <= end; p++) {
+                    html += '<button data-page="' + p + '"' +
+                        (p === pageNumber ? ' class="active-page"' : '') + '>' + p + '</button>';
+                }
+
+                if (end < pageCount) {
+                    if (end < pageCount - 1) html += '<button disabled>…</button>';
+                    html += '<button data-page="' + pageCount + '">' + pageCount + '</button>';
+                }
+
+                // Botão próximo
+                html += '<button class="page-next" ' + (pageNumber >= pageCount ? 'disabled' : '') +
+                    ' data-page="' + (pageNumber + 1) + '" title="Próximo">▶</button>';
+
+                pageButtons.innerHTML = html;
+
+                // Event listeners
+                var buttons = pageButtons.querySelectorAll('button[data-page]');
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].addEventListener('click', function () {
+                        var page = parseInt(this.getAttribute('data-page'), 10);
+                        if (!isNaN(page) && page !== currentPage) {
+                            currentPage = page;
+                            renderTable(currentPage);
+                        }
+                    });
+                }
+            }
+
+            /* ─── Inicializa navegador ─── */
+            try {
+                // Verifica se listColors existe
+                if (typeof listColors === 'function') {
+                    renderTable(currentPage);
+                } else {
+                    browseBody.innerHTML =
+                        '<div class="empty-state"><span class="emoji">⚠️</span><p>' +
+                        'Função <code>listColors</code> não encontrada. ' +
+                        'Verifique se o script NameToColor.js foi carregado.</p></div>';
+                }
+            } catch (e) {
+                browseBody.innerHTML =
+                    '<div class="empty-state"><span class="emoji">⚠️</span><p>Erro: ' + e.message + '</p></div>';
+            }
+
+        })();
     </script>
+
 </body>
 
 </html>
