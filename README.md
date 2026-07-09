@@ -1,50 +1,50 @@
 # NameToColor
 
-Converte textos, IDs e formatos de cor em hexadecimal. O plugin combina uma base extensa de nomes de cores com fallback determinístico para qualquer entrada.
+Converts text, IDs, and color formats to hexadecimal. The plugin combines an extensive built-in color name database with deterministic fallback for any input.
 
-## 🔗 Página de teste interativa
+## 🔗 Interactive Test Page
 
 [https://zonaro.github.io/NameToColor/](https://zonaro.github.io/NameToColor/)
 
-Experimente todas as funções do plugin ao vivo — incluindo o navegador paginado da base de cores com `listColors`.
+Try all plugin features live — including the paginated color database browser with `listColors`.
 
-## Instalação via CDN
+## CDN Installation
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js"></script>
 ```
 
-Depois de incluir o script, as funções globais `generateColor()`, `generateReadableColor()` e `listColors()` ficam disponíveis no navegador.
+After including the script, the global functions `generateColor()`, `generateReadableColor()`, and `listColors()` become available in the browser.
 
-## Funções
+## Functions
 
 ### `generateColor(input)`
 
-Função principal. Aceita diversos tipos de entrada e retorna um código hexadecimal (`#rrggbb` ou `#rrggbbaa`).
+Main function. Accepts various input types and returns a hexadecimal color code (`#rrggbb` or `#rrggbbaa`).
 
 ### `generateReadableColor(input)`
 
-Retorna um par `[textColor, backgroundColor]` onde a cor do texto é legível **e harmoniosa** sobre o fundo, **com contraste garantido WCAG AA (4.5:1)**.
+Returns a `[textColor, backgroundColor]` pair where the text color is readable **and harmonious** over the background, **with guaranteed WCAG AA (4.5:1) contrast**.
 
-#### Algoritmo
+#### Algorithm
 
-1. Gera a cor base com `generateColor(input)`.
-2. Calcula a luminância relativa da cor de fundo conforme a fórmula WCAG.
-3. Escolhe a cor de base (branco ou preto) com **maior contraste** contra o fundo.
-4. **Calcula dinamicamente** a taxa de mesclagem necessária para atingir **WCAG AA (4.5:1)**, garantindo legibilidade sem sacrificar completamente a harmonia visual — a taxa mínima é de 50% da cor base.
+1. Generates the base color with `generateColor(input)`.
+2. Calculates the relative luminance of the background color according to the WCAG formula.
+3. Picks the base color (white or black) with the **greatest contrast** against the background.
+4. **Dynamically calculates** the blend ratio needed to reach **WCAG AA (4.5:1)**, ensuring readability without completely sacrificing visual harmony — the minimum blend is 50% of the base color.
 
 ```js
 generateReadableColor("tomato");
-// Ex.: ["#b24338", "#ff6347"]  (texto mesclado, não preto puro)
+// E.g.: ["#b24338", "#ff6347"]  (blended text, not pure black)
 
 generateReadableColor("black");
-// -> ["#4d4d4d", "#000000"]    (texto mesclado, não branco puro)
+// -> ["#4d4d4d", "#000000"]    (blended text, not pure white)
 
 generateReadableColor("#85d8fd");
-// Ex.: ["#152228", "#85d8fd"]  (contraste >= 4.5:1 garantido)
+// E.g.: ["#152228", "#85d8fd"]  (contrast >= 4.5:1 guaranteed)
 ```
 
-Aplicação prática em elemento HTML:
+Practical usage on an HTML element:
 
 ```js
 const el = document.getElementById("username");
@@ -56,49 +56,49 @@ el.style.backgroundColor = backgroundColor;
 
 ### `listColors(pageNumber?, pageSize?)`
 
-Retorna a base interna de cores de forma paginada.
+Returns the internal color database in a paginated format.
 
 ```js
-// Todas as cores em uma página
+// All colors on one page
 listColors();
 // -> { items: [...], pageNumber: 1, pageCount: 1, totalItems: 1023 }
 
-// Página 2 com 10 itens
+// Page 2 with 10 items
 listColors(2, 10);
 // -> { items: [...], pageNumber: 2, pageCount: 103, totalItems: 1023 }
 ```
 
-Útil para construir navegadores, seletores ou tabelas de cores. A página de teste interativa usa essa função para exibir a base completa com paginação.
+Useful for building color browsers, pickers, or tables. The interactive test page uses this function to display the full database with pagination.
 
-## Tipos de entrada
+## Input Types
 
-### 1) Nome de cor conhecido (base interna)
+### 1) Known color name (built-in database)
 
-Aceita nomes de uma lista extensa de cores (centenas de entradas):
+Accepts names from an extensive color list (hundreds of entries):
 
 ```js
 generateColor("Absolute Zero"); // -> "#0048BA"
 generateColor("zaffre");        // -> "#0014A8"
 ```
 
-Tambem tenta correspondencia aproximada (fuzzy):
+Also performs fuzzy matching:
 
 ```js
-generateColor("absolut zero"); // -> "#0048BA" (nome semelhante)
+generateColor("absolut zero"); // -> "#0048BA" (similar name)
 ```
 
-### 2) ID numerico da tabela interna
+### 2) Numeric ID from the internal table
 
-Se a entrada for numero, o plugin tenta buscar pelo campo `ID`:
+If the input is a number, the plugin looks up by the `ID` field:
 
 ```js
 generateColor(1);   // -> "#0048BA"
 generateColor(974); // -> "#39A78E"
 ```
 
-### 3) Valores em HEX
+### 3) HEX values
 
-Se a entrada ja for HEX (com ou sem `#`), ela e retornada normalizada:
+If the input is already HEX (with or without `#`), it is returned normalized:
 
 ```js
 generateColor("#ff00aa"); // -> "#ff00aa"
@@ -106,44 +106,44 @@ generateColor("ff00aa");  // -> "#ff00aa"
 generateColor("f0a");     // -> "#f0a"
 ```
 
-### 4) Valores RGB e RGBA
+### 4) RGB and RGBA values
 
-Converte strings RGB/RGBA para hexadecimal:
+Converts RGB/RGBA strings to hexadecimal:
 
 ```js
 generateColor("rgb(255, 99, 71)");       // -> "#ff6347"
 generateColor("rgba(255, 99, 71, 0.5)"); // -> "#ff634780"
 ```
 
-### 5) Palavra "random"
+### 5) The word "random"
 
-Retorna uma cor aleatoria a cada chamada:
+Returns a random color on each call:
 
 ```js
-generateColor("random"); // -> "#a3f2c1" (exemplo)
+generateColor("random"); // -> "#a3f2c1" (example)
 ```
 
-### 6) Nomes CSS validos
+### 6) Valid CSS color names
 
-Se o navegador reconhecer a string como cor CSS valida, o plugin retorna em formato hexadecimal:
+If the browser recognizes the string as a valid CSS color, the plugin returns it in hexadecimal format:
 
 ```js
 generateColor("tomato");
 generateColor("rebeccapurple");
 ```
 
-### 7) Texto generico (fallback deterministico)
+### 7) Generic text (deterministic fallback)
 
-Quando nada acima se aplica, a cor e gerada por hash simples da string:
+When none of the above apply, the color is generated by a simple hash of the string:
 
 ```js
-generateColor("Lucas"); // -> sempre a mesma cor para "Lucas"
-generateColor("Maria"); // -> sempre a mesma cor para "Maria"
+generateColor("Lucas"); // -> always the same color for "Lucas"
+generateColor("Maria"); // -> always the same color for "Maria"
 ```
 
-### 8) Entrada vazia
+### 8) Empty input
 
-Entradas vazias, `null` ou `undefined` retornam `"black"`:
+Empty, `null`, or `undefined` inputs return `"black"`:
 
 ```js
 generateColor("");
@@ -152,45 +152,45 @@ generateColor(undefined);
 // -> "black"
 ```
 
-### 9) Elementos HTML
+### 9) HTML Elements
 
-Passando um elemento HTML, a função aplica a cor gerada (baseada no `textContent`) diretamente à propriedade `color` do elemento e retorna a cor:
+When passing an HTML element, the function applies the generated color (based on `textContent`) directly to the element's `color` property and returns the color:
 
 ```js
 const el = document.getElementById("username");
 generateColor(el);
-// el.style.color agora está definido com a cor gerada
+// el.style.color is now set to the generated color
 ```
 
-Ou como um seletor em loop:
+Or as a loop selector:
 
 ```js
 document.querySelectorAll(".tag").forEach(el => generateColor(el));
 ```
 
-## Ordem de processamento
+## Processing Order
 
-1. Elemento HTML
-2. Numero (ID da tabela)
-3. Entrada vazia
+1. HTML Element
+2. Number (table ID)
+3. Empty input
 4. `"random"`
 5. HEX
 6. RGB
 7. RGBA
-8. Cor CSS valida
-9. Busca aproximada em nomes internos
-10. Hash deterministico
+8. Valid CSS color
+9. Fuzzy name lookup in internal database
+10. Deterministic hash
 
-## Características
+## Features
 
-- **Determinístico** no fallback por texto — a mesma entrada sempre produz a mesma cor.
-- **Base interna** com ~1000+ cores nomeadas, buscáveis por nome (com fuzzy match) ou por ID numérico.
-- **Aceita múltiplos formatos**: HEX (`#rgb`, `#rrggbb`), RGB, RGBA, nomes CSS, `"random"` e elementos HTML.
-- **Contraste inteligente**: `generateReadableColor` calcula dinamicamente a taxa de mesclagem necessária para garantir **WCAG AA (4.5:1)**, resultando em texto sempre legível e esteticamente harmonioso.
-- **Paginação**: `listColors()` permite navegar pela base de cores com suporte a páginas.
-- **Zero dependências**: funciona puramente no navegador com JavaScript vanilla.
-- **Tamanho reduzido**: ~38 KB minificado, sem `npm install`.
+- **Deterministic** text fallback — the same input always produces the same color.
+- **Built-in database** with ~1000+ named colors, searchable by name (with fuzzy matching) or numeric ID.
+- **Accepts multiple formats**: HEX (`#rgb`, `#rrggbb`), RGB, RGBA, CSS color names, `"random"`, and HTML elements.
+- **Smart contrast**: `generateReadableColor` dynamically calculates the necessary blend ratio to guarantee **WCAG AA (4.5:1)**, resulting in text that is always readable and aesthetically harmonious.
+- **Pagination**: `listColors()` allows browsing the color database with page support.
+- **Zero dependencies**: runs purely in the browser with vanilla JavaScript.
+- **Small footprint**: ~38 KB minified, no `npm install` required.
 
-## Licença
+## License
 
 MIT
