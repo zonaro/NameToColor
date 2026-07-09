@@ -14,7 +14,7 @@ Try all plugin features live — including the paginated color database browser 
 <script src="https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js"></script>
 ```
 
-After including the script, the global functions `generateColor()`, `generateReadableColor()`, and `listColors()` become available in the browser.
+After including the script, all functions become globally available in the browser — including `generateColor()`, `generateReadableColor()`, `listColors()`, color harmonies, color name lookup, and utility helpers.
 
 ## Functions
 
@@ -72,6 +72,143 @@ listColors(2, 10);
 ```
 
 Useful for building color browsers, pickers, or tables. The interactive test page uses this function to display the full database with pagination.
+
+## Color Name Lookup
+
+### `colorName(input)`
+
+Returns the **first** color name from the internal database whose hex exactly matches the generated color for the input. Returns `null` if no exact match is found.
+
+```js
+colorName("Absolute Zero"); // -> "Absolute Zero"
+colorName(1);               // -> "Absolute Zero"
+colorName("#0048BA");       // -> "Absolute Zero"
+colorName("unknown");       // -> null
+```
+
+### `colorNames(input)`
+
+Returns **all** color names (synonyms) for the hex that matches the input. Unlike `colorName()`, this returns the full array for entries with multiple names.
+
+```js
+colorNames("Aqua");          // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
+colorNames("#00FFFF");       // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
+colorNames("unknown");       // -> []
+```
+
+### `closestName(input)`
+
+Like `colorName()`, but when there is no exact match, finds the **nearest color** by RGB Euclidean distance and returns its first name.
+
+```js
+closestName("#ff6348");      // -> "Tomato" (nearest match)
+closestName("unknown");      // -> nearest color name in the database
+```
+
+### `closestNames(input)`
+
+Like `colorNames()`, but with fuzzy fallback — finds the nearest color by RGB distance and returns all its names.
+
+```js
+closestNames("#00FFFF");     // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
+closestNames("#ff6348");     // -> ["Tomato"]
+closestNames("unknown");     // -> names of the nearest color
+```
+
+## Color Harmonies
+
+### `generateInvertedColor(input)`
+
+Returns the **negative** (inverted) color of the input. Each RGB channel is subtracted from 255.
+
+```js
+generateInvertedColor("#ff0000");  // -> "#00ffff" (Red → Cyan)
+generateInvertedColor("black");    // -> "#ffffff"
+generateInvertedColor("gold");     // -> "#0028ff"
+```
+
+### `generateComplementary(input)`
+
+Returns the **complementary** color — the exact opposite on the color wheel (180° away in HSL hue).
+
+```js
+generateComplementary("#ff0000");  // -> "#00ffff" (Red → Cyan)
+generateComplementary("#0000ff");  // -> "#ffff00" (Blue → Yellow)
+generateComplementary("#808080");  // -> "#808080" (Gray — no hue to complement)
+```
+
+### `generateTriadic(input)`
+
+Returns an array of **3 colors** equally spaced on the color wheel (120° apart).
+
+```js
+generateTriadic("#ff0000");  // -> ["#ff0000", "#00ff00", "#0000ff"]
+generateTriadic("gold");     // -> ["#ffd700", "#00ffd9", "#d900ff"]
+```
+
+### `generateSquare(input)`
+
+Returns an array of **4 colors** equally spaced on the color wheel (90° apart) — a tetradic/square scheme.
+
+```js
+generateSquare("#ff0000");   // -> ["#ff0000", "#80ff00", "#00ffff", "#7f00ff"]
+```
+
+### `generateSplitComplementary(input)`
+
+Returns an array of **3 colors**: the base color and two colors adjacent to its complement (150° and 210°).
+
+```js
+generateSplitComplementary("#ff0000");
+// -> ["#ff0000", "#00ff80", "#007fff"]
+```
+
+### `generateMonochrome(input, count?)`
+
+Generates a **monochrome palette** with `count` colors (default **5**, min 2, max 21). All colors share the same hue and saturation — only lightness varies. Returns colors sorted from lightest to darkest.
+
+```js
+generateMonochrome("#ff0000");
+// -> ["#ffa8a8", "#ff5757", "#ff0000", "#a80000", "#570000"]
+
+generateMonochrome("gold", 3);
+// -> ["#ffec80", "#ffd700", "#806c00"]
+
+generateMonochrome("black", 5);
+// -> ["#cccccc", "#999999", "#666666", "#333333", "#000000"]
+```
+
+## Utility Functions
+
+These helper functions are also exposed globally for fine-grained control:
+
+| Function                 | Description                                                                           |
+| ------------------------ | ------------------------------------------------------------------------------------- |
+| `hexToRgb(hex)`          | Converts `#rrggbb` to `{ r, g, b }` (0–255)                                           |
+| `hexToHsl(hex)`          | Converts `#rrggbb` to `{ h, s, l }` (hue 0–360°, saturation 0–100%, lightness 0–100%) |
+| `hslToHex(h, s, l)`      | Converts HSL values back to `#rrggbb`                                                 |
+| `relativeLuminance(hex)` | Returns the WCAG relative luminance (0–1)                                             |
+| `normalizeHex(value)`    | Normalizes `black`, `white`, `#rgb`, `#rrggbbaa` to `#rrggbb`                         |
+| `isLight(input)`         | Returns `true` if the generated color is light (luminance > 0.5)                      |
+| `isDark(input)`          | Returns `true` if the generated color is dark (luminance ≤ 0.5)                       |
+
+### Luminance & Light/Dark helpers
+
+```js
+const hex = generateColor("gold");
+// hex → "#ffd700"
+
+relativeLuminance(hex);
+// → 0.699 (bright color)
+
+isLight(hex);
+// → true
+
+isDark(hex);
+// → false
+```
+
+> **Note:** `isLight` and `isDark` are complementary — a color is either light *or* dark, never both, never neither. The threshold is a relative luminance of **0.5**.
 
 ## Input Types
 
@@ -217,9 +354,13 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 
 - **Deterministic** text fallback — the same input always produces the same color.
 - **Built-in database** with 2000+ named colors (2254+ entries), searchable by name (exact, contains, or fuzzy via Levenshtein) or numeric index.
+- **Color name lookup**: `colorName()`, `colorNames()`, `closestName()`, `closestNames()` for finding color names from any input.
+- **Color harmonies**: `generateInvertedColor()`, `generateComplementary()`, `generateTriadic()`, `generateSquare()`, `generateSplitComplementary()` for color scheme exploration.
+- **Monochrome palettes**: `generateMonochrome()` creates harmonious single-hue palettes.
 - **Accepts multiple formats**: Arrays (recursive), objects (converted to string), HEX (`#rgb`, `#rrggbb`), RGB, RGBA, CSS color names, `"random"`, numeric indices, and HTML elements.
 - **Smart contrast**: `generateReadableColor` dynamically calculates the necessary blend ratio to guarantee **WCAG AA (4.5:1)**, resulting in text that is always readable and aesthetically harmonious.
 - **Pagination**: `listColors()` allows browsing the color database with page support.
+- **Utility functions**: `hexToRgb()`, `hexToHsl()`, `hslToHex()`, `relativeLuminance()`, `normalizeHex()`, `isLight()`, `isDark()` for fine-grained control.
 - **Zero dependencies**: runs purely in the browser with vanilla JavaScript.
 - **Small footprint**: ~38 KB minified, no `npm install` required.
 

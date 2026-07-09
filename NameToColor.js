@@ -3,7 +3,7 @@
  * Each entry's Color property is an array of one or more names for the same hex value.
  * @type {Array<{Color: string[], Hexadecimal: string}>}
  */
-const colorNames = [
+const colorDatabase = [
     {
         "Color": [
             "Abbey"
@@ -5312,7 +5312,7 @@ const colorNames = [
     },
     {
         "Color": [
-            "Gray (Web)",
+            "Grey",
             "Gray"
         ],
         "Hexadecimal": "#808080"
@@ -13661,8 +13661,8 @@ function generateColor(input) {
 
     // If input is a number (integer), use it as an index
     if (typeof input === 'number' && Number.isInteger(input)) {
-        if (input >= 0 && input < colorNames.length) {
-            return colorNames[input].Hexadecimal;
+        if (input >= 0 && input < colorDatabase.length) {
+            return colorDatabase[input].Hexadecimal;
         }
         // Index out of range: generate deterministic color from the number itself
         var hash = input;
@@ -13729,8 +13729,8 @@ function generateColor(input) {
     var normalizedText = text.replace(/[^a-z0-9]/g, '');
 
     // 1. Exact match (case-insensitive, ignoring non-alphanumeric chars)
-    for (var ci = 0; ci < colorNames.length; ci++) {
-        var entry = colorNames[ci];
+    for (var ci = 0; ci < colorDatabase.length; ci++) {
+        var entry = colorDatabase[ci];
         for (var ni = 0; ni < entry.Color.length; ni++) {
             var normalizedName = entry.Color[ni].toLowerCase().replace(/[^a-z0-9]/g, '');
             if (normalizedName === normalizedText) {
@@ -13740,8 +13740,8 @@ function generateColor(input) {
     }
 
     // 2. Contains match (case-insensitive)
-    for (var ci2 = 0; ci2 < colorNames.length; ci2++) {
-        var entry2 = colorNames[ci2];
+    for (var ci2 = 0; ci2 < colorDatabase.length; ci2++) {
+        var entry2 = colorDatabase[ci2];
         for (var ni2 = 0; ni2 < entry2.Color.length; ni2++) {
             if (entry2.Color[ni2].toLowerCase().indexOf(text) !== -1) {
                 return entry2.Hexadecimal;
@@ -13753,8 +13753,8 @@ function generateColor(input) {
     var bestMatch = null;
     var bestDistance = Infinity;
 
-    for (var ci3 = 0; ci3 < colorNames.length; ci3++) {
-        var entry3 = colorNames[ci3];
+    for (var ci3 = 0; ci3 < colorDatabase.length; ci3++) {
+        var entry3 = colorDatabase[ci3];
         for (var ni3 = 0; ni3 < entry3.Color.length; ni3++) {
             var normalizedName3 = entry3.Color[ni3].toLowerCase().replace(/[^a-z0-9]/g, '');
             var distance = levenshteinDistance(normalizedText, normalizedName3);
@@ -14408,8 +14408,8 @@ function generateReadableColor(input) {
 function listColors(pageNumber, pageSize) {
     // Build a flat list: each name in the Color array becomes its own item
     var flatList = [];
-    for (var i = 0; i < colorNames.length; i++) {
-        var entry = colorNames[i];
+    for (var i = 0; i < colorDatabase.length; i++) {
+        var entry = colorDatabase[i];
         for (var j = 0; j < entry.Color.length; j++) {
             flatList.push({
                 Color: entry.Color[j],
@@ -14444,4 +14444,161 @@ function listColors(pageNumber, pageSize) {
         pageCount: pageCount,
         totalItems: totalItems
     };
+}
+
+/**
+ * Returns the first matching color name for a given input.
+ * Searches the database by exact hex match. If the color has multiple names,
+ * returns the first one. If no exact match is found, returns null.
+ *
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {string|null} The first color name, or null if not found.
+ *
+ * @example
+ * colorName("Absolute Zero"); // -> "Absolute Zero"
+ * colorName(1);               // -> "Absolute Zero"
+ * colorName("#0048BA");       // -> "Absolute Zero"
+ * colorName("unknown");       // -> null
+ */
+function colorName(input) {
+    var hex = resolveHex(input);
+    if (!hex) return null;
+
+    var normalizedHex = hex.toLowerCase();
+    for (var i = 0; i < colorDatabase.length; i++) {
+        if (colorDatabase[i].Hexadecimal.toLowerCase() === normalizedHex) {
+            return colorDatabase[i].Color[0];
+        }
+    }
+    return null;
+}
+
+/**
+ * Returns all possible color names for a given input.
+ * Searches the database by exact hex match. If the color has multiple
+ * synonyms, returns the full array. If no exact match is found,
+ * returns an empty array.
+ *
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {string[]} Array of color names, or empty array if not found.
+ *
+ * @example
+ * colorNames("Aqua");     // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
+ * colorNames("#00FFFF");  // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
+ * colorNames("unknown");  // -> []
+ */
+function colorNames(input) {
+    var hex = resolveHex(input);
+    if (!hex) return [];
+
+    var normalizedHex = hex.toLowerCase();
+    for (var i = 0; i < colorDatabase.length; i++) {
+        if (colorDatabase[i].Hexadecimal.toLowerCase() === normalizedHex) {
+            return colorDatabase[i].Color.slice();
+        }
+    }
+    return [];
+}
+
+/**
+ * Returns the name of the nearest color in the chromatic circle.
+ * Works like colorName(), but instead of returning null when no exact
+ * match is found, it finds the closest color in the database (by RGB
+ * Euclidean distance) and returns its first name.
+ *
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {string|null} The first name of the nearest color, or null if database is empty.
+ *
+ * @example
+ * closestName("#ff6348"); // -> "Tomato" (slightly different red, nearest match)
+ * closestName("unknown"); // -> nearest color name in the database
+ */
+function closestName(input) {
+    var hex = resolveHex(input);
+    if (!hex) return null;
+
+    // Try exact match first
+    var exact = colorName(input);
+    if (exact !== null) return exact;
+
+    // Find the nearest color in the chromatic circle
+    var nearest = findNearestColor(hex);
+    return nearest ? nearest.Color[0] : null;
+}
+
+/**
+ * Returns all names of the nearest color in the chromatic circle.
+ * Works like colorNames(), but instead of returning an empty array when
+ * no exact match is found, it finds the closest color in the database
+ * (by RGB Euclidean distance) and returns all its names.
+ *
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {string[]} Array of names of the nearest color, or empty array if database is empty.
+ *
+ * @example
+ * closestNames("#ff6348"); // -> ["Tomato"] (nearest match)
+ * closestNames("unknown"); // -> names of the nearest color
+ */
+function closestNames(input) {
+    var hex = resolveHex(input);
+    if (!hex) return [];
+
+    // Try exact match first
+    var exact = colorNames(input);
+    if (exact.length > 0) return exact;
+
+    // Find the nearest color in the chromatic circle
+    var nearest = findNearestColor(hex);
+    return nearest ? nearest.Color.slice() : [];
+}
+
+/**
+ * Resolves any input to a single hexadecimal color string.
+ * If generateColor returns an array (because input was an array),
+ * the first element is used.
+ *
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {string|null} A hexadecimal color string (#rrggbb) or null.
+ * @private
+ */
+function resolveHex(input) {
+    var result = generateColor(input);
+    if (Array.isArray(result)) {
+        return result.length > 0 ? result[0] : null;
+    }
+    return typeof result === 'string' && result.charAt(0) === '#' ? result : null;
+}
+
+/**
+ * Finds the nearest color in the database by RGB Euclidean distance.
+ *
+ * @param {string} hex - Target color in #rrggbb format.
+ * @returns {Object|null} The closest colorDatabase entry, or null.
+ * @private
+ */
+function findNearestColor(hex) {
+    var targetRgb = hexToRgb(hex);
+    var bestEntry = null;
+    var bestDistance = Infinity;
+
+    for (var i = 0; i < colorDatabase.length; i++) {
+        var entry = colorDatabase[i];
+        var entryHex = entry.Hexadecimal;
+
+        // Skip if it is the exact same color (already checked by caller)
+        if (entryHex.toLowerCase() === hex.toLowerCase()) continue;
+
+        var entryRgb = hexToRgb(entryHex);
+        var dr = targetRgb.r - entryRgb.r;
+        var dg = targetRgb.g - entryRgb.g;
+        var db = targetRgb.b - entryRgb.b;
+        var distance = dr * dr + dg * dg + db * db;
+
+        if (distance < bestDistance) {
+            bestDistance = distance;
+            bestEntry = entry;
+        }
+    }
+
+    return bestEntry;
 }

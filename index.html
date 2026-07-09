@@ -1441,16 +1441,136 @@ generateMonochrome(<span class="string">"black"</span>, <span class="number">5</
                         <td>Returns <code>true</code> if the generated color is dark (luminance ≤ 0.5)</td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>findColorName(hex)</code></td>
-                        <td>Searches the database for a color name matching the given hex</td>
+                        <td class="mono"><code>colorName(input)</code></td>
+                        <td>Returns the <strong>first</strong> color name matching the generated hex, or
+                            <code>null</code> if not found</td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>colorNames</code></td>
+                        <td class="mono"><code>colorNames(input)</code></td>
+                        <td>Returns <strong>all</strong> color names (synonyms) matching the generated hex, or an empty
+                            array</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>closestName(input)</code></td>
+                        <td>Returns the nearest color name by RGB Euclidean distance (fuzzy match), or <code>null</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>closestNames(input)</code></td>
+                        <td>Returns all names of the nearest color by RGB Euclidean distance, or empty array</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>colorDatabase</code></td>
                         <td>The full internal array of <code>{ Color: string[], Hexadecimal }</code> objects (each entry
                             can store multiple names)</td>
                     </tr>
                 </tbody>
             </table>
+
+            <!-- ─── colorName ─── -->
+            <h3 id="function-colorName" data-api-function="colorName"><span aria-hidden="true">🏷️</span>
+                <code>colorName(input)</code>
+            </h3>
+            <div class="func-signature" aria-label="Function signature: colorName(input) returns String or null">
+                colorName(<span class="param">input</span>) → <span class="param">String | null</span>
+            </div>
+            <p>
+                Returns the <strong>first</strong> color name from the internal database whose hex exactly matches
+                the generated color for the given input. Accepts any value that <code>generateColor()</code> accepts.
+            </p>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// By name — returns the same name</span>
+colorName(<span class="string">"Absolute Zero"</span>);
+<span class="comment">// → "Absolute Zero"</span>
+
+<span class="comment">// By index — looks up the hex, finds the first name</span>
+colorName(<span class="number">1</span>);
+<span class="comment">// → "Absolute Zero"</span>
+
+<span class="comment">// By hex — exact database match</span>
+colorName(<span class="string">"#0048BA"</span>);
+<span class="comment">// → "Absolute Zero"</span>
+
+<span class="comment">// Unknown color — returns null</span>
+colorName(<span class="string">"unknown"</span>);
+<span class="comment">// → null</span></pre>
+
+            <!-- ─── colorNames ─── -->
+            <h3 id="function-colorNames" data-api-function="colorNames"><span aria-hidden="true">🏷️</span>
+                <code>colorNames(input)</code>
+            </h3>
+            <div class="func-signature" aria-label="Function signature: colorNames(input) returns String[]">
+                colorNames(<span class="param">input</span>) → <span class="param">String[]</span>
+            </div>
+            <p>
+                Returns <strong>all</strong> color names (synonyms) for the hex that matches the input.
+                Unlike <code>colorName()</code> which returns only the first name, this returns the full
+                array of names for entries with multiple synonyms.
+            </p>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// Color with multiple names — returns all synonyms</span>
+colorNames(<span class="string">"Aqua"</span>);
+<span class="comment">// → ["Aqua", "Cyan", "Spanish Sky Blue"]</span>
+
+<span class="comment">// By hex — same result</span>
+colorNames(<span class="string">"#00FFFF"</span>);
+<span class="comment">// → ["Aqua", "Cyan", "Spanish Sky Blue"]</span>
+
+<span class="comment">// Unknown color — returns empty array</span>
+colorNames(<span class="string">"unknown"</span>);
+<span class="comment">// → []</span></pre>
+
+            <!-- ─── closestName ─── -->
+            <h3 id="function-closestName" data-api-function="closestName"><span aria-hidden="true">🎯</span>
+                <code>closestName(input)</code>
+            </h3>
+            <div class="func-signature" aria-label="Function signature: closestName(input) returns String or null">
+                closestName(<span class="param">input</span>) → <span class="param">String | null</span>
+            </div>
+            <p>
+                Like <code>colorName()</code>, but when there is no exact match in the database, it finds the
+                <strong>nearest color</strong> by RGB Euclidean distance and returns its first name.
+            </p>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// Exact match — works like colorName()</span>
+closestName(<span class="string">"#0048BA"</span>);
+<span class="comment">// → "Absolute Zero"</span>
+
+<span class="comment">// Near match — finds closest by RGB distance</span>
+closestName(<span class="string">"#ff6348"</span>);
+<span class="comment">// → "Tomato" (nearest color in the database)</span>
+
+<span class="comment">// Any input — always returns the nearest color name</span>
+closestName(<span class="string">"unknown"</span>);
+<span class="comment">// → nearest color name in the database</span></pre>
+
+            <!-- ─── closestNames ─── -->
+            <h3 id="function-closestNames" data-api-function="closestNames"><span aria-hidden="true">🎯</span>
+                <code>closestNames(input)</code>
+            </h3>
+            <div class="func-signature" aria-label="Function signature: closestNames(input) returns String[]">
+                closestNames(<span class="param">input</span>) → <span class="param">String[]</span>
+            </div>
+            <p>
+                Like <code>colorNames()</code>, but with fuzzy fallback: if no exact match is found, finds the
+                <strong>nearest color</strong> by RGB Euclidean distance and returns <strong>all its names</strong>.
+            </p>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// Exact match — works like colorNames()</span>
+closestNames(<span class="string">"#00FFFF"</span>);
+<span class="comment">// → ["Aqua", "Cyan", "Spanish Sky Blue"]</span>
+
+<span class="comment">// Near match — finds closest and returns all its names</span>
+closestNames(<span class="string">"#ff6348"</span>);
+<span class="comment">// → ["Tomato"]</span>
+
+<span class="comment">// Any input — always returns names of the nearest color</span>
+closestNames(<span class="string">"unknown"</span>);
+<span class="comment">// → names of the nearest color</span></pre>
 
             <h4>Luminance &amp; Light/Dark helpers</h4>
             <pre><span class="keyword">const</span> hex = generateColor(<span class="string">"gold"</span>);
@@ -1594,9 +1714,9 @@ isDark(hex);
             function findColorName(hex) {
                 if (!hex || typeof hex !== 'string') return '';
                 var normalized = hex.toLowerCase();
-                for (var i = 0; i < colorNames.length; i++) {
-                    if (colorNames[i].Hexadecimal.toLowerCase() === normalized) {
-                        var names = colorNames[i].Color;
+                for (var i = 0; i < colorDatabase.length; i++) {
+                    if (colorDatabase[i].Hexadecimal.toLowerCase() === normalized) {
+                        var names = colorDatabase[i].Color;
                         if (Array.isArray(names)) {
                             return '✨ ' + names.join(' / ');
                         }
