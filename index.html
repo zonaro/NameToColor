@@ -10,7 +10,7 @@
          ═══════════════════════════════════════════ -->
     <title>NameToColor — Convert Text to Hex Color | JavaScript Library</title>
     <meta name="description"
-        content="NameToColor is a zero-dependency JavaScript library that converts text, IDs, HEX, RGB, RGBA, and CSS color names to hexadecimal. Features WCAG AA contrast calculation, 1000+ named colors with fuzzy matching, and deterministic hash-based color generation. Interactive API tester included.">
+        content="NameToColor is a zero-dependency JavaScript library that converts text, IDs, HEX, RGB, RGBA, arrays, objects, and color names to hexadecimal. Features WCAG AA contrast calculation, 2000+ named colors with exact, contains and fuzzy matching, and deterministic hash-based color generation. Interactive API tester included.">
     <meta name="keywords"
         content="color converter,hex color,javascript library,color name to hex,text to color,WCAG contrast,accessibility,color picker,css color,generate color,readable color,named colors,color database">
     <meta name="author" content="zonaro">
@@ -845,9 +845,9 @@
         <section class="card hero">
             <h1>🎨 NameToColor</h1>
             <p>
-                Interactive plugin tester — converts text, IDs, HEX, RGB, RGBA
-                and color names to hexadecimal. Results update automatically
-                as you type.
+                Interactive plugin tester — converts text, IDs, HEX, RGB, RGBA,
+                arrays, objects, and color names to hexadecimal. Results update
+                automatically as you type.
             </p>
         </section>
 
@@ -861,14 +861,15 @@
             <form id="test-form" autocomplete="off">
                 <label for="value-input">Enter a name, ID, color or any text</label>
                 <div class="input-row">
-                    <input id="value-input" type="text" placeholder="e.g.: Lucas, #00ff7f, rgb(255,0,0), 42, random"
-                        spellcheck="false">
+                    <input id="value-input" type="text"
+                        placeholder="e.g.: Lucas, #00ff7f, rgb(255,0,0), 42, [tomato, 1]" spellcheck="false">
                 </div>
                 <div class="input-hint">
                     💡 Try: <kbd>random</kbd> ·
-                    <kbd>tomato</kbd> · <kbd>#ff00aa</kbd> ·
+                    <kbd>[tomato, 1, absolute zero]</kbd> ·
+                    <kbd>#ff00aa</kbd> ·
                     <kbd>rgb(100,200,50)</kbd> · <kbd>1</kbd> ·
-                    <kbd>absolute zero</kbd>
+                    <kbd>spanish sky</kbd>
                 </div>
             </form>
 
@@ -992,13 +993,15 @@
             <h3 id="function-generateColor" data-api-function="generateColor"><span aria-hidden="true">🎯</span>
                 <code>generateColor(input)</code>
             </h3>
-            <div class="func-signature" aria-label="Function signature: generateColor(input) returns String">
-                generateColor(<span class="param">input</span>) → <span class="param">String</span>
+            <div class="func-signature" aria-label="Function signature: generateColor(input) returns String or Array">
+                generateColor(<span class="param">input</span>) → <span class="param">String | String[]</span>
             </div>
             <p>
                 The heart of the library. Accepts a wide variety of input types and
-                always returns a hexadecimal color string (<code>#rrggbb</code> or
-                <code>#rrggbbaa</code>). The result is deterministic for the same input
+                returns a hexadecimal color string (<code>#rrggbb</code> or
+                <code>#rrggbbaa</code>). When the input is an <strong>array</strong>,
+                returns an array of color codes by recursing into each element.
+                The result is deterministic for the same input
                 (except for <code>"random"</code>).
             </p>
 
@@ -1013,15 +1016,27 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td class="mono"><strong>Array (recursive)</strong></td>
+                        <td>Calls <code>generateColor</code> on each element, returns an array. Nested arrays also work.
+                        </td>
+                        <td class="mono"><code>generateColor(["Lucas", 42])</code> → <code>["#…", "#…"]</code></td>
+                    </tr>
+                    <tr>
                         <td class="mono"><strong>Known color name</strong></td>
-                        <td>Matches against an internal database of 1000+ named colors (case-insensitive, with fuzzy
-                            matching)</td>
+                        <td>Matches against an internal database of 2000+ named colors (case-insensitive, with contains
+                            and fuzzy matching)</td>
                         <td class="mono"><code>generateColor("Absolute Zero")</code> → <code>"#0048BA"</code></td>
                     </tr>
                     <tr>
                         <td class="mono"><strong>Numeric Index</strong></td>
-                        <td>Looks up by array index in the internal table</td>
+                        <td>Looks up by array index; if out of range, generates a deterministic color from the number
+                        </td>
                         <td class="mono"><code>generateColor(1)</code> → <code>"#0048BA"</code></td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><strong>Object</strong></td>
+                        <td>Any non-array, non-element object is converted to string and processed</td>
+                        <td class="mono"><code>generateColor({toString:()=>"Lucas"})</code></td>
                     </tr>
                     <tr>
                         <td class="mono"><strong>HEX</strong></td>
@@ -1058,8 +1073,8 @@
                     </tr>
                     <tr>
                         <td class="mono"><strong>Empty / null / undefined</strong></td>
-                        <td>Returns <code>"black"</code> for falsy inputs</td>
-                        <td class="mono"><code>generateColor("")</code> → <code>"black"</code></td>
+                        <td>Returns a <strong>random</strong> color for falsy inputs</td>
+                        <td class="mono"><code>generateColor("")</code> → <code>"#a3f2c1"</code> (random)</td>
                     </tr>
                 </tbody>
             </table>
@@ -1068,14 +1083,20 @@
             <p>When you call <code>generateColor()</code>, the library evaluates the input in this order:</p>
             <ol>
                 <li><strong>HTML Element</strong> — extracts <code>textContent</code> and recurses</li>
-                <li><strong>Numeric Index</strong> — looks up in the internal color table</li>
-                <li><strong>Empty input</strong> — returns <code>"black"</code></li>
+                <li><strong>Array</strong> — maps each element recursively</li>
+                <li><strong>Numeric Index</strong> — looks up in the internal color table; deterministic fallback if out
+                    of range</li>
+                <li><strong>Object</strong> — converts to string and recurses</li>
+                <li><strong>Empty input</strong> — returns a random color</li>
                 <li><strong>"random"</strong> — generates a random hex color</li>
+                <li><strong>CSS valid color</strong> — lets the browser resolve it</li>
                 <li><strong>HEX string</strong> — parses and normalizes</li>
                 <li><strong>RGB string</strong> — parses <code>rgb(r, g, b)</code></li>
                 <li><strong>RGBA string</strong> — parses <code>rgba(r, g, b, a)</code></li>
-                <li><strong>CSS valid color</strong> — lets the browser resolve it</li>
-                <li><strong>Fuzzy name match</strong> — searches the internal database for similar names</li>
+                <li><strong>Exact name match</strong> — searches the internal database for an exact normalized match
+                </li>
+                <li><strong>Contains name match</strong> — searches for partial name matches</li>
+                <li><strong>Levenshtein fuzzy match</strong> — finds the closest name within distance threshold</li>
                 <li><strong>Deterministic hash</strong> — fallback for any remaining text</li>
             </ol>
 
@@ -1150,7 +1171,8 @@ generateReadableColor(<span class="string">"#85d8fd"</span>);
                     class="param">{ items, pageNumber, pageCount, totalItems }</span>
             </div>
             <p>
-                Returns the entire internal color database in a paginated format. Each item contains
+                Returns the entire internal color database in a paginated format. Each color name
+                appears as its own item (entries with multiple names are flattened). Each item contains
                 <code>Color</code> (name) and <code>Hexadecimal</code>.
             </p>
 
@@ -1216,11 +1238,11 @@ generateReadableColor(<span class="string">"#85d8fd"</span>);
             <h4>Examples</h4>
             <pre><span class="comment">// Get all colors (no pagination)</span>
 listColors();
-<span class="comment">// → { items: [...], pageNumber: 1, pageCount: 1, totalItems: 1023 }</span>
+<span class="comment">// → { items: [...], pageNumber: 1, pageCount: 1, totalItems: 2370 }</span>
 
 <span class="comment">// Page 2 with 10 items per page</span>
 listColors(<span class="number">2</span>, <span class="number">10</span>);
-<span class="comment">// → { items: [...], pageNumber: 2, pageCount: 103, totalItems: 1023 }</span>
+<span class="comment">// → { items: [...], pageNumber: 2, pageCount: 237, totalItems: 2370 }</span>
 
 <span class="comment">// Useful for building color pickers, tables, or browsers</span>
 <span class="keyword">const</span> result = listColors(<span class="number">1</span>, <span class="number">20</span>);
@@ -1424,7 +1446,8 @@ generateMonochrome(<span class="string">"black"</span>, <span class="number">5</
                     </tr>
                     <tr>
                         <td class="mono"><code>colorNames</code></td>
-                        <td>The full internal array of <code>{ Color, Hexadecimal }</code> objects</td>
+                        <td>The full internal array of <code>{ Color: string[], Hexadecimal }</code> objects (each entry
+                            can store multiple names)</td>
                     </tr>
                 </tbody>
             </table>
@@ -1465,7 +1488,8 @@ isDark(hex);
                     <li><strong>Deterministic</strong> — same text always produces the same color (except
                         <code>"random"</code>)
                     </li>
-                    <li><strong>1000+ named colors</strong> — with fuzzy matching and numeric index lookup</li>
+                    <li><strong>2000+ named colors</strong> — with exact, contains, and fuzzy (Levenshtein) matching
+                    </li>
                     <li><strong>Smart contrast</strong> — <code>generateReadableColor</code> guarantees WCAG AA (4.5:1)
                     </li>
                     <li><strong>Color harmonies</strong> — complementary, triadic, square, split-complementary, inverted
@@ -1473,8 +1497,8 @@ isDark(hex);
                     <li><strong>Monochrome palettes</strong> — <code>generateMonochrome</code> with alternating
                         light/dark
                     </li>
-                    <li><strong>Multiple formats</strong> — HEX, RGB, RGBA, CSS names, indexes, random, and generic text
-                    </li>
+                    <li><strong>Multiple formats</strong> — arrays (recursive), objects, HEX, RGB, RGBA, CSS names,
+                        indexes, random, and generic text</li>
                     <li><strong>Zero dependencies</strong> — ~38 KB minified, works everywhere</li>
                     <li><strong>Pagination built-in</strong> — <code>listColors</code> with page &amp; size control</li>
                 </ul>
@@ -1572,7 +1596,11 @@ isDark(hex);
                 var normalized = hex.toLowerCase();
                 for (var i = 0; i < colorNames.length; i++) {
                     if (colorNames[i].Hexadecimal.toLowerCase() === normalized) {
-                        return '✨ ' + colorNames[i].Color;
+                        var names = colorNames[i].Color;
+                        if (Array.isArray(names)) {
+                            return '✨ ' + names.join(' / ');
+                        }
+                        return '✨ ' + names;
                     }
                 }
                 return '';
