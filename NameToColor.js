@@ -1,5 +1,5 @@
 /**
- * Lista interna de cores conhecidas com nome e hexadecimal.
+ * Internal list of known colors with name and hexadecimal values.
  * @type {Array<{Color: string, Hexadecimal: string}>}
  */
 const colorNames = [
@@ -9022,9 +9022,9 @@ const colorNames = [
 ]
 
 /**
- * Gera uma cor hexadecimal a partir de uma string ou número.
- * @param {string|number} input - A entrada para gerar a cor.
- * @returns {string} - O código hexadecimal da cor.
+ * Generates a hexadecimal color from a string or number.
+ * @param {string|number} input - The input to generate the color from.
+ * @returns {string} - The hexadecimal color code.
  */
 function generateColor(input) {
 
@@ -9044,13 +9044,13 @@ function generateColor(input) {
         }
     }
 
-    const text = String(input || '').trim().toLowerCase(); // Garante que text seja uma string, mesmo que input seja undefined ou null
+    const text = String(input || '').trim().toLowerCase(); // Ensures text is a string even if input is undefined or null
 
     if (text === '') {
-        return 'black'; // Retorna preto para entradas vazias
+        return 'black'; // Returns black for empty inputs
     }
 
-    // 1. Regra: Palavra "random"
+    // 1. Rule: "random" keyword
     if (text === 'random') {
         return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
     }
@@ -9061,7 +9061,7 @@ function generateColor(input) {
     if (s.color !== '') {
         const ctx = document.createElement('canvas').getContext('2d');
         ctx.fillStyle = text;
-        return ctx.fillStyle; // Retorna o formato #rrggbb
+        return ctx.fillStyle; // Returns the #rrggbb format
     }
 
     // if text is a hex color, return it
@@ -9146,7 +9146,7 @@ function generateColor(input) {
     // deterministic color generation based on the input text using a simple hash function
     let hash = 0;
     for (let i = 0; i < text.length; i++) {
-        // Algoritmo de hash simples (djb2)
+        // Simple hash algorithm (djb2)
         hash = text.charCodeAt(i) + ((hash << 5) - hash);
     }
 
@@ -9161,9 +9161,9 @@ function generateColor(input) {
 }
 
 /**
- * Converte um valor hexadecimal de cor para o formato RGB.
- * @param {string} hex - Cor no formato #rrggbb.
- * @returns {{ r: number, g: number, b: number }} Objeto com canais r, g, b (0-255).
+ * Converts a hexadecimal color value to RGB format.
+ * @param {string} hex - Color in #rrggbb format.
+ * @returns {{ r: number, g: number, b: number }} Object with r, g, b channels (0-255).
  */
 function hexToRgb(hex) {
     return {
@@ -9174,9 +9174,9 @@ function hexToRgb(hex) {
 }
 
 /**
- * Calcula a luminância relativa de uma cor no espaço sRGB.
- * @param {string} hex - Cor no formato #rrggbb.
- * @returns {number} Luminância relativa entre 0 (preto) e 1 (branco).
+ * Calculates the relative luminance of a color in sRGB space.
+ * @param {string} hex - Color in #rrggbb format.
+ * @returns {number} Relative luminance between 0 (black) and 1 (white).
  */
 function relativeLuminance(hex) {
     const { r, g, b } = hexToRgb(hex);
@@ -9190,19 +9190,18 @@ function relativeLuminance(hex) {
 }
 
 /**
- * Determina se uma cor gerada a partir de uma entrada qualquer é considerada CLARA.
- * A função utiliza generateColor() para obter o hexadecimal da cor e,
- * em seguida, calcula a luminância relativa. Uma cor é considerada clara
- * quando sua luminância relativa é maior que 0,5 (acima do meio do espectro
- * entre preto e branco).
+ * Determines whether a color generated from any input is considered LIGHT.
+ * Uses generateColor() to obtain the color hex and then calculates relative luminance.
+ * A color is considered light when its relative luminance is greater than 0.5
+ * (above the midpoint between black and white).
  *
- * @param {*} input - Qualquer valor aceito por generateColor().
- * @returns {boolean} `true` se a cor for clara, `false` caso contrário.
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {boolean} `true` if the color is light, `false` otherwise.
  *
  * @example
- * isLight(1);      // false — Absolute Zero (#0048BA) é escuro
- * isLight('gold'); // true  — gold é claro
- * isLight('black') // false — preto é escuro
+ * isLight(1);      // false — Absolute Zero (#0048BA) is dark
+ * isLight('gold'); // true  — gold is light
+ * isLight('black') // false — black is dark
  */
 function isLight(input) {
     var hex = normalizeHex(generateColor(input));
@@ -9213,17 +9212,17 @@ function isLight(input) {
 }
 
 /**
- * Determina se uma cor gerada a partir de uma entrada qualquer é considerada ESCURA.
- * É o inverso lógico de isLight(). Uma cor é considerada escura
- * quando sua luminância relativa é menor ou igual a 0,5.
+ * Determines whether a color generated from any input is considered DARK.
+ * It is the logical inverse of isLight(). A color is considered dark
+ * when its relative luminance is less than or equal to 0.5.
  *
- * @param {*} input - Qualquer valor aceito por generateColor().
- * @returns {boolean} `true` se a cor for escura, `false` caso contrário.
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {boolean} `true` if the color is dark, `false` otherwise.
  *
  * @example
- * isDark(1);      // true  — Absolute Zero (#0048BA) é escuro
- * isDark('gold'); // false — gold é claro
- * isDark('white') // false — branco é claro
+ * isDark(1);      // true  — Absolute Zero (#0048BA) is dark
+ * isDark('gold'); // false — gold is light
+ * isDark('white') // false — white is light
  */
 function isDark(input) {
     var hex = normalizeHex(generateColor(input));
@@ -9234,10 +9233,10 @@ function isDark(input) {
 }
 
 /**
- * Normaliza uma string de cor para o formato hexadecimal #rrggbb.
- * Aceita #rrggbb, #rgb, #rrggbbaa, black, white e retorna null se inválido.
+ * Normalizes a color string to #rrggbb hexadecimal format.
+ * Accepts #rrggbb, #rgb, #rrggbbaa, black, white and returns null if invalid.
  * @param {string} value
- * @returns {string|null} Cor no formato #rrggbb ou null.
+ * @returns {string|null} Color in #rrggbb format or null.
  */
 function normalizeHex(value) {
     if (typeof value !== 'string') {
@@ -9270,8 +9269,8 @@ function normalizeHex(value) {
 }
 
 /**
- * Converte uma cor hexadecimal #rrggbb para o espaço HSL (Matiz, Saturação, Luminosidade).
- * @param {string} hex - Cor no formato #rrggbb.
+ * Converts a #rrggbb hexadecimal color to HSL (Hue, Saturation, Lightness) space.
+ * @param {string} hex - Color in #rrggbb format.
  * @returns {{ h: number, s: number, l: number }} h (0-360), s (0-100), l (0-100).
  */
 function hexToHsl(hex) {
@@ -9304,11 +9303,11 @@ function hexToHsl(hex) {
 }
 
 /**
- * Converte uma cor HSL (Matiz, Saturação, Luminosidade) de volta para hexadecimal #rrggbb.
- * @param {number} h - Matiz (0-360).
- * @param {number} s - Saturação (0-100).
- * @param {number} l - Luminosidade (0-100).
- * @returns {string} Cor no formato #rrggbb.
+ * Converts an HSL (Hue, Saturation, Lightness) color back to #rrggbb hexadecimal.
+ * @param {number} h - Hue (0-360).
+ * @param {number} s - Saturation (0-100).
+ * @param {number} l - Lightness (0-100).
+ * @returns {string} Color in #rrggbb format.
  */
 function hslToHex(h, s, l) {
     h = (h % 360 + 360) % 360 / 360;
@@ -9342,16 +9341,16 @@ function hslToHex(h, s, l) {
 }
 
 /**
- * Gera a cor invertida (negativo) de uma entrada.
- * A inversão é feita canal por canal no espaço RGB: cada canal (R, G, B)
- * é subtraído de 255, produzindo o efeito de "negativo fotográfico".
+ * Generates the inverted color (negative) of an input.
+ * Inversion is done channel by channel in RGB space: each channel (R, G, B)
+ * is subtracted from 255, producing a "photographic negative" effect.
  *
- * @param {*} input - Qualquer valor aceito por generateColor().
- * @returns {string} Cor invertida no formato #rrggbb.
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {string} Inverted color in #rrggbb format.
  *
  * @example
- * generateInvertedColor('#ff0000'); // "#00ffff" — vermelho vira ciano
- * generateInvertedColor('black');   // "#ffffff" — preto vira branco
+ * generateInvertedColor('#ff0000'); // "#00ffff" — red becomes cyan
+ * generateInvertedColor('black');   // "#ffffff" — black becomes white
  */
 function generateInvertedColor(input) {
     var hex = normalizeHex(generateColor(input));
@@ -9366,15 +9365,15 @@ function generateInvertedColor(input) {
 }
 
 /**
- * Gera a cor complementar de uma entrada — a cor oposta no círculo cromático (180° de distância).
- * Preserva a saturação e a luminosidade da cor original, alterando apenas o matiz.
+ * Generates the complementary color of an input — the opposite color on the color wheel (180° apart).
+ * Preserves the saturation and lightness of the original color, changing only the hue.
  *
- * @param {*} input - Qualquer valor aceito por generateColor().
- * @returns {string} Cor complementar no formato #rrggbb.
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {string} Complementary color in #rrggbb format.
  *
  * @example
- * generateComplementary('#ff0000'); // "#00ffff" — vermelho complementa ciano
- * generateComplementary('#0000ff'); // "#ffff00" — azul complementa amarelo
+ * generateComplementary('#ff0000'); // "#00ffff" — red complements cyan
+ * generateComplementary('#0000ff'); // "#ffff00" — blue complements yellow
  */
 function generateComplementary(input) {
     var hex = normalizeHex(generateColor(input));
@@ -9386,12 +9385,12 @@ function generateComplementary(input) {
 }
 
 /**
- * Gera um esquema de cores triádico a partir de uma entrada.
- * Retorna um array com 3 cores equidistantes no círculo cromático (120° entre cada).
- * A primeira cor é a cor gerada, as demais são as duas cores triádicas.
+ * Generates a triadic color scheme from an input.
+ * Returns an array with 3 colors equidistant on the color wheel (120° apart each).
+ * The first color is the generated color, the others are the two triadic colors.
  *
- * @param {*} input - Qualquer valor aceito por generateColor().
- * @returns {string[]} Array com 3 cores no formato #rrggbb: [base, triádica 1, triádica 2].
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {string[]} Array with 3 colors in #rrggbb format: [base, triadic 1, triadic 2].
  *
  * @example
  * generateTriadic('#ff0000');
@@ -9411,12 +9410,12 @@ function generateTriadic(input) {
 }
 
 /**
- * Gera um esquema de cores quadrado (tetrádico) a partir de uma entrada.
- * Retorna um array com 4 cores equidistantes no círculo cromático (90° entre cada).
- * A primeira é a cor gerada, as demais são as três cores do esquema quadrado.
+ * Generates a square (tetradic) color scheme from an input.
+ * Returns an array with 4 colors equidistant on the color wheel (90° apart each).
+ * The first is the generated color, the rest are the three square scheme colors.
  *
- * @param {*} input - Qualquer valor aceito por generateColor().
- * @returns {string[]} Array com 4 cores no formato #rrggbb: [base, 90°, 180°, 270°].
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {string[]} Array with 4 colors in #rrggbb format: [base, 90°, 180°, 270°].
  *
  * @example
  * generateSquare('#ff0000');
@@ -9437,12 +9436,12 @@ function generateSquare(input) {
 }
 
 /**
- * Gera um esquema de cores split-complementar a partir de uma entrada.
- * Retorna um array com 3 cores: a cor base e duas cores adjacentes ao complementar
- * (30° antes e 30° depois do oposto, ou seja, a 150° e 210° da cor original).
+ * Generates a split-complementary color scheme from an input.
+ * Returns an array with 3 colors: the base color and two colors adjacent to the complement
+ * (30° before and 30° after the opposite, i.e., at 150° and 210° from the original color).
  *
- * @param {*} input - Qualquer valor aceito por generateColor().
- * @returns {string[]} Array com 3 cores no formato #rrggbb: [base, split 1, split 2].
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {string[]} Array with 3 colors in #rrggbb format: [base, split 1, split 2].
  *
  * @example
  * generateSplitComplementary('#ff0000');
@@ -9462,32 +9461,31 @@ function generateSplitComplementary(input) {
 }
 
 /**
- * Gera uma paleta de cores monocromática a partir de uma entrada.
- * A paleta mantém o mesmo matiz (h) e saturação (s) da cor original,
- * variando apenas a luminosidade (l) de forma alternada: uma cor mais
- * clara, uma mais escura, outra mais clara, e assim por diante.
+ * Generates a monochromatic color palette from an input.
+ * The palette keeps the same hue (h) and saturation (s) as the original color,
+ * varying only the lightness (l) in alternating fashion: one lighter,
+ * one darker, another lighter, and so on.
  *
- * A primeira cor da paleta é sempre a cor gerada original. A prioridade
- * de clara/escura depende da cor inicial: se for clara (luminância > 0.5),
- * a próxima é escura; se for escura, a próxima é clara.
+ * The first color of the palette is always the original generated color. The
+ * light/dark priority depends on the initial color: if it is light (luminance > 0.5),
+ * the next is dark; if it is dark, the next is light.
  *
- * O espaçamento de luminosidade é calculado automaticamente para distribuir
- * uniformemente as cores entre os extremos (0% e 100%), garantindo que
- * todas as cores sejam visualmente distintas.
+ * The lightness spacing is automatically calculated to distribute colors
+ * evenly between the extremes (0% and 100%), ensuring all colors are visually distinct.
  *
- * @param {*} input - Qualquer valor aceito por generateColor().
- * @param {number} [count=5] - Número de cores na paleta (mínimo 2, máximo 21).
- * @returns {string[]} Array com `count` cores no formato #rrggbb.
+ * @param {*} input - Any value accepted by generateColor().
+ * @param {number} [count=5] - Number of colors in the palette (minimum 2, maximum 21).
+ * @returns {string[]} Array with `count` colors in #rrggbb format.
  *
  * @example
  * generateMonochrome('#ff0000', 5);
  * // → ["#ff0000", "#ff6666", "#990000", "#ffb3b3", "#4d0000"]
- * //    (original, +claro, +escuro, ++claro, ++escuro)
+ * //    (original, +light, +dark, ++light, ++dark)
  *
  * @example
  * generateMonochrome('gold', 3);
  * // → ["#ffd700", "#ffe066", "#b39800"]
- * //    (original, +claro, +escuro — gold é clara, então próximo é escuro)
+ * //    (original, +light, +dark — gold is light, so next is dark)
  */
 function generateMonochrome(input, count) {
     var hex = normalizeHex(generateColor(input));
@@ -9500,11 +9498,11 @@ function generateMonochrome(input, count) {
     var hsl = hexToHsl(hex);
     var originalL = hsl.l;
 
-    // ── Casos extremos: preto (l=0) ou branco (l=100) ──
-    // Geram escala de cinza (saturação = 0) para uma paleta mais natural
+    // ── Edge cases: black (l=0) or white (l=100) ──
+    // Generate grayscale (saturation = 0) for a more natural palette
     if (originalL === 0 || originalL === 100) {
         var paletteGray = [];
-        // Distribuir count cores uniformemente entre 0 e 100
+        // Distribute count colors evenly between 0 and 100
         for (var gi = 0; gi < count; gi++) {
             var lVal = Math.round(100 * (count - 1 - gi) / (count - 1));
             paletteGray.push(hslToHex(0, 0, lVal));
@@ -9512,18 +9510,18 @@ function generateMonochrome(input, count) {
         return paletteGray;
     }
 
-    // ── Gerar paleta com a original sempre próxima ao centro ──
-    // A paleta final será ordenada da mais clara para a mais escura,
-    // mas a cor original sempre estará próxima ao centro (quando possível).
+    // ── Generate palette with the original always near the center ──
+    // The final palette will be sorted from lightest to darkest,
+    // but the original color will always stay near the center (when possible).
 
-    // Quantas variações para cada lado (excluindo a original)
+    // How many variations on each side (excluding the original)
     var totalVariations = count - 1;
     var lightCount = Math.ceil(totalVariations / 2);
     var darkCount = Math.floor(totalVariations / 2);
 
-    // Se a original for muito clara, damos mais variações para o lado escuro
-    // Se for muito escura, damos mais para o lado claro
-    // Isso garante que a original fique próxima ao centro
+    // If the original is very light, we give more variations to the dark side
+    // If it is very dark, we give more to the light side
+    // This ensures the original stays near the center
     if (originalL > 70 && lightCount > darkCount + 1) {
         lightCount--;
         darkCount++;
@@ -9532,30 +9530,30 @@ function generateMonochrome(input, count) {
         lightCount++;
     }
 
-    // Gerar luminosidades mais claras que a original
+    // Generate lightness values brighter than the original
     var lightTargets = [];
     for (var li = 1; li <= lightCount; li++) {
         var lVal = originalL + (100 - originalL) * (li / (lightCount + 1));
         lightTargets.push(Math.round(lVal));
     }
 
-    // Gerar luminosidades mais escuras que a original
+    // Generate lightness values darker than the original
     var darkTargets = [];
     for (var di = 1; di <= darkCount; di++) {
         var dVal = originalL * (1 - di / (darkCount + 1));
         darkTargets.push(Math.round(dVal));
     }
 
-    // Montar array completo: claras + original + escuras
+    // Build full array: lights + original + darks
     var allL = lightTargets.concat([originalL]).concat(darkTargets);
 
-    // Ordenar do mais claro (maior L) para o mais escuro (menor L)
+    // Sort from lightest (highest L) to darkest (lowest L)
     allL.sort(function (a, b) { return b - a; });
 
-    // Garantir que temos exatamente count cores
-    // (pode ter menos se os ranges forem muito estreitos)
+    // Ensure we have exactly count colors
+    // (may have fewer if ranges are too narrow)
     while (allL.length < count) {
-        // Encontrar o maior gap e inserir no meio
+        // Find the largest gap and insert in the middle
         var maxGap = 0;
         var gapIdx = 0;
         for (var gi = 0; gi < allL.length - 1; gi++) {
@@ -9569,10 +9567,10 @@ function generateMonochrome(input, count) {
         allL.splice(gapIdx + 1, 0, mid);
     }
 
-    // Se ultrapassou count, remover os extremos (mais claro e mais escuro)
-    // para manter a original no centro
+    // If it exceeded count, remove the extremes (lightest and darkest)
+    // to keep the original in the center
     while (allL.length > count) {
-        // Remove o mais claro ou o mais escuro, qual estiver mais longe da original
+        // Remove the lightest or darkest, whichever is farthest from the original
         var distLight = Math.abs(allL[0] - originalL);
         var distDark = Math.abs(allL[allL.length - 1] - originalL);
         if (distLight >= distDark) {
@@ -9582,7 +9580,7 @@ function generateMonochrome(input, count) {
         }
     }
 
-    // Converter para hex
+    // Convert to hex
     var palette = [];
     for (var pi = 0; pi < allL.length; pi++) {
         palette.push(hslToHex(hsl.h, hsl.s, allL[pi]));
@@ -9592,9 +9590,9 @@ function generateMonochrome(input, count) {
 }
 
 /**
- * Gera um par de cores onde a primeira cor é legível sobre a segunda a partir de um valor de entrada, que pode ser um número, uma string representando um nome de cor, um código hexadecimal, ou uma string de formato RGB/RGBA. A função tenta interpretar o valor de entrada e retornar a cor correspondente em formato hexadecimal. Se a entrada for inválida ou não puder ser interpretada como uma cor, a função gera uma cor determinística baseada no texto da entrada.   
- * @param {*} input 
- * @return {Array} Um array contendo duas cores: a primeira é legível sobre a segunda, ambas no formato hexadecimal.
+ * Generates a pair of colors where the first color is readable on top of the second, from an input value which can be a number, a string representing a color name, a hexadecimal code, or an RGB/RGBA format string. It attempts to interpret the input value and return the corresponding color in hexadecimal format. If the input is invalid or cannot be interpreted as a color, it generates a deterministic color based on the input text.
+ * @param {*} input
+ * @return {Array} An array containing two colors: the first is readable on top of the second, both in hexadecimal format.
  */
 function generateReadableColor(input) {
 
@@ -9609,28 +9607,28 @@ function generateReadableColor(input) {
     const bgRgb = hexToRgb(hex);
     const bgLuminance = relativeLuminance(bgRgb.r, bgRgb.g, bgRgb.b);
 
-    // ── Meta de contraste WCAG ──
-    // AA para texto normal: 4.5:1 | AA para texto grande: 3:1 | AAA: 7:1
+    // ── WCAG contrast target ──
+    // AA for normal text: 4.5:1 | AA for large text: 3:1 | AAA: 7:1
     const TARGET_CONTRAST = 4.5;
 
-    // Contraste do branco (L=1.0) e do preto (L=0.0) contra o fundo
+    // Contrast of white (L=1.0) and black (L=0.0) against the background
     const contrastWithWhite = (1.0 + 0.05) / (bgLuminance + 0.05);
     const contrastWithBlack = (bgLuminance + 0.05) / (0.0 + 0.05);
 
-    // Escolhe a cor base (branco ou preto) que oferece MAIOR contraste
+    // Choose the base color (white or black) that offers the HIGHEST contrast
     const useWhite = contrastWithWhite >= contrastWithBlack;
     const baseHex = useWhite ? '#FFFFFF' : '#000000';
 
-    // ── Cálculo da taxa de mesclagem dinâmica (busca binária) ──
-    // Como a luminância não é linear no espaço sRGB, a mesclagem em RGB
-    // não produz uma luminância que seja combinação linear das luminâncias
-    // original e base. Por isso, usamos busca binária para encontrar a
-    // menor taxa que atinge TARGET_CONTRAST.
+    // ── Dynamic blend rate calculation (binary search) ──
+    // Since luminance is not linear in sRGB space, blending in RGB
+    // does not produce a luminance that is a linear combination of the
+    // original and base luminances. Therefore, we use binary search to find
+    // the smallest rate that reaches TARGET_CONTRAST.
 
-    const MIN_RATIO = 0.5; // Mínimo de 50% da cor base para harmonia visual
+    const MIN_RATIO = 0.5; // Minimum 50% of base color for visual harmony
     const bgRgbLocal = { r: bgRgb.r, g: bgRgb.g, b: bgRgb.b };
 
-    // Testa se o mínimo já é suficiente
+    // Test if the minimum is already sufficient
     let testColor = blendColors(baseHex, hex, MIN_RATIO);
     let testRgb = hexToRgb(testColor);
     let testContrast = contrastRatio(testRgb, bgRgbLocal);
@@ -9639,7 +9637,7 @@ function generateReadableColor(input) {
     if (testContrast >= TARGET_CONTRAST) {
         ratio = MIN_RATIO;
     } else {
-        // Busca binária: encontra a menor taxa que atinge o contraste alvo
+        // Binary search: find the smallest rate that reaches the target contrast
         let low = MIN_RATIO;
         let high = 1.0;
 
@@ -9742,24 +9740,24 @@ function generateReadableColor(input) {
 }
 
 /**
- * Retorna um array paginado de todas as cores da tabela interna.
+ * Returns a paginated array of all colors from the internal table.
  *
- * @param {number} [pageNumber] - Número da página (1-based). Se omitido, retorna todas as cores.
- * @param {number} [pageSize] - Quantidade de itens por página. Obrigatório se pageNumber for fornecido.
- * @returns {Object} Objeto no formato { items, pageNumber, pageCount, totalItems }.
+ * @param {number} [pageNumber] - Page number (1-based). If omitted, returns all colors.
+ * @param {number} [pageSize] - Number of items per page. Required if pageNumber is provided.
+ * @returns {Object} Object in the format { items, pageNumber, pageCount, totalItems }.
  *
  * @example
- * // Retorna todas as cores em uma única página
+ * // Returns all colors in a single page
  * listColors();
  *
  * @example
- * // Retorna a página 2 com 10 itens por página
+ * // Returns page 2 with 10 items per page
  * listColors(2, 10);
  */
 function listColors(pageNumber, pageSize) {
     var totalItems = colorNames.length;
 
-    // Se não informou pageNumber, retorna tudo (pageCount = 1)
+    // If pageNumber was not provided, return everything (pageCount = 1)
     if (pageNumber === undefined || pageNumber === null) {
         return {
             items: colorNames,
@@ -9769,7 +9767,7 @@ function listColors(pageNumber, pageSize) {
         };
     }
 
-    // Validação básica dos parâmetros
+    // Basic parameter validation
     pageNumber = Math.max(1, Math.floor(Number(pageNumber)));
     pageSize = Math.max(1, Math.floor(Number(pageSize)));
 
