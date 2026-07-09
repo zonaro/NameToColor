@@ -1,4877 +1,9023 @@
 /**
- * Lista interna de cores conhecidas com ID, nome e hexadecimal.
- * @type {Array<{ID: number, Color: string, Hexadecimal: string}>}
+ * Lista interna de cores conhecidas com nome e hexadecimal.
+ * @type {Array<{Color: string, Hexadecimal: string}>}
  */
 const colorNames = [
     {
-        "ID": 1,
+        "Color": "Abbey",
+        "Hexadecimal": "#4C4F56"
+    },
+    {
         "Color": "Absolute Zero",
         "Hexadecimal": "#0048BA"
     },
     {
-        "ID": 2,
-        "Color": "Acid green",
+        "Color": "Acadia",
+        "Hexadecimal": "#1B1404"
+    },
+    {
+        "Color": "Acapulco",
+        "Hexadecimal": "#7CB0A1"
+    },
+    {
+        "Color": "Acid Green",
         "Hexadecimal": "#B0BF1A"
     },
     {
-        "ID": 3,
         "Color": "Aero",
         "Hexadecimal": "#7CB9E8"
     },
     {
-        "ID": 4,
-        "Color": "Aero blue",
+        "Color": "Aero Blue",
+        "Hexadecimal": "#C9FFE5"
+    },
+    {
+        "Color": "Aero Blue 2",
         "Hexadecimal": "#C0E8D5"
     },
     {
-        "ID": 5,
-        "Color": "African violet",
+        "Color": "Affair",
+        "Hexadecimal": "#714693"
+    },
+    {
+        "Color": "African Violet",
         "Hexadecimal": "#B284BE"
     },
     {
-        "ID": 6,
-        "Color": "Air superiority blue",
+        "Color": "Air Superiority Blue",
         "Hexadecimal": "#72A0C1"
     },
     {
-        "ID": 7,
+        "Color": "Akaroa",
+        "Hexadecimal": "#D4C4A8"
+    },
+    {
         "Color": "Alabaster",
+        "Hexadecimal": "#FAFAFA"
+    },
+    {
+        "Color": "Alabaster 2",
         "Hexadecimal": "#EDEAE0"
     },
     {
-        "ID": 8,
-        "Color": "Alice blue",
+        "Color": "Albescent White",
+        "Hexadecimal": "#F5E9D3"
+    },
+    {
+        "Color": "Algae Green",
+        "Hexadecimal": "#93DFB8"
+    },
+    {
+        "Color": "Alice Blue",
         "Hexadecimal": "#F0F8FF"
     },
     {
-        "ID": 9,
-        "Color": "Alloy orange",
+        "Color": "Alloy Orange",
         "Hexadecimal": "#C46210"
     },
     {
-        "ID": 10,
+        "Color": "Allports",
+        "Hexadecimal": "#0076A3"
+    },
+    {
         "Color": "Almond",
+        "Hexadecimal": "#EED9C4"
+    },
+    {
+        "Color": "Almond 2",
         "Hexadecimal": "#EFDECD"
     },
     {
-        "ID": 11,
+        "Color": "Almond Frost",
+        "Hexadecimal": "#907B71"
+    },
+    {
+        "Color": "Alpine",
+        "Hexadecimal": "#AF8F2C"
+    },
+    {
+        "Color": "Alto",
+        "Hexadecimal": "#DBDBDB"
+    },
+    {
+        "Color": "Aluminium",
+        "Hexadecimal": "#A9ACB6"
+    },
+    {
         "Color": "Amaranth",
         "Hexadecimal": "#E52B50"
     },
     {
-        "ID": 12,
         "Color": "Amaranth (M&P)",
         "Hexadecimal": "#9F2B68"
     },
     {
-        "ID": 13,
-        "Color": "Amaranth pink",
+        "Color": "Amaranth Pink",
         "Hexadecimal": "#F19CBB"
     },
     {
-        "ID": 14,
-        "Color": "Amaranth purple",
+        "Color": "Amaranth Purple",
         "Hexadecimal": "#AB274F"
     },
     {
-        "ID": 15,
-        "Color": "Amaranth red",
+        "Color": "Amaranth Red",
         "Hexadecimal": "#D3212D"
     },
     {
-        "ID": 16,
         "Color": "Amazon",
         "Hexadecimal": "#3B7A57"
     },
     {
-        "ID": 17,
         "Color": "Amber",
         "Hexadecimal": "#FFBF00"
     },
     {
-        "ID": 18,
         "Color": "Amber (SAE/ECE)",
         "Hexadecimal": "#FF7E00"
     },
     {
-        "ID": 19,
+        "Color": "Americano",
+        "Hexadecimal": "#87756E"
+    },
+    {
         "Color": "Amethyst",
         "Hexadecimal": "#9966CC"
     },
     {
-        "ID": 20,
-        "Color": "Android green",
+        "Color": "Amethyst Smoke",
+        "Hexadecimal": "#A397B4"
+    },
+    {
+        "Color": "Amour",
+        "Hexadecimal": "#F9EAF3"
+    },
+    {
+        "Color": "Amulet",
+        "Hexadecimal": "#7B9F80"
+    },
+    {
+        "Color": "Anakiwa",
+        "Hexadecimal": "#9DE5FF"
+    },
+    {
+        "Color": "Android Green",
         "Hexadecimal": "#3DDC84"
     },
     {
-        "ID": 21,
-        "Color": "Antique brass",
+        "Color": "Antique Brass",
         "Hexadecimal": "#CD9575"
     },
     {
-        "ID": 22,
-        "Color": "Antique bronze",
+        "Color": "Antique Brass 2",
+        "Hexadecimal": "#C88A65"
+    },
+    {
+        "Color": "Antique Bronze",
+        "Hexadecimal": "#704A07"
+    },
+    {
+        "Color": "Antique Bronze 2",
         "Hexadecimal": "#665D1E"
     },
     {
-        "ID": 23,
-        "Color": "Antique fuchsia",
+        "Color": "Antique Fuchsia",
         "Hexadecimal": "#915C83"
     },
     {
-        "ID": 24,
-        "Color": "Antique ruby",
+        "Color": "Antique Ruby",
         "Hexadecimal": "#841B2D"
     },
     {
-        "ID": 25,
-        "Color": "Antique white",
+        "Color": "Antique White",
         "Hexadecimal": "#FAEBD7"
     },
     {
-        "ID": 26,
-        "Color": "Ao (English)",
+        "Color": "Anzac",
+        "Hexadecimal": "#E0B646"
+    },
+    {
+        "Color": "Ao",
         "Hexadecimal": "#008000"
     },
     {
-        "ID": 27,
-        "Color": "Apple green",
+        "Color": "Apache",
+        "Hexadecimal": "#DFBE6F"
+    },
+    {
+        "Color": "Apple",
+        "Hexadecimal": "#4FA83D"
+    },
+    {
+        "Color": "Apple Blossom",
+        "Hexadecimal": "#AF4D43"
+    },
+    {
+        "Color": "Apple Green",
         "Hexadecimal": "#8DB600"
     },
     {
-        "ID": 28,
+        "Color": "Apple Green 2",
+        "Hexadecimal": "#E2F3EC"
+    },
+    {
         "Color": "Apricot",
+        "Hexadecimal": "#EB9373"
+    },
+    {
+        "Color": "Apricot Peach",
         "Hexadecimal": "#FBCEB1"
     },
     {
-        "ID": 29,
-        "Color": "Aqua",
+        "Color": "Apricot White",
+        "Hexadecimal": "#FFFEEC"
+    },
+    {
+        "Color": "Aqua / Cyan / Spanish Sky Blue",
         "Hexadecimal": "#00FFFF"
     },
     {
-        "ID": 30,
+        "Color": "Aqua Deep",
+        "Hexadecimal": "#014B43"
+    },
+    {
+        "Color": "Aqua Haze",
+        "Hexadecimal": "#EDF5F5"
+    },
+    {
+        "Color": "Aqua Island",
+        "Hexadecimal": "#A1DAD7"
+    },
+    {
+        "Color": "Aqua Spring",
+        "Hexadecimal": "#EAF9F5"
+    },
+    {
+        "Color": "Aqua Squeeze",
+        "Hexadecimal": "#E8F5F2"
+    },
+    {
         "Color": "Aquamarine",
         "Hexadecimal": "#7FFFD4"
     },
     {
-        "ID": 31,
-        "Color": "Arctic lime",
+        "Color": "Aquamarine Blue",
+        "Hexadecimal": "#71D9E2"
+    },
+    {
+        "Color": "Arapawa",
+        "Hexadecimal": "#110C6C"
+    },
+    {
+        "Color": "Arctic Lime",
         "Hexadecimal": "#D0FF14"
     },
     {
-        "ID": 32,
-        "Color": "Army green",
+        "Color": "Armadillo",
+        "Hexadecimal": "#433E37"
+    },
+    {
+        "Color": "Army Green",
         "Hexadecimal": "#4B5320"
     },
     {
-        "ID": 33,
+        "Color": "Arrowtown",
+        "Hexadecimal": "#948771"
+    },
+    {
         "Color": "Artichoke",
         "Hexadecimal": "#8F9779"
     },
     {
-        "ID": 34,
-        "Color": "Arylide yellow",
+        "Color": "Arylide Yellow / Hansa Yellow",
         "Hexadecimal": "#E9D66B"
     },
     {
-        "ID": 35,
-        "Color": "Ash gray",
+        "Color": "Ash",
+        "Hexadecimal": "#C6C3B5"
+    },
+    {
+        "Color": "Ash Gray",
         "Hexadecimal": "#B2BEB5"
     },
     {
-        "ID": 36,
         "Color": "Asparagus",
         "Hexadecimal": "#87A96B"
     },
     {
-        "ID": 37,
-        "Color": "Atomic tangerine",
+        "Color": "Asparagus 2",
+        "Hexadecimal": "#7BA05B"
+    },
+    {
+        "Color": "Asphalt",
+        "Hexadecimal": "#130A06"
+    },
+    {
+        "Color": "Astra",
+        "Hexadecimal": "#FAEAB9"
+    },
+    {
+        "Color": "Astral",
+        "Hexadecimal": "#327DA0"
+    },
+    {
+        "Color": "Astronaut",
+        "Hexadecimal": "#283A77"
+    },
+    {
+        "Color": "Astronaut Blue",
+        "Hexadecimal": "#013E62"
+    },
+    {
+        "Color": "Athens Gray",
+        "Hexadecimal": "#EEF0F3"
+    },
+    {
+        "Color": "Aths Special",
+        "Hexadecimal": "#ECEBCE"
+    },
+    {
+        "Color": "Atlantis",
+        "Hexadecimal": "#97CD2D"
+    },
+    {
+        "Color": "Atoll",
+        "Hexadecimal": "#0A6F75"
+    },
+    {
+        "Color": "Atomic Tangerine",
         "Hexadecimal": "#FF9966"
     },
     {
-        "ID": 38,
+        "Color": "Au Chico",
+        "Hexadecimal": "#97605D"
+    },
+    {
+        "Color": "Aubergine",
+        "Hexadecimal": "#3B0910"
+    },
+    {
         "Color": "Auburn",
         "Hexadecimal": "#A52A2A"
     },
     {
-        "ID": 39,
         "Color": "Aureolin",
         "Hexadecimal": "#FDEE00"
     },
     {
-        "ID": 40,
+        "Color": "Australian Mint",
+        "Hexadecimal": "#F5FFBE"
+    },
+    {
         "Color": "Avocado",
         "Hexadecimal": "#568203"
     },
     {
-        "ID": 41,
-        "Color": "Azure",
-        "Hexadecimal": "#007FFF"
+        "Color": "Avocado 2",
+        "Hexadecimal": "#888D65"
     },
     {
-        "ID": 42,
-        "Color": "Azure (X11/web color)",
+        "Color": "Axolotl",
+        "Hexadecimal": "#4E6649"
+    },
+    {
+        "Color": "Azalea",
+        "Hexadecimal": "#F7C8DA"
+    },
+    {
+        "Color": "Aztec",
+        "Hexadecimal": "#0D1C19"
+    },
+    {
+        "Color": "Azure",
+        "Hexadecimal": "#315BA1"
+    },
+    {
+        "Color": "Azure (X11/Web Color)",
         "Hexadecimal": "#F0FFFF"
     },
     {
-        "ID": 43,
-        "Color": "Baby blue",
+        "Color": "Azure Radiance",
+        "Hexadecimal": "#007FFF"
+    },
+    {
+        "Color": "B'dazzled Blue",
+        "Hexadecimal": "#2E5894"
+    },
+    {
+        "Color": "Baby Blue",
         "Hexadecimal": "#89CFF0"
     },
     {
-        "ID": 44,
-        "Color": "Baby blue eyes",
+        "Color": "Baby Blue Eyes",
         "Hexadecimal": "#A1CAF1"
     },
     {
-        "ID": 45,
-        "Color": "Baby pink",
+        "Color": "Baby Pink / Tea Rose",
         "Hexadecimal": "#F4C2C2"
     },
     {
-        "ID": 46,
-        "Color": "Baby powder",
+        "Color": "Baby Powder",
         "Hexadecimal": "#FEFEFA"
     },
     {
-        "ID": 47,
-        "Color": "Baker-Miller pink",
+        "Color": "Bahama Blue",
+        "Hexadecimal": "#026395"
+    },
+    {
+        "Color": "Bahia",
+        "Hexadecimal": "#A5CB0C"
+    },
+    {
+        "Color": "Baja White",
+        "Hexadecimal": "#FFF8D1"
+    },
+    {
+        "Color": "Baker-Miller Pink / Schauss Pink",
         "Hexadecimal": "#FF91AF"
     },
     {
-        "ID": 48,
+        "Color": "Bali Hai",
+        "Hexadecimal": "#859FAF"
+    },
+    {
+        "Color": "Baltic Sea",
+        "Hexadecimal": "#2A2630"
+    },
+    {
+        "Color": "Bamboo",
+        "Hexadecimal": "#DA6304"
+    },
+    {
         "Color": "Banana Mania",
         "Hexadecimal": "#FAE7B5"
     },
     {
-        "ID": 49,
+        "Color": "Banana Mania 2",
+        "Hexadecimal": "#FBE7B2"
+    },
+    {
+        "Color": "Bandicoot",
+        "Hexadecimal": "#858470"
+    },
+    {
+        "Color": "Barberry",
+        "Hexadecimal": "#DED717"
+    },
+    {
         "Color": "Barbie Pink",
         "Hexadecimal": "#DA1884"
     },
     {
-        "ID": 50,
-        "Color": "Barn red",
+        "Color": "Barley Corn",
+        "Hexadecimal": "#A68B5B"
+    },
+    {
+        "Color": "Barley White",
+        "Hexadecimal": "#FFF4CE"
+    },
+    {
+        "Color": "Barn Red",
         "Hexadecimal": "#7C0A02"
     },
     {
-        "ID": 51,
-        "Color": "Battleship grey",
+        "Color": "Barossa",
+        "Hexadecimal": "#44012D"
+    },
+    {
+        "Color": "Bastille",
+        "Hexadecimal": "#292130"
+    },
+    {
+        "Color": "Battleship Gray",
+        "Hexadecimal": "#828F72"
+    },
+    {
+        "Color": "Battleship Grey / Old Silver",
         "Hexadecimal": "#848482"
     },
     {
-        "ID": 52,
-        "Color": "Beau blue",
+        "Color": "Bay Leaf",
+        "Hexadecimal": "#7DA98D"
+    },
+    {
+        "Color": "Bay Of Many",
+        "Hexadecimal": "#273A81"
+    },
+    {
+        "Color": "Bazaar",
+        "Hexadecimal": "#98777B"
+    },
+    {
+        "Color": "Bean",
+        "Hexadecimal": "#3D0C02"
+    },
+    {
+        "Color": "Beau Blue / Pale Aqua",
         "Hexadecimal": "#BCD4E6"
     },
     {
-        "ID": 53,
+        "Color": "Beauty Bush",
+        "Hexadecimal": "#EEC1BE"
+    },
+    {
         "Color": "Beaver",
         "Hexadecimal": "#9F8170"
     },
     {
-        "ID": 54,
+        "Color": "Beaver 2",
+        "Hexadecimal": "#926F5B"
+    },
+    {
+        "Color": "Beeswax",
+        "Hexadecimal": "#FEF2C7"
+    },
+    {
         "Color": "Beige",
         "Hexadecimal": "#F5F5DC"
     },
     {
-        "ID": 55,
-        "Color": "B'dazzled blue",
-        "Hexadecimal": "#2E5894"
+        "Color": "Bermuda",
+        "Hexadecimal": "#7DD8C6"
     },
     {
-        "ID": 56,
-        "Color": "Big dip o’ruby",
+        "Color": "Bermuda Gray",
+        "Hexadecimal": "#6B8BA2"
+    },
+    {
+        "Color": "Beryl Green",
+        "Hexadecimal": "#DEE5C0"
+    },
+    {
+        "Color": "Bianca",
+        "Hexadecimal": "#FCFBF3"
+    },
+    {
+        "Color": "Big Dip O’Ruby",
         "Hexadecimal": "#9C2542"
     },
     {
-        "ID": 57,
+        "Color": "Big Stone",
+        "Hexadecimal": "#162A40"
+    },
+    {
+        "Color": "Bilbao",
+        "Hexadecimal": "#327C14"
+    },
+    {
+        "Color": "Biloba Flower",
+        "Hexadecimal": "#B2A1EA"
+    },
+    {
+        "Color": "Birch",
+        "Hexadecimal": "#373021"
+    },
+    {
+        "Color": "Bird Flower",
+        "Hexadecimal": "#D4CD16"
+    },
+    {
+        "Color": "Biscay",
+        "Hexadecimal": "#1B3162"
+    },
+    {
+        "Color": "Bismark",
+        "Hexadecimal": "#497183"
+    },
+    {
+        "Color": "Bison Hide",
+        "Hexadecimal": "#C1B7A4"
+    },
+    {
         "Color": "Bisque",
         "Hexadecimal": "#FFE4C4"
     },
     {
-        "ID": 58,
         "Color": "Bistre",
         "Hexadecimal": "#3D2B1F"
     },
     {
-        "ID": 59,
-        "Color": "Bistre brown",
+        "Color": "Bistre Brown / Drab / Mode Beige",
         "Hexadecimal": "#967117"
     },
     {
-        "ID": 60,
-        "Color": "Bitter lemon",
+        "Color": "Bitter",
+        "Hexadecimal": "#868974"
+    },
+    {
+        "Color": "Bitter Lemon",
         "Hexadecimal": "#CAE00D"
     },
     {
-        "ID": 61,
-        "Color": "Bitter lime",
+        "Color": "Bitter Lime / Lime (Color Wheel) / Lime",
         "Hexadecimal": "#BFFF00"
     },
     {
-        "ID": 62,
         "Color": "Bittersweet",
         "Hexadecimal": "#FE6F5E"
     },
     {
-        "ID": 63,
-        "Color": "Bittersweet shimmer",
+        "Color": "Bittersweet Shimmer",
         "Hexadecimal": "#BF4F51"
     },
     {
-        "ID": 64,
+        "Color": "Bizarre",
+        "Hexadecimal": "#EEDEDA"
+    },
+    {
         "Color": "Black",
         "Hexadecimal": "#000000"
     },
     {
-        "ID": 65,
-        "Color": "Black bean",
-        "Hexadecimal": "#3D0C02"
+        "Color": "Black Bean",
+        "Hexadecimal": "#081910"
     },
     {
-        "ID": 66,
-        "Color": "Black chocolate",
+        "Color": "Black Chocolate",
         "Hexadecimal": "#1B1811"
     },
     {
-        "ID": 67,
-        "Color": "Black coffee",
+        "Color": "Black Coffee",
         "Hexadecimal": "#3B2F2F"
     },
     {
-        "ID": 68,
-        "Color": "Black coral",
+        "Color": "Black Coral",
         "Hexadecimal": "#54626F"
     },
     {
-        "ID": 69,
-        "Color": "Black olive",
+        "Color": "Black Forest",
+        "Hexadecimal": "#0B1304"
+    },
+    {
+        "Color": "Black Haze",
+        "Hexadecimal": "#F6F7F7"
+    },
+    {
+        "Color": "Black Marlin",
+        "Hexadecimal": "#3E2C1C"
+    },
+    {
+        "Color": "Black Olive",
+        "Hexadecimal": "#242E16"
+    },
+    {
+        "Color": "Black Olive 2",
         "Hexadecimal": "#3B3C36"
     },
     {
-        "ID": 70,
+        "Color": "Black Pearl",
+        "Hexadecimal": "#041322"
+    },
+    {
+        "Color": "Black Rock",
+        "Hexadecimal": "#0D0332"
+    },
+    {
+        "Color": "Black Rose",
+        "Hexadecimal": "#67032D"
+    },
+    {
+        "Color": "Black Russian",
+        "Hexadecimal": "#0A001C"
+    },
+    {
         "Color": "Black Shadows",
         "Hexadecimal": "#BFAFB2"
     },
     {
-        "ID": 71,
-        "Color": "Blanched almond",
+        "Color": "Black Squeeze",
+        "Hexadecimal": "#F2FAFA"
+    },
+    {
+        "Color": "Black White",
+        "Hexadecimal": "#FFFEF6"
+    },
+    {
+        "Color": "Blackberry",
+        "Hexadecimal": "#4D0135"
+    },
+    {
+        "Color": "Blackcurrant",
+        "Hexadecimal": "#32293A"
+    },
+    {
+        "Color": "Blanched Almond",
         "Hexadecimal": "#FFEBCD"
     },
     {
-        "ID": 72,
-        "Color": "Blast-off bronze",
+        "Color": "Blast-Off Bronze",
         "Hexadecimal": "#A57164"
     },
     {
-        "ID": 73,
-        "Color": "Bleu de France",
+        "Color": "Blaze Orange",
+        "Hexadecimal": "#FF6600"
+    },
+    {
+        "Color": "Bleach White",
+        "Hexadecimal": "#FEF3D8"
+    },
+    {
+        "Color": "Bleached Cedar",
+        "Hexadecimal": "#2C2133"
+    },
+    {
+        "Color": "Bleu De France",
         "Hexadecimal": "#318CE7"
     },
     {
-        "ID": 74,
-        "Color": "Blizzard blue",
+        "Color": "Blizzard Blue",
+        "Hexadecimal": "#A3E3ED"
+    },
+    {
+        "Color": "Blizzard Blue 2",
         "Hexadecimal": "#ACE5EE"
     },
     {
-        "ID": 75,
         "Color": "Blond",
         "Hexadecimal": "#FAF0BE"
     },
     {
-        "ID": 76,
-        "Color": "Blood red",
+        "Color": "Blood Red",
         "Hexadecimal": "#660000"
     },
     {
-        "ID": 77,
+        "Color": "Blossom",
+        "Hexadecimal": "#DCB4BC"
+    },
+    {
         "Color": "Blue",
         "Hexadecimal": "#0000FF"
     },
     {
-        "ID": 78,
         "Color": "Blue (Crayola)",
         "Hexadecimal": "#1F75FE"
     },
     {
-        "ID": 79,
-        "Color": "Blue (Munsell)",
+        "Color": "Blue (MUNSELL)",
         "Hexadecimal": "#0093AF"
     },
     {
-        "ID": 80,
         "Color": "Blue (NCS)",
         "Hexadecimal": "#0087BD"
     },
     {
-        "ID": 81,
-        "Color": "Blue (Pantone)",
+        "Color": "Blue (PANTONE)",
         "Hexadecimal": "#0018A8"
     },
     {
-        "ID": 82,
-        "Color": "Blue (pigment)",
+        "Color": "Blue (Pigment)",
         "Hexadecimal": "#333399"
     },
     {
-        "ID": 83,
         "Color": "Blue (RYB)",
         "Hexadecimal": "#0247FE"
     },
     {
-        "ID": 84,
-        "Color": "Blue bell",
+        "Color": "Blue Bayoux",
+        "Hexadecimal": "#496679"
+    },
+    {
+        "Color": "Blue Bell",
         "Hexadecimal": "#A2A2D0"
     },
     {
-        "ID": 85,
-        "Color": "Blue-gray",
-        "Hexadecimal": "#6699CC"
+        "Color": "Blue Bell 2",
+        "Hexadecimal": "#9999CC"
     },
     {
-        "ID": 86,
-        "Color": "Blue-green",
-        "Hexadecimal": "#0D98BA"
+        "Color": "Blue Chalk",
+        "Hexadecimal": "#F1E9FF"
     },
     {
-        "ID": 87,
-        "Color": "Blue-green (color wheel)",
-        "Hexadecimal": "#064E40"
+        "Color": "Blue Charcoal",
+        "Hexadecimal": "#010D1A"
     },
     {
-        "ID": 88,
-        "Color": "Blue jeans",
+        "Color": "Blue Chill",
+        "Hexadecimal": "#0C8990"
+    },
+    {
+        "Color": "Blue Diamond",
+        "Hexadecimal": "#380474"
+    },
+    {
+        "Color": "Blue Dianne",
+        "Hexadecimal": "#204852"
+    },
+    {
+        "Color": "Blue Gem",
+        "Hexadecimal": "#2C0E8C"
+    },
+    {
+        "Color": "Blue Haze",
+        "Hexadecimal": "#BFBED8"
+    },
+    {
+        "Color": "Blue Jeans",
         "Hexadecimal": "#5DADEC"
     },
     {
-        "ID": 89,
-        "Color": "Blue sapphire",
+        "Color": "Blue Lagoon",
+        "Hexadecimal": "#017987"
+    },
+    {
+        "Color": "Blue Marguerite",
+        "Hexadecimal": "#7666C6"
+    },
+    {
+        "Color": "Blue Ribbon",
+        "Hexadecimal": "#0066FF"
+    },
+    {
+        "Color": "Blue Romance",
+        "Hexadecimal": "#D2F6DE"
+    },
+    {
+        "Color": "Blue Sapphire",
         "Hexadecimal": "#126180"
     },
     {
-        "ID": 90,
-        "Color": "Blue-violet",
+        "Color": "Blue Smoke",
+        "Hexadecimal": "#748881"
+    },
+    {
+        "Color": "Blue Stone",
+        "Hexadecimal": "#016162"
+    },
+    {
+        "Color": "Blue Violet",
         "Hexadecimal": "#8A2BE2"
     },
     {
-        "ID": 91,
-        "Color": "Blue-violet (Crayola)",
-        "Hexadecimal": "#7366BD"
+        "Color": "Blue Violet 2",
+        "Hexadecimal": "#6456B7"
     },
     {
-        "ID": 92,
-        "Color": "Blue-violet (color wheel)",
-        "Hexadecimal": "#4D1A7F"
+        "Color": "Blue Whale",
+        "Hexadecimal": "#042E4C"
     },
     {
-        "ID": 93,
-        "Color": "Blue yonder",
+        "Color": "Blue Yonder",
         "Hexadecimal": "#5072A7"
     },
     {
-        "ID": 94,
+        "Color": "Blue Zodiac",
+        "Hexadecimal": "#13264D"
+    },
+    {
+        "Color": "Blue-Gray / Livid",
+        "Hexadecimal": "#6699CC"
+    },
+    {
+        "Color": "Blue-Green",
+        "Hexadecimal": "#0D98BA"
+    },
+    {
+        "Color": "Blue-Green (Color Wheel)",
+        "Hexadecimal": "#064E40"
+    },
+    {
+        "Color": "Blue-Violet (Color Wheel)",
+        "Hexadecimal": "#4D1A7F"
+    },
+    {
+        "Color": "Blue-Violet (Crayola)",
+        "Hexadecimal": "#7366BD"
+    },
+    {
         "Color": "Bluetiful",
         "Hexadecimal": "#3C69E7"
     },
     {
-        "ID": 95,
+        "Color": "Blumine",
+        "Hexadecimal": "#18587A"
+    },
+    {
         "Color": "Blush",
         "Hexadecimal": "#DE5D83"
     },
     {
-        "ID": 96,
+        "Color": "Blush 2",
+        "Hexadecimal": "#B44668"
+    },
+    {
         "Color": "Bole",
         "Hexadecimal": "#79443B"
     },
     {
-        "ID": 97,
+        "Color": "Bombay",
+        "Hexadecimal": "#AFB1B8"
+    },
+    {
+        "Color": "Bon Jour",
+        "Hexadecimal": "#E5E0E1"
+    },
+    {
+        "Color": "Bondi Blue",
+        "Hexadecimal": "#0095B6"
+    },
+    {
         "Color": "Bone",
         "Hexadecimal": "#E3DAC9"
     },
     {
-        "ID": 98,
-        "Color": "Bottle green",
+        "Color": "Bone 2",
+        "Hexadecimal": "#E4D1C0"
+    },
+    {
+        "Color": "Bordeaux",
+        "Hexadecimal": "#5C0120"
+    },
+    {
+        "Color": "Bossanova",
+        "Hexadecimal": "#4E2A5A"
+    },
+    {
+        "Color": "Boston Blue",
+        "Hexadecimal": "#3B91B4"
+    },
+    {
+        "Color": "Botticelli",
+        "Hexadecimal": "#C7DDE5"
+    },
+    {
+        "Color": "Bottle Green",
         "Hexadecimal": "#006A4E"
     },
     {
-        "ID": 99,
+        "Color": "Bottle Green 2",
+        "Hexadecimal": "#093624"
+    },
+    {
+        "Color": "Boulder",
+        "Hexadecimal": "#7A7A7A"
+    },
+    {
+        "Color": "Bouquet",
+        "Hexadecimal": "#AE809E"
+    },
+    {
+        "Color": "Bourbon",
+        "Hexadecimal": "#BA6F1E"
+    },
+    {
+        "Color": "Bracken",
+        "Hexadecimal": "#4A2A04"
+    },
+    {
         "Color": "Brandy",
+        "Hexadecimal": "#DEC196"
+    },
+    {
+        "Color": "Brandy 2",
         "Hexadecimal": "#87413F"
     },
     {
-        "ID": 100,
-        "Color": "Brick red",
+        "Color": "Brandy Punch",
+        "Hexadecimal": "#CD8429"
+    },
+    {
+        "Color": "Brandy Rose",
+        "Hexadecimal": "#BB8983"
+    },
+    {
+        "Color": "Breaker Bay",
+        "Hexadecimal": "#5DA19F"
+    },
+    {
+        "Color": "Brick Red",
+        "Hexadecimal": "#C62D42"
+    },
+    {
+        "Color": "Brick Red 2",
         "Hexadecimal": "#CB4154"
     },
     {
-        "ID": 101,
-        "Color": "Bright green",
+        "Color": "Bridal Heath",
+        "Hexadecimal": "#FFFAF4"
+    },
+    {
+        "Color": "Bridesmaid",
+        "Hexadecimal": "#FEF0EC"
+    },
+    {
+        "Color": "Bright Gray",
+        "Hexadecimal": "#3C4151"
+    },
+    {
+        "Color": "Bright Green",
         "Hexadecimal": "#66FF00"
     },
     {
-        "ID": 102,
-        "Color": "Bright lilac",
+        "Color": "Bright Lilac",
         "Hexadecimal": "#D891EF"
     },
     {
-        "ID": 103,
-        "Color": "Bright maroon",
+        "Color": "Bright Maroon / Maroon (Crayola) / Maroon Flush",
         "Hexadecimal": "#C32148"
     },
     {
-        "ID": 104,
-        "Color": "Bright navy blue",
+        "Color": "Bright Navy Blue / Navy Blue (Crayola)",
         "Hexadecimal": "#1974D2"
     },
     {
-        "ID": 105,
-        "Color": "Bright yellow (Crayola)",
+        "Color": "Bright Red",
+        "Hexadecimal": "#B10000"
+    },
+    {
+        "Color": "Bright Sun",
+        "Hexadecimal": "#FED33C"
+    },
+    {
+        "Color": "Bright Turquoise",
+        "Hexadecimal": "#08E8DE"
+    },
+    {
+        "Color": "Bright Yellow (Crayola)",
         "Hexadecimal": "#FFAA1D"
     },
     {
-        "ID": 106,
-        "Color": "Brilliant rose",
+        "Color": "Brilliant Rose",
         "Hexadecimal": "#FF55A3"
     },
     {
-        "ID": 107,
-        "Color": "Brink pink",
+        "Color": "Brink Pink",
         "Hexadecimal": "#FB607F"
     },
     {
-        "ID": 108,
-        "Color": "British racing green",
+        "Color": "British Racing Green",
         "Hexadecimal": "#004225"
     },
     {
-        "ID": 109,
+        "Color": "Bronco",
+        "Hexadecimal": "#ABA196"
+    },
+    {
         "Color": "Bronze",
         "Hexadecimal": "#CD7F32"
     },
     {
-        "ID": 110,
+        "Color": "Bronze 2",
+        "Hexadecimal": "#3F2109"
+    },
+    {
+        "Color": "Bronze Olive",
+        "Hexadecimal": "#4E420C"
+    },
+    {
+        "Color": "Bronzetone",
+        "Hexadecimal": "#4D400F"
+    },
+    {
+        "Color": "Broom",
+        "Hexadecimal": "#FFEC13"
+    },
+    {
         "Color": "Brown",
+        "Hexadecimal": "#964B00"
+    },
+    {
+        "Color": "Brown 2",
         "Hexadecimal": "#88540B"
     },
     {
-        "ID": 111,
-        "Color": "Brown sugar",
+        "Color": "Brown Bramble",
+        "Hexadecimal": "#592804"
+    },
+    {
+        "Color": "Brown Derby",
+        "Hexadecimal": "#492615"
+    },
+    {
+        "Color": "Brown Pod",
+        "Hexadecimal": "#401801"
+    },
+    {
+        "Color": "Brown Rust",
+        "Hexadecimal": "#AF593E"
+    },
+    {
+        "Color": "Brown Sugar",
         "Hexadecimal": "#AF6E4D"
     },
     {
-        "ID": 112,
-        "Color": "Brunswick green",
+        "Color": "Brown Tumbleweed",
+        "Hexadecimal": "#37290E"
+    },
+    {
+        "Color": "Brunswick Green / English Green",
         "Hexadecimal": "#1B4D3E"
     },
     {
-        "ID": 113,
-        "Color": "Bud green",
+        "Color": "Bubbles",
+        "Hexadecimal": "#E7FEFF"
+    },
+    {
+        "Color": "Buccaneer",
+        "Hexadecimal": "#622F30"
+    },
+    {
+        "Color": "Bud",
+        "Hexadecimal": "#A8AE9C"
+    },
+    {
+        "Color": "Bud Green",
         "Hexadecimal": "#7BB661"
     },
     {
-        "ID": 114,
+        "Color": "Buddha Gold",
+        "Hexadecimal": "#C1A004"
+    },
+    {
         "Color": "Buff",
         "Hexadecimal": "#FFC680"
     },
     {
-        "ID": 115,
+        "Color": "Buff 2",
+        "Hexadecimal": "#F0DC82"
+    },
+    {
+        "Color": "Bulgarian Rose",
+        "Hexadecimal": "#480607"
+    },
+    {
+        "Color": "Bull Shot",
+        "Hexadecimal": "#864D1E"
+    },
+    {
+        "Color": "Bunker",
+        "Hexadecimal": "#0D1117"
+    },
+    {
+        "Color": "Bunting",
+        "Hexadecimal": "#151F4C"
+    },
+    {
         "Color": "Burgundy",
+        "Hexadecimal": "#900020"
+    },
+    {
+        "Color": "Burgundy 2",
         "Hexadecimal": "#800020"
     },
     {
-        "ID": 116,
         "Color": "Burlywood",
         "Hexadecimal": "#DEB887"
     },
     {
-        "ID": 117,
-        "Color": "Burnished brown",
+        "Color": "Burnham",
+        "Hexadecimal": "#002E20"
+    },
+    {
+        "Color": "Burning Orange",
+        "Hexadecimal": "#FF7034"
+    },
+    {
+        "Color": "Burning Sand",
+        "Hexadecimal": "#D99376"
+    },
+    {
+        "Color": "Burnished Brown",
         "Hexadecimal": "#A17A74"
     },
     {
-        "ID": 118,
-        "Color": "Burnt orange",
+        "Color": "Burnt Maroon",
+        "Hexadecimal": "#420303"
+    },
+    {
+        "Color": "Burnt Orange",
         "Hexadecimal": "#CC5500"
     },
     {
-        "ID": 119,
-        "Color": "Burnt sienna",
+        "Color": "Burnt Sienna",
         "Hexadecimal": "#E97451"
     },
     {
-        "ID": 120,
-        "Color": "Burnt umber",
+        "Color": "Burnt Umber",
         "Hexadecimal": "#8A3324"
     },
     {
-        "ID": 121,
+        "Color": "Bush",
+        "Hexadecimal": "#0D2E1C"
+    },
+    {
+        "Color": "Buttercup",
+        "Hexadecimal": "#F3AD16"
+    },
+    {
+        "Color": "Buttered Rum",
+        "Hexadecimal": "#A1750D"
+    },
+    {
+        "Color": "Butterfly Bush",
+        "Hexadecimal": "#624E9A"
+    },
+    {
+        "Color": "Buttermilk",
+        "Hexadecimal": "#FFF1B5"
+    },
+    {
+        "Color": "Buttery White",
+        "Hexadecimal": "#FFFCEA"
+    },
+    {
         "Color": "Byzantine",
         "Hexadecimal": "#BD33A4"
     },
     {
-        "ID": 122,
         "Color": "Byzantium",
         "Hexadecimal": "#702963"
     },
     {
-        "ID": 123,
+        "Color": "Cab Sav",
+        "Hexadecimal": "#4D0A18"
+    },
+    {
+        "Color": "Cabaret",
+        "Hexadecimal": "#D94972"
+    },
+    {
+        "Color": "Cabbage Pont",
+        "Hexadecimal": "#3F4C3A"
+    },
+    {
+        "Color": "Cactus",
+        "Hexadecimal": "#587156"
+    },
+    {
         "Color": "Cadet",
         "Hexadecimal": "#536872"
     },
     {
-        "ID": 124,
-        "Color": "Cadet blue",
+        "Color": "Cadet Blue",
         "Hexadecimal": "#5F9EA0"
     },
     {
-        "ID": 125,
-        "Color": "Cadet blue (Crayola)",
+        "Color": "Cadet Blue (Crayola)",
         "Hexadecimal": "#A9B2C3"
     },
     {
-        "ID": 126,
-        "Color": "Cadet grey",
+        "Color": "Cadet Grey",
         "Hexadecimal": "#91A3B0"
     },
     {
-        "ID": 127,
-        "Color": "Cadmium green",
+        "Color": "Cadillac",
+        "Hexadecimal": "#B04C6A"
+    },
+    {
+        "Color": "Cadmium Green",
         "Hexadecimal": "#006B3C"
     },
     {
-        "ID": 128,
-        "Color": "Cadmium orange",
+        "Color": "Cadmium Orange",
         "Hexadecimal": "#ED872D"
     },
     {
-        "ID": 129,
-        "Color": "Cadmium red",
+        "Color": "Cadmium Red",
         "Hexadecimal": "#E30022"
     },
     {
-        "ID": 130,
-        "Color": "Cadmium yellow",
+        "Color": "Cadmium Yellow",
         "Hexadecimal": "#FFF600"
     },
     {
-        "ID": 131,
-        "Color": "Café au lait",
+        "Color": "Café Au Lait / French Beige / Tuscan Tan",
         "Hexadecimal": "#A67B5B"
     },
     {
-        "ID": 132,
-        "Color": "Café noir",
+        "Color": "Café Noir",
         "Hexadecimal": "#4B3621"
     },
     {
-        "ID": 133,
-        "Color": "Cambridge blue",
+        "Color": "Cafe Royale",
+        "Hexadecimal": "#6F440C"
+    },
+    {
+        "Color": "Calico",
+        "Hexadecimal": "#E0C095"
+    },
+    {
+        "Color": "California",
+        "Hexadecimal": "#FE9D04"
+    },
+    {
+        "Color": "Calypso",
+        "Hexadecimal": "#31728D"
+    },
+    {
+        "Color": "Camarone",
+        "Hexadecimal": "#00581A"
+    },
+    {
+        "Color": "Cambridge Blue",
         "Hexadecimal": "#A3C1AD"
     },
     {
-        "ID": 134,
-        "Color": "Camel",
+        "Color": "Camel / Fallow / Lion / Wood Brown",
         "Hexadecimal": "#C19A6B"
     },
     {
-        "ID": 135,
-        "Color": "Cameo pink",
+        "Color": "Camelot",
+        "Hexadecimal": "#893456"
+    },
+    {
+        "Color": "Cameo",
+        "Hexadecimal": "#D9B99B"
+    },
+    {
+        "Color": "Cameo Pink",
         "Hexadecimal": "#EFBBCC"
     },
     {
-        "ID": 136,
-        "Color": "Canary",
-        "Hexadecimal": "#FFFF99"
+        "Color": "Camouflage",
+        "Hexadecimal": "#3C3910"
     },
     {
-        "ID": 137,
-        "Color": "Canary yellow",
+        "Color": "Camouflage Green",
+        "Hexadecimal": "#78866B"
+    },
+    {
+        "Color": "Can Can",
+        "Hexadecimal": "#D591A4"
+    },
+    {
+        "Color": "Canary",
+        "Hexadecimal": "#F3FB62"
+    },
+    {
+        "Color": "Canary Yellow / Process Yellow / Yellow (Process)",
         "Hexadecimal": "#FFEF00"
     },
     {
-        "ID": 138,
-        "Color": "Candy apple red",
+        "Color": "Candlelight",
+        "Hexadecimal": "#FCD917"
+    },
+    {
+        "Color": "Candy Apple Red",
         "Hexadecimal": "#FF0800"
     },
     {
-        "ID": 139,
-        "Color": "Candy pink",
+        "Color": "Candy Corn",
+        "Hexadecimal": "#FBEC5D"
+    },
+    {
+        "Color": "Candy Pink / Tango Pink",
         "Hexadecimal": "#E4717A"
     },
     {
-        "ID": 140,
-        "Color": "Capri",
+        "Color": "Cannon Black",
+        "Hexadecimal": "#251706"
+    },
+    {
+        "Color": "Cannon Pink",
+        "Hexadecimal": "#894367"
+    },
+    {
+        "Color": "Cape Cod",
+        "Hexadecimal": "#3C4443"
+    },
+    {
+        "Color": "Cape Honey",
+        "Hexadecimal": "#FEE5AC"
+    },
+    {
+        "Color": "Cape Palliser",
+        "Hexadecimal": "#A26645"
+    },
+    {
+        "Color": "Caper",
+        "Hexadecimal": "#DCEDB4"
+    },
+    {
+        "Color": "Capri / Deep Sky Blue",
         "Hexadecimal": "#00BFFF"
     },
     {
-        "ID": 141,
-        "Color": "Caput mortuum",
+        "Color": "Caput Mortuum",
         "Hexadecimal": "#592720"
     },
     {
-        "ID": 142,
+        "Color": "Caramel",
+        "Hexadecimal": "#FFDDAF"
+    },
+    {
+        "Color": "Cararra",
+        "Hexadecimal": "#EEEEE8"
+    },
+    {
+        "Color": "Cardin Green",
+        "Hexadecimal": "#01361C"
+    },
+    {
         "Color": "Cardinal",
         "Hexadecimal": "#C41E3A"
     },
     {
-        "ID": 143,
-        "Color": "Caribbean green",
+        "Color": "Cardinal Pink",
+        "Hexadecimal": "#8C055E"
+    },
+    {
+        "Color": "Careys Pink",
+        "Hexadecimal": "#D29EAA"
+    },
+    {
+        "Color": "Caribbean Green",
         "Hexadecimal": "#00CC99"
     },
     {
-        "ID": 144,
+        "Color": "Carissma",
+        "Hexadecimal": "#EA88A8"
+    },
+    {
+        "Color": "Carla",
+        "Hexadecimal": "#F3FFD8"
+    },
+    {
         "Color": "Carmine",
         "Hexadecimal": "#960018"
     },
     {
-        "ID": 145,
         "Color": "Carmine (M&P)",
         "Hexadecimal": "#D70040"
     },
     {
-        "ID": 146,
-        "Color": "Carnation pink",
+        "Color": "Carnaby Tan",
+        "Hexadecimal": "#5C2E01"
+    },
+    {
+        "Color": "Carnation",
+        "Hexadecimal": "#F95A61"
+    },
+    {
+        "Color": "Carnation Pink",
         "Hexadecimal": "#FFA6C9"
     },
     {
-        "ID": 147,
-        "Color": "Carnelian",
+        "Color": "Carnelian / Cornell Red",
         "Hexadecimal": "#B31B1B"
     },
     {
-        "ID": 148,
-        "Color": "Carolina blue",
+        "Color": "Carolina Blue",
         "Hexadecimal": "#56A0D3"
     },
     {
-        "ID": 149,
-        "Color": "Carrot orange",
+        "Color": "Carousel Pink",
+        "Hexadecimal": "#F9E0ED"
+    },
+    {
+        "Color": "Carrot Orange",
         "Hexadecimal": "#ED9121"
     },
     {
-        "ID": 150,
-        "Color": "Castleton green",
+        "Color": "Casablanca",
+        "Hexadecimal": "#F8B853"
+    },
+    {
+        "Color": "Casal",
+        "Hexadecimal": "#2F6168"
+    },
+    {
+        "Color": "Cascade",
+        "Hexadecimal": "#8BA9A5"
+    },
+    {
+        "Color": "Cashmere",
+        "Hexadecimal": "#E6BEA5"
+    },
+    {
+        "Color": "Casper",
+        "Hexadecimal": "#ADBED1"
+    },
+    {
+        "Color": "Castleton Green",
         "Hexadecimal": "#00563F"
     },
     {
-        "ID": 151,
+        "Color": "Castro",
+        "Hexadecimal": "#52001F"
+    },
+    {
+        "Color": "Catalina Blue",
+        "Hexadecimal": "#062A78"
+    },
+    {
         "Color": "Catawba",
         "Hexadecimal": "#703642"
     },
     {
-        "ID": 152,
+        "Color": "Catskill White",
+        "Hexadecimal": "#EEF6F7"
+    },
+    {
+        "Color": "Cavern Pink",
+        "Hexadecimal": "#E3BEBE"
+    },
+    {
+        "Color": "Cedar",
+        "Hexadecimal": "#3E1C14"
+    },
+    {
         "Color": "Cedar Chest",
         "Hexadecimal": "#C95A49"
     },
     {
-        "ID": 153,
+        "Color": "Cedar Wood Finish",
+        "Hexadecimal": "#711A00"
+    },
+    {
         "Color": "Celadon",
         "Hexadecimal": "#ACE1AF"
     },
     {
-        "ID": 154,
-        "Color": "Celadon blue",
+        "Color": "Celadon Blue / Deep Cerulean",
         "Hexadecimal": "#007BA7"
     },
     {
-        "ID": 155,
-        "Color": "Celadon green",
+        "Color": "Celadon Green",
         "Hexadecimal": "#2F847C"
     },
     {
-        "ID": 156,
-        "Color": "Celeste",
-        "Hexadecimal": "#B2FFFF"
+        "Color": "Celery",
+        "Hexadecimal": "#B8C25D"
     },
     {
-        "ID": 157,
-        "Color": "Celtic blue",
+        "Color": "Celeste",
+        "Hexadecimal": "#D1D2CA"
+    },
+    {
+        "Color": "Cello",
+        "Hexadecimal": "#1E385B"
+    },
+    {
+        "Color": "Celtic",
+        "Hexadecimal": "#163222"
+    },
+    {
+        "Color": "Celtic Blue",
         "Hexadecimal": "#246BCE"
     },
     {
-        "ID": 158,
-        "Color": "Cerise",
+        "Color": "Cement",
+        "Hexadecimal": "#8D7662"
+    },
+    {
+        "Color": "Ceramic",
+        "Hexadecimal": "#FCFFF9"
+    },
+    {
+        "Color": "Cerise / Cerise Red",
         "Hexadecimal": "#DE3163"
     },
     {
-        "ID": 159,
         "Color": "Cerulean",
-        "Hexadecimal": "#007BA7"
+        "Hexadecimal": "#02A4D3"
     },
     {
-        "ID": 160,
-        "Color": "Cerulean blue",
-        "Hexadecimal": "#2A52BE"
-    },
-    {
-        "ID": 161,
-        "Color": "Cerulean frost",
-        "Hexadecimal": "#6D9BC3"
-    },
-    {
-        "ID": 162,
         "Color": "Cerulean (Crayola)",
         "Hexadecimal": "#1DACD6"
     },
     {
-        "ID": 163,
-        "Color": "CG blue",
+        "Color": "Cerulean Blue",
+        "Hexadecimal": "#2A52BE"
+    },
+    {
+        "Color": "Cerulean Frost",
+        "Hexadecimal": "#6D9BC3"
+    },
+    {
+        "Color": "Cg Blue",
         "Hexadecimal": "#007AA5"
     },
     {
-        "ID": 164,
-        "Color": "CG red",
+        "Color": "Cg Red",
         "Hexadecimal": "#E03C31"
     },
     {
-        "ID": 165,
+        "Color": "Chablis",
+        "Hexadecimal": "#FFF4F3"
+    },
+    {
+        "Color": "Chalet Green",
+        "Hexadecimal": "#516E3D"
+    },
+    {
+        "Color": "Chalky",
+        "Hexadecimal": "#EED794"
+    },
+    {
+        "Color": "Chambray",
+        "Hexadecimal": "#354E8C"
+    },
+    {
+        "Color": "Chamois",
+        "Hexadecimal": "#EDDCB1"
+    },
+    {
         "Color": "Champagne",
         "Hexadecimal": "#F7E7CE"
     },
     {
-        "ID": 166,
-        "Color": "Champagne pink",
+        "Color": "Champagne 2",
+        "Hexadecimal": "#FAECCC"
+    },
+    {
+        "Color": "Champagne Pink",
         "Hexadecimal": "#F1DDCF"
     },
     {
-        "ID": 167,
+        "Color": "Chantilly",
+        "Hexadecimal": "#F8C3DF"
+    },
+    {
+        "Color": "Charade",
+        "Hexadecimal": "#292937"
+    },
+    {
         "Color": "Charcoal",
         "Hexadecimal": "#36454F"
     },
     {
-        "ID": 168,
-        "Color": "Charleston green",
+        "Color": "Chardon",
+        "Hexadecimal": "#FFF3F1"
+    },
+    {
+        "Color": "Chardonnay",
+        "Hexadecimal": "#FFCD8C"
+    },
+    {
+        "Color": "Charleston Green",
         "Hexadecimal": "#232B2B"
     },
     {
-        "ID": 169,
-        "Color": "Charm pink",
+        "Color": "Charlotte",
+        "Hexadecimal": "#BAEEF9"
+    },
+    {
+        "Color": "Charm",
+        "Hexadecimal": "#D47494"
+    },
+    {
+        "Color": "Charm Pink",
         "Hexadecimal": "#E68FAC"
     },
     {
-        "ID": 170,
-        "Color": "Chartreuse (traditional)",
+        "Color": "Chartreuse (Traditional) / Chartreuse Yellow",
         "Hexadecimal": "#DFFF00"
     },
     {
-        "ID": 171,
-        "Color": "Chartreuse (web)",
+        "Color": "Chartreuse (Web) / Chartreuse",
         "Hexadecimal": "#7FFF00"
     },
     {
-        "ID": 172,
-        "Color": "Cherry blossom pink",
+        "Color": "Chateau Green",
+        "Hexadecimal": "#40A860"
+    },
+    {
+        "Color": "Chatelle",
+        "Hexadecimal": "#BDB3C7"
+    },
+    {
+        "Color": "Chathams Blue",
+        "Hexadecimal": "#175579"
+    },
+    {
+        "Color": "Chelsea Cucumber",
+        "Hexadecimal": "#83AA5D"
+    },
+    {
+        "Color": "Chelsea Gem",
+        "Hexadecimal": "#9E5302"
+    },
+    {
+        "Color": "Chenin",
+        "Hexadecimal": "#DFCD6F"
+    },
+    {
+        "Color": "Cherokee",
+        "Hexadecimal": "#FCDA98"
+    },
+    {
+        "Color": "Cherry Blossom Pink",
         "Hexadecimal": "#FFB7C5"
     },
     {
-        "ID": 173,
+        "Color": "Cherry Pie",
+        "Hexadecimal": "#2A0359"
+    },
+    {
+        "Color": "Cherrywood",
+        "Hexadecimal": "#651A14"
+    },
+    {
+        "Color": "Cherub",
+        "Hexadecimal": "#F8D9E9"
+    },
+    {
         "Color": "Chestnut",
         "Hexadecimal": "#954535"
     },
     {
-        "ID": 174,
-        "Color": "Chili red",
+        "Color": "Chetwode Blue",
+        "Hexadecimal": "#8581D9"
+    },
+    {
+        "Color": "Chicago",
+        "Hexadecimal": "#5D5C58"
+    },
+    {
+        "Color": "Chiffon",
+        "Hexadecimal": "#F1FFC8"
+    },
+    {
+        "Color": "Chilean Fire",
+        "Hexadecimal": "#F77703"
+    },
+    {
+        "Color": "Chilean Heath",
+        "Hexadecimal": "#FFFDE6"
+    },
+    {
+        "Color": "Chili Red",
         "Hexadecimal": "#E23D28"
     },
     {
-        "ID": 175,
-        "Color": "China pink",
+        "Color": "China Ivory",
+        "Hexadecimal": "#FCFFE7"
+    },
+    {
+        "Color": "China Pink / Liseran Purple / Thulian Pink",
         "Hexadecimal": "#DE6FA1"
     },
     {
-        "ID": 176,
-        "Color": "China rose",
+        "Color": "China Rose",
         "Hexadecimal": "#A8516E"
     },
     {
-        "ID": 177,
-        "Color": "Chinese red",
+        "Color": "Chinese Red",
         "Hexadecimal": "#AA381E"
     },
     {
-        "ID": 178,
-        "Color": "Chinese violet",
+        "Color": "Chinese Violet",
         "Hexadecimal": "#856088"
     },
     {
-        "ID": 179,
-        "Color": "Chinese yellow",
+        "Color": "Chinese Yellow",
         "Hexadecimal": "#FFB200"
     },
     {
-        "ID": 180,
-        "Color": "Chocolate (traditional)",
+        "Color": "Chino",
+        "Hexadecimal": "#CEC7A7"
+    },
+    {
+        "Color": "Chinook",
+        "Hexadecimal": "#A8E3BD"
+    },
+    {
+        "Color": "Chocolate",
+        "Hexadecimal": "#370202"
+    },
+    {
+        "Color": "Chocolate (Traditional) / Cinnamon",
         "Hexadecimal": "#7B3F00"
     },
     {
-        "ID": 181,
-        "Color": "Chocolate (web)",
+        "Color": "Chocolate (Web) / Hot Cinnamon",
         "Hexadecimal": "#D2691E"
     },
     {
-        "ID": 182,
         "Color": "Chocolate Cosmos",
         "Hexadecimal": "#58111A"
     },
     {
-        "ID": 183,
-        "Color": "Chrome yellow",
+        "Color": "Christalle",
+        "Hexadecimal": "#33036B"
+    },
+    {
+        "Color": "Christi",
+        "Hexadecimal": "#67A712"
+    },
+    {
+        "Color": "Christine",
+        "Hexadecimal": "#E7730A"
+    },
+    {
+        "Color": "Chrome White",
+        "Hexadecimal": "#E8F1D4"
+    },
+    {
+        "Color": "Chrome Yellow",
         "Hexadecimal": "#FFA700"
     },
     {
-        "ID": 184,
+        "Color": "Cinder",
+        "Hexadecimal": "#0E0E18"
+    },
+    {
+        "Color": "Cinderella",
+        "Hexadecimal": "#FDE1DC"
+    },
+    {
         "Color": "Cinereous",
         "Hexadecimal": "#98817B"
     },
     {
-        "ID": 185,
         "Color": "Cinnabar",
         "Hexadecimal": "#E34234"
     },
     {
-        "ID": 186,
         "Color": "Cinnamon Satin",
         "Hexadecimal": "#CD607E"
     },
     {
-        "ID": 187,
+        "Color": "Cioccolato",
+        "Hexadecimal": "#55280C"
+    },
+    {
         "Color": "Citrine",
         "Hexadecimal": "#E4D00A"
     },
     {
-        "ID": 188,
+        "Color": "Citrine White",
+        "Hexadecimal": "#FAF7D6"
+    },
+    {
         "Color": "Citron",
         "Hexadecimal": "#9FA91F"
     },
     {
-        "ID": 189,
+        "Color": "Citron 2",
+        "Hexadecimal": "#9EA91F"
+    },
+    {
+        "Color": "Citrus",
+        "Hexadecimal": "#A1C50A"
+    },
+    {
+        "Color": "Clairvoyant",
+        "Hexadecimal": "#480656"
+    },
+    {
+        "Color": "Clam Shell",
+        "Hexadecimal": "#D4B6AF"
+    },
+    {
         "Color": "Claret",
         "Hexadecimal": "#7F1734"
     },
     {
-        "ID": 190,
-        "Color": "Cobalt blue",
+        "Color": "Classic Rose",
+        "Hexadecimal": "#FBCCE7"
+    },
+    {
+        "Color": "Clay Ash",
+        "Hexadecimal": "#BDC8B3"
+    },
+    {
+        "Color": "Clay Creek",
+        "Hexadecimal": "#8A8360"
+    },
+    {
+        "Color": "Clear Day",
+        "Hexadecimal": "#E9FFFD"
+    },
+    {
+        "Color": "Clementine",
+        "Hexadecimal": "#E96E00"
+    },
+    {
+        "Color": "Clinker",
+        "Hexadecimal": "#371D09"
+    },
+    {
+        "Color": "Cloud",
+        "Hexadecimal": "#C7C4BF"
+    },
+    {
+        "Color": "Cloud Burst",
+        "Hexadecimal": "#202E54"
+    },
+    {
+        "Color": "Cloudy",
+        "Hexadecimal": "#ACA59F"
+    },
+    {
+        "Color": "Clover",
+        "Hexadecimal": "#384910"
+    },
+    {
+        "Color": "Cobalt Blue / Cobalt",
         "Hexadecimal": "#0047AB"
     },
     {
-        "ID": 191,
-        "Color": "Cocoa brown",
-        "Hexadecimal": "#D2691E"
+        "Color": "Cocoa Bean",
+        "Hexadecimal": "#481C1C"
     },
     {
-        "ID": 192,
+        "Color": "Cocoa Brown",
+        "Hexadecimal": "#301F1E"
+    },
+    {
+        "Color": "Coconut Cream",
+        "Hexadecimal": "#F8F7DC"
+    },
+    {
+        "Color": "Cod Gray",
+        "Hexadecimal": "#0B0B0B"
+    },
+    {
         "Color": "Coffee",
-        "Hexadecimal": "#6F4E37"
+        "Hexadecimal": "#706555"
     },
     {
-        "ID": 193,
+        "Color": "Coffee Bean",
+        "Hexadecimal": "#2A140E"
+    },
+    {
+        "Color": "Cognac",
+        "Hexadecimal": "#9F381D"
+    },
+    {
+        "Color": "Cola",
+        "Hexadecimal": "#3F2500"
+    },
+    {
+        "Color": "Cold Purple",
+        "Hexadecimal": "#ABA0D9"
+    },
+    {
+        "Color": "Cold Turkey",
+        "Hexadecimal": "#CEBABA"
+    },
+    {
+        "Color": "Colonial White",
+        "Hexadecimal": "#FFEDBC"
+    },
+    {
         "Color": "Columbia Blue",
         "Hexadecimal": "#B9D9EB"
     },
     {
-        "ID": 194,
-        "Color": "Congo pink",
+        "Color": "Comet",
+        "Hexadecimal": "#5C5D75"
+    },
+    {
+        "Color": "Como",
+        "Hexadecimal": "#517C66"
+    },
+    {
+        "Color": "Conch",
+        "Hexadecimal": "#C9D9D2"
+    },
+    {
+        "Color": "Concord",
+        "Hexadecimal": "#7C7B7A"
+    },
+    {
+        "Color": "Concrete",
+        "Hexadecimal": "#F2F2F2"
+    },
+    {
+        "Color": "Confetti",
+        "Hexadecimal": "#E9D75A"
+    },
+    {
+        "Color": "Congo Brown",
+        "Hexadecimal": "#593737"
+    },
+    {
+        "Color": "Congo Pink / Coral Pink / Tea Rose",
         "Hexadecimal": "#F88379"
     },
     {
-        "ID": 195,
-        "Color": "Cool grey",
+        "Color": "Congress Blue",
+        "Hexadecimal": "#02478E"
+    },
+    {
+        "Color": "Conifer",
+        "Hexadecimal": "#ACDD4D"
+    },
+    {
+        "Color": "Contessa",
+        "Hexadecimal": "#C6726B"
+    },
+    {
+        "Color": "Cool Grey",
         "Hexadecimal": "#8C92AC"
     },
     {
-        "ID": 196,
         "Color": "Copper",
         "Hexadecimal": "#B87333"
     },
     {
-        "ID": 197,
-        "Color": "Copper (Crayola)",
+        "Color": "Copper (Crayola) / Copperfield",
         "Hexadecimal": "#DA8A67"
     },
     {
-        "ID": 198,
-        "Color": "Copper penny",
+        "Color": "Copper Canyon",
+        "Hexadecimal": "#7E3A15"
+    },
+    {
+        "Color": "Copper Penny",
         "Hexadecimal": "#AD6F69"
     },
     {
-        "ID": 199,
-        "Color": "Copper red",
+        "Color": "Copper Red",
         "Hexadecimal": "#CB6D51"
     },
     {
-        "ID": 200,
-        "Color": "Copper rose",
+        "Color": "Copper Rose",
         "Hexadecimal": "#996666"
     },
     {
-        "ID": 201,
+        "Color": "Copper Rust",
+        "Hexadecimal": "#944747"
+    },
+    {
         "Color": "Coquelicot",
         "Hexadecimal": "#FF3800"
     },
     {
-        "ID": 202,
         "Color": "Coral",
         "Hexadecimal": "#FF7F50"
     },
     {
-        "ID": 203,
-        "Color": "Coral pink",
-        "Hexadecimal": "#F88379"
+        "Color": "Coral Red",
+        "Hexadecimal": "#FF4040"
     },
     {
-        "ID": 204,
+        "Color": "Coral Reef",
+        "Hexadecimal": "#C7BCA2"
+    },
+    {
+        "Color": "Coral Tree",
+        "Hexadecimal": "#A86B6B"
+    },
+    {
         "Color": "Cordovan",
         "Hexadecimal": "#893F45"
     },
     {
-        "ID": 205,
+        "Color": "Corduroy",
+        "Hexadecimal": "#606E68"
+    },
+    {
+        "Color": "Coriander",
+        "Hexadecimal": "#C4D0B0"
+    },
+    {
+        "Color": "Cork",
+        "Hexadecimal": "#40291D"
+    },
+    {
         "Color": "Corn",
-        "Hexadecimal": "#FBEC5D"
+        "Hexadecimal": "#E7BF05"
     },
     {
-        "ID": 206,
-        "Color": "Cornell red",
-        "Hexadecimal": "#B31B1B"
+        "Color": "Corn Field",
+        "Hexadecimal": "#F8FACD"
     },
     {
-        "ID": 207,
-        "Color": "Cornflower blue",
+        "Color": "Corn Harvest",
+        "Hexadecimal": "#8B6B0B"
+    },
+    {
+        "Color": "Cornflower Blue",
         "Hexadecimal": "#6495ED"
     },
     {
-        "ID": 208,
+        "Color": "Cornflower Lilac",
+        "Hexadecimal": "#FFB0AC"
+    },
+    {
         "Color": "Cornsilk",
         "Hexadecimal": "#FFF8DC"
     },
     {
-        "ID": 209,
-        "Color": "Cosmic cobalt",
+        "Color": "Corvette",
+        "Hexadecimal": "#FAD3A2"
+    },
+    {
+        "Color": "Cosmic",
+        "Hexadecimal": "#76395D"
+    },
+    {
+        "Color": "Cosmic Cobalt",
         "Hexadecimal": "#2E2D88"
     },
     {
-        "ID": 210,
-        "Color": "Cosmic latte",
+        "Color": "Cosmic Latte",
         "Hexadecimal": "#FFF8E7"
     },
     {
-        "ID": 211,
-        "Color": "Coyote brown",
-        "Hexadecimal": "#81613C"
+        "Color": "Cosmos",
+        "Hexadecimal": "#FFD8D9"
     },
     {
-        "ID": 212,
-        "Color": "Cotton candy",
+        "Color": "Costa Del Sol",
+        "Hexadecimal": "#615D30"
+    },
+    {
+        "Color": "Cotton Candy",
         "Hexadecimal": "#FFBCD9"
     },
     {
-        "ID": 213,
+        "Color": "Cotton Candy 2",
+        "Hexadecimal": "#FFB7D5"
+    },
+    {
+        "Color": "Cotton Seed",
+        "Hexadecimal": "#C2BDB6"
+    },
+    {
+        "Color": "County Green",
+        "Hexadecimal": "#01371A"
+    },
+    {
+        "Color": "Cowboy",
+        "Hexadecimal": "#4D282D"
+    },
+    {
+        "Color": "Coyote Brown",
+        "Hexadecimal": "#81613C"
+    },
+    {
+        "Color": "Crail",
+        "Hexadecimal": "#B95140"
+    },
+    {
+        "Color": "Cranberry",
+        "Hexadecimal": "#DB5079"
+    },
+    {
+        "Color": "Crater Brown",
+        "Hexadecimal": "#462425"
+    },
+    {
         "Color": "Cream",
         "Hexadecimal": "#FFFDD0"
     },
     {
-        "ID": 214,
+        "Color": "Cream Brulee",
+        "Hexadecimal": "#FFE5A0"
+    },
+    {
+        "Color": "Cream Can",
+        "Hexadecimal": "#F5C85C"
+    },
+    {
+        "Color": "Creole",
+        "Hexadecimal": "#1E0F04"
+    },
+    {
+        "Color": "Crete",
+        "Hexadecimal": "#737829"
+    },
+    {
         "Color": "Crimson",
         "Hexadecimal": "#DC143C"
     },
     {
-        "ID": 215,
         "Color": "Crimson (UA)",
         "Hexadecimal": "#9E1B32"
     },
     {
-        "ID": 216,
+        "Color": "Crocodile",
+        "Hexadecimal": "#736D58"
+    },
+    {
+        "Color": "Crown Of Thorns",
+        "Hexadecimal": "#771F1F"
+    },
+    {
+        "Color": "Crowshead",
+        "Hexadecimal": "#1C1208"
+    },
+    {
+        "Color": "Cruise",
+        "Hexadecimal": "#B5ECDF"
+    },
+    {
+        "Color": "Crusoe",
+        "Hexadecimal": "#004816"
+    },
+    {
+        "Color": "Crusta",
+        "Hexadecimal": "#FD7B33"
+    },
+    {
         "Color": "Crystal",
         "Hexadecimal": "#A7D8DE"
     },
     {
-        "ID": 217,
         "Color": "Cultured",
         "Hexadecimal": "#F5F5F5"
     },
     {
-        "ID": 218,
-        "Color": "Cyan",
-        "Hexadecimal": "#00FFFF"
+        "Color": "Cumin",
+        "Hexadecimal": "#924321"
     },
     {
-        "ID": 219,
-        "Color": "Cyan (process)",
+        "Color": "Cumulus",
+        "Hexadecimal": "#FDFFD5"
+    },
+    {
+        "Color": "Cupid",
+        "Hexadecimal": "#FBBEDA"
+    },
+    {
+        "Color": "Curious Blue",
+        "Hexadecimal": "#2596D1"
+    },
+    {
+        "Color": "Cutty Sark",
+        "Hexadecimal": "#507672"
+    },
+    {
+        "Color": "Cyan (Process)",
         "Hexadecimal": "#00B7EB"
     },
     {
-        "ID": 220,
-        "Color": "Cyber grape",
+        "Color": "Cyber Grape",
         "Hexadecimal": "#58427C"
     },
     {
-        "ID": 221,
-        "Color": "Cyber yellow",
+        "Color": "Cyber Yellow / Yellow (NCS)",
         "Hexadecimal": "#FFD300"
     },
     {
-        "ID": 222,
         "Color": "Cyclamen",
         "Hexadecimal": "#F56FA1"
     },
     {
-        "ID": 223,
-        "Color": "Dark blue-gray",
+        "Color": "Cyprus",
+        "Hexadecimal": "#003E40"
+    },
+    {
+        "Color": "Daintree",
+        "Hexadecimal": "#012731"
+    },
+    {
+        "Color": "Dairy Cream",
+        "Hexadecimal": "#F9E4BC"
+    },
+    {
+        "Color": "Daisy Bush",
+        "Hexadecimal": "#4F2398"
+    },
+    {
+        "Color": "Dallas",
+        "Hexadecimal": "#6E4B26"
+    },
+    {
+        "Color": "Dandelion",
+        "Hexadecimal": "#FED85D"
+    },
+    {
+        "Color": "Danube",
+        "Hexadecimal": "#6093D1"
+    },
+    {
+        "Color": "Dark Blue",
+        "Hexadecimal": "#0000C8"
+    },
+    {
+        "Color": "Dark Blue-Gray",
         "Hexadecimal": "#666699"
     },
     {
-        "ID": 224,
-        "Color": "Dark brown",
+        "Color": "Dark Brown",
         "Hexadecimal": "#654321"
     },
     {
-        "ID": 225,
-        "Color": "Dark byzantium",
+        "Color": "Dark Burgundy",
+        "Hexadecimal": "#770F05"
+    },
+    {
+        "Color": "Dark Byzantium",
         "Hexadecimal": "#5D3954"
     },
     {
-        "ID": 226,
-        "Color": "Dark cornflower blue",
+        "Color": "Dark Cornflower Blue",
         "Hexadecimal": "#26428B"
     },
     {
-        "ID": 227,
-        "Color": "Dark cyan",
+        "Color": "Dark Cyan",
         "Hexadecimal": "#008B8B"
     },
     {
-        "ID": 228,
-        "Color": "Dark electric blue",
+        "Color": "Dark Ebony",
+        "Hexadecimal": "#3C2005"
+    },
+    {
+        "Color": "Dark Electric Blue / Payne's Grey",
         "Hexadecimal": "#536878"
     },
     {
-        "ID": 229,
-        "Color": "Dark goldenrod",
+        "Color": "Dark Fern",
+        "Hexadecimal": "#0A480D"
+    },
+    {
+        "Color": "Dark Goldenrod",
         "Hexadecimal": "#B8860B"
     },
     {
-        "ID": 230,
-        "Color": "Dark green",
+        "Color": "Dark Green",
         "Hexadecimal": "#013220"
     },
     {
-        "ID": 231,
-        "Color": "Dark green (X11)",
+        "Color": "Dark Green (X11)",
         "Hexadecimal": "#006400"
     },
     {
-        "ID": 232,
-        "Color": "Dark jungle green",
+        "Color": "Dark Jungle Green",
         "Hexadecimal": "#1A2421"
     },
     {
-        "ID": 233,
-        "Color": "Dark khaki",
+        "Color": "Dark Khaki",
         "Hexadecimal": "#BDB76B"
     },
     {
-        "ID": 234,
-        "Color": "Dark lava",
+        "Color": "Dark Lava / Taupe",
         "Hexadecimal": "#483C32"
     },
     {
-        "ID": 235,
-        "Color": "Dark liver",
+        "Color": "Dark Liver",
         "Hexadecimal": "#534B4F"
     },
     {
-        "ID": 236,
-        "Color": "Dark liver (horses)",
+        "Color": "Dark Liver (Horses)",
         "Hexadecimal": "#543D37"
     },
     {
-        "ID": 237,
-        "Color": "Dark magenta",
+        "Color": "Dark Magenta",
         "Hexadecimal": "#8B008B"
     },
     {
-        "ID": 238,
-        "Color": "Dark moss green",
+        "Color": "Dark Moss Green",
         "Hexadecimal": "#4A5D23"
     },
     {
-        "ID": 239,
-        "Color": "Dark olive green",
+        "Color": "Dark Olive Green",
         "Hexadecimal": "#556B2F"
     },
     {
-        "ID": 240,
-        "Color": "Dark orange",
+        "Color": "Dark Orange",
         "Hexadecimal": "#FF8C00"
     },
     {
-        "ID": 241,
-        "Color": "Dark orchid",
+        "Color": "Dark Orchid",
         "Hexadecimal": "#9932CC"
     },
     {
-        "ID": 242,
-        "Color": "Dark pastel green",
+        "Color": "Dark Pastel Green",
         "Hexadecimal": "#03C03C"
     },
     {
-        "ID": 243,
-        "Color": "Dark purple",
+        "Color": "Dark Purple",
         "Hexadecimal": "#301934"
     },
     {
-        "ID": 244,
-        "Color": "Dark red",
+        "Color": "Dark Red",
         "Hexadecimal": "#8B0000"
     },
     {
-        "ID": 245,
-        "Color": "Dark salmon",
+        "Color": "Dark Salmon",
         "Hexadecimal": "#E9967A"
     },
     {
-        "ID": 246,
-        "Color": "Dark sea green",
+        "Color": "Dark Sea Green",
         "Hexadecimal": "#8FBC8F"
     },
     {
-        "ID": 247,
-        "Color": "Dark sienna",
+        "Color": "Dark Sienna",
         "Hexadecimal": "#3C1414"
     },
     {
-        "ID": 248,
-        "Color": "Dark sky blue",
+        "Color": "Dark Sky Blue",
         "Hexadecimal": "#8CBED6"
     },
     {
-        "ID": 249,
-        "Color": "Dark slate blue",
+        "Color": "Dark Slate Blue",
         "Hexadecimal": "#483D8B"
     },
     {
-        "ID": 250,
-        "Color": "Dark slate gray",
+        "Color": "Dark Slate Gray",
         "Hexadecimal": "#2F4F4F"
     },
     {
-        "ID": 251,
-        "Color": "Dark spring green",
+        "Color": "Dark Spring Green",
         "Hexadecimal": "#177245"
     },
     {
-        "ID": 252,
-        "Color": "Dark turquoise",
+        "Color": "Dark Tan",
+        "Hexadecimal": "#661010"
+    },
+    {
+        "Color": "Dark Turquoise",
         "Hexadecimal": "#00CED1"
     },
     {
-        "ID": 253,
-        "Color": "Dark violet",
+        "Color": "Dark Violet",
         "Hexadecimal": "#9400D3"
     },
     {
-        "ID": 254,
-        "Color": "Dartmouth green",
+        "Color": "Dartmouth Green",
         "Hexadecimal": "#00703C"
     },
     {
-        "ID": 255,
-        "Color": "Davy's grey",
+        "Color": "Davy's Grey",
         "Hexadecimal": "#555555"
     },
     {
-        "ID": 256,
-        "Color": "Deep cerise",
+        "Color": "Dawn",
+        "Hexadecimal": "#A6A29A"
+    },
+    {
+        "Color": "Dawn Pink",
+        "Hexadecimal": "#F3E9E5"
+    },
+    {
+        "Color": "De York",
+        "Hexadecimal": "#7AC488"
+    },
+    {
+        "Color": "Deco",
+        "Hexadecimal": "#D2DA97"
+    },
+    {
+        "Color": "Deep Blue",
+        "Hexadecimal": "#220878"
+    },
+    {
+        "Color": "Deep Blush",
+        "Hexadecimal": "#E47698"
+    },
+    {
+        "Color": "Deep Bronze",
+        "Hexadecimal": "#4A3004"
+    },
+    {
+        "Color": "Deep Cerise / Cerise",
         "Hexadecimal": "#DA3287"
     },
     {
-        "ID": 257,
-        "Color": "Deep champagne",
+        "Color": "Deep Champagne / Sunset / Tuscan",
         "Hexadecimal": "#FAD6A5"
     },
     {
-        "ID": 258,
-        "Color": "Deep chestnut",
+        "Color": "Deep Chestnut",
         "Hexadecimal": "#B94E48"
     },
     {
-        "ID": 259,
-        "Color": "Deep jungle green",
+        "Color": "Deep Cove",
+        "Hexadecimal": "#051040"
+    },
+    {
+        "Color": "Deep Fir",
+        "Hexadecimal": "#002900"
+    },
+    {
+        "Color": "Deep Forest Green",
+        "Hexadecimal": "#182D09"
+    },
+    {
+        "Color": "Deep Jungle Green",
         "Hexadecimal": "#004B49"
     },
     {
-        "ID": 260,
-        "Color": "Deep pink",
+        "Color": "Deep Koamaru",
+        "Hexadecimal": "#1B127B"
+    },
+    {
+        "Color": "Deep Oak",
+        "Hexadecimal": "#412010"
+    },
+    {
+        "Color": "Deep Pink",
         "Hexadecimal": "#FF1493"
     },
     {
-        "ID": 261,
-        "Color": "Deep saffron",
+        "Color": "Deep Saffron",
         "Hexadecimal": "#FF9933"
     },
     {
-        "ID": 262,
-        "Color": "Deep sky blue",
-        "Hexadecimal": "#00BFFF"
+        "Color": "Deep Sapphire",
+        "Hexadecimal": "#082567"
     },
     {
-        "ID": 263,
+        "Color": "Deep Sea",
+        "Hexadecimal": "#01826B"
+    },
+    {
+        "Color": "Deep Sea Green",
+        "Hexadecimal": "#095859"
+    },
+    {
         "Color": "Deep Space Sparkle",
         "Hexadecimal": "#4A646C"
     },
     {
-        "ID": 264,
-        "Color": "Deep taupe",
+        "Color": "Deep Taupe",
         "Hexadecimal": "#7E5E60"
     },
     {
-        "ID": 265,
+        "Color": "Deep Teal",
+        "Hexadecimal": "#003532"
+    },
+    {
+        "Color": "Del Rio",
+        "Hexadecimal": "#B09A95"
+    },
+    {
+        "Color": "Dell",
+        "Hexadecimal": "#396413"
+    },
+    {
+        "Color": "Delta",
+        "Hexadecimal": "#A4A49D"
+    },
+    {
+        "Color": "Deluge",
+        "Hexadecimal": "#7563A8"
+    },
+    {
         "Color": "Denim",
         "Hexadecimal": "#1560BD"
     },
     {
-        "ID": 266,
-        "Color": "Denim blue",
+        "Color": "Denim Blue",
         "Hexadecimal": "#2243B6"
     },
     {
-        "ID": 267,
-        "Color": "Desert",
-        "Hexadecimal": "#C19A6B"
+        "Color": "Derby",
+        "Hexadecimal": "#FFEED8"
     },
     {
-        "ID": 268,
-        "Color": "Desert sand",
+        "Color": "Desert",
+        "Hexadecimal": "#AE6020"
+    },
+    {
+        "Color": "Desert Sand",
         "Hexadecimal": "#EDC9AF"
     },
     {
-        "ID": 269,
-        "Color": "Dim gray",
+        "Color": "Desert Storm",
+        "Hexadecimal": "#F8F8F7"
+    },
+    {
+        "Color": "Dew",
+        "Hexadecimal": "#EAFFFE"
+    },
+    {
+        "Color": "Di Serria",
+        "Hexadecimal": "#DB995E"
+    },
+    {
+        "Color": "Diesel",
+        "Hexadecimal": "#130000"
+    },
+    {
+        "Color": "Dim Gray",
         "Hexadecimal": "#696969"
     },
     {
-        "ID": 270,
-        "Color": "Dodger blue",
+        "Color": "Dingley",
+        "Hexadecimal": "#5D7747"
+    },
+    {
+        "Color": "Disco",
+        "Hexadecimal": "#871550"
+    },
+    {
+        "Color": "Dixie",
+        "Hexadecimal": "#E29418"
+    },
+    {
+        "Color": "Dodger Blue",
         "Hexadecimal": "#1E90FF"
     },
     {
-        "ID": 271,
-        "Color": "Dogwood rose",
+        "Color": "Dogwood Rose",
         "Hexadecimal": "#D71868"
     },
     {
-        "ID": 272,
-        "Color": "Drab",
-        "Hexadecimal": "#967117"
+        "Color": "Dolly",
+        "Hexadecimal": "#F9FF8B"
     },
     {
-        "ID": 273,
-        "Color": "Duke blue",
+        "Color": "Dolphin",
+        "Hexadecimal": "#646077"
+    },
+    {
+        "Color": "Domino",
+        "Hexadecimal": "#8E775E"
+    },
+    {
+        "Color": "Don Juan",
+        "Hexadecimal": "#5D4C51"
+    },
+    {
+        "Color": "Donkey Brown",
+        "Hexadecimal": "#A69279"
+    },
+    {
+        "Color": "Dorado",
+        "Hexadecimal": "#6B5755"
+    },
+    {
+        "Color": "Double Colonial White",
+        "Hexadecimal": "#EEE3AD"
+    },
+    {
+        "Color": "Double Pearl Lusta",
+        "Hexadecimal": "#FCF4D0"
+    },
+    {
+        "Color": "Double Spanish White",
+        "Hexadecimal": "#E6D7B9"
+    },
+    {
+        "Color": "Dove Gray",
+        "Hexadecimal": "#6D6C6C"
+    },
+    {
+        "Color": "Downriver",
+        "Hexadecimal": "#092256"
+    },
+    {
+        "Color": "Downy",
+        "Hexadecimal": "#6FD0C5"
+    },
+    {
+        "Color": "Driftwood",
+        "Hexadecimal": "#AF8751"
+    },
+    {
+        "Color": "Drover",
+        "Hexadecimal": "#FDF7AD"
+    },
+    {
+        "Color": "Duke Blue",
         "Hexadecimal": "#00009C"
     },
     {
-        "ID": 274,
-        "Color": "Dutch white",
+        "Color": "Dull Lavender",
+        "Hexadecimal": "#A899E6"
+    },
+    {
+        "Color": "Dune",
+        "Hexadecimal": "#383533"
+    },
+    {
+        "Color": "Dust Storm",
+        "Hexadecimal": "#E5CCC9"
+    },
+    {
+        "Color": "Dusty Gray",
+        "Hexadecimal": "#A8989B"
+    },
+    {
+        "Color": "Dutch White",
         "Hexadecimal": "#EFDFBB"
     },
     {
-        "ID": 275,
-        "Color": "Earth yellow",
+        "Color": "Eagle",
+        "Hexadecimal": "#B6BAA4"
+    },
+    {
+        "Color": "Earls Green",
+        "Hexadecimal": "#C9B93B"
+    },
+    {
+        "Color": "Early Dawn",
+        "Hexadecimal": "#FFF9E6"
+    },
+    {
+        "Color": "Earth Yellow",
         "Hexadecimal": "#E1A95F"
     },
     {
-        "ID": 276,
+        "Color": "East Bay",
+        "Hexadecimal": "#414C7D"
+    },
+    {
+        "Color": "East Side",
+        "Hexadecimal": "#AC91CE"
+    },
+    {
+        "Color": "Eastern Blue",
+        "Hexadecimal": "#1E9AB0"
+    },
+    {
+        "Color": "Ebb",
+        "Hexadecimal": "#E9E3E3"
+    },
+    {
         "Color": "Ebony",
         "Hexadecimal": "#555D50"
     },
     {
-        "ID": 277,
-        "Color": "Ecru",
+        "Color": "Ebony 2",
+        "Hexadecimal": "#0C0B1D"
+    },
+    {
+        "Color": "Ebony Clay",
+        "Hexadecimal": "#26283B"
+    },
+    {
+        "Color": "Eclipse",
+        "Hexadecimal": "#311C17"
+    },
+    {
+        "Color": "Ecru / Sand",
         "Hexadecimal": "#C2B280"
     },
     {
-        "ID": 278,
-        "Color": "Eerie black",
+        "Color": "Ecru White",
+        "Hexadecimal": "#F5F3E5"
+    },
+    {
+        "Color": "Ecstasy",
+        "Hexadecimal": "#FA7814"
+    },
+    {
+        "Color": "Eden",
+        "Hexadecimal": "#105852"
+    },
+    {
+        "Color": "Edgewater",
+        "Hexadecimal": "#C8E3D7"
+    },
+    {
+        "Color": "Edward",
+        "Hexadecimal": "#A2AEAB"
+    },
+    {
+        "Color": "Eerie Black",
         "Hexadecimal": "#1B1B1B"
     },
     {
-        "ID": 279,
+        "Color": "Egg Sour",
+        "Hexadecimal": "#FFF4DD"
+    },
+    {
+        "Color": "Egg White",
+        "Hexadecimal": "#FFEFC1"
+    },
+    {
         "Color": "Eggplant",
         "Hexadecimal": "#614051"
     },
     {
-        "ID": 280,
         "Color": "Eggshell",
         "Hexadecimal": "#F0EAD6"
     },
     {
-        "ID": 281,
-        "Color": "Egyptian blue",
+        "Color": "Egyptian Blue",
         "Hexadecimal": "#1034A6"
     },
     {
-        "ID": 282,
         "Color": "Eigengrau",
         "Hexadecimal": "#16161D"
     },
     {
-        "ID": 283,
-        "Color": "Electric blue",
+        "Color": "El Paso",
+        "Hexadecimal": "#1E1708"
+    },
+    {
+        "Color": "El Salva",
+        "Hexadecimal": "#8F3E33"
+    },
+    {
+        "Color": "Electric Blue",
         "Hexadecimal": "#7DF9FF"
     },
     {
-        "ID": 284,
-        "Color": "Electric green",
+        "Color": "Electric Green / Green / Lime (Web) (X11 Green)",
         "Hexadecimal": "#00FF00"
     },
     {
-        "ID": 285,
-        "Color": "Electric indigo",
+        "Color": "Electric Indigo",
         "Hexadecimal": "#6F00FF"
     },
     {
-        "ID": 286,
-        "Color": "Electric lime",
+        "Color": "Electric Lime",
         "Hexadecimal": "#CCFF00"
     },
     {
-        "ID": 287,
-        "Color": "Electric purple",
+        "Color": "Electric Purple",
         "Hexadecimal": "#BF00FF"
     },
     {
-        "ID": 288,
-        "Color": "Electric violet",
+        "Color": "Electric Violet",
+        "Hexadecimal": "#8B00FF"
+    },
+    {
+        "Color": "Electric Violet / Violet",
         "Hexadecimal": "#8F00FF"
     },
     {
-        "ID": 289,
-        "Color": "Emerald",
+        "Color": "Elephant",
+        "Hexadecimal": "#123447"
+    },
+    {
+        "Color": "Elf Green",
+        "Hexadecimal": "#088370"
+    },
+    {
+        "Color": "Elm",
+        "Hexadecimal": "#1C7C7D"
+    },
+    {
+        "Color": "Emerald / Paris Green",
         "Hexadecimal": "#50C878"
     },
     {
-        "ID": 290,
         "Color": "Eminence",
         "Hexadecimal": "#6C3082"
     },
     {
-        "ID": 291,
-        "Color": "English green",
-        "Hexadecimal": "#1B4D3E"
+        "Color": "Emperor",
+        "Hexadecimal": "#514649"
     },
     {
-        "ID": 292,
-        "Color": "English lavender",
+        "Color": "Empress",
+        "Hexadecimal": "#817377"
+    },
+    {
+        "Color": "Endeavour",
+        "Hexadecimal": "#0056A7"
+    },
+    {
+        "Color": "Energy Yellow",
+        "Hexadecimal": "#F8DD5C"
+    },
+    {
+        "Color": "English Holly",
+        "Hexadecimal": "#022D15"
+    },
+    {
+        "Color": "English Lavender",
         "Hexadecimal": "#B48395"
     },
     {
-        "ID": 293,
-        "Color": "English red",
+        "Color": "English Red",
         "Hexadecimal": "#AB4B52"
     },
     {
-        "ID": 294,
-        "Color": "English vermillion",
+        "Color": "English Vermillion",
         "Hexadecimal": "#CC474B"
     },
     {
-        "ID": 295,
-        "Color": "English violet",
+        "Color": "English Violet",
         "Hexadecimal": "#563C5C"
     },
     {
-        "ID": 296,
+        "Color": "English Walnut",
+        "Hexadecimal": "#3E2B23"
+    },
+    {
+        "Color": "Envy",
+        "Hexadecimal": "#8BA690"
+    },
+    {
+        "Color": "Equator",
+        "Hexadecimal": "#E1BC64"
+    },
+    {
         "Color": "Erin",
         "Hexadecimal": "#00FF40"
     },
     {
-        "ID": 297,
-        "Color": "Eton blue",
+        "Color": "Espresso",
+        "Hexadecimal": "#612718"
+    },
+    {
+        "Color": "Eternity",
+        "Hexadecimal": "#211A0E"
+    },
+    {
+        "Color": "Eton Blue",
         "Hexadecimal": "#96C8A2"
     },
     {
-        "ID": 298,
-        "Color": "Fallow",
-        "Hexadecimal": "#C19A6B"
+        "Color": "Eucalyptus",
+        "Hexadecimal": "#278A5B"
     },
     {
-        "ID": 299,
-        "Color": "Falu red",
+        "Color": "Eunry",
+        "Hexadecimal": "#CFA39D"
+    },
+    {
+        "Color": "Evening Sea",
+        "Hexadecimal": "#024E46"
+    },
+    {
+        "Color": "Everglade",
+        "Hexadecimal": "#1C402E"
+    },
+    {
+        "Color": "Faded Jade",
+        "Hexadecimal": "#427977"
+    },
+    {
+        "Color": "Fair Pink",
+        "Hexadecimal": "#FFEFEC"
+    },
+    {
+        "Color": "Falcon",
+        "Hexadecimal": "#7F626D"
+    },
+    {
+        "Color": "Falu Red",
         "Hexadecimal": "#801818"
     },
     {
-        "ID": 300,
         "Color": "Fandango",
         "Hexadecimal": "#B53389"
     },
     {
-        "ID": 301,
-        "Color": "Fandango pink",
+        "Color": "Fandango Pink",
         "Hexadecimal": "#DE5285"
     },
     {
-        "ID": 302,
-        "Color": "Fashion fuchsia",
+        "Color": "Fantasy",
+        "Hexadecimal": "#FAF3F0"
+    },
+    {
+        "Color": "Fashion Fuchsia / Hollywood Cerise",
         "Hexadecimal": "#F400A1"
     },
     {
-        "ID": 303,
         "Color": "Fawn",
         "Hexadecimal": "#E5AA70"
     },
     {
-        "ID": 304,
+        "Color": "Fedora",
+        "Hexadecimal": "#796A78"
+    },
+    {
+        "Color": "Feijoa",
+        "Hexadecimal": "#9FDD8C"
+    },
+    {
         "Color": "Feldgrau",
         "Hexadecimal": "#4D5D53"
     },
     {
-        "ID": 305,
-        "Color": "Fern green",
+        "Color": "Fern",
+        "Hexadecimal": "#63B76C"
+    },
+    {
+        "Color": "Fern Frond",
+        "Hexadecimal": "#657220"
+    },
+    {
+        "Color": "Fern Green",
         "Hexadecimal": "#4F7942"
     },
     {
-        "ID": 306,
-        "Color": "Field drab",
+        "Color": "Ferra",
+        "Hexadecimal": "#704F50"
+    },
+    {
+        "Color": "Festival",
+        "Hexadecimal": "#FBE96C"
+    },
+    {
+        "Color": "Feta",
+        "Hexadecimal": "#F0FCEA"
+    },
+    {
+        "Color": "Field Drab",
         "Hexadecimal": "#6C541E"
     },
     {
-        "ID": 307,
-        "Color": "Fiery rose",
+        "Color": "Fiery Orange",
+        "Hexadecimal": "#B35213"
+    },
+    {
+        "Color": "Fiery Rose",
         "Hexadecimal": "#FF5470"
     },
     {
-        "ID": 308,
+        "Color": "Finch",
+        "Hexadecimal": "#626649"
+    },
+    {
+        "Color": "Finlandia",
+        "Hexadecimal": "#556D56"
+    },
+    {
+        "Color": "Finn",
+        "Hexadecimal": "#692D54"
+    },
+    {
+        "Color": "Fiord",
+        "Hexadecimal": "#405169"
+    },
+    {
+        "Color": "Fire",
+        "Hexadecimal": "#AA4203"
+    },
+    {
+        "Color": "Fire Bush",
+        "Hexadecimal": "#E89928"
+    },
+    {
+        "Color": "Fire Engine Red",
+        "Hexadecimal": "#CE2029"
+    },
+    {
+        "Color": "Fire Opal",
+        "Hexadecimal": "#E95C4B"
+    },
+    {
         "Color": "Firebrick",
         "Hexadecimal": "#B22222"
     },
     {
-        "ID": 309,
-        "Color": "Fire engine red",
-        "Hexadecimal": "#CE2029"
+        "Color": "Firefly",
+        "Hexadecimal": "#0E2A30"
     },
     {
-        "ID": 310,
-        "Color": "Fire opal",
-        "Hexadecimal": "#E95C4B"
-    },
-    {
-        "ID": 311,
         "Color": "Flame",
         "Hexadecimal": "#E25822"
     },
     {
-        "ID": 312,
+        "Color": "Flame Pea",
+        "Hexadecimal": "#DA5B38"
+    },
+    {
+        "Color": "Flamenco",
+        "Hexadecimal": "#FF7D07"
+    },
+    {
+        "Color": "Flamingo",
+        "Hexadecimal": "#F2552A"
+    },
+    {
         "Color": "Flax",
         "Hexadecimal": "#EEDC82"
     },
     {
-        "ID": 313,
+        "Color": "Flax Smoke",
+        "Hexadecimal": "#7B8265"
+    },
+    {
+        "Color": "Flint",
+        "Hexadecimal": "#6F6A61"
+    },
+    {
         "Color": "Flirt",
         "Hexadecimal": "#A2006D"
     },
     {
-        "ID": 314,
-        "Color": "Floral white",
+        "Color": "Floral White",
         "Hexadecimal": "#FFFAF0"
     },
     {
-        "ID": 315,
-        "Color": "Fluorescent blue",
+        "Color": "Fluorescent Blue",
         "Hexadecimal": "#15F4EE"
     },
     {
-        "ID": 316,
-        "Color": "Forest green (Crayola)",
+        "Color": "Flush Mahogany",
+        "Hexadecimal": "#CA3435"
+    },
+    {
+        "Color": "Foam",
+        "Hexadecimal": "#D8FCFA"
+    },
+    {
+        "Color": "Fog",
+        "Hexadecimal": "#D7D0FF"
+    },
+    {
+        "Color": "Foggy Gray",
+        "Hexadecimal": "#CBCAB6"
+    },
+    {
+        "Color": "Forest Green (Crayola) / Aqua Forest",
         "Hexadecimal": "#5FA777"
     },
     {
-        "ID": 317,
-        "Color": "Forest green (traditional)",
+        "Color": "Forest Green (Traditional) / UP Forest Green",
         "Hexadecimal": "#014421"
     },
     {
-        "ID": 318,
-        "Color": "Forest green (web)",
+        "Color": "Forest Green (Web) / Forest Green",
         "Hexadecimal": "#228B22"
     },
     {
-        "ID": 319,
-        "Color": "French beige",
-        "Hexadecimal": "#A67B5B"
+        "Color": "Forget Me Not",
+        "Hexadecimal": "#FFF1EE"
     },
     {
-        "ID": 320,
-        "Color": "French bistre",
+        "Color": "Fountain Blue",
+        "Hexadecimal": "#56B4BE"
+    },
+    {
+        "Color": "Frangipani",
+        "Hexadecimal": "#FFDEB3"
+    },
+    {
+        "Color": "French Bistre",
         "Hexadecimal": "#856D4D"
     },
     {
-        "ID": 321,
-        "Color": "French blue",
+        "Color": "French Blue",
         "Hexadecimal": "#0072BB"
     },
     {
-        "ID": 322,
-        "Color": "French fuchsia",
+        "Color": "French Fuchsia",
         "Hexadecimal": "#FD3F92"
     },
     {
-        "ID": 323,
-        "Color": "French lilac",
-        "Hexadecimal": "#86608E"
+        "Color": "French Gray",
+        "Hexadecimal": "#BDBDC6"
     },
     {
-        "ID": 324,
-        "Color": "French lime",
+        "Color": "French Lilac",
+        "Hexadecimal": "#ECC7EE"
+    },
+    {
+        "Color": "French Lime",
         "Hexadecimal": "#9EFD38"
     },
     {
-        "ID": 325,
-        "Color": "French mauve",
+        "Color": "French Mauve",
         "Hexadecimal": "#D473D4"
     },
     {
-        "ID": 326,
-        "Color": "French pink",
+        "Color": "French Pass",
+        "Hexadecimal": "#BDEDFD"
+    },
+    {
+        "Color": "French Pink",
         "Hexadecimal": "#FD6C9E"
     },
     {
-        "ID": 327,
-        "Color": "French raspberry",
+        "Color": "French Raspberry",
         "Hexadecimal": "#C72C48"
     },
     {
-        "ID": 328,
-        "Color": "French rose",
+        "Color": "French Rose",
         "Hexadecimal": "#F64A8A"
     },
     {
-        "ID": 329,
-        "Color": "French sky blue",
+        "Color": "French Sky Blue",
         "Hexadecimal": "#77B5FE"
     },
     {
-        "ID": 330,
-        "Color": "French violet",
+        "Color": "French Violet",
         "Hexadecimal": "#8806CE"
     },
     {
-        "ID": 331,
+        "Color": "Fresh Eggplant",
+        "Hexadecimal": "#990066"
+    },
+    {
+        "Color": "Friar Gray",
+        "Hexadecimal": "#807E79"
+    },
+    {
+        "Color": "Fringy Flower",
+        "Hexadecimal": "#B1E2C1"
+    },
+    {
+        "Color": "Froly",
+        "Hexadecimal": "#F57584"
+    },
+    {
+        "Color": "Frost",
+        "Hexadecimal": "#EDF5DD"
+    },
+    {
         "Color": "Frostbite",
         "Hexadecimal": "#E936A7"
     },
     {
-        "ID": 332,
-        "Color": "Fuchsia",
-        "Hexadecimal": "#FF00FF"
+        "Color": "Frosted Mint",
+        "Hexadecimal": "#DBFFF8"
     },
     {
-        "ID": 333,
-        "Color": "Fuchsia (Crayola)",
+        "Color": "Frostee",
+        "Hexadecimal": "#E4F6E7"
+    },
+    {
+        "Color": "Fruit Salad",
+        "Hexadecimal": "#4F9D5D"
+    },
+    {
+        "Color": "Fuchsia (Crayola) / Fuchsia Pink",
         "Hexadecimal": "#C154C1"
     },
     {
-        "ID": 334,
-        "Color": "Fuchsia purple",
+        "Color": "Fuchsia / Magenta",
+        "Hexadecimal": "#FF00FF"
+    },
+    {
+        "Color": "Fuchsia Blue",
+        "Hexadecimal": "#7A58C1"
+    },
+    {
+        "Color": "Fuchsia Purple",
         "Hexadecimal": "#CC397B"
     },
     {
-        "ID": 335,
-        "Color": "Fuchsia rose",
+        "Color": "Fuchsia Rose",
         "Hexadecimal": "#C74375"
     },
     {
-        "ID": 336,
+        "Color": "Fuego",
+        "Hexadecimal": "#BEDE0D"
+    },
+    {
+        "Color": "Fuel Yellow",
+        "Hexadecimal": "#ECA927"
+    },
+    {
         "Color": "Fulvous",
         "Hexadecimal": "#E48400"
     },
     {
-        "ID": 337,
+        "Color": "Fun Blue",
+        "Hexadecimal": "#1959A8"
+    },
+    {
+        "Color": "Fun Green",
+        "Hexadecimal": "#016D39"
+    },
+    {
+        "Color": "Fuscous Gray",
+        "Hexadecimal": "#54534D"
+    },
+    {
         "Color": "Fuzzy Wuzzy",
         "Hexadecimal": "#87421F"
     },
     {
-        "ID": 338,
+        "Color": "Fuzzy Wuzzy Brown",
+        "Hexadecimal": "#C45655"
+    },
+    {
+        "Color": "Gable Green",
+        "Hexadecimal": "#163531"
+    },
+    {
         "Color": "Gainsboro",
         "Hexadecimal": "#DCDCDC"
     },
     {
-        "ID": 339,
+        "Color": "Gallery",
+        "Hexadecimal": "#EFEFEF"
+    },
+    {
+        "Color": "Galliano",
+        "Hexadecimal": "#DCB20C"
+    },
+    {
         "Color": "Gamboge",
         "Hexadecimal": "#E49B0F"
     },
     {
-        "ID": 340,
-        "Color": "Generic viridian",
+        "Color": "Geebung",
+        "Hexadecimal": "#D18F1B"
+    },
+    {
+        "Color": "Generic Viridian",
         "Hexadecimal": "#007F66"
     },
     {
-        "ID": 341,
-        "Color": "Ghost white",
+        "Color": "Genoa",
+        "Hexadecimal": "#15736B"
+    },
+    {
+        "Color": "Geraldine",
+        "Hexadecimal": "#FB8989"
+    },
+    {
+        "Color": "Geyser",
+        "Hexadecimal": "#D4DFE2"
+    },
+    {
+        "Color": "Ghost",
+        "Hexadecimal": "#C7C9D5"
+    },
+    {
+        "Color": "Ghost White",
         "Hexadecimal": "#F8F8FF"
     },
     {
-        "ID": 342,
+        "Color": "Gigas",
+        "Hexadecimal": "#523C94"
+    },
+    {
+        "Color": "Gimblet",
+        "Hexadecimal": "#B8B56A"
+    },
+    {
+        "Color": "Gin",
+        "Hexadecimal": "#E8F2EB"
+    },
+    {
+        "Color": "Gin Fizz",
+        "Hexadecimal": "#FFF9E2"
+    },
+    {
+        "Color": "Givry",
+        "Hexadecimal": "#F8E4BF"
+    },
+    {
+        "Color": "Glacier",
+        "Hexadecimal": "#80B3C4"
+    },
+    {
+        "Color": "Glade Green",
+        "Hexadecimal": "#61845F"
+    },
+    {
         "Color": "Glaucous",
         "Hexadecimal": "#6082B6"
     },
     {
-        "ID": 343,
-        "Color": "Glossy grape",
+        "Color": "Glossy Grape",
         "Hexadecimal": "#AB92B3"
     },
     {
-        "ID": 344,
-        "Color": "GO green",
+        "Color": "Go Ben",
+        "Hexadecimal": "#726D4E"
+    },
+    {
+        "Color": "Go Green",
         "Hexadecimal": "#00AB66"
     },
     {
-        "ID": 345,
+        "Color": "Goblin",
+        "Hexadecimal": "#3D7D52"
+    },
+    {
         "Color": "Gold",
         "Hexadecimal": "#A57C00"
     },
     {
-        "ID": 346,
-        "Color": "Gold (metallic)",
-        "Hexadecimal": "#D4AF37"
-    },
-    {
-        "ID": 347,
-        "Color": "Gold (web) (Golden)",
-        "Hexadecimal": "#FFD700"
-    },
-    {
-        "ID": 348,
-        "Color": "Gold (Crayola)",
+        "Color": "Gold (Crayola) / Gold Sand",
         "Hexadecimal": "#E6BE8A"
     },
     {
-        "ID": 349,
+        "Color": "Gold (Metallic)",
+        "Hexadecimal": "#D4AF37"
+    },
+    {
+        "Color": "Gold (Web) (Golden)",
+        "Hexadecimal": "#FFD700"
+    },
+    {
+        "Color": "Gold Drop",
+        "Hexadecimal": "#F18200"
+    },
+    {
         "Color": "Gold Fusion",
         "Hexadecimal": "#85754E"
     },
     {
-        "ID": 350,
-        "Color": "Golden brown",
+        "Color": "Gold Tips",
+        "Hexadecimal": "#DEBA13"
+    },
+    {
+        "Color": "Golden Bell",
+        "Hexadecimal": "#E28913"
+    },
+    {
+        "Color": "Golden Brown",
         "Hexadecimal": "#996515"
     },
     {
-        "ID": 351,
-        "Color": "Golden poppy",
-        "Hexadecimal": "#FCC200"
+        "Color": "Golden Dream",
+        "Hexadecimal": "#F0D52D"
     },
     {
-        "ID": 352,
-        "Color": "Golden yellow",
-        "Hexadecimal": "#FFDF00"
+        "Color": "Golden Fizz",
+        "Hexadecimal": "#F5FB3D"
     },
     {
-        "ID": 353,
-        "Color": "Goldenrod",
+        "Color": "Golden Glow",
+        "Hexadecimal": "#FDE295"
+    },
+    {
+        "Color": "Golden Grass",
         "Hexadecimal": "#DAA520"
     },
     {
-        "ID": 354,
-        "Color": "Gotham green",
+        "Color": "Golden Poppy",
+        "Hexadecimal": "#FCC200"
+    },
+    {
+        "Color": "Golden Sand",
+        "Hexadecimal": "#F0DB7D"
+    },
+    {
+        "Color": "Golden Tainoi",
+        "Hexadecimal": "#FFCC5C"
+    },
+    {
+        "Color": "Golden Yellow",
+        "Hexadecimal": "#FFDF00"
+    },
+    {
+        "Color": "Goldenrod",
+        "Hexadecimal": "#FCD667"
+    },
+    {
+        "Color": "Gondola",
+        "Hexadecimal": "#261414"
+    },
+    {
+        "Color": "Gordons Green",
+        "Hexadecimal": "#0B1107"
+    },
+    {
+        "Color": "Gorse",
+        "Hexadecimal": "#FFF14F"
+    },
+    {
+        "Color": "Gossamer",
+        "Hexadecimal": "#069B81"
+    },
+    {
+        "Color": "Gossip",
+        "Hexadecimal": "#D2F8B0"
+    },
+    {
+        "Color": "Gotham Green",
         "Hexadecimal": "#00573F"
     },
     {
-        "ID": 355,
-        "Color": "Granite gray",
+        "Color": "Gothic",
+        "Hexadecimal": "#6D92A1"
+    },
+    {
+        "Color": "Governor Bay",
+        "Hexadecimal": "#2F3CB3"
+    },
+    {
+        "Color": "Grain Brown",
+        "Hexadecimal": "#E4D5B7"
+    },
+    {
+        "Color": "Grandis",
+        "Hexadecimal": "#FFD38C"
+    },
+    {
+        "Color": "Granite Gray",
         "Hexadecimal": "#676767"
     },
     {
-        "ID": 356,
-        "Color": "Granny Smith apple",
+        "Color": "Granite Green",
+        "Hexadecimal": "#8D8974"
+    },
+    {
+        "Color": "Granny Apple",
+        "Hexadecimal": "#D5F6E3"
+    },
+    {
+        "Color": "Granny Smith",
+        "Hexadecimal": "#84A0A0"
+    },
+    {
+        "Color": "Granny Smith Apple",
         "Hexadecimal": "#A8E4A0"
     },
     {
-        "ID": 357,
-        "Color": "Gray (web)",
+        "Color": "Granny Smith Apple 2",
+        "Hexadecimal": "#9DE093"
+    },
+    {
+        "Color": "Grape",
+        "Hexadecimal": "#381A51"
+    },
+    {
+        "Color": "Graphite",
+        "Hexadecimal": "#251607"
+    },
+    {
+        "Color": "Gravel",
+        "Hexadecimal": "#4A444B"
+    },
+    {
+        "Color": "Gray (Web) / Gray",
         "Hexadecimal": "#808080"
     },
     {
-        "ID": 358,
-        "Color": "Gray (X11 gray)",
+        "Color": "Gray (X11 Gray)",
         "Hexadecimal": "#BEBEBE"
     },
     {
-        "ID": 359,
-        "Color": "Green",
-        "Hexadecimal": "#00FF00"
+        "Color": "Gray Asparagus",
+        "Hexadecimal": "#465945"
     },
     {
-        "ID": 360,
+        "Color": "Gray Chateau",
+        "Hexadecimal": "#A2AAB3"
+    },
+    {
+        "Color": "Gray Nickel",
+        "Hexadecimal": "#C3C3BD"
+    },
+    {
+        "Color": "Gray Nurse",
+        "Hexadecimal": "#E7ECE6"
+    },
+    {
+        "Color": "Gray Olive",
+        "Hexadecimal": "#A9A491"
+    },
+    {
+        "Color": "Gray Suit",
+        "Hexadecimal": "#C1BECD"
+    },
+    {
         "Color": "Green (Crayola)",
         "Hexadecimal": "#1CAC78"
     },
     {
-        "ID": 361,
-        "Color": "Green (web)",
-        "Hexadecimal": "#008000"
-    },
-    {
-        "ID": 362,
-        "Color": "Green (Munsell)",
+        "Color": "Green (MUNSELL)",
         "Hexadecimal": "#00A877"
     },
     {
-        "ID": 363,
         "Color": "Green (NCS)",
         "Hexadecimal": "#009F6B"
     },
     {
-        "ID": 364,
-        "Color": "Green (Pantone)",
+        "Color": "Green (PANTONE)",
         "Hexadecimal": "#00AD43"
     },
     {
-        "ID": 365,
-        "Color": "Green (pigment)",
+        "Color": "Green (Pigment)",
         "Hexadecimal": "#00A550"
     },
     {
-        "ID": 366,
         "Color": "Green (RYB)",
         "Hexadecimal": "#66B032"
     },
     {
-        "ID": 367,
-        "Color": "Green-blue",
-        "Hexadecimal": "#1164B4"
+        "Color": "Green Haze",
+        "Hexadecimal": "#01A368"
     },
     {
-        "ID": 368,
-        "Color": "Green-blue (Crayola)",
-        "Hexadecimal": "#2887C8"
+        "Color": "Green House",
+        "Hexadecimal": "#24500F"
     },
     {
-        "ID": 369,
-        "Color": "Green-cyan",
-        "Hexadecimal": "#009966"
+        "Color": "Green Kelp",
+        "Hexadecimal": "#25311C"
     },
     {
-        "ID": 370,
+        "Color": "Green Leaf",
+        "Hexadecimal": "#436A0D"
+    },
+    {
         "Color": "Green Lizard",
         "Hexadecimal": "#A7F432"
     },
     {
-        "ID": 371,
+        "Color": "Green Mist",
+        "Hexadecimal": "#CBD3B0"
+    },
+    {
+        "Color": "Green Pea",
+        "Hexadecimal": "#1D6142"
+    },
+    {
         "Color": "Green Sheen",
         "Hexadecimal": "#6EAEA1"
     },
     {
-        "ID": 372,
-        "Color": "Green-yellow",
-        "Hexadecimal": "#ADFF2F"
+        "Color": "Green Smoke",
+        "Hexadecimal": "#A4AF6E"
     },
     {
-        "ID": 373,
-        "Color": "Green-yellow (Crayola)",
+        "Color": "Green Spring",
+        "Hexadecimal": "#B8C1B1"
+    },
+    {
+        "Color": "Green Vogue",
+        "Hexadecimal": "#032B52"
+    },
+    {
+        "Color": "Green Waterloo",
+        "Hexadecimal": "#101405"
+    },
+    {
+        "Color": "Green White",
+        "Hexadecimal": "#E8EBE0"
+    },
+    {
+        "Color": "Green-Blue",
+        "Hexadecimal": "#1164B4"
+    },
+    {
+        "Color": "Green-Blue (Crayola)",
+        "Hexadecimal": "#2887C8"
+    },
+    {
+        "Color": "Green-Cyan",
+        "Hexadecimal": "#009966"
+    },
+    {
+        "Color": "Green-Yellow (Crayola)",
         "Hexadecimal": "#F0E891"
     },
     {
-        "ID": 374,
+        "Color": "Green-Yellow / Green Yellow",
+        "Hexadecimal": "#ADFF2F"
+    },
+    {
+        "Color": "Grenadier",
+        "Hexadecimal": "#D54600"
+    },
+    {
         "Color": "Grullo",
         "Hexadecimal": "#A99A86"
     },
     {
-        "ID": 375,
+        "Color": "Guardsman Red",
+        "Hexadecimal": "#BA0101"
+    },
+    {
+        "Color": "Gulf Blue",
+        "Hexadecimal": "#051657"
+    },
+    {
+        "Color": "Gulf Stream",
+        "Hexadecimal": "#80B3AE"
+    },
+    {
+        "Color": "Gull Gray",
+        "Hexadecimal": "#9DACB7"
+    },
+    {
+        "Color": "Gum Leaf",
+        "Hexadecimal": "#B6D3BF"
+    },
+    {
+        "Color": "Gumbo",
+        "Hexadecimal": "#7CA1A6"
+    },
+    {
+        "Color": "Gun Powder",
+        "Hexadecimal": "#414257"
+    },
+    {
         "Color": "Gunmetal",
         "Hexadecimal": "#2a3439"
     },
     {
-        "ID": 376,
-        "Color": "Han blue",
+        "Color": "Gunsmoke",
+        "Hexadecimal": "#828685"
+    },
+    {
+        "Color": "Gurkha",
+        "Hexadecimal": "#9A9577"
+    },
+    {
+        "Color": "Hacienda",
+        "Hexadecimal": "#98811B"
+    },
+    {
+        "Color": "Hairy Heath",
+        "Hexadecimal": "#6B2A14"
+    },
+    {
+        "Color": "Haiti",
+        "Hexadecimal": "#1B1035"
+    },
+    {
+        "Color": "Half And Half",
+        "Hexadecimal": "#FFFEE1"
+    },
+    {
+        "Color": "Half Baked",
+        "Hexadecimal": "#85C4CC"
+    },
+    {
+        "Color": "Half Colonial White",
+        "Hexadecimal": "#FDF6D3"
+    },
+    {
+        "Color": "Half Dutch White",
+        "Hexadecimal": "#FEF7DE"
+    },
+    {
+        "Color": "Half Spanish White",
+        "Hexadecimal": "#FEF4DB"
+    },
+    {
+        "Color": "Hampton",
+        "Hexadecimal": "#E5D8AF"
+    },
+    {
+        "Color": "Han Blue",
         "Hexadecimal": "#446CCF"
     },
     {
-        "ID": 377,
-        "Color": "Han purple",
+        "Color": "Han Purple",
         "Hexadecimal": "#5218FA"
     },
     {
-        "ID": 378,
-        "Color": "Hansa yellow",
-        "Hexadecimal": "#E9D66B"
-    },
-    {
-        "ID": 379,
         "Color": "Harlequin",
         "Hexadecimal": "#3FFF00"
     },
     {
-        "ID": 380,
-        "Color": "Harvest gold",
+        "Color": "Harp",
+        "Hexadecimal": "#E6F2EA"
+    },
+    {
+        "Color": "Harvest Gold",
+        "Hexadecimal": "#E0B974"
+    },
+    {
+        "Color": "Harvest Gold 2",
         "Hexadecimal": "#DA9100"
     },
     {
-        "ID": 381,
+        "Color": "Havelock Blue",
+        "Hexadecimal": "#5590D9"
+    },
+    {
+        "Color": "Hawaiian Tan",
+        "Hexadecimal": "#9D5616"
+    },
+    {
+        "Color": "Hawkes Blue",
+        "Hexadecimal": "#D4E2FC"
+    },
+    {
         "Color": "Heat Wave",
         "Hexadecimal": "#FF7A00"
     },
     {
-        "ID": 382,
+        "Color": "Heath",
+        "Hexadecimal": "#541012"
+    },
+    {
+        "Color": "Heather",
+        "Hexadecimal": "#B7C3D0"
+    },
+    {
+        "Color": "Heathered Gray",
+        "Hexadecimal": "#B6B095"
+    },
+    {
+        "Color": "Heavy Metal",
+        "Hexadecimal": "#2B3228"
+    },
+    {
         "Color": "Heliotrope",
         "Hexadecimal": "#DF73FF"
     },
     {
-        "ID": 383,
-        "Color": "Heliotrope gray",
+        "Color": "Heliotrope Gray / Rose Quartz",
         "Hexadecimal": "#AA98A9"
     },
     {
-        "ID": 384,
-        "Color": "Hollywood cerise",
-        "Hexadecimal": "#F400A1"
+        "Color": "Hemlock",
+        "Hexadecimal": "#5E5D3B"
     },
     {
-        "ID": 385,
+        "Color": "Hemp",
+        "Hexadecimal": "#907874"
+    },
+    {
+        "Color": "Hibiscus",
+        "Hexadecimal": "#B6316C"
+    },
+    {
+        "Color": "Highland",
+        "Hexadecimal": "#6F8E63"
+    },
+    {
+        "Color": "Hillary",
+        "Hexadecimal": "#ACA586"
+    },
+    {
+        "Color": "Himalaya",
+        "Hexadecimal": "#6A5D1B"
+    },
+    {
+        "Color": "Hint Of Green",
+        "Hexadecimal": "#E6FFE9"
+    },
+    {
+        "Color": "Hint Of Red",
+        "Hexadecimal": "#FBF9F9"
+    },
+    {
+        "Color": "Hint Of Yellow",
+        "Hexadecimal": "#FAFDE4"
+    },
+    {
+        "Color": "Hippie Blue",
+        "Hexadecimal": "#589AAF"
+    },
+    {
+        "Color": "Hippie Green",
+        "Hexadecimal": "#53824B"
+    },
+    {
+        "Color": "Hippie Pink",
+        "Hexadecimal": "#AE4560"
+    },
+    {
+        "Color": "Hit Gray",
+        "Hexadecimal": "#A1ADB5"
+    },
+    {
+        "Color": "Hit Pink",
+        "Hexadecimal": "#FFAB81"
+    },
+    {
+        "Color": "Hokey Pokey",
+        "Hexadecimal": "#C8A528"
+    },
+    {
+        "Color": "Hoki",
+        "Hexadecimal": "#65869F"
+    },
+    {
+        "Color": "Holly",
+        "Hexadecimal": "#011D13"
+    },
+    {
+        "Color": "Honey Flower",
+        "Hexadecimal": "#4F1C70"
+    },
+    {
         "Color": "Honeydew",
         "Hexadecimal": "#F0FFF0"
     },
     {
-        "ID": 386,
-        "Color": "Honolulu blue",
+        "Color": "Honeysuckle",
+        "Hexadecimal": "#EDFC84"
+    },
+    {
+        "Color": "Honolulu Blue",
         "Hexadecimal": "#006DB0"
     },
     {
-        "ID": 387,
-        "Color": "Hooker's green",
+        "Color": "Hooker's Green",
         "Hexadecimal": "#49796B"
     },
     {
-        "ID": 388,
-        "Color": "Hot magenta",
+        "Color": "Hopbush",
+        "Hexadecimal": "#D06DA1"
+    },
+    {
+        "Color": "Horizon",
+        "Hexadecimal": "#5A87A0"
+    },
+    {
+        "Color": "Horses Neck",
+        "Hexadecimal": "#604913"
+    },
+    {
+        "Color": "Hot Magenta",
         "Hexadecimal": "#FF1DCE"
     },
     {
-        "ID": 389,
-        "Color": "Hot pink",
+        "Color": "Hot Pink",
         "Hexadecimal": "#FF69B4"
     },
     {
-        "ID": 390,
-        "Color": "Hunter green",
+        "Color": "Hot Toddy",
+        "Hexadecimal": "#B38007"
+    },
+    {
+        "Color": "Humming Bird",
+        "Hexadecimal": "#CFF9F3"
+    },
+    {
+        "Color": "Hunter Green",
         "Hexadecimal": "#355E3B"
     },
     {
-        "ID": 391,
+        "Color": "Hunter Green 2",
+        "Hexadecimal": "#161D10"
+    },
+    {
+        "Color": "Hurricane",
+        "Hexadecimal": "#877C7B"
+    },
+    {
+        "Color": "Husk",
+        "Hexadecimal": "#B7A458"
+    },
+    {
+        "Color": "Ice Cold",
+        "Hexadecimal": "#B1F4E7"
+    },
+    {
         "Color": "Iceberg",
+        "Hexadecimal": "#DAF4F0"
+    },
+    {
+        "Color": "Iceberg 2",
         "Hexadecimal": "#71A6D2"
     },
     {
-        "ID": 392,
         "Color": "Icterine",
         "Hexadecimal": "#FCF75E"
     },
     {
-        "ID": 393,
-        "Color": "Illuminating emerald",
+        "Color": "Illuminating Emerald",
         "Hexadecimal": "#319177"
     },
     {
-        "ID": 394,
-        "Color": "Imperial red",
+        "Color": "Illusion",
+        "Hexadecimal": "#F6A4C9"
+    },
+    {
+        "Color": "Imperial Red / Red (PANTONE)",
         "Hexadecimal": "#ED2939"
     },
     {
-        "ID": 395,
+        "Color": "Inch Worm",
+        "Hexadecimal": "#B0E313"
+    },
+    {
         "Color": "Inchworm",
         "Hexadecimal": "#B2EC5D"
     },
     {
-        "ID": 396,
         "Color": "Independence",
         "Hexadecimal": "#4C516D"
     },
     {
-        "ID": 397,
-        "Color": "India green",
+        "Color": "India Green",
         "Hexadecimal": "#138808"
     },
     {
-        "ID": 398,
-        "Color": "Indian red",
+        "Color": "Indian Red / Chestnut Rose",
         "Hexadecimal": "#CD5C5C"
     },
     {
-        "ID": 399,
-        "Color": "Indian yellow",
+        "Color": "Indian Tan",
+        "Hexadecimal": "#4D1E01"
+    },
+    {
+        "Color": "Indian Yellow",
         "Hexadecimal": "#E3A857"
     },
     {
-        "ID": 400,
         "Color": "Indigo",
-        "Hexadecimal": "#4B0082"
+        "Hexadecimal": "#4F69C6"
     },
     {
-        "ID": 401,
-        "Color": "Indigo dye",
+        "Color": "Indigo Dye",
         "Hexadecimal": "#00416A"
     },
     {
-        "ID": 402,
+        "Color": "Indochine",
+        "Hexadecimal": "#C26B03"
+    },
+    {
         "Color": "International Klein Blue",
+        "Hexadecimal": "#002FA7"
+    },
+    {
+        "Color": "International Klein Blue 2",
         "Hexadecimal": "#130a8f"
     },
     {
-        "ID": 403,
-        "Color": "International orange (aerospace)",
+        "Color": "International Orange (Aerospace) / International Orange",
         "Hexadecimal": "#FF4F00"
     },
     {
-        "ID": 404,
-        "Color": "International orange (engineering)",
+        "Color": "International Orange (Engineering)",
         "Hexadecimal": "#BA160C"
     },
     {
-        "ID": 405,
-        "Color": "International orange (Golden Gate Bridge)",
+        "Color": "International Orange (Golden Gate Bridge)",
         "Hexadecimal": "#C0362C"
     },
     {
-        "ID": 406,
         "Color": "Iris",
         "Hexadecimal": "#5A4FCF"
     },
     {
-        "ID": 407,
-        "Color": "Irresistible",
+        "Color": "Irish Coffee",
+        "Hexadecimal": "#5F3D26"
+    },
+    {
+        "Color": "Iroko",
+        "Hexadecimal": "#433120"
+    },
+    {
+        "Color": "Iron",
+        "Hexadecimal": "#D4D7D9"
+    },
+    {
+        "Color": "Ironside Gray",
+        "Hexadecimal": "#676662"
+    },
+    {
+        "Color": "Ironstone",
+        "Hexadecimal": "#86483C"
+    },
+    {
+        "Color": "Irresistible / Raspberry Rose",
         "Hexadecimal": "#B3446C"
     },
     {
-        "ID": 408,
         "Color": "Isabelline",
         "Hexadecimal": "#F4F0EC"
     },
     {
-        "ID": 409,
-        "Color": "Italian sky blue",
+        "Color": "Island Spice",
+        "Hexadecimal": "#FFFCEE"
+    },
+    {
+        "Color": "Italian Sky Blue",
         "Hexadecimal": "#B2FFFF"
     },
     {
-        "ID": 410,
         "Color": "Ivory",
         "Hexadecimal": "#FFFFF0"
     },
     {
-        "ID": 411,
+        "Color": "Jacaranda",
+        "Hexadecimal": "#2E0329"
+    },
+    {
+        "Color": "Jacarta",
+        "Hexadecimal": "#3A2A6A"
+    },
+    {
+        "Color": "Jacko Bean",
+        "Hexadecimal": "#2E1905"
+    },
+    {
+        "Color": "Jacksons Purple",
+        "Hexadecimal": "#20208D"
+    },
+    {
         "Color": "Jade",
         "Hexadecimal": "#00A86B"
     },
     {
-        "ID": 412,
-        "Color": "Japanese carmine",
+        "Color": "Jaffa",
+        "Hexadecimal": "#EF863F"
+    },
+    {
+        "Color": "Jagged Ice",
+        "Hexadecimal": "#C2E8E5"
+    },
+    {
+        "Color": "Jagger",
+        "Hexadecimal": "#350E57"
+    },
+    {
+        "Color": "Jaguar",
+        "Hexadecimal": "#080110"
+    },
+    {
+        "Color": "Jambalaya",
+        "Hexadecimal": "#5B3013"
+    },
+    {
+        "Color": "Janna",
+        "Hexadecimal": "#F4EBD3"
+    },
+    {
+        "Color": "Japanese Carmine",
         "Hexadecimal": "#9D2933"
     },
     {
-        "ID": 413,
-        "Color": "Japanese violet",
+        "Color": "Japanese Laurel",
+        "Hexadecimal": "#0A6906"
+    },
+    {
+        "Color": "Japanese Maple",
+        "Hexadecimal": "#780109"
+    },
+    {
+        "Color": "Japanese Violet",
         "Hexadecimal": "#5B3256"
     },
     {
-        "ID": 414,
-        "Color": "Jasmine",
+        "Color": "Japonica",
+        "Hexadecimal": "#D87C63"
+    },
+    {
+        "Color": "Jasmine / Mellow Yellow",
         "Hexadecimal": "#F8DE7E"
     },
     {
-        "ID": 415,
-        "Color": "Jazzberry jam",
+        "Color": "Java",
+        "Hexadecimal": "#1FC2C2"
+    },
+    {
+        "Color": "Jazzberry Jam",
         "Hexadecimal": "#A50B5E"
     },
     {
-        "ID": 416,
+        "Color": "Jelly Bean",
+        "Hexadecimal": "#297B9A"
+    },
+    {
         "Color": "Jet",
         "Hexadecimal": "#343434"
     },
     {
-        "ID": 417,
+        "Color": "Jet Stream",
+        "Hexadecimal": "#B5D2CE"
+    },
+    {
+        "Color": "Jewel",
+        "Hexadecimal": "#126B40"
+    },
+    {
+        "Color": "Jon",
+        "Hexadecimal": "#3B1F1F"
+    },
+    {
         "Color": "Jonquil",
         "Hexadecimal": "#F4CA16"
     },
     {
-        "ID": 418,
-        "Color": "June bud",
+        "Color": "Jonquil 2",
+        "Hexadecimal": "#EEFF9A"
+    },
+    {
+        "Color": "Jordy Blue",
+        "Hexadecimal": "#8AB9F1"
+    },
+    {
+        "Color": "Judge Gray",
+        "Hexadecimal": "#544333"
+    },
+    {
+        "Color": "Jumbo",
+        "Hexadecimal": "#7C7B82"
+    },
+    {
+        "Color": "June Bud",
         "Hexadecimal": "#BDDA57"
     },
     {
-        "ID": 419,
-        "Color": "Jungle green",
+        "Color": "Jungle Green",
         "Hexadecimal": "#29AB87"
     },
     {
-        "ID": 420,
-        "Color": "Kelly green",
+        "Color": "Jungle Mist",
+        "Hexadecimal": "#B4CFD3"
+    },
+    {
+        "Color": "Juniper",
+        "Hexadecimal": "#6D9292"
+    },
+    {
+        "Color": "Just Right",
+        "Hexadecimal": "#ECCDB9"
+    },
+    {
+        "Color": "Kabul",
+        "Hexadecimal": "#5E483E"
+    },
+    {
+        "Color": "Kaitoke Green",
+        "Hexadecimal": "#004620"
+    },
+    {
+        "Color": "Kangaroo",
+        "Hexadecimal": "#C6C8BD"
+    },
+    {
+        "Color": "Karaka",
+        "Hexadecimal": "#1E1609"
+    },
+    {
+        "Color": "Karry",
+        "Hexadecimal": "#FFEAD4"
+    },
+    {
+        "Color": "Kashmir Blue",
+        "Hexadecimal": "#507096"
+    },
+    {
+        "Color": "Kelly Green",
         "Hexadecimal": "#4CBB17"
     },
     {
-        "ID": 421,
+        "Color": "Kelp",
+        "Hexadecimal": "#454936"
+    },
+    {
+        "Color": "Kenyan Copper",
+        "Hexadecimal": "#7C1C05"
+    },
+    {
         "Color": "Keppel",
         "Hexadecimal": "#3AB09E"
     },
     {
-        "ID": 422,
-        "Color": "Key lime",
+        "Color": "Key Lime",
         "Hexadecimal": "#E8F48C"
     },
     {
-        "ID": 423,
-        "Color": "Khaki (web)",
+        "Color": "Key Lime Pie",
+        "Hexadecimal": "#BFC921"
+    },
+    {
+        "Color": "Khaki (Web) / Indian Khaki",
         "Hexadecimal": "#C3B091"
     },
     {
-        "ID": 424,
-        "Color": "Khaki (X11) (Light khaki)",
+        "Color": "Khaki (X11) (Light Khaki) / Khaki",
         "Hexadecimal": "#F0E68C"
     },
     {
-        "ID": 425,
-        "Color": "Kobe",
+        "Color": "Kidnapper",
+        "Hexadecimal": "#E1EAD4"
+    },
+    {
+        "Color": "Kilamanjaro",
+        "Hexadecimal": "#240C02"
+    },
+    {
+        "Color": "Killarney",
+        "Hexadecimal": "#3A6A47"
+    },
+    {
+        "Color": "Kimberly",
+        "Hexadecimal": "#736C9F"
+    },
+    {
+        "Color": "Kingfisher Daisy",
+        "Hexadecimal": "#3E0480"
+    },
+    {
+        "Color": "Kobe / Sienna",
         "Hexadecimal": "#882D17"
     },
     {
-        "ID": 426,
         "Color": "Kobi",
         "Hexadecimal": "#E79FC4"
     },
     {
-        "ID": 427,
         "Color": "Kobicha",
         "Hexadecimal": "#6B4423"
     },
     {
-        "ID": 428,
-        "Color": "Kombu green",
+        "Color": "Kokoda",
+        "Hexadecimal": "#6E6D57"
+    },
+    {
+        "Color": "Kombu Green",
         "Hexadecimal": "#354230"
     },
     {
-        "ID": 429,
-        "Color": "KSU purple",
+        "Color": "Korma",
+        "Hexadecimal": "#8F4B0E"
+    },
+    {
+        "Color": "Koromiko",
+        "Hexadecimal": "#FFBD5F"
+    },
+    {
+        "Color": "Kournikova",
+        "Hexadecimal": "#FFE772"
+    },
+    {
+        "Color": "Ksu Purple",
         "Hexadecimal": "#512888"
     },
     {
-        "ID": 430,
-        "Color": "Languid lavender",
+        "Color": "Kumera",
+        "Hexadecimal": "#886221"
+    },
+    {
+        "Color": "La Palma",
+        "Hexadecimal": "#368716"
+    },
+    {
+        "Color": "La Rioja",
+        "Hexadecimal": "#B3C110"
+    },
+    {
+        "Color": "Languid Lavender",
         "Hexadecimal": "#D6CADD"
     },
     {
-        "ID": 431,
-        "Color": "Lapis lazuli",
+        "Color": "Lapis Lazuli",
         "Hexadecimal": "#26619C"
     },
     {
-        "ID": 432,
-        "Color": "Laser lemon",
+        "Color": "Las Palmas",
+        "Hexadecimal": "#C6E610"
+    },
+    {
+        "Color": "Laser",
+        "Hexadecimal": "#C8B568"
+    },
+    {
+        "Color": "Laser Lemon / Unmellow Yellow",
         "Hexadecimal": "#FFFF66"
     },
     {
-        "ID": 433,
-        "Color": "Laurel green",
+        "Color": "Laurel",
+        "Hexadecimal": "#749378"
+    },
+    {
+        "Color": "Laurel Green",
         "Hexadecimal": "#A9BA9D"
     },
     {
-        "ID": 434,
         "Color": "Lava",
         "Hexadecimal": "#CF1020"
     },
     {
-        "ID": 435,
-        "Color": "Lavender (floral)",
+        "Color": "Lavender (Floral) / Lavender",
         "Hexadecimal": "#B57EDC"
     },
     {
-        "ID": 436,
-        "Color": "Lavender (web)",
+        "Color": "Lavender (Web)",
         "Hexadecimal": "#E6E6FA"
     },
     {
-        "ID": 437,
-        "Color": "Lavender blue",
+        "Color": "Lavender Blue / Periwinkle",
         "Hexadecimal": "#CCCCFF"
     },
     {
-        "ID": 438,
-        "Color": "Lavender blush",
+        "Color": "Lavender Blush",
         "Hexadecimal": "#FFF0F5"
     },
     {
-        "ID": 439,
-        "Color": "Lavender gray",
+        "Color": "Lavender Gray",
+        "Hexadecimal": "#BDBBD7"
+    },
+    {
+        "Color": "Lavender Gray 2",
         "Hexadecimal": "#C4C3D0"
     },
     {
-        "ID": 440,
-        "Color": "Lawn green",
+        "Color": "Lavender Magenta",
+        "Hexadecimal": "#EE82EE"
+    },
+    {
+        "Color": "Lavender Pink",
+        "Hexadecimal": "#FBAED2"
+    },
+    {
+        "Color": "Lavender Purple",
+        "Hexadecimal": "#967BB6"
+    },
+    {
+        "Color": "Lavender Rose",
+        "Hexadecimal": "#FBA0E3"
+    },
+    {
+        "Color": "Lawn Green",
         "Hexadecimal": "#7CFC00"
     },
     {
-        "ID": 441,
-        "Color": "Lemon",
-        "Hexadecimal": "#FFF700"
+        "Color": "Leather",
+        "Hexadecimal": "#967059"
     },
     {
-        "ID": 442,
-        "Color": "Lemon chiffon",
+        "Color": "Lemon",
+        "Hexadecimal": "#FDE910"
+    },
+    {
+        "Color": "Lemon Chiffon",
         "Hexadecimal": "#FFFACD"
     },
     {
-        "ID": 443,
-        "Color": "Lemon curry",
+        "Color": "Lemon Curry",
         "Hexadecimal": "#CCA01D"
     },
     {
-        "ID": 444,
-        "Color": "Lemon glacier",
+        "Color": "Lemon Ginger",
+        "Hexadecimal": "#AC9E22"
+    },
+    {
+        "Color": "Lemon Glacier",
         "Hexadecimal": "#FDFF00"
     },
     {
-        "ID": 445,
-        "Color": "Lemon meringue",
+        "Color": "Lemon Grass",
+        "Hexadecimal": "#9B9E8F"
+    },
+    {
+        "Color": "Lemon Meringue",
         "Hexadecimal": "#F6EABE"
     },
     {
-        "ID": 446,
-        "Color": "Lemon yellow",
+        "Color": "Lemon Yellow",
         "Hexadecimal": "#FFF44F"
     },
     {
-        "ID": 447,
-        "Color": "Lemon yellow (Crayola)",
+        "Color": "Lemon Yellow (Crayola)",
         "Hexadecimal": "#FFFF9F"
     },
     {
-        "ID": 448,
         "Color": "Liberty",
         "Hexadecimal": "#545AA7"
     },
     {
-        "ID": 449,
-        "Color": "Light blue",
+        "Color": "Light Apricot",
+        "Hexadecimal": "#FDD5B1"
+    },
+    {
+        "Color": "Light Blue",
         "Hexadecimal": "#ADD8E6"
     },
     {
-        "ID": 450,
-        "Color": "Light coral",
+        "Color": "Light Coral",
         "Hexadecimal": "#F08080"
     },
     {
-        "ID": 451,
-        "Color": "Light cornflower blue",
+        "Color": "Light Cornflower Blue / Cornflower",
         "Hexadecimal": "#93CCEA"
     },
     {
-        "ID": 452,
-        "Color": "Light cyan",
+        "Color": "Light Cyan",
         "Hexadecimal": "#E0FFFF"
     },
     {
-        "ID": 453,
-        "Color": "Light French beige",
+        "Color": "Light French Beige",
         "Hexadecimal": "#C8AD7F"
     },
     {
-        "ID": 454,
-        "Color": "Light goldenrod yellow",
+        "Color": "Light Goldenrod Yellow",
         "Hexadecimal": "#FAFAD2"
     },
     {
-        "ID": 455,
-        "Color": "Light gray",
+        "Color": "Light Gray",
         "Hexadecimal": "#D3D3D3"
     },
     {
-        "ID": 456,
-        "Color": "Light green",
+        "Color": "Light Green",
         "Hexadecimal": "#90EE90"
     },
     {
-        "ID": 457,
-        "Color": "Light orange",
+        "Color": "Light Orange",
         "Hexadecimal": "#FED8B1"
     },
     {
-        "ID": 458,
-        "Color": "Light periwinkle",
+        "Color": "Light Periwinkle",
         "Hexadecimal": "#C5CBE1"
     },
     {
-        "ID": 459,
-        "Color": "Light pink",
+        "Color": "Light Pink",
         "Hexadecimal": "#FFB6C1"
     },
     {
-        "ID": 460,
-        "Color": "Light salmon",
+        "Color": "Light Salmon",
         "Hexadecimal": "#FFA07A"
     },
     {
-        "ID": 461,
-        "Color": "Light sea green",
+        "Color": "Light Sea Green",
         "Hexadecimal": "#20B2AA"
     },
     {
-        "ID": 462,
-        "Color": "Light sky blue",
+        "Color": "Light Sky Blue",
         "Hexadecimal": "#87CEFA"
     },
     {
-        "ID": 463,
-        "Color": "Light slate gray",
+        "Color": "Light Slate Gray",
         "Hexadecimal": "#778899"
     },
     {
-        "ID": 464,
-        "Color": "Light steel blue",
+        "Color": "Light Steel Blue",
         "Hexadecimal": "#B0C4DE"
     },
     {
-        "ID": 465,
-        "Color": "Light yellow",
+        "Color": "Light Wisteria",
+        "Hexadecimal": "#C9A0DC"
+    },
+    {
+        "Color": "Light Yellow",
         "Hexadecimal": "#FFFFE0"
     },
     {
-        "ID": 466,
+        "Color": "Lightning Yellow",
+        "Hexadecimal": "#FCC01E"
+    },
+    {
         "Color": "Lilac",
         "Hexadecimal": "#C8A2C8"
     },
     {
-        "ID": 467,
+        "Color": "Lilac Bush",
+        "Hexadecimal": "#9874D3"
+    },
+    {
         "Color": "Lilac Luster",
         "Hexadecimal": "#AE98AA"
     },
     {
-        "ID": 468,
-        "Color": "Lime (color wheel)",
-        "Hexadecimal": "#BFFF00"
+        "Color": "Lily",
+        "Hexadecimal": "#C8AABF"
     },
     {
-        "ID": 469,
-        "Color": "Lime (web) (X11 green)",
-        "Hexadecimal": "#00FF00"
+        "Color": "Lily White",
+        "Hexadecimal": "#E7F8FF"
     },
     {
-        "ID": 470,
-        "Color": "Lime green",
+        "Color": "Lima",
+        "Hexadecimal": "#76BD17"
+    },
+    {
+        "Color": "Lime Green",
         "Hexadecimal": "#32CD32"
     },
     {
-        "ID": 471,
-        "Color": "Lincoln green",
+        "Color": "Limeade",
+        "Hexadecimal": "#6F9D02"
+    },
+    {
+        "Color": "Limed Ash",
+        "Hexadecimal": "#747D63"
+    },
+    {
+        "Color": "Limed Oak",
+        "Hexadecimal": "#AC8A56"
+    },
+    {
+        "Color": "Limed Spruce",
+        "Hexadecimal": "#394851"
+    },
+    {
+        "Color": "Lincoln Green",
         "Hexadecimal": "#195905"
     },
     {
-        "ID": 472,
         "Color": "Linen",
         "Hexadecimal": "#FAF0E6"
     },
     {
-        "ID": 473,
-        "Color": "Lion",
-        "Hexadecimal": "#C19A6B"
+        "Color": "Link Water",
+        "Hexadecimal": "#D9E4F5"
     },
     {
-        "ID": 474,
-        "Color": "Liseran purple",
-        "Hexadecimal": "#DE6FA1"
+        "Color": "Lipstick",
+        "Hexadecimal": "#AB0563"
     },
     {
-        "ID": 475,
-        "Color": "Little boy blue",
+        "Color": "Lisbon Brown",
+        "Hexadecimal": "#423921"
+    },
+    {
+        "Color": "Little Boy Blue",
         "Hexadecimal": "#6CA0DC"
     },
     {
-        "ID": 476,
         "Color": "Liver",
         "Hexadecimal": "#674C47"
     },
     {
-        "ID": 477,
-        "Color": "Liver (dogs)",
+        "Color": "Liver (Dogs)",
         "Hexadecimal": "#B86D29"
     },
     {
-        "ID": 478,
-        "Color": "Liver (organ)",
+        "Color": "Liver (Organ)",
         "Hexadecimal": "#6C2E1F"
     },
     {
-        "ID": 479,
-        "Color": "Liver chestnut",
+        "Color": "Liver Chestnut",
         "Hexadecimal": "#987456"
     },
     {
-        "ID": 480,
-        "Color": "Livid",
-        "Hexadecimal": "#6699CC"
+        "Color": "Livid Brown",
+        "Hexadecimal": "#4D282E"
     },
     {
-        "ID": 481,
-        "Color": "Macaroni and Cheese",
+        "Color": "Loafer",
+        "Hexadecimal": "#EEF4DE"
+    },
+    {
+        "Color": "Loblolly",
+        "Hexadecimal": "#BDC9CE"
+    },
+    {
+        "Color": "Lochinvar",
+        "Hexadecimal": "#2C8C84"
+    },
+    {
+        "Color": "Lochmara",
+        "Hexadecimal": "#007EC7"
+    },
+    {
+        "Color": "Locust",
+        "Hexadecimal": "#A8AF8E"
+    },
+    {
+        "Color": "Log Cabin",
+        "Hexadecimal": "#242A1D"
+    },
+    {
+        "Color": "Logan",
+        "Hexadecimal": "#AAA9CD"
+    },
+    {
+        "Color": "Lola",
+        "Hexadecimal": "#DFCFDB"
+    },
+    {
+        "Color": "London Hue",
+        "Hexadecimal": "#BEA6C3"
+    },
+    {
+        "Color": "Lonestar",
+        "Hexadecimal": "#6D0101"
+    },
+    {
+        "Color": "Lotus",
+        "Hexadecimal": "#863C3C"
+    },
+    {
+        "Color": "Loulou",
+        "Hexadecimal": "#460B41"
+    },
+    {
+        "Color": "Lucky",
+        "Hexadecimal": "#AF9F1C"
+    },
+    {
+        "Color": "Lucky Point",
+        "Hexadecimal": "#1A1A68"
+    },
+    {
+        "Color": "Lunar Green",
+        "Hexadecimal": "#3C493A"
+    },
+    {
+        "Color": "Luxor Gold",
+        "Hexadecimal": "#A7882C"
+    },
+    {
+        "Color": "Lynch",
+        "Hexadecimal": "#697E9A"
+    },
+    {
+        "Color": "Mabel",
+        "Hexadecimal": "#D9F7FF"
+    },
+    {
+        "Color": "Macaroni And Cheese",
+        "Hexadecimal": "#FFB97B"
+    },
+    {
+        "Color": "Macaroni And Cheese 2",
         "Hexadecimal": "#FFBD88"
     },
     {
-        "ID": 482,
+        "Color": "Madang",
+        "Hexadecimal": "#B7F0BE"
+    },
+    {
         "Color": "Madder Lake",
         "Hexadecimal": "#CC3336"
     },
     {
-        "ID": 483,
-        "Color": "Magenta",
-        "Hexadecimal": "#FF00FF"
+        "Color": "Madison",
+        "Hexadecimal": "#09255D"
     },
     {
-        "ID": 484,
+        "Color": "Madras",
+        "Hexadecimal": "#3F3002"
+    },
+    {
         "Color": "Magenta (Crayola)",
         "Hexadecimal": "#F653A6"
     },
     {
-        "ID": 485,
-        "Color": "Magenta (dye)",
+        "Color": "Magenta (Dye)",
         "Hexadecimal": "#CA1F7B"
     },
     {
-        "ID": 486,
-        "Color": "Magenta (Pantone)",
+        "Color": "Magenta (PANTONE)",
         "Hexadecimal": "#D0417E"
     },
     {
-        "ID": 487,
-        "Color": "Magenta (process)",
+        "Color": "Magenta (Process)",
         "Hexadecimal": "#FF0090"
     },
     {
-        "ID": 488,
-        "Color": "Magenta haze",
+        "Color": "Magenta Haze",
         "Hexadecimal": "#9F4576"
     },
     {
-        "ID": 489,
-        "Color": "Magic mint",
+        "Color": "Magic Mint",
         "Hexadecimal": "#AAF0D1"
     },
     {
-        "ID": 490,
         "Color": "Magnolia",
+        "Hexadecimal": "#F8F4FF"
+    },
+    {
+        "Color": "Magnolia 2",
         "Hexadecimal": "#F2E8D7"
     },
     {
-        "ID": 491,
         "Color": "Mahogany",
         "Hexadecimal": "#C04000"
     },
     {
-        "ID": 492,
-        "Color": "Maize",
-        "Hexadecimal": "#FBEC5D"
+        "Color": "Mahogany 2",
+        "Hexadecimal": "#4E0606"
     },
     {
-        "ID": 493,
+        "Color": "Mai Tai",
+        "Hexadecimal": "#B06608"
+    },
+    {
+        "Color": "Maize",
+        "Hexadecimal": "#F5D5A0"
+    },
+    {
         "Color": "Maize (Crayola)",
         "Hexadecimal": "#F2C649"
     },
     {
-        "ID": 494,
-        "Color": "Majorelle blue",
+        "Color": "Majorelle Blue",
         "Hexadecimal": "#6050DC"
     },
     {
-        "ID": 495,
+        "Color": "Makara",
+        "Hexadecimal": "#897D6D"
+    },
+    {
+        "Color": "Mako",
+        "Hexadecimal": "#444954"
+    },
+    {
         "Color": "Malachite",
         "Hexadecimal": "#0BDA51"
     },
     {
-        "ID": 496,
+        "Color": "Malibu",
+        "Hexadecimal": "#7DC8F7"
+    },
+    {
+        "Color": "Mallard",
+        "Hexadecimal": "#233418"
+    },
+    {
+        "Color": "Malta",
+        "Hexadecimal": "#BDB2A1"
+    },
+    {
+        "Color": "Mamba",
+        "Hexadecimal": "#8E8190"
+    },
+    {
         "Color": "Manatee",
         "Hexadecimal": "#979AAA"
     },
     {
-        "ID": 497,
+        "Color": "Manatee 2",
+        "Hexadecimal": "#8D90A1"
+    },
+    {
+        "Color": "Mandalay",
+        "Hexadecimal": "#AD781B"
+    },
+    {
         "Color": "Mandarin",
         "Hexadecimal": "#F37A48"
     },
     {
-        "ID": 498,
+        "Color": "Mandy",
+        "Hexadecimal": "#E25465"
+    },
+    {
+        "Color": "Mandys Pink",
+        "Hexadecimal": "#F2C3B2"
+    },
+    {
         "Color": "Mango",
         "Hexadecimal": "#FDBE02"
     },
     {
-        "ID": 499,
         "Color": "Mango Tango",
         "Hexadecimal": "#FF8243"
     },
     {
-        "ID": 500,
+        "Color": "Mango Tango 2",
+        "Hexadecimal": "#E77200"
+    },
+    {
+        "Color": "Manhattan",
+        "Hexadecimal": "#F5C999"
+    },
+    {
         "Color": "Mantis",
         "Hexadecimal": "#74C365"
     },
     {
-        "ID": 501,
+        "Color": "Mantle",
+        "Hexadecimal": "#8B9C90"
+    },
+    {
+        "Color": "Manz",
+        "Hexadecimal": "#EEEF78"
+    },
+    {
         "Color": "Mardi Gras",
         "Hexadecimal": "#880085"
     },
     {
-        "ID": 502,
+        "Color": "Mardi Gras 2",
+        "Hexadecimal": "#350036"
+    },
+    {
         "Color": "Marigold",
         "Hexadecimal": "#EAA221"
     },
     {
-        "ID": 503,
-        "Color": "Maroon (Crayola)",
-        "Hexadecimal": "#C32148"
+        "Color": "Marigold 2",
+        "Hexadecimal": "#B98D28"
     },
     {
-        "ID": 504,
-        "Color": "Maroon (web)",
+        "Color": "Marigold Yellow",
+        "Hexadecimal": "#FBE870"
+    },
+    {
+        "Color": "Mariner",
+        "Hexadecimal": "#286ACD"
+    },
+    {
+        "Color": "Maroon (Web) / Maroon",
         "Hexadecimal": "#800000"
     },
     {
-        "ID": 505,
         "Color": "Maroon (X11)",
         "Hexadecimal": "#B03060"
     },
     {
-        "ID": 506,
+        "Color": "Maroon Oak",
+        "Hexadecimal": "#520C17"
+    },
+    {
+        "Color": "Marshland",
+        "Hexadecimal": "#0B0F08"
+    },
+    {
+        "Color": "Martini",
+        "Hexadecimal": "#AFA09E"
+    },
+    {
+        "Color": "Martinique",
+        "Hexadecimal": "#363050"
+    },
+    {
+        "Color": "Marzipan",
+        "Hexadecimal": "#F8DB9D"
+    },
+    {
+        "Color": "Masala",
+        "Hexadecimal": "#403B38"
+    },
+    {
+        "Color": "Matisse",
+        "Hexadecimal": "#1B659D"
+    },
+    {
+        "Color": "Matrix",
+        "Hexadecimal": "#B05D54"
+    },
+    {
+        "Color": "Matterhorn",
+        "Hexadecimal": "#4E3B41"
+    },
+    {
         "Color": "Mauve",
         "Hexadecimal": "#E0B0FF"
     },
     {
-        "ID": 507,
-        "Color": "Mauve taupe",
+        "Color": "Mauve Taupe / Raspberry Glace",
         "Hexadecimal": "#915F6D"
     },
     {
-        "ID": 508,
         "Color": "Mauvelous",
         "Hexadecimal": "#EF98AA"
     },
     {
-        "ID": 509,
-        "Color": "Maximum blue",
+        "Color": "Mauvelous 2",
+        "Hexadecimal": "#F091A9"
+    },
+    {
+        "Color": "Maverick",
+        "Hexadecimal": "#D8C2D5"
+    },
+    {
+        "Color": "Maximum Blue",
         "Hexadecimal": "#47ABCC"
     },
     {
-        "ID": 510,
-        "Color": "Maximum blue green",
+        "Color": "Maximum Blue Green",
         "Hexadecimal": "#30BFBF"
     },
     {
-        "ID": 511,
-        "Color": "Maximum blue purple",
+        "Color": "Maximum Blue Purple",
         "Hexadecimal": "#ACACE6"
     },
     {
-        "ID": 512,
-        "Color": "Maximum green",
+        "Color": "Maximum Green",
         "Hexadecimal": "#5E8C31"
     },
     {
-        "ID": 513,
-        "Color": "Maximum green yellow",
+        "Color": "Maximum Green Yellow",
         "Hexadecimal": "#D9E650"
     },
     {
-        "ID": 514,
-        "Color": "Maximum purple",
+        "Color": "Maximum Purple",
         "Hexadecimal": "#733380"
     },
     {
-        "ID": 515,
-        "Color": "Maximum red",
+        "Color": "Maximum Red",
         "Hexadecimal": "#D92121"
     },
     {
-        "ID": 516,
-        "Color": "Maximum red purple",
+        "Color": "Maximum Red Purple",
         "Hexadecimal": "#A63A79"
     },
     {
-        "ID": 517,
-        "Color": "Maximum yellow",
+        "Color": "Maximum Yellow",
         "Hexadecimal": "#FAFA37"
     },
     {
-        "ID": 518,
-        "Color": "Maximum yellow red",
+        "Color": "Maximum Yellow Red",
         "Hexadecimal": "#F2BA49"
     },
     {
-        "ID": 519,
-        "Color": "May green",
+        "Color": "May Green",
         "Hexadecimal": "#4C9141"
     },
     {
-        "ID": 520,
-        "Color": "Maya blue",
+        "Color": "Maya Blue",
         "Hexadecimal": "#73C2FB"
     },
     {
-        "ID": 521,
-        "Color": "Medium aquamarine",
+        "Color": "Medium Aquamarine",
         "Hexadecimal": "#66DDAA"
     },
     {
-        "ID": 522,
-        "Color": "Medium blue",
+        "Color": "Medium Blue",
         "Hexadecimal": "#0000CD"
     },
     {
-        "ID": 523,
-        "Color": "Medium candy apple red",
+        "Color": "Medium Candy Apple Red",
         "Hexadecimal": "#E2062C"
     },
     {
-        "ID": 524,
-        "Color": "Medium carmine",
+        "Color": "Medium Carmine",
         "Hexadecimal": "#AF4035"
     },
     {
-        "ID": 525,
-        "Color": "Medium champagne",
+        "Color": "Medium Champagne",
         "Hexadecimal": "#F3E5AB"
     },
     {
-        "ID": 526,
-        "Color": "Medium orchid",
+        "Color": "Medium Orchid",
         "Hexadecimal": "#BA55D3"
     },
     {
-        "ID": 527,
-        "Color": "Medium purple",
+        "Color": "Medium Purple",
         "Hexadecimal": "#9370DB"
     },
     {
-        "ID": 528,
-        "Color": "Medium sea green",
+        "Color": "Medium Red Violet",
+        "Hexadecimal": "#BB3385"
+    },
+    {
+        "Color": "Medium Sea Green",
         "Hexadecimal": "#3CB371"
     },
     {
-        "ID": 529,
-        "Color": "Medium slate blue",
+        "Color": "Medium Slate Blue",
         "Hexadecimal": "#7B68EE"
     },
     {
-        "ID": 530,
-        "Color": "Medium spring green",
+        "Color": "Medium Spring Green",
         "Hexadecimal": "#00FA9A"
     },
     {
-        "ID": 531,
-        "Color": "Medium turquoise",
+        "Color": "Medium Turquoise",
         "Hexadecimal": "#48D1CC"
     },
     {
-        "ID": 532,
-        "Color": "Medium violet-red",
+        "Color": "Medium Violet-Red / Red-Violet / Red Violet",
         "Hexadecimal": "#C71585"
     },
     {
-        "ID": 533,
-        "Color": "Mellow apricot",
+        "Color": "Melanie",
+        "Hexadecimal": "#E4C2D5"
+    },
+    {
+        "Color": "Melanzane",
+        "Hexadecimal": "#300529"
+    },
+    {
+        "Color": "Mellow Apricot",
         "Hexadecimal": "#F8B878"
     },
     {
-        "ID": 534,
-        "Color": "Mellow yellow",
-        "Hexadecimal": "#F8DE7E"
-    },
-    {
-        "ID": 535,
         "Color": "Melon",
         "Hexadecimal": "#FEBAAD"
     },
     {
-        "ID": 536,
-        "Color": "Metallic gold",
+        "Color": "Melrose",
+        "Hexadecimal": "#C7C1FF"
+    },
+    {
+        "Color": "Mercury",
+        "Hexadecimal": "#E5E5E5"
+    },
+    {
+        "Color": "Merino",
+        "Hexadecimal": "#F6F0E6"
+    },
+    {
+        "Color": "Merlin",
+        "Hexadecimal": "#413C37"
+    },
+    {
+        "Color": "Merlot",
+        "Hexadecimal": "#831923"
+    },
+    {
+        "Color": "Metallic Bronze",
+        "Hexadecimal": "#49371B"
+    },
+    {
+        "Color": "Metallic Copper",
+        "Hexadecimal": "#71291D"
+    },
+    {
+        "Color": "Metallic Gold",
         "Hexadecimal": "#D3AF37"
     },
     {
-        "ID": 537,
         "Color": "Metallic Seaweed",
         "Hexadecimal": "#0A7E8C"
     },
     {
-        "ID": 538,
         "Color": "Metallic Sunburst",
         "Hexadecimal": "#9C7C38"
     },
     {
-        "ID": 539,
-        "Color": "Mexican pink",
+        "Color": "Meteor",
+        "Hexadecimal": "#D07D12"
+    },
+    {
+        "Color": "Meteorite",
+        "Hexadecimal": "#3C1F76"
+    },
+    {
+        "Color": "Mexican Pink",
         "Hexadecimal": "#E4007C"
     },
     {
-        "ID": 540,
-        "Color": "Middle blue",
+        "Color": "Mexican Red",
+        "Hexadecimal": "#A72525"
+    },
+    {
+        "Color": "Mid Gray",
+        "Hexadecimal": "#5F5F6E"
+    },
+    {
+        "Color": "Middle Blue",
         "Hexadecimal": "#7ED4E6"
     },
     {
-        "ID": 541,
-        "Color": "Middle blue green",
+        "Color": "Middle Blue Green",
         "Hexadecimal": "#8DD9CC"
     },
     {
-        "ID": 542,
-        "Color": "Middle blue purple",
+        "Color": "Middle Blue Purple",
         "Hexadecimal": "#8B72BE"
     },
     {
-        "ID": 543,
-        "Color": "Middle grey",
-        "Hexadecimal": "#8B8680"
-    },
-    {
-        "ID": 544,
-        "Color": "Middle green",
+        "Color": "Middle Green",
         "Hexadecimal": "#4D8C57"
     },
     {
-        "ID": 545,
-        "Color": "Middle green yellow",
+        "Color": "Middle Green Yellow",
         "Hexadecimal": "#ACBF60"
     },
     {
-        "ID": 546,
-        "Color": "Middle purple",
+        "Color": "Middle Grey / Natural Gray",
+        "Hexadecimal": "#8B8680"
+    },
+    {
+        "Color": "Middle Purple",
         "Hexadecimal": "#D982B5"
     },
     {
-        "ID": 547,
-        "Color": "Middle red",
+        "Color": "Middle Red",
         "Hexadecimal": "#E58E73"
     },
     {
-        "ID": 548,
-        "Color": "Middle red purple",
+        "Color": "Middle Red Purple",
         "Hexadecimal": "#A55353"
     },
     {
-        "ID": 549,
-        "Color": "Middle yellow",
+        "Color": "Middle Yellow",
         "Hexadecimal": "#FFEB00"
     },
     {
-        "ID": 550,
-        "Color": "Middle yellow red",
+        "Color": "Middle Yellow Red",
         "Hexadecimal": "#ECB176"
     },
     {
-        "ID": 551,
         "Color": "Midnight",
+        "Hexadecimal": "#011635"
+    },
+    {
+        "Color": "Midnight 2",
         "Hexadecimal": "#702670"
     },
     {
-        "ID": 552,
-        "Color": "Midnight blue",
+        "Color": "Midnight Blue",
         "Hexadecimal": "#191970"
     },
     {
-        "ID": 553,
-        "Color": "Midnight green (eagle green)",
+        "Color": "Midnight Blue 2",
+        "Hexadecimal": "#003366"
+    },
+    {
+        "Color": "Midnight Green (Eagle Green)",
         "Hexadecimal": "#004953"
     },
     {
-        "ID": 554,
-        "Color": "Mikado yellow",
+        "Color": "Midnight Moss",
+        "Hexadecimal": "#041004"
+    },
+    {
+        "Color": "Mikado",
+        "Hexadecimal": "#2D2510"
+    },
+    {
+        "Color": "Mikado Yellow",
         "Hexadecimal": "#FFC40C"
     },
     {
-        "ID": 555,
-        "Color": "Mimi pink",
+        "Color": "Milan",
+        "Hexadecimal": "#FAFFA4"
+    },
+    {
+        "Color": "Milano Red",
+        "Hexadecimal": "#B81104"
+    },
+    {
+        "Color": "Milk Punch",
+        "Hexadecimal": "#FFF6D4"
+    },
+    {
+        "Color": "Millbrook",
+        "Hexadecimal": "#594433"
+    },
+    {
+        "Color": "Mimi Pink",
         "Hexadecimal": "#FFDAE9"
     },
     {
-        "ID": 556,
+        "Color": "Mimosa",
+        "Hexadecimal": "#F8FDD3"
+    },
+    {
         "Color": "Mindaro",
         "Hexadecimal": "#E3F988"
     },
     {
-        "ID": 557,
+        "Color": "Mine Shaft",
+        "Hexadecimal": "#323232"
+    },
+    {
+        "Color": "Mineral Green",
+        "Hexadecimal": "#3F5D53"
+    },
+    {
         "Color": "Ming",
         "Hexadecimal": "#36747D"
     },
     {
-        "ID": 558,
-        "Color": "Minion yellow",
+        "Color": "Minion Yellow",
         "Hexadecimal": "#F5E050"
     },
     {
-        "ID": 559,
+        "Color": "Minsk",
+        "Hexadecimal": "#3F307F"
+    },
+    {
         "Color": "Mint",
         "Hexadecimal": "#3EB489"
     },
     {
-        "ID": 560,
-        "Color": "Mint cream",
+        "Color": "Mint Cream",
         "Hexadecimal": "#F5FFFA"
     },
     {
-        "ID": 561,
-        "Color": "Mint green",
+        "Color": "Mint Green",
         "Hexadecimal": "#98FF98"
     },
     {
-        "ID": 562,
-        "Color": "Misty moss",
+        "Color": "Mint Julep",
+        "Hexadecimal": "#F1EEC1"
+    },
+    {
+        "Color": "Mint Tulip",
+        "Hexadecimal": "#C4F4EB"
+    },
+    {
+        "Color": "Mirage",
+        "Hexadecimal": "#161928"
+    },
+    {
+        "Color": "Mischka",
+        "Hexadecimal": "#D1D2DD"
+    },
+    {
+        "Color": "Mist Gray",
+        "Hexadecimal": "#C4C4BC"
+    },
+    {
+        "Color": "Misty Moss",
         "Hexadecimal": "#BBB477"
     },
     {
-        "ID": 563,
-        "Color": "Misty rose",
+        "Color": "Misty Rose",
         "Hexadecimal": "#FFE4E1"
     },
     {
-        "ID": 564,
-        "Color": "Mode beige",
-        "Hexadecimal": "#967117"
+        "Color": "Mobster",
+        "Hexadecimal": "#7F7589"
     },
     {
-        "ID": 565,
-        "Color": "Morning blue",
+        "Color": "Moccaccino",
+        "Hexadecimal": "#6E1D14"
+    },
+    {
+        "Color": "Mocha",
+        "Hexadecimal": "#782D19"
+    },
+    {
+        "Color": "Mojo",
+        "Hexadecimal": "#C04737"
+    },
+    {
+        "Color": "Mona Lisa",
+        "Hexadecimal": "#FFA194"
+    },
+    {
+        "Color": "Monarch",
+        "Hexadecimal": "#8B0723"
+    },
+    {
+        "Color": "Mondo",
+        "Hexadecimal": "#4A3C30"
+    },
+    {
+        "Color": "Mongoose",
+        "Hexadecimal": "#B5A27F"
+    },
+    {
+        "Color": "Monsoon",
+        "Hexadecimal": "#8A8389"
+    },
+    {
+        "Color": "Monte Carlo",
+        "Hexadecimal": "#83D0C6"
+    },
+    {
+        "Color": "Monza",
+        "Hexadecimal": "#C7031E"
+    },
+    {
+        "Color": "Moody Blue",
+        "Hexadecimal": "#7F76D3"
+    },
+    {
+        "Color": "Moon Glow",
+        "Hexadecimal": "#FCFEDA"
+    },
+    {
+        "Color": "Moon Mist",
+        "Hexadecimal": "#DCDDCC"
+    },
+    {
+        "Color": "Moon Raker",
+        "Hexadecimal": "#D6CEF6"
+    },
+    {
+        "Color": "Morning Blue",
         "Hexadecimal": "#8DA399"
     },
     {
-        "ID": 566,
-        "Color": "Moss green",
+        "Color": "Morning Glory",
+        "Hexadecimal": "#9EDEE0"
+    },
+    {
+        "Color": "Morocco Brown",
+        "Hexadecimal": "#441D00"
+    },
+    {
+        "Color": "Mortar",
+        "Hexadecimal": "#504351"
+    },
+    {
+        "Color": "Mosque",
+        "Hexadecimal": "#036A6E"
+    },
+    {
+        "Color": "Moss Green",
+        "Hexadecimal": "#ADDFAD"
+    },
+    {
+        "Color": "Moss Green / Turtle Green",
         "Hexadecimal": "#8A9A5B"
     },
     {
-        "ID": 567,
         "Color": "Mountain Meadow",
         "Hexadecimal": "#30BA8F"
     },
     {
-        "ID": 568,
-        "Color": "Mountbatten pink",
+        "Color": "Mountain Meadow 2",
+        "Hexadecimal": "#1AB385"
+    },
+    {
+        "Color": "Mountain Mist",
+        "Hexadecimal": "#959396"
+    },
+    {
+        "Color": "Mountbatten Pink",
         "Hexadecimal": "#997A8D"
     },
     {
-        "ID": 569,
-        "Color": "MSU green",
+        "Color": "Msu Green",
         "Hexadecimal": "#18453B"
     },
     {
-        "ID": 570,
+        "Color": "Muddy Waters",
+        "Hexadecimal": "#B78E5C"
+    },
+    {
+        "Color": "Muesli",
+        "Hexadecimal": "#AA8B5B"
+    },
+    {
         "Color": "Mulberry",
         "Hexadecimal": "#C54B8C"
     },
     {
-        "ID": 571,
         "Color": "Mulberry (Crayola)",
         "Hexadecimal": "#C8509B"
     },
     {
-        "ID": 572,
+        "Color": "Mulberry Wood",
+        "Hexadecimal": "#5C0536"
+    },
+    {
+        "Color": "Mule Fawn",
+        "Hexadecimal": "#8C472F"
+    },
+    {
+        "Color": "Mulled Wine",
+        "Hexadecimal": "#4E4562"
+    },
+    {
         "Color": "Mustard",
         "Hexadecimal": "#FFDB58"
     },
     {
-        "ID": 573,
-        "Color": "Myrtle green",
+        "Color": "My Pink",
+        "Hexadecimal": "#D69188"
+    },
+    {
+        "Color": "My Sin",
+        "Hexadecimal": "#FFB31F"
+    },
+    {
+        "Color": "Myrtle Green",
         "Hexadecimal": "#317873"
     },
     {
-        "ID": 574,
         "Color": "Mystic",
         "Hexadecimal": "#D65282"
     },
     {
-        "ID": 575,
-        "Color": "Mystic maroon",
+        "Color": "Mystic 2",
+        "Hexadecimal": "#E2EBED"
+    },
+    {
+        "Color": "Mystic Maroon",
         "Hexadecimal": "#AD4379"
     },
     {
-        "ID": 576,
-        "Color": "Nadeshiko pink",
+        "Color": "Nadeshiko Pink",
         "Hexadecimal": "#F6ADC6"
     },
     {
-        "ID": 577,
-        "Color": "Naples yellow",
+        "Color": "Nandor",
+        "Hexadecimal": "#4B5D52"
+    },
+    {
+        "Color": "Napa",
+        "Hexadecimal": "#ACA494"
+    },
+    {
+        "Color": "Naples Yellow / Royal Yellow / Stil De Grain Yellow",
         "Hexadecimal": "#FADA5E"
     },
     {
-        "ID": 578,
-        "Color": "Navajo white",
+        "Color": "Narvik",
+        "Hexadecimal": "#EDF9F1"
+    },
+    {
+        "Color": "Navajo White",
         "Hexadecimal": "#FFDEAD"
     },
     {
-        "ID": 579,
-        "Color": "Navy blue",
+        "Color": "Navy Blue",
         "Hexadecimal": "#000080"
     },
     {
-        "ID": 580,
-        "Color": "Navy blue (Crayola)",
-        "Hexadecimal": "#1974D2"
+        "Color": "Nebula",
+        "Hexadecimal": "#CBDBD6"
     },
     {
-        "ID": 581,
-        "Color": "Neon blue",
+        "Color": "Negroni",
+        "Hexadecimal": "#FFE2C5"
+    },
+    {
+        "Color": "Neon Blue",
         "Hexadecimal": "#4666FF"
     },
     {
-        "ID": 582,
         "Color": "Neon Carrot",
         "Hexadecimal": "#FFA343"
     },
     {
-        "ID": 583,
-        "Color": "Neon green",
-        "Hexadecimal": "#39FF14"
-    },
-    {
-        "ID": 584,
-        "Color": "Neon fuchsia",
+        "Color": "Neon Fuchsia",
         "Hexadecimal": "#FE4164"
     },
     {
-        "ID": 585,
-        "Color": "New York pink",
+        "Color": "Neon Green",
+        "Hexadecimal": "#39FF14"
+    },
+    {
+        "Color": "Nepal",
+        "Hexadecimal": "#8EABC1"
+    },
+    {
+        "Color": "Neptune",
+        "Hexadecimal": "#7CB7BB"
+    },
+    {
+        "Color": "Nero",
+        "Hexadecimal": "#140600"
+    },
+    {
+        "Color": "Nevada",
+        "Hexadecimal": "#646E75"
+    },
+    {
+        "Color": "New Orleans",
+        "Hexadecimal": "#F3D69D"
+    },
+    {
+        "Color": "New York Pink",
         "Hexadecimal": "#D7837F"
     },
     {
-        "ID": 586,
+        "Color": "Niagara",
+        "Hexadecimal": "#06A189"
+    },
+    {
         "Color": "Nickel",
         "Hexadecimal": "#727472"
     },
     {
-        "ID": 587,
-        "Color": "Non-photo blue",
+        "Color": "Night Rider",
+        "Hexadecimal": "#1F120F"
+    },
+    {
+        "Color": "Night Shadz",
+        "Hexadecimal": "#AA375A"
+    },
+    {
+        "Color": "Nile Blue",
+        "Hexadecimal": "#193751"
+    },
+    {
+        "Color": "Nobel",
+        "Hexadecimal": "#B7B1B1"
+    },
+    {
+        "Color": "Nomad",
+        "Hexadecimal": "#BAB1A2"
+    },
+    {
+        "Color": "Non-Photo Blue",
         "Hexadecimal": "#A4DDED"
     },
     {
-        "ID": 588,
+        "Color": "Norway",
+        "Hexadecimal": "#A8BD9F"
+    },
+    {
+        "Color": "Nugget",
+        "Hexadecimal": "#C59922"
+    },
+    {
+        "Color": "Nutmeg",
+        "Hexadecimal": "#81422C"
+    },
+    {
+        "Color": "Nutmeg Wood Finish",
+        "Hexadecimal": "#683600"
+    },
+    {
         "Color": "Nyanza",
         "Hexadecimal": "#E9FFDB"
     },
     {
-        "ID": 589,
+        "Color": "Oasis",
+        "Hexadecimal": "#FEEFCE"
+    },
+    {
+        "Color": "Observatory",
+        "Hexadecimal": "#02866F"
+    },
+    {
         "Color": "Ocean Blue",
         "Hexadecimal": "#4F42B5"
     },
     {
-        "ID": 590,
-        "Color": "Ocean green",
+        "Color": "Ocean Green",
+        "Hexadecimal": "#41AA78"
+    },
+    {
+        "Color": "Ocean Green 2",
         "Hexadecimal": "#48BF91"
     },
     {
-        "ID": 591,
         "Color": "Ochre",
         "Hexadecimal": "#CC7722"
     },
     {
-        "ID": 592,
-        "Color": "Old burgundy",
+        "Color": "Off Green",
+        "Hexadecimal": "#E6F8F3"
+    },
+    {
+        "Color": "Off Yellow",
+        "Hexadecimal": "#FEF9E3"
+    },
+    {
+        "Color": "Oil",
+        "Hexadecimal": "#281E15"
+    },
+    {
+        "Color": "Old Brick",
+        "Hexadecimal": "#901E1E"
+    },
+    {
+        "Color": "Old Burgundy",
         "Hexadecimal": "#43302E"
     },
     {
-        "ID": 593,
-        "Color": "Old gold",
+        "Color": "Old Copper",
+        "Hexadecimal": "#724A2F"
+    },
+    {
+        "Color": "Old Gold",
         "Hexadecimal": "#CFB53B"
     },
     {
-        "ID": 594,
-        "Color": "Old lace",
+        "Color": "Old Lace",
         "Hexadecimal": "#FDF5E6"
     },
     {
-        "ID": 595,
-        "Color": "Old lavender",
+        "Color": "Old Lavender",
         "Hexadecimal": "#796878"
     },
     {
-        "ID": 596,
-        "Color": "Old mauve",
+        "Color": "Old Mauve / Wine Dregs",
         "Hexadecimal": "#673147"
     },
     {
-        "ID": 597,
-        "Color": "Old rose",
+        "Color": "Old Rose",
         "Hexadecimal": "#C08081"
     },
     {
-        "ID": 598,
-        "Color": "Old silver",
-        "Hexadecimal": "#848482"
-    },
-    {
-        "ID": 599,
         "Color": "Olive",
         "Hexadecimal": "#808000"
     },
     {
-        "ID": 600,
-        "Color": "Olive Drab (#3)",
+        "Color": "Olive Drab (#3) / Olive Drab",
         "Hexadecimal": "#6B8E23"
     },
     {
-        "ID": 601,
         "Color": "Olive Drab #7",
         "Hexadecimal": "#3C341F"
     },
     {
-        "ID": 602,
-        "Color": "Olive green",
+        "Color": "Olive Green",
         "Hexadecimal": "#B5B35C"
     },
     {
-        "ID": 603,
+        "Color": "Olive Haze",
+        "Hexadecimal": "#8B8470"
+    },
+    {
+        "Color": "Olivetone",
+        "Hexadecimal": "#716E10"
+    },
+    {
         "Color": "Olivine",
         "Hexadecimal": "#9AB973"
     },
     {
-        "ID": 604,
+        "Color": "Onahau",
+        "Hexadecimal": "#CDF4FF"
+    },
+    {
+        "Color": "Onion",
+        "Hexadecimal": "#2F270E"
+    },
+    {
         "Color": "Onyx",
         "Hexadecimal": "#353839"
     },
     {
-        "ID": 605,
         "Color": "Opal",
         "Hexadecimal": "#A8C3BC"
     },
     {
-        "ID": 606,
-        "Color": "Opera mauve",
+        "Color": "Opal 2",
+        "Hexadecimal": "#A9C6C2"
+    },
+    {
+        "Color": "Opera Mauve",
         "Hexadecimal": "#B784A7"
     },
     {
-        "ID": 607,
-        "Color": "Orange",
-        "Hexadecimal": "#FF7F00"
+        "Color": "Opium",
+        "Hexadecimal": "#8E6F70"
     },
     {
-        "ID": 608,
+        "Color": "Oracle",
+        "Hexadecimal": "#377475"
+    },
+    {
         "Color": "Orange (Crayola)",
         "Hexadecimal": "#FF7538"
     },
     {
-        "ID": 609,
-        "Color": "Orange (Pantone)",
+        "Color": "Orange (PANTONE)",
         "Hexadecimal": "#FF5800"
     },
     {
-        "ID": 610,
-        "Color": "Orange (web)",
+        "Color": "Orange (Web) / Web Orange",
         "Hexadecimal": "#FFA500"
     },
     {
-        "ID": 611,
-        "Color": "Orange peel",
+        "Color": "Orange / Flush Orange",
+        "Hexadecimal": "#FF7F00"
+    },
+    {
+        "Color": "Orange Peel",
         "Hexadecimal": "#FF9F00"
     },
     {
-        "ID": 612,
-        "Color": "Orange-red",
-        "Hexadecimal": "#FF681F"
+        "Color": "Orange Peel 2",
+        "Hexadecimal": "#FFA000"
     },
     {
-        "ID": 613,
-        "Color": "Orange-red (Crayola)",
-        "Hexadecimal": "#FF5349"
+        "Color": "Orange Roughy",
+        "Hexadecimal": "#C45719"
     },
     {
-        "ID": 614,
-        "Color": "Orange soda",
+        "Color": "Orange Soda",
         "Hexadecimal": "#FA5B3D"
     },
     {
-        "ID": 615,
-        "Color": "Orange-yellow",
+        "Color": "Orange White",
+        "Hexadecimal": "#FEFCED"
+    },
+    {
+        "Color": "Orange-Red (Crayola) / Red-Orange",
+        "Hexadecimal": "#FF5349"
+    },
+    {
+        "Color": "Orange-Red / Red-Orange (Crayola) / Orange",
+        "Hexadecimal": "#FF681F"
+    },
+    {
+        "Color": "Orange-Yellow",
         "Hexadecimal": "#F5BD1F"
     },
     {
-        "ID": 616,
-        "Color": "Orange-yellow (Crayola)",
+        "Color": "Orange-Yellow (Crayola)",
         "Hexadecimal": "#F8D568"
     },
     {
-        "ID": 617,
         "Color": "Orchid",
         "Hexadecimal": "#DA70D6"
     },
     {
-        "ID": 618,
-        "Color": "Orchid pink",
-        "Hexadecimal": "#F2BDCD"
-    },
-    {
-        "ID": 619,
-        "Color": "Orchid (Crayola)",
+        "Color": "Orchid (Crayola) / Light Orchid",
         "Hexadecimal": "#E29CD2"
     },
     {
-        "ID": 620,
-        "Color": "Outer space (Crayola)",
+        "Color": "Orchid Pink",
+        "Hexadecimal": "#F2BDCD"
+    },
+    {
+        "Color": "Orchid White",
+        "Hexadecimal": "#FFFDF3"
+    },
+    {
+        "Color": "Oregon",
+        "Hexadecimal": "#9B4703"
+    },
+    {
+        "Color": "Orient",
+        "Hexadecimal": "#015E85"
+    },
+    {
+        "Color": "Oriental Pink",
+        "Hexadecimal": "#C69191"
+    },
+    {
+        "Color": "Orinoco",
+        "Hexadecimal": "#F3FBD4"
+    },
+    {
+        "Color": "Oslo Gray",
+        "Hexadecimal": "#878D91"
+    },
+    {
+        "Color": "Ottoman",
+        "Hexadecimal": "#E9F8ED"
+    },
+    {
+        "Color": "Ou Crimson Red",
+        "Hexadecimal": "#841617"
+    },
+    {
+        "Color": "Outer Space (Crayola) / Outer Space",
         "Hexadecimal": "#2D383A"
     },
     {
-        "ID": 621,
         "Color": "Outrageous Orange",
+        "Hexadecimal": "#FF6037"
+    },
+    {
+        "Color": "Outrageous Orange 2",
         "Hexadecimal": "#FF6E4A"
     },
     {
-        "ID": 622,
         "Color": "Oxblood",
         "Hexadecimal": "#4A0000"
     },
     {
-        "ID": 623,
-        "Color": "Oxford blue",
+        "Color": "Oxford Blue",
         "Hexadecimal": "#002147"
     },
     {
-        "ID": 624,
-        "Color": "OU Crimson red",
-        "Hexadecimal": "#841617"
+        "Color": "Oxford Blue 2",
+        "Hexadecimal": "#384555"
     },
     {
-        "ID": 625,
-        "Color": "Pacific blue",
+        "Color": "Oxley",
+        "Hexadecimal": "#779E86"
+    },
+    {
+        "Color": "Oyster Bay",
+        "Hexadecimal": "#DAFAFF"
+    },
+    {
+        "Color": "Oyster Pink",
+        "Hexadecimal": "#E9CECD"
+    },
+    {
+        "Color": "Paarl",
+        "Hexadecimal": "#A65529"
+    },
+    {
+        "Color": "Pablo",
+        "Hexadecimal": "#776F61"
+    },
+    {
+        "Color": "Pacific Blue",
         "Hexadecimal": "#1CA9C9"
     },
     {
-        "ID": 626,
-        "Color": "Pakistan green",
+        "Color": "Pacific Blue 2",
+        "Hexadecimal": "#009DC4"
+    },
+    {
+        "Color": "Pacifika",
+        "Hexadecimal": "#778120"
+    },
+    {
+        "Color": "Paco",
+        "Hexadecimal": "#411F10"
+    },
+    {
+        "Color": "Padua",
+        "Hexadecimal": "#ADE6C4"
+    },
+    {
+        "Color": "Pakistan Green",
         "Hexadecimal": "#006600"
     },
     {
-        "ID": 627,
-        "Color": "Palatinate purple",
+        "Color": "Palatinate Purple",
         "Hexadecimal": "#682860"
     },
     {
-        "ID": 628,
-        "Color": "Pale aqua",
-        "Hexadecimal": "#BCD4E6"
+        "Color": "Pale Canary",
+        "Hexadecimal": "#FFFF99"
     },
     {
-        "ID": 629,
-        "Color": "Pale cerulean",
+        "Color": "Pale Cerulean",
         "Hexadecimal": "#9BC4E2"
     },
     {
-        "ID": 630,
-        "Color": "Pale Dogwood",
+        "Color": "Pale Dogwood / Rose Pompadour",
         "Hexadecimal": "#ED7A9B"
     },
     {
-        "ID": 631,
-        "Color": "Pale pink",
+        "Color": "Pale Leaf",
+        "Hexadecimal": "#C0D3B9"
+    },
+    {
+        "Color": "Pale Oyster",
+        "Hexadecimal": "#988D77"
+    },
+    {
+        "Color": "Pale Pink",
         "Hexadecimal": "#FADADD"
     },
     {
-        "ID": 632,
-        "Color": "Pale purple (Pantone)",
+        "Color": "Pale Prim",
+        "Hexadecimal": "#FDFEB8"
+    },
+    {
+        "Color": "Pale Purple (PANTONE)",
         "Hexadecimal": "#FAE6FA"
     },
     {
-        "ID": 633,
-        "Color": "Pale silver",
+        "Color": "Pale Rose",
+        "Hexadecimal": "#FFE1F2"
+    },
+    {
+        "Color": "Pale Silver / Silver (Crayola) / Silver Rust",
         "Hexadecimal": "#C9C0BB"
     },
     {
-        "ID": 634,
-        "Color": "Pale spring bud",
+        "Color": "Pale Sky",
+        "Hexadecimal": "#6E7783"
+    },
+    {
+        "Color": "Pale Slate",
+        "Hexadecimal": "#C3BFC1"
+    },
+    {
+        "Color": "Pale Spring Bud / Spring Green (Crayola) / Fall Green",
         "Hexadecimal": "#ECEBBD"
     },
     {
-        "ID": 635,
-        "Color": "Pansy purple",
+        "Color": "Palm Green",
+        "Hexadecimal": "#09230F"
+    },
+    {
+        "Color": "Palm Leaf",
+        "Hexadecimal": "#19330E"
+    },
+    {
+        "Color": "Pampas",
+        "Hexadecimal": "#F4F2EE"
+    },
+    {
+        "Color": "Panache",
+        "Hexadecimal": "#EAF6EE"
+    },
+    {
+        "Color": "Pancho",
+        "Hexadecimal": "#EDCDAB"
+    },
+    {
+        "Color": "Pansy Purple",
         "Hexadecimal": "#78184A"
     },
     {
-        "ID": 636,
-        "Color": "Paolo Veronese green",
+        "Color": "Paolo Veronese Green",
         "Hexadecimal": "#009B7D"
     },
     {
-        "ID": 637,
-        "Color": "Papaya whip",
+        "Color": "Papaya Whip",
         "Hexadecimal": "#FFEFD5"
     },
     {
-        "ID": 638,
-        "Color": "Paradise pink",
+        "Color": "Paprika",
+        "Hexadecimal": "#8D0226"
+    },
+    {
+        "Color": "Paradise Pink",
         "Hexadecimal": "#E63E62"
     },
     {
-        "ID": 639,
+        "Color": "Paradiso",
+        "Hexadecimal": "#317D82"
+    },
+    {
         "Color": "Parchment",
         "Hexadecimal": "#F1E9D2"
     },
     {
-        "ID": 640,
-        "Color": "Paris Green",
-        "Hexadecimal": "#50C878"
+        "Color": "Paris Daisy",
+        "Hexadecimal": "#FFF46E"
     },
     {
-        "ID": 641,
-        "Color": "Pastel pink",
+        "Color": "Paris M",
+        "Hexadecimal": "#26056A"
+    },
+    {
+        "Color": "Paris White",
+        "Hexadecimal": "#CADCD4"
+    },
+    {
+        "Color": "Parsley",
+        "Hexadecimal": "#134F19"
+    },
+    {
+        "Color": "Pastel Green",
+        "Hexadecimal": "#77DD77"
+    },
+    {
+        "Color": "Pastel Pink",
+        "Hexadecimal": "#FFD1DC"
+    },
+    {
+        "Color": "Pastel Pink 2",
         "Hexadecimal": "#DEA5A4"
     },
     {
-        "ID": 642,
-        "Color": "Patriarch",
+        "Color": "Patina",
+        "Hexadecimal": "#639A8F"
+    },
+    {
+        "Color": "Patriarch / Purple (Web)",
         "Hexadecimal": "#800080"
     },
     {
-        "ID": 643,
-        "Color": "Payne's grey",
-        "Hexadecimal": "#536878"
+        "Color": "Pattens Blue",
+        "Hexadecimal": "#DEF5FF"
     },
     {
-        "ID": 644,
+        "Color": "Paua",
+        "Hexadecimal": "#260368"
+    },
+    {
+        "Color": "Pavlova",
+        "Hexadecimal": "#D7C498"
+    },
+    {
         "Color": "Peach",
         "Hexadecimal": "#FFE5B4"
     },
     {
-        "ID": 645,
-        "Color": "Peach (Crayola)",
+        "Color": "Peach (Crayola) / Flesh",
         "Hexadecimal": "#FFCBA4"
     },
     {
-        "ID": 646,
-        "Color": "Peach puff",
+        "Color": "Peach Cream",
+        "Hexadecimal": "#FFF0DB"
+    },
+    {
+        "Color": "Peach Orange",
+        "Hexadecimal": "#FFCC99"
+    },
+    {
+        "Color": "Peach Puff",
         "Hexadecimal": "#FFDAB9"
     },
     {
-        "ID": 647,
+        "Color": "Peach Schnapps",
+        "Hexadecimal": "#FFDCD6"
+    },
+    {
+        "Color": "Peach Yellow",
+        "Hexadecimal": "#FADFAD"
+    },
+    {
+        "Color": "Peanut",
+        "Hexadecimal": "#782F16"
+    },
+    {
         "Color": "Pear",
         "Hexadecimal": "#D1E231"
     },
     {
-        "ID": 648,
-        "Color": "Pearly purple",
+        "Color": "Pearl Bush",
+        "Hexadecimal": "#E8E0D5"
+    },
+    {
+        "Color": "Pearl Lusta",
+        "Hexadecimal": "#FCF4DC"
+    },
+    {
+        "Color": "Pearly Purple",
         "Hexadecimal": "#B768A2"
     },
     {
-        "ID": 649,
-        "Color": "Periwinkle",
-        "Hexadecimal": "#CCCCFF"
+        "Color": "Peat",
+        "Hexadecimal": "#716B56"
     },
     {
-        "ID": 650,
-        "Color": "Periwinkle (Crayola)",
+        "Color": "Pelorous",
+        "Hexadecimal": "#3EABBF"
+    },
+    {
+        "Color": "Peppermint",
+        "Hexadecimal": "#E3F5E1"
+    },
+    {
+        "Color": "Perano",
+        "Hexadecimal": "#A9BEF2"
+    },
+    {
+        "Color": "Perfume",
+        "Hexadecimal": "#D0BEF8"
+    },
+    {
+        "Color": "Periglacial Blue",
+        "Hexadecimal": "#E1E6D6"
+    },
+    {
+        "Color": "Periwinkle (Crayola) / Periwinkle Gray",
         "Hexadecimal": "#C3CDE6"
     },
     {
-        "ID": 651,
         "Color": "Permanent Geranium Lake",
         "Hexadecimal": "#E12C2C"
     },
     {
-        "ID": 652,
-        "Color": "Persian blue",
+        "Color": "Persian Blue",
         "Hexadecimal": "#1C39BB"
     },
     {
-        "ID": 653,
-        "Color": "Persian green",
+        "Color": "Persian Green",
         "Hexadecimal": "#00A693"
     },
     {
-        "ID": 654,
-        "Color": "Persian indigo",
+        "Color": "Persian Indigo",
         "Hexadecimal": "#32127A"
     },
     {
-        "ID": 655,
-        "Color": "Persian orange",
+        "Color": "Persian Orange",
         "Hexadecimal": "#D99058"
     },
     {
-        "ID": 656,
-        "Color": "Persian pink",
+        "Color": "Persian Pink",
         "Hexadecimal": "#F77FBE"
     },
     {
-        "ID": 657,
-        "Color": "Persian plum",
+        "Color": "Persian Plum / Prune",
         "Hexadecimal": "#701C1C"
     },
     {
-        "ID": 658,
-        "Color": "Persian red",
+        "Color": "Persian Red",
         "Hexadecimal": "#CC3333"
     },
     {
-        "ID": 659,
-        "Color": "Persian rose",
+        "Color": "Persian Rose",
         "Hexadecimal": "#FE28A2"
     },
     {
-        "ID": 660,
         "Color": "Persimmon",
+        "Hexadecimal": "#FF6B53"
+    },
+    {
+        "Color": "Persimmon 2",
         "Hexadecimal": "#EC5800"
     },
     {
-        "ID": 661,
+        "Color": "Peru Tan",
+        "Hexadecimal": "#7F3A02"
+    },
+    {
+        "Color": "Pesto",
+        "Hexadecimal": "#7C7631"
+    },
+    {
+        "Color": "Petite Orchid",
+        "Hexadecimal": "#DB9690"
+    },
+    {
+        "Color": "Pewter",
+        "Hexadecimal": "#96A8A1"
+    },
+    {
         "Color": "Pewter Blue",
         "Hexadecimal": "#8BA8B7"
     },
     {
-        "ID": 662,
-        "Color": "Phlox",
+        "Color": "Pharlap",
+        "Hexadecimal": "#A3807B"
+    },
+    {
+        "Color": "Phlox / Psychedelic Purple",
         "Hexadecimal": "#DF00FF"
     },
     {
-        "ID": 663,
-        "Color": "Phthalo blue",
+        "Color": "Phthalo Blue",
         "Hexadecimal": "#000F89"
     },
     {
-        "ID": 664,
-        "Color": "Phthalo green",
+        "Color": "Phthalo Green",
         "Hexadecimal": "#123524"
     },
     {
-        "ID": 665,
-        "Color": "Picotee blue",
+        "Color": "Picasso",
+        "Hexadecimal": "#FFF39D"
+    },
+    {
+        "Color": "Pickled Bean",
+        "Hexadecimal": "#6E4826"
+    },
+    {
+        "Color": "Pickled Bluewood",
+        "Hexadecimal": "#314459"
+    },
+    {
+        "Color": "Picotee Blue",
         "Hexadecimal": "#2E2787"
     },
     {
-        "ID": 666,
-        "Color": "Pictorial carmine",
+        "Color": "Picton Blue",
+        "Hexadecimal": "#45B1E8"
+    },
+    {
+        "Color": "Pictorial Carmine",
         "Hexadecimal": "#C30B4E"
     },
     {
-        "ID": 667,
-        "Color": "Piggy pink",
+        "Color": "Pig Pink",
+        "Hexadecimal": "#FDD7E4"
+    },
+    {
+        "Color": "Pigeon Post",
+        "Hexadecimal": "#AFBDD9"
+    },
+    {
+        "Color": "Piggy Pink",
         "Hexadecimal": "#FDDDE6"
     },
     {
-        "ID": 668,
-        "Color": "Pine green",
+        "Color": "Pigment Indigo",
+        "Hexadecimal": "#4B0082"
+    },
+    {
+        "Color": "Pine Cone",
+        "Hexadecimal": "#6D5E54"
+    },
+    {
+        "Color": "Pine Glade",
+        "Hexadecimal": "#C7CD90"
+    },
+    {
+        "Color": "Pine Green",
         "Hexadecimal": "#01796F"
     },
     {
-        "ID": 669,
-        "Color": "Pine tree",
+        "Color": "Pine Tree",
         "Hexadecimal": "#2A2F23"
     },
     {
-        "ID": 670,
+        "Color": "Pine Tree 2",
+        "Hexadecimal": "#171F04"
+    },
+    {
         "Color": "Pink",
         "Hexadecimal": "#FFC0CB"
     },
     {
-        "ID": 671,
-        "Color": "Pink (Pantone)",
+        "Color": "Pink (PANTONE)",
         "Hexadecimal": "#D74894"
     },
     {
-        "ID": 672,
-        "Color": "Pink flamingo",
+        "Color": "Pink Flamingo",
+        "Hexadecimal": "#FF66FF"
+    },
+    {
+        "Color": "Pink Flamingo 2",
         "Hexadecimal": "#FC74FD"
     },
     {
-        "ID": 673,
-        "Color": "Pink lace",
+        "Color": "Pink Flare",
+        "Hexadecimal": "#E1C0C8"
+    },
+    {
+        "Color": "Pink Lace",
         "Hexadecimal": "#FFDDF4"
     },
     {
-        "ID": 674,
-        "Color": "Pink lavender",
+        "Color": "Pink Lady",
+        "Hexadecimal": "#FFF1D8"
+    },
+    {
+        "Color": "Pink Lavender",
         "Hexadecimal": "#D8B2D1"
     },
     {
-        "ID": 675,
         "Color": "Pink Sherbet",
         "Hexadecimal": "#F78FA7"
     },
     {
-        "ID": 676,
+        "Color": "Pink Swan",
+        "Hexadecimal": "#BEB5B7"
+    },
+    {
+        "Color": "Piper",
+        "Hexadecimal": "#C96323"
+    },
+    {
+        "Color": "Pipi",
+        "Hexadecimal": "#FEF4CC"
+    },
+    {
+        "Color": "Pippin",
+        "Hexadecimal": "#FFE1DF"
+    },
+    {
+        "Color": "Pirate Gold",
+        "Hexadecimal": "#BA7F03"
+    },
+    {
         "Color": "Pistachio",
+        "Hexadecimal": "#9DC209"
+    },
+    {
+        "Color": "Pistachio 2",
         "Hexadecimal": "#93C572"
     },
     {
-        "ID": 677,
+        "Color": "Pixie Green",
+        "Hexadecimal": "#C0D8B6"
+    },
+    {
+        "Color": "Pizazz",
+        "Hexadecimal": "#FF9000"
+    },
+    {
+        "Color": "Pizza",
+        "Hexadecimal": "#C99415"
+    },
+    {
+        "Color": "Plantation",
+        "Hexadecimal": "#27504B"
+    },
+    {
         "Color": "Platinum",
         "Hexadecimal": "#E5E4E2"
     },
     {
-        "ID": 678,
         "Color": "Plum",
-        "Hexadecimal": "#8E4585"
+        "Hexadecimal": "#843179"
     },
     {
-        "ID": 679,
-        "Color": "Plum (web)",
+        "Color": "Plum (Web)",
         "Hexadecimal": "#DDA0DD"
     },
     {
-        "ID": 680,
+        "Color": "Plum 2",
+        "Hexadecimal": "#8E4585"
+    },
+    {
         "Color": "Plump Purple",
         "Hexadecimal": "#5946B2"
     },
     {
-        "ID": 681,
+        "Color": "Pohutukawa",
+        "Hexadecimal": "#8F021C"
+    },
+    {
+        "Color": "Polar",
+        "Hexadecimal": "#E5F9F6"
+    },
+    {
         "Color": "Polished Pine",
         "Hexadecimal": "#5DA493"
     },
     {
-        "ID": 682,
-        "Color": "Pomp and Power",
+        "Color": "Polo Blue",
+        "Hexadecimal": "#8DA8CC"
+    },
+    {
+        "Color": "Pomegranate",
+        "Hexadecimal": "#F34723"
+    },
+    {
+        "Color": "Pomp And Power",
         "Hexadecimal": "#86608E"
     },
     {
-        "ID": 683,
+        "Color": "Pompadour",
+        "Hexadecimal": "#660045"
+    },
+    {
         "Color": "Popstar",
         "Hexadecimal": "#BE4F62"
     },
     {
-        "ID": 684,
+        "Color": "Porcelain",
+        "Hexadecimal": "#EFF2F3"
+    },
+    {
+        "Color": "Porsche",
+        "Hexadecimal": "#EAAE69"
+    },
+    {
+        "Color": "Port Gore",
+        "Hexadecimal": "#251F4F"
+    },
+    {
+        "Color": "Portafino",
+        "Hexadecimal": "#FFFFB4"
+    },
+    {
+        "Color": "Portage",
+        "Hexadecimal": "#8B9FEE"
+    },
+    {
+        "Color": "Portica",
+        "Hexadecimal": "#F9E663"
+    },
+    {
         "Color": "Portland Orange",
         "Hexadecimal": "#FF5A36"
     },
     {
-        "ID": 685,
-        "Color": "Powder blue",
+        "Color": "Pot Pourri",
+        "Hexadecimal": "#F5E7E2"
+    },
+    {
+        "Color": "Potters Clay",
+        "Hexadecimal": "#8C5738"
+    },
+    {
+        "Color": "Powder Ash",
+        "Hexadecimal": "#BCC9C2"
+    },
+    {
+        "Color": "Powder Blue",
         "Hexadecimal": "#B0E0E6"
     },
     {
-        "ID": 686,
-        "Color": "Princeton orange",
+        "Color": "Prairie Sand",
+        "Hexadecimal": "#9A3820"
+    },
+    {
+        "Color": "Prelude",
+        "Hexadecimal": "#D0C0E5"
+    },
+    {
+        "Color": "Prim",
+        "Hexadecimal": "#F0E2EC"
+    },
+    {
+        "Color": "Primrose",
+        "Hexadecimal": "#EDEA99"
+    },
+    {
+        "Color": "Princeton Orange",
         "Hexadecimal": "#F58025"
     },
     {
-        "ID": 687,
-        "Color": "Process yellow",
-        "Hexadecimal": "#FFEF00"
+        "Color": "Provincial Pink",
+        "Hexadecimal": "#FEF5F1"
     },
     {
-        "ID": 688,
-        "Color": "Prune",
-        "Hexadecimal": "#701C1C"
-    },
-    {
-        "ID": 689,
-        "Color": "Prussian blue",
+        "Color": "Prussian Blue",
         "Hexadecimal": "#003153"
     },
     {
-        "ID": 690,
-        "Color": "Psychedelic purple",
-        "Hexadecimal": "#DF00FF"
-    },
-    {
-        "ID": 691,
         "Color": "Puce",
         "Hexadecimal": "#CC8899"
     },
     {
-        "ID": 692,
-        "Color": "Pullman Brown (UPS Brown)",
+        "Color": "Pueblo",
+        "Hexadecimal": "#7D2C14"
+    },
+    {
+        "Color": "Puerto Rico",
+        "Hexadecimal": "#3FC1AA"
+    },
+    {
+        "Color": "Pullman Brown (Ups Brown)",
         "Hexadecimal": "#644117"
     },
     {
-        "ID": 693,
+        "Color": "Pumice",
+        "Hexadecimal": "#C2CAC4"
+    },
+    {
         "Color": "Pumpkin",
         "Hexadecimal": "#FF7518"
     },
     {
-        "ID": 694,
+        "Color": "Pumpkin Skin",
+        "Hexadecimal": "#B1610B"
+    },
+    {
+        "Color": "Punch",
+        "Hexadecimal": "#DC4333"
+    },
+    {
+        "Color": "Punga",
+        "Hexadecimal": "#4D3D14"
+    },
+    {
         "Color": "Purple",
         "Hexadecimal": "#6A0DAD"
     },
     {
-        "ID": 695,
-        "Color": "Purple (web)",
-        "Hexadecimal": "#800080"
-    },
-    {
-        "ID": 696,
-        "Color": "Purple (Munsell)",
+        "Color": "Purple (MUNSELL)",
         "Hexadecimal": "#9F00C5"
     },
     {
-        "ID": 697,
-        "Color": "Purple (X11)",
+        "Color": "Purple (X11) / Veronica",
         "Hexadecimal": "#A020F0"
     },
     {
-        "ID": 698,
-        "Color": "Purple mountain majesty",
+        "Color": "Purple 2",
+        "Hexadecimal": "#660099"
+    },
+    {
+        "Color": "Purple Heart",
+        "Hexadecimal": "#652DC1"
+    },
+    {
+        "Color": "Purple Mountain Majesty / Purple Mountain's Majesty",
         "Hexadecimal": "#9678B6"
     },
     {
-        "ID": 699,
-        "Color": "Purple navy",
+        "Color": "Purple Navy",
         "Hexadecimal": "#4E5180"
     },
     {
-        "ID": 700,
-        "Color": "Purple pizzazz",
+        "Color": "Purple Pizzazz",
         "Hexadecimal": "#FE4EDA"
     },
     {
-        "ID": 701,
+        "Color": "Purple Pizzazz 2",
+        "Hexadecimal": "#FF00CC"
+    },
+    {
         "Color": "Purple Plum",
         "Hexadecimal": "#9C51B6"
     },
     {
-        "ID": 702,
         "Color": "Purpureus",
         "Hexadecimal": "#9A4EAE"
     },
     {
-        "ID": 703,
-        "Color": "Queen blue",
+        "Color": "Putty",
+        "Hexadecimal": "#E7CD8C"
+    },
+    {
+        "Color": "Quarter Pearl Lusta",
+        "Hexadecimal": "#FFFDF4"
+    },
+    {
+        "Color": "Quarter Spanish White",
+        "Hexadecimal": "#F7F2E1"
+    },
+    {
+        "Color": "Queen Blue",
         "Hexadecimal": "#436B95"
     },
     {
-        "ID": 704,
-        "Color": "Queen pink",
+        "Color": "Queen Pink",
         "Hexadecimal": "#E8CCD7"
     },
     {
-        "ID": 705,
         "Color": "Quick Silver",
         "Hexadecimal": "#A6A6A6"
     },
     {
-        "ID": 706,
-        "Color": "Quinacridone magenta",
+        "Color": "Quicksand",
+        "Hexadecimal": "#BD978E"
+    },
+    {
+        "Color": "Quill Gray",
+        "Hexadecimal": "#D6D6D1"
+    },
+    {
+        "Color": "Quinacridone Magenta",
         "Hexadecimal": "#8E3A59"
     },
     {
-        "ID": 707,
+        "Color": "Quincy",
+        "Hexadecimal": "#623F2D"
+    },
+    {
+        "Color": "Racing Green",
+        "Hexadecimal": "#0C1911"
+    },
+    {
         "Color": "Radical Red",
         "Hexadecimal": "#FF355E"
     },
     {
-        "ID": 708,
-        "Color": "Raisin black",
+        "Color": "Raffia",
+        "Hexadecimal": "#EADAB8"
+    },
+    {
+        "Color": "Rainee",
+        "Hexadecimal": "#B9C8AC"
+    },
+    {
+        "Color": "Raisin Black",
         "Hexadecimal": "#242124"
     },
     {
-        "ID": 709,
         "Color": "Rajah",
         "Hexadecimal": "#FBAB60"
     },
     {
-        "ID": 710,
+        "Color": "Rajah 2",
+        "Hexadecimal": "#F7B668"
+    },
+    {
+        "Color": "Rangitoto",
+        "Hexadecimal": "#2E3222"
+    },
+    {
+        "Color": "Rangoon Green",
+        "Hexadecimal": "#1C1E13"
+    },
+    {
         "Color": "Raspberry",
         "Hexadecimal": "#E30B5D"
     },
     {
-        "ID": 711,
-        "Color": "Raspberry glace",
-        "Hexadecimal": "#915F6D"
+        "Color": "Raven",
+        "Hexadecimal": "#727B89"
     },
     {
-        "ID": 712,
-        "Color": "Raspberry rose",
-        "Hexadecimal": "#B3446C"
+        "Color": "Raw Sienna",
+        "Hexadecimal": "#D27D46"
     },
     {
-        "ID": 713,
-        "Color": "Raw sienna",
+        "Color": "Raw Sienna 2",
         "Hexadecimal": "#D68A59"
     },
     {
-        "ID": 714,
-        "Color": "Raw umber",
+        "Color": "Raw Umber",
+        "Hexadecimal": "#734A12"
+    },
+    {
+        "Color": "Raw Umber 2",
         "Hexadecimal": "#826644"
     },
     {
-        "ID": 715,
-        "Color": "Razzle dazzle rose",
+        "Color": "Razzle Dazzle Rose",
         "Hexadecimal": "#FF33CC"
     },
     {
-        "ID": 716,
         "Color": "Razzmatazz",
+        "Hexadecimal": "#E30B5C"
+    },
+    {
+        "Color": "Razzmatazz 2",
         "Hexadecimal": "#E3256B"
     },
     {
-        "ID": 717,
         "Color": "Razzmic Berry",
         "Hexadecimal": "#8D4E85"
     },
     {
-        "ID": 718,
         "Color": "Rebecca Purple",
         "Hexadecimal": "#663399"
     },
     {
-        "ID": 719,
+        "Color": "Rebel",
+        "Hexadecimal": "#3C1206"
+    },
+    {
         "Color": "Red",
         "Hexadecimal": "#FF0000"
     },
     {
-        "ID": 720,
         "Color": "Red (Crayola)",
         "Hexadecimal": "#EE204D"
     },
     {
-        "ID": 721,
-        "Color": "Red (Munsell)",
+        "Color": "Red (MUNSELL)",
         "Hexadecimal": "#F2003C"
     },
     {
-        "ID": 722,
         "Color": "Red (NCS)",
         "Hexadecimal": "#C40233"
     },
     {
-        "ID": 723,
-        "Color": "Red (Pantone)",
-        "Hexadecimal": "#ED2939"
-    },
-    {
-        "ID": 724,
-        "Color": "Red (pigment)",
+        "Color": "Red (Pigment)",
         "Hexadecimal": "#ED1C24"
     },
     {
-        "ID": 725,
         "Color": "Red (RYB)",
         "Hexadecimal": "#FE2712"
     },
     {
-        "ID": 726,
-        "Color": "Red-orange",
-        "Hexadecimal": "#FF5349"
+        "Color": "Red Beech",
+        "Hexadecimal": "#7B3801"
     },
     {
-        "ID": 727,
-        "Color": "Red-orange (Crayola)",
-        "Hexadecimal": "#FF681F"
+        "Color": "Red Berry",
+        "Hexadecimal": "#8E0000"
     },
     {
-        "ID": 728,
-        "Color": "Red-orange (Color wheel)",
-        "Hexadecimal": "#FF4500"
+        "Color": "Red Damask",
+        "Hexadecimal": "#DA6A41"
     },
     {
-        "ID": 729,
-        "Color": "Red-purple",
-        "Hexadecimal": "#E40078"
+        "Color": "Red Devil",
+        "Hexadecimal": "#860111"
     },
     {
-        "ID": 730,
+        "Color": "Red Orange",
+        "Hexadecimal": "#FF3F34"
+    },
+    {
+        "Color": "Red Oxide",
+        "Hexadecimal": "#6E0902"
+    },
+    {
+        "Color": "Red Ribbon",
+        "Hexadecimal": "#ED0A3F"
+    },
+    {
+        "Color": "Red Robin",
+        "Hexadecimal": "#80341F"
+    },
+    {
         "Color": "Red Salsa",
         "Hexadecimal": "#FD3A4A"
     },
     {
-        "ID": 731,
-        "Color": "Red-violet",
-        "Hexadecimal": "#C71585"
+        "Color": "Red Stage",
+        "Hexadecimal": "#D05F04"
     },
     {
-        "ID": 732,
-        "Color": "Red-violet (Crayola)",
-        "Hexadecimal": "#C0448F"
+        "Color": "Red-Orange (Color Wheel)",
+        "Hexadecimal": "#FF4500"
     },
     {
-        "ID": 733,
-        "Color": "Red-violet (Color wheel)",
+        "Color": "Red-Purple",
+        "Hexadecimal": "#E40078"
+    },
+    {
+        "Color": "Red-Violet (Color Wheel)",
         "Hexadecimal": "#922B3E"
     },
     {
-        "ID": 734,
+        "Color": "Red-Violet (Crayola)",
+        "Hexadecimal": "#C0448F"
+    },
+    {
         "Color": "Redwood",
+        "Hexadecimal": "#5D1E0F"
+    },
+    {
+        "Color": "Redwood 2",
         "Hexadecimal": "#A45A52"
     },
     {
-        "ID": 735,
-        "Color": "Resolution blue",
+        "Color": "Reef",
+        "Hexadecimal": "#C9FFA2"
+    },
+    {
+        "Color": "Reef Gold",
+        "Hexadecimal": "#9F821C"
+    },
+    {
+        "Color": "Regal Blue",
+        "Hexadecimal": "#013F6A"
+    },
+    {
+        "Color": "Regent Gray",
+        "Hexadecimal": "#86949F"
+    },
+    {
+        "Color": "Regent St Blue",
+        "Hexadecimal": "#AAD6E6"
+    },
+    {
+        "Color": "Remy",
+        "Hexadecimal": "#FEEBF3"
+    },
+    {
+        "Color": "Reno Sand",
+        "Hexadecimal": "#A86515"
+    },
+    {
+        "Color": "Resolution Blue",
         "Hexadecimal": "#002387"
     },
     {
-        "ID": 736,
+        "Color": "Revolver",
+        "Hexadecimal": "#2C1632"
+    },
+    {
+        "Color": "Rhino",
+        "Hexadecimal": "#2E3F62"
+    },
+    {
         "Color": "Rhythm",
         "Hexadecimal": "#777696"
     },
     {
-        "ID": 737,
-        "Color": "Rich black",
+        "Color": "Rice Cake",
+        "Hexadecimal": "#FFFEF0"
+    },
+    {
+        "Color": "Rice Flower",
+        "Hexadecimal": "#EEFFE2"
+    },
+    {
+        "Color": "Rich Black",
         "Hexadecimal": "#004040"
     },
     {
-        "ID": 738,
-        "Color": "Rich black (FOGRA29)",
+        "Color": "Rich Black (Fogra29)",
         "Hexadecimal": "#010B13"
     },
     {
-        "ID": 739,
-        "Color": "Rich black (FOGRA39)",
+        "Color": "Rich Black (Fogra39)",
         "Hexadecimal": "#010203"
     },
     {
-        "ID": 740,
-        "Color": "Rifle green",
+        "Color": "Rich Gold",
+        "Hexadecimal": "#A85307"
+    },
+    {
+        "Color": "Rifle Green",
         "Hexadecimal": "#444C38"
     },
     {
-        "ID": 741,
-        "Color": "Robin egg blue",
+        "Color": "Rio Grande",
+        "Hexadecimal": "#BBD009"
+    },
+    {
+        "Color": "Ripe Lemon",
+        "Hexadecimal": "#F4D81C"
+    },
+    {
+        "Color": "Ripe Plum",
+        "Hexadecimal": "#410056"
+    },
+    {
+        "Color": "Riptide",
+        "Hexadecimal": "#8BE6D8"
+    },
+    {
+        "Color": "River Bed",
+        "Hexadecimal": "#434C59"
+    },
+    {
+        "Color": "Rob Roy",
+        "Hexadecimal": "#EAC674"
+    },
+    {
+        "Color": "Robin Egg Blue / Robin's Egg Blue",
         "Hexadecimal": "#00CCCC"
     },
     {
-        "ID": 742,
-        "Color": "Rocket metallic",
+        "Color": "Rock",
+        "Hexadecimal": "#4D3833"
+    },
+    {
+        "Color": "Rock Blue",
+        "Hexadecimal": "#9EB1CD"
+    },
+    {
+        "Color": "Rock Spray",
+        "Hexadecimal": "#BA450C"
+    },
+    {
+        "Color": "Rocket Metallic",
         "Hexadecimal": "#8A7F80"
     },
     {
-        "ID": 743,
-        "Color": "Rojo Spanish red",
+        "Color": "Rodeo Dust",
+        "Hexadecimal": "#C9B29B"
+    },
+    {
+        "Color": "Rojo Spanish Red",
         "Hexadecimal": "#A91101"
     },
     {
-        "ID": 744,
-        "Color": "Roman silver",
+        "Color": "Rolling Stone",
+        "Hexadecimal": "#747D83"
+    },
+    {
+        "Color": "Roman",
+        "Hexadecimal": "#DE6360"
+    },
+    {
+        "Color": "Roman Coffee",
+        "Hexadecimal": "#795D4C"
+    },
+    {
+        "Color": "Roman Silver",
         "Hexadecimal": "#838996"
     },
     {
-        "ID": 745,
+        "Color": "Romance",
+        "Hexadecimal": "#FFFEFD"
+    },
+    {
+        "Color": "Romantic",
+        "Hexadecimal": "#FFD2B7"
+    },
+    {
+        "Color": "Ronchi",
+        "Hexadecimal": "#ECC54E"
+    },
+    {
+        "Color": "Roof Terracotta",
+        "Hexadecimal": "#A62F20"
+    },
+    {
+        "Color": "Rope",
+        "Hexadecimal": "#8E4D1E"
+    },
+    {
         "Color": "Rose",
         "Hexadecimal": "#FF007F"
     },
     {
-        "ID": 746,
-        "Color": "Rose bonbon",
+        "Color": "Rose Bonbon",
         "Hexadecimal": "#F9429E"
     },
     {
-        "ID": 747,
+        "Color": "Rose Bud",
+        "Hexadecimal": "#FBB2A3"
+    },
+    {
+        "Color": "Rose Bud Cherry",
+        "Hexadecimal": "#800B47"
+    },
+    {
         "Color": "Rose Dust",
         "Hexadecimal": "#9E5E6F"
     },
     {
-        "ID": 748,
-        "Color": "Rose ebony",
+        "Color": "Rose Ebony",
         "Hexadecimal": "#674846"
     },
     {
-        "ID": 749,
-        "Color": "Rose madder",
+        "Color": "Rose Fog",
+        "Hexadecimal": "#E7BCB4"
+    },
+    {
+        "Color": "Rose Madder / Alizarin Crimson",
         "Hexadecimal": "#E32636"
     },
     {
-        "ID": 750,
-        "Color": "Rose pink",
+        "Color": "Rose Of Sharon",
+        "Hexadecimal": "#BF5500"
+    },
+    {
+        "Color": "Rose Pink",
         "Hexadecimal": "#FF66CC"
     },
     {
-        "ID": 751,
-        "Color": "Rose Pompadour",
-        "Hexadecimal": "#ED7A9B"
-    },
-    {
-        "ID": 752,
-        "Color": "Rose quartz",
-        "Hexadecimal": "#AA98A9"
-    },
-    {
-        "ID": 753,
-        "Color": "Rose red",
+        "Color": "Rose Red",
         "Hexadecimal": "#C21E56"
     },
     {
-        "ID": 754,
-        "Color": "Rose taupe",
+        "Color": "Rose Taupe",
         "Hexadecimal": "#905D5D"
     },
     {
-        "ID": 755,
-        "Color": "Rose vale",
+        "Color": "Rose Vale",
         "Hexadecimal": "#AB4E52"
     },
     {
-        "ID": 756,
+        "Color": "Rose White",
+        "Hexadecimal": "#FFF6F5"
+    },
+    {
         "Color": "Rosewood",
         "Hexadecimal": "#65000B"
     },
     {
-        "ID": 757,
-        "Color": "Rosso corsa",
+        "Color": "Rosso Corsa",
         "Hexadecimal": "#D40000"
     },
     {
-        "ID": 758,
-        "Color": "Rosy brown",
+        "Color": "Rosy Brown",
         "Hexadecimal": "#BC8F8F"
     },
     {
-        "ID": 759,
-        "Color": "Royal blue (dark)",
+        "Color": "Roti",
+        "Hexadecimal": "#C6A84B"
+    },
+    {
+        "Color": "Rouge",
+        "Hexadecimal": "#A23B6C"
+    },
+    {
+        "Color": "Royal Blue (Dark)",
         "Hexadecimal": "#002366"
     },
     {
-        "ID": 760,
-        "Color": "Royal blue (light)",
+        "Color": "Royal Blue (Light) / Royal Blue",
         "Hexadecimal": "#4169E1"
     },
     {
-        "ID": 761,
-        "Color": "Royal purple",
+        "Color": "Royal Heath",
+        "Hexadecimal": "#AB3472"
+    },
+    {
+        "Color": "Royal Purple",
+        "Hexadecimal": "#6B3FA0"
+    },
+    {
+        "Color": "Royal Purple 2",
         "Hexadecimal": "#7851A9"
     },
     {
-        "ID": 762,
-        "Color": "Royal yellow",
-        "Hexadecimal": "#FADA5E"
-    },
-    {
-        "ID": 763,
         "Color": "Ruber",
         "Hexadecimal": "#CE4676"
     },
     {
-        "ID": 764,
-        "Color": "Rubine red",
+        "Color": "Rubine Red",
         "Hexadecimal": "#D10056"
     },
     {
-        "ID": 765,
         "Color": "Ruby",
         "Hexadecimal": "#E0115F"
     },
     {
-        "ID": 766,
-        "Color": "Ruby red",
+        "Color": "Ruby Red",
         "Hexadecimal": "#9B111E"
     },
     {
-        "ID": 767,
         "Color": "Rufous",
         "Hexadecimal": "#A81C07"
     },
     {
-        "ID": 768,
+        "Color": "Rum",
+        "Hexadecimal": "#796989"
+    },
+    {
+        "Color": "Rum Swizzle",
+        "Hexadecimal": "#F9F8E4"
+    },
+    {
         "Color": "Russet",
         "Hexadecimal": "#80461B"
     },
     {
-        "ID": 769,
-        "Color": "Russian green",
+        "Color": "Russett",
+        "Hexadecimal": "#755A57"
+    },
+    {
+        "Color": "Russian Green",
         "Hexadecimal": "#679267"
     },
     {
-        "ID": 770,
-        "Color": "Russian violet",
+        "Color": "Russian Violet",
         "Hexadecimal": "#32174D"
     },
     {
-        "ID": 771,
         "Color": "Rust",
         "Hexadecimal": "#B7410E"
     },
     {
-        "ID": 772,
-        "Color": "Rusty red",
+        "Color": "Rustic Red",
+        "Hexadecimal": "#480404"
+    },
+    {
+        "Color": "Rusty Nail",
+        "Hexadecimal": "#86560A"
+    },
+    {
+        "Color": "Rusty Red",
         "Hexadecimal": "#DA2C43"
     },
     {
-        "ID": 773,
-        "Color": "Sacramento State green",
+        "Color": "Sacramento State Green",
         "Hexadecimal": "#043927"
     },
     {
-        "ID": 774,
-        "Color": "Saddle brown",
+        "Color": "Saddle",
+        "Hexadecimal": "#4C3024"
+    },
+    {
+        "Color": "Saddle Brown",
         "Hexadecimal": "#8B4513"
     },
     {
-        "ID": 775,
-        "Color": "Safety orange",
+        "Color": "Saddle Brown 2",
+        "Hexadecimal": "#583401"
+    },
+    {
+        "Color": "Safety Orange",
         "Hexadecimal": "#FF7800"
     },
     {
-        "ID": 776,
-        "Color": "Safety orange (blaze orange)",
+        "Color": "Safety Orange (Blaze Orange)",
         "Hexadecimal": "#FF6700"
     },
     {
-        "ID": 777,
-        "Color": "Safety yellow",
+        "Color": "Safety Yellow",
         "Hexadecimal": "#EED202"
     },
     {
-        "ID": 778,
         "Color": "Saffron",
         "Hexadecimal": "#F4C430"
     },
     {
-        "ID": 779,
+        "Color": "Saffron Mango",
+        "Hexadecimal": "#F9BF58"
+    },
+    {
         "Color": "Sage",
+        "Hexadecimal": "#9EA587"
+    },
+    {
+        "Color": "Sage 2",
         "Hexadecimal": "#BCB88A"
     },
     {
-        "ID": 780,
-        "Color": "St. Patrick's blue",
-        "Hexadecimal": "#23297A"
+        "Color": "Sahara",
+        "Hexadecimal": "#B7A214"
     },
     {
-        "ID": 781,
+        "Color": "Sahara Sand",
+        "Hexadecimal": "#F1E788"
+    },
+    {
+        "Color": "Sail",
+        "Hexadecimal": "#B8E0F9"
+    },
+    {
+        "Color": "Salem",
+        "Hexadecimal": "#097F4B"
+    },
+    {
         "Color": "Salmon",
+        "Hexadecimal": "#FF8C69"
+    },
+    {
+        "Color": "Salmon 2",
         "Hexadecimal": "#FA8072"
     },
     {
-        "ID": 782,
-        "Color": "Salmon pink",
+        "Color": "Salmon Pink / Pink Salmon",
         "Hexadecimal": "#FF91A4"
     },
     {
-        "ID": 783,
-        "Color": "Sand",
-        "Hexadecimal": "#C2B280"
+        "Color": "Salomie",
+        "Hexadecimal": "#FEDB8D"
     },
     {
-        "ID": 784,
-        "Color": "Sand dune",
-        "Hexadecimal": "#967117"
+        "Color": "Salt Box",
+        "Hexadecimal": "#685E6E"
     },
     {
-        "ID": 785,
-        "Color": "Sandy brown",
+        "Color": "Saltpan",
+        "Hexadecimal": "#F1F7F2"
+    },
+    {
+        "Color": "Sambuca",
+        "Hexadecimal": "#3A2010"
+    },
+    {
+        "Color": "San Felix",
+        "Hexadecimal": "#0B6207"
+    },
+    {
+        "Color": "San Juan",
+        "Hexadecimal": "#304B6A"
+    },
+    {
+        "Color": "San Marino",
+        "Hexadecimal": "#456CAC"
+    },
+    {
+        "Color": "Sand Dune",
+        "Hexadecimal": "#826F65"
+    },
+    {
+        "Color": "Sandal",
+        "Hexadecimal": "#AA8D6F"
+    },
+    {
+        "Color": "Sandrift",
+        "Hexadecimal": "#AB917A"
+    },
+    {
+        "Color": "Sandstone",
+        "Hexadecimal": "#796D62"
+    },
+    {
+        "Color": "Sandwisp",
+        "Hexadecimal": "#F5E7A2"
+    },
+    {
+        "Color": "Sandy Beach",
+        "Hexadecimal": "#FFEAC8"
+    },
+    {
+        "Color": "Sandy Brown",
         "Hexadecimal": "#F4A460"
     },
     {
-        "ID": 786,
-        "Color": "Sap green",
+        "Color": "Sangria",
+        "Hexadecimal": "#92000A"
+    },
+    {
+        "Color": "Sanguine Brown",
+        "Hexadecimal": "#8D3D38"
+    },
+    {
+        "Color": "Santa Fe",
+        "Hexadecimal": "#B16D52"
+    },
+    {
+        "Color": "Santas Gray",
+        "Hexadecimal": "#9FA0B1"
+    },
+    {
+        "Color": "Sap Green",
         "Hexadecimal": "#507D2A"
     },
     {
-        "ID": 787,
+        "Color": "Sapling",
+        "Hexadecimal": "#DED4A4"
+    },
+    {
         "Color": "Sapphire",
         "Hexadecimal": "#0F52BA"
     },
     {
-        "ID": 788,
-        "Color": "Sapphire blue",
+        "Color": "Sapphire 2",
+        "Hexadecimal": "#2F519E"
+    },
+    {
+        "Color": "Sapphire Blue / Sapphire (Crayola)",
         "Hexadecimal": "#0067A5"
     },
     {
-        "ID": 789,
-        "Color": "Sapphire (Crayola)",
-        "Hexadecimal": "#0067A5"
+        "Color": "Saratoga",
+        "Hexadecimal": "#555B10"
     },
     {
-        "ID": 790,
-        "Color": "Satin sheen gold",
+        "Color": "Satin Linen",
+        "Hexadecimal": "#E6E4D4"
+    },
+    {
+        "Color": "Satin Sheen Gold",
         "Hexadecimal": "#CBA135"
     },
     {
-        "ID": 791,
+        "Color": "Sauvignon",
+        "Hexadecimal": "#FFF5F3"
+    },
+    {
+        "Color": "Sazerac",
+        "Hexadecimal": "#FFF4E0"
+    },
+    {
+        "Color": "Scampi",
+        "Hexadecimal": "#675FA6"
+    },
+    {
+        "Color": "Scandal",
+        "Hexadecimal": "#CFFAF4"
+    },
+    {
         "Color": "Scarlet",
         "Hexadecimal": "#FF2400"
     },
     {
-        "ID": 792,
-        "Color": "Schauss pink",
-        "Hexadecimal": "#FF91AF"
+        "Color": "Scarlet Gum",
+        "Hexadecimal": "#431560"
     },
     {
-        "ID": 793,
-        "Color": "School bus yellow",
+        "Color": "Scarlett",
+        "Hexadecimal": "#950015"
+    },
+    {
+        "Color": "Scarpa Flow",
+        "Hexadecimal": "#585562"
+    },
+    {
+        "Color": "Schist",
+        "Hexadecimal": "#A9B497"
+    },
+    {
+        "Color": "School Bus Yellow",
         "Hexadecimal": "#FFD800"
     },
     {
-        "ID": 794,
+        "Color": "Schooner",
+        "Hexadecimal": "#8B847E"
+    },
+    {
+        "Color": "Science Blue",
+        "Hexadecimal": "#0066CC"
+    },
+    {
+        "Color": "Scooter",
+        "Hexadecimal": "#2EBFD4"
+    },
+    {
+        "Color": "Scorpion",
+        "Hexadecimal": "#695F62"
+    },
+    {
+        "Color": "Scotch Mist",
+        "Hexadecimal": "#FFFBDC"
+    },
+    {
         "Color": "Screamin' Green",
         "Hexadecimal": "#66FF66"
     },
     {
-        "ID": 795,
-        "Color": "Sea green",
+        "Color": "Sea Buckthorn",
+        "Hexadecimal": "#FBA129"
+    },
+    {
+        "Color": "Sea Green",
         "Hexadecimal": "#2E8B57"
     },
     {
-        "ID": 796,
-        "Color": "Sea green (Crayola)",
+        "Color": "Sea Green (Crayola)",
         "Hexadecimal": "#00FFCD"
     },
     {
-        "ID": 797,
-        "Color": "Seal brown",
+        "Color": "Sea Mist",
+        "Hexadecimal": "#C5DBCA"
+    },
+    {
+        "Color": "Sea Nymph",
+        "Hexadecimal": "#78A39C"
+    },
+    {
+        "Color": "Sea Pink",
+        "Hexadecimal": "#ED989E"
+    },
+    {
+        "Color": "Seagull",
+        "Hexadecimal": "#80CCEA"
+    },
+    {
+        "Color": "Seal Brown",
         "Hexadecimal": "#59260B"
     },
     {
-        "ID": 798,
+        "Color": "Seance",
+        "Hexadecimal": "#731E8F"
+    },
+    {
         "Color": "Seashell",
+        "Hexadecimal": "#F1F1F1"
+    },
+    {
+        "Color": "Seashell Peach",
         "Hexadecimal": "#FFF5EE"
     },
     {
-        "ID": 799,
-        "Color": "Selective yellow",
+        "Color": "Seaweed",
+        "Hexadecimal": "#1B2F11"
+    },
+    {
+        "Color": "Selago",
+        "Hexadecimal": "#F0EEFD"
+    },
+    {
+        "Color": "Selective Yellow",
         "Hexadecimal": "#FFBA00"
     },
     {
-        "ID": 800,
         "Color": "Sepia",
         "Hexadecimal": "#704214"
     },
     {
-        "ID": 801,
+        "Color": "Sepia Black",
+        "Hexadecimal": "#2B0202"
+    },
+    {
+        "Color": "Sepia Skin",
+        "Hexadecimal": "#9E5B40"
+    },
+    {
+        "Color": "Serenade",
+        "Hexadecimal": "#FFF4E8"
+    },
+    {
         "Color": "Shadow",
+        "Hexadecimal": "#837050"
+    },
+    {
+        "Color": "Shadow 2",
         "Hexadecimal": "#8A795D"
     },
     {
-        "ID": 802,
-        "Color": "Shadow blue",
+        "Color": "Shadow Blue",
         "Hexadecimal": "#778BA5"
     },
     {
-        "ID": 803,
-        "Color": "Shamrock green",
+        "Color": "Shadow Green",
+        "Hexadecimal": "#9AC2B8"
+    },
+    {
+        "Color": "Shady Lady",
+        "Hexadecimal": "#AAA5A9"
+    },
+    {
+        "Color": "Shakespeare",
+        "Hexadecimal": "#4EABD1"
+    },
+    {
+        "Color": "Shalimar",
+        "Hexadecimal": "#FBFFBA"
+    },
+    {
+        "Color": "Shamrock",
+        "Hexadecimal": "#33CC99"
+    },
+    {
+        "Color": "Shamrock Green",
         "Hexadecimal": "#009E60"
     },
     {
-        "ID": 804,
-        "Color": "Sheen green",
+        "Color": "Shark",
+        "Hexadecimal": "#25272C"
+    },
+    {
+        "Color": "Sheen Green",
         "Hexadecimal": "#8FD400"
     },
     {
-        "ID": 805,
+        "Color": "Sherpa Blue",
+        "Hexadecimal": "#004950"
+    },
+    {
+        "Color": "Sherwood Green",
+        "Hexadecimal": "#02402C"
+    },
+    {
+        "Color": "Shilo",
+        "Hexadecimal": "#E8B9B3"
+    },
+    {
         "Color": "Shimmering Blush",
         "Hexadecimal": "#D98695"
     },
     {
-        "ID": 806,
+        "Color": "Shingle Fawn",
+        "Hexadecimal": "#6B4E31"
+    },
+    {
         "Color": "Shiny Shamrock",
         "Hexadecimal": "#5FA778"
     },
     {
-        "ID": 807,
-        "Color": "Shocking pink",
+        "Color": "Ship Cove",
+        "Hexadecimal": "#788BBA"
+    },
+    {
+        "Color": "Ship Gray",
+        "Hexadecimal": "#3E3A44"
+    },
+    {
+        "Color": "Shiraz",
+        "Hexadecimal": "#B20931"
+    },
+    {
+        "Color": "Shocking",
+        "Hexadecimal": "#E292C0"
+    },
+    {
+        "Color": "Shocking Pink",
         "Hexadecimal": "#FC0FC0"
     },
     {
-        "ID": 808,
-        "Color": "Shocking pink (Crayola)",
+        "Color": "Shocking Pink (Crayola) / Ultra Pink / Blush Pink",
         "Hexadecimal": "#FF6FFF"
     },
     {
-        "ID": 809,
-        "Color": "Sienna",
-        "Hexadecimal": "#882D17"
+        "Color": "Shuttle Gray",
+        "Hexadecimal": "#5F6672"
     },
     {
-        "ID": 810,
+        "Color": "Siam",
+        "Hexadecimal": "#646A54"
+    },
+    {
+        "Color": "Sidecar",
+        "Hexadecimal": "#F3E7BB"
+    },
+    {
+        "Color": "Silk",
+        "Hexadecimal": "#BDB1A8"
+    },
+    {
         "Color": "Silver",
         "Hexadecimal": "#C0C0C0"
     },
     {
-        "ID": 811,
-        "Color": "Silver (Crayola)",
-        "Hexadecimal": "#C9C0BB"
-    },
-    {
-        "ID": 812,
         "Color": "Silver (Metallic)",
         "Hexadecimal": "#AAA9AD"
     },
     {
-        "ID": 813,
-        "Color": "Silver chalice",
+        "Color": "Silver Chalice",
         "Hexadecimal": "#ACACAC"
     },
     {
-        "ID": 814,
-        "Color": "Silver pink",
+        "Color": "Silver Pink",
         "Hexadecimal": "#C4AEAD"
     },
     {
-        "ID": 815,
-        "Color": "Silver sand",
+        "Color": "Silver Sand",
         "Hexadecimal": "#BFC1C2"
     },
     {
-        "ID": 816,
+        "Color": "Silver Tree",
+        "Hexadecimal": "#66B58F"
+    },
+    {
+        "Color": "Sinbad",
+        "Hexadecimal": "#9FD7D3"
+    },
+    {
         "Color": "Sinopia",
         "Hexadecimal": "#CB410B"
     },
     {
-        "ID": 817,
+        "Color": "Siren",
+        "Hexadecimal": "#7A013A"
+    },
+    {
+        "Color": "Sirocco",
+        "Hexadecimal": "#718080"
+    },
+    {
+        "Color": "Sisal",
+        "Hexadecimal": "#D3CBBA"
+    },
+    {
         "Color": "Sizzling Red",
         "Hexadecimal": "#FF3855"
     },
     {
-        "ID": 818,
         "Color": "Sizzling Sunrise",
         "Hexadecimal": "#FFDB00"
     },
     {
-        "ID": 819,
+        "Color": "Skeptic",
+        "Hexadecimal": "#CAE6DA"
+    },
+    {
         "Color": "Skobeloff",
         "Hexadecimal": "#007474"
     },
     {
-        "ID": 820,
-        "Color": "Sky blue",
+        "Color": "Sky Blue",
         "Hexadecimal": "#87CEEB"
     },
     {
-        "ID": 821,
-        "Color": "Sky blue (Crayola)",
+        "Color": "Sky Blue (Crayola)",
         "Hexadecimal": "#76D7EA"
     },
     {
-        "ID": 822,
-        "Color": "Sky magenta",
+        "Color": "Sky Magenta",
         "Hexadecimal": "#CF71AF"
     },
     {
-        "ID": 823,
-        "Color": "Slate blue",
+        "Color": "Slate Blue",
         "Hexadecimal": "#6A5ACD"
     },
     {
-        "ID": 824,
-        "Color": "Slate gray",
+        "Color": "Slate Gray",
         "Hexadecimal": "#708090"
     },
     {
-        "ID": 825,
-        "Color": "Slimy green",
+        "Color": "Slimy Green",
         "Hexadecimal": "#299617"
     },
     {
-        "ID": 826,
+        "Color": "Smalt",
+        "Hexadecimal": "#003399"
+    },
+    {
+        "Color": "Smalt Blue",
+        "Hexadecimal": "#51808F"
+    },
+    {
         "Color": "Smitten",
         "Hexadecimal": "#C84186"
     },
     {
-        "ID": 827,
-        "Color": "Smoky black",
+        "Color": "Smoky",
+        "Hexadecimal": "#605B73"
+    },
+    {
+        "Color": "Smoky Black",
         "Hexadecimal": "#100C08"
     },
     {
-        "ID": 828,
         "Color": "Snow",
         "Hexadecimal": "#FFFAFA"
     },
     {
-        "ID": 829,
-        "Color": "Solid pink",
+        "Color": "Snow Drift",
+        "Hexadecimal": "#F7FAF7"
+    },
+    {
+        "Color": "Snow Flurry",
+        "Hexadecimal": "#E4FFD1"
+    },
+    {
+        "Color": "Snowy Mint",
+        "Hexadecimal": "#D6FFDB"
+    },
+    {
+        "Color": "Snuff",
+        "Hexadecimal": "#E2D8ED"
+    },
+    {
+        "Color": "Soapstone",
+        "Hexadecimal": "#FFFBF9"
+    },
+    {
+        "Color": "Soft Amber",
+        "Hexadecimal": "#D1C6B4"
+    },
+    {
+        "Color": "Soft Peach",
+        "Hexadecimal": "#F5EDEF"
+    },
+    {
+        "Color": "Solid Pink",
         "Hexadecimal": "#893843"
     },
     {
-        "ID": 830,
-        "Color": "Sonic silver",
+        "Color": "Solitaire",
+        "Hexadecimal": "#FEF8E2"
+    },
+    {
+        "Color": "Solitude",
+        "Hexadecimal": "#EAF6FF"
+    },
+    {
+        "Color": "Sonic Silver",
         "Hexadecimal": "#757575"
     },
     {
-        "ID": 831,
-        "Color": "Space cadet",
+        "Color": "Sorbus",
+        "Hexadecimal": "#FD7C07"
+    },
+    {
+        "Color": "Sorrell Brown",
+        "Hexadecimal": "#CEB98F"
+    },
+    {
+        "Color": "Soya Bean",
+        "Hexadecimal": "#6A6051"
+    },
+    {
+        "Color": "Space Cadet",
         "Hexadecimal": "#1D2951"
     },
     {
-        "ID": 832,
-        "Color": "Spanish bistre",
+        "Color": "Spanish Bistre",
         "Hexadecimal": "#807532"
     },
     {
-        "ID": 833,
-        "Color": "Spanish blue",
+        "Color": "Spanish Blue",
         "Hexadecimal": "#0070B8"
     },
     {
-        "ID": 834,
-        "Color": "Spanish carmine",
+        "Color": "Spanish Carmine",
         "Hexadecimal": "#D10047"
     },
     {
-        "ID": 835,
-        "Color": "Spanish gray",
+        "Color": "Spanish Gray",
         "Hexadecimal": "#989898"
     },
     {
-        "ID": 836,
-        "Color": "Spanish green",
+        "Color": "Spanish Green",
+        "Hexadecimal": "#819885"
+    },
+    {
+        "Color": "Spanish Green 2",
         "Hexadecimal": "#009150"
     },
     {
-        "ID": 837,
-        "Color": "Spanish orange",
+        "Color": "Spanish Orange",
         "Hexadecimal": "#E86100"
     },
     {
-        "ID": 838,
-        "Color": "Spanish pink",
+        "Color": "Spanish Pink",
         "Hexadecimal": "#F7BFBE"
     },
     {
-        "ID": 839,
-        "Color": "Spanish red",
+        "Color": "Spanish Red",
         "Hexadecimal": "#E60026"
     },
     {
-        "ID": 840,
-        "Color": "Spanish sky blue",
-        "Hexadecimal": "#00FFFF"
-    },
-    {
-        "ID": 841,
-        "Color": "Spanish violet",
+        "Color": "Spanish Violet",
         "Hexadecimal": "#4C2882"
     },
     {
-        "ID": 842,
-        "Color": "Spanish viridian",
+        "Color": "Spanish Viridian",
         "Hexadecimal": "#007F5C"
     },
     {
-        "ID": 843,
-        "Color": "Spring bud",
+        "Color": "Spectra",
+        "Hexadecimal": "#2F5A57"
+    },
+    {
+        "Color": "Spice",
+        "Hexadecimal": "#6A442E"
+    },
+    {
+        "Color": "Spicy Mix",
+        "Hexadecimal": "#885342"
+    },
+    {
+        "Color": "Spicy Mustard",
+        "Hexadecimal": "#74640D"
+    },
+    {
+        "Color": "Spicy Pink",
+        "Hexadecimal": "#816E71"
+    },
+    {
+        "Color": "Spindle",
+        "Hexadecimal": "#B6D1EA"
+    },
+    {
+        "Color": "Spray",
+        "Hexadecimal": "#79DEEC"
+    },
+    {
+        "Color": "Spring Bud",
         "Hexadecimal": "#A7FC00"
     },
     {
-        "ID": 844,
         "Color": "Spring Frost",
         "Hexadecimal": "#87FF2A"
     },
     {
-        "ID": 845,
-        "Color": "Spring green",
+        "Color": "Spring Green",
         "Hexadecimal": "#00FF7F"
     },
     {
-        "ID": 846,
-        "Color": "Spring green (Crayola)",
-        "Hexadecimal": "#ECEBBD"
+        "Color": "Spring Leaves",
+        "Hexadecimal": "#578363"
     },
     {
-        "ID": 847,
-        "Color": "Star command blue",
+        "Color": "Spring Rain",
+        "Hexadecimal": "#ACCBB1"
+    },
+    {
+        "Color": "Spring Sun",
+        "Hexadecimal": "#F6FFDC"
+    },
+    {
+        "Color": "Spring Wood",
+        "Hexadecimal": "#F8F6F1"
+    },
+    {
+        "Color": "Sprout",
+        "Hexadecimal": "#C1D7B0"
+    },
+    {
+        "Color": "Spun Pearl",
+        "Hexadecimal": "#AAABB7"
+    },
+    {
+        "Color": "Squirrel",
+        "Hexadecimal": "#8F8176"
+    },
+    {
+        "Color": "St Tropaz",
+        "Hexadecimal": "#2D569B"
+    },
+    {
+        "Color": "St. Patrick's Blue",
+        "Hexadecimal": "#23297A"
+    },
+    {
+        "Color": "Stack",
+        "Hexadecimal": "#8A8F8A"
+    },
+    {
+        "Color": "Star Command Blue",
         "Hexadecimal": "#007BB8"
     },
     {
-        "ID": 848,
-        "Color": "Steel blue",
+        "Color": "Star Dust",
+        "Hexadecimal": "#9F9F9C"
+    },
+    {
+        "Color": "Stark White",
+        "Hexadecimal": "#E5D7BD"
+    },
+    {
+        "Color": "Starship",
+        "Hexadecimal": "#ECF245"
+    },
+    {
+        "Color": "Steel Blue",
         "Hexadecimal": "#4682B4"
     },
     {
-        "ID": 849,
-        "Color": "Steel pink",
+        "Color": "Steel Gray",
+        "Hexadecimal": "#262335"
+    },
+    {
+        "Color": "Steel Pink",
         "Hexadecimal": "#CC33CC"
     },
     {
-        "ID": 850,
         "Color": "Steel Teal",
         "Hexadecimal": "#5F8A8B"
     },
     {
-        "ID": 851,
-        "Color": "Stil de grain yellow",
-        "Hexadecimal": "#FADA5E"
+        "Color": "Stiletto",
+        "Hexadecimal": "#9C3336"
     },
     {
-        "ID": 852,
+        "Color": "Stonewall",
+        "Hexadecimal": "#928573"
+    },
+    {
+        "Color": "Storm Dust",
+        "Hexadecimal": "#646463"
+    },
+    {
+        "Color": "Storm Gray",
+        "Hexadecimal": "#717486"
+    },
+    {
+        "Color": "Stratos",
+        "Hexadecimal": "#000741"
+    },
+    {
         "Color": "Straw",
+        "Hexadecimal": "#D4BF8D"
+    },
+    {
+        "Color": "Straw 2",
         "Hexadecimal": "#E4D96F"
     },
     {
-        "ID": 853,
         "Color": "Strawberry",
         "Hexadecimal": "#FA5053"
     },
     {
-        "ID": 854,
         "Color": "Strawberry Blonde",
         "Hexadecimal": "#FF9361"
     },
     {
-        "ID": 855,
+        "Color": "Strikemaster",
+        "Hexadecimal": "#956387"
+    },
+    {
+        "Color": "Stromboli",
+        "Hexadecimal": "#325D52"
+    },
+    {
+        "Color": "Studio",
+        "Hexadecimal": "#714AB2"
+    },
+    {
+        "Color": "Submarine",
+        "Hexadecimal": "#BAC7C9"
+    },
+    {
+        "Color": "Sugar Cane",
+        "Hexadecimal": "#F9FFF6"
+    },
+    {
         "Color": "Sugar Plum",
         "Hexadecimal": "#914E75"
     },
     {
-        "ID": 856,
+        "Color": "Sulu",
+        "Hexadecimal": "#C1F07C"
+    },
+    {
+        "Color": "Summer Green",
+        "Hexadecimal": "#96BBAB"
+    },
+    {
+        "Color": "Sun",
+        "Hexadecimal": "#FBAC13"
+    },
+    {
+        "Color": "Sundance",
+        "Hexadecimal": "#C9B35B"
+    },
+    {
+        "Color": "Sundown",
+        "Hexadecimal": "#FFB1B3"
+    },
+    {
+        "Color": "Sunflower",
+        "Hexadecimal": "#E4D422"
+    },
+    {
+        "Color": "Sunglo",
+        "Hexadecimal": "#E16865"
+    },
+    {
         "Color": "Sunglow",
         "Hexadecimal": "#FFCC33"
     },
     {
-        "ID": 857,
         "Color": "Sunray",
         "Hexadecimal": "#E3AB57"
     },
     {
-        "ID": 858,
-        "Color": "Sunset",
-        "Hexadecimal": "#FAD6A5"
+        "Color": "Sunset Orange",
+        "Hexadecimal": "#FE4C40"
     },
     {
-        "ID": 859,
-        "Color": "Super pink",
+        "Color": "Sunshade",
+        "Hexadecimal": "#FF9E2C"
+    },
+    {
+        "Color": "Super Pink",
         "Hexadecimal": "#CF6BA9"
     },
     {
-        "ID": 860,
+        "Color": "Supernova",
+        "Hexadecimal": "#FFC901"
+    },
+    {
+        "Color": "Surf",
+        "Hexadecimal": "#BBD7C1"
+    },
+    {
+        "Color": "Surf Crest",
+        "Hexadecimal": "#CFE5D2"
+    },
+    {
+        "Color": "Surfie Green",
+        "Hexadecimal": "#0C7A79"
+    },
+    {
+        "Color": "Sushi",
+        "Hexadecimal": "#87AB39"
+    },
+    {
+        "Color": "Suva Gray",
+        "Hexadecimal": "#888387"
+    },
+    {
+        "Color": "Swamp",
+        "Hexadecimal": "#001B1C"
+    },
+    {
+        "Color": "Swamp Green",
+        "Hexadecimal": "#ACB78E"
+    },
+    {
+        "Color": "Swans Down",
+        "Hexadecimal": "#DCF0EA"
+    },
+    {
         "Color": "Sweet Brown",
         "Hexadecimal": "#A83731"
     },
     {
-        "ID": 861,
+        "Color": "Sweet Corn",
+        "Hexadecimal": "#FBEA8C"
+    },
+    {
+        "Color": "Sweet Pink",
+        "Hexadecimal": "#FD9FA2"
+    },
+    {
+        "Color": "Swirl",
+        "Hexadecimal": "#D3CDC5"
+    },
+    {
+        "Color": "Swiss Coffee",
+        "Hexadecimal": "#DDD6D5"
+    },
+    {
+        "Color": "Sycamore",
+        "Hexadecimal": "#908D39"
+    },
+    {
         "Color": "Syracuse Orange",
         "Hexadecimal": "#D44500"
     },
     {
-        "ID": 862,
+        "Color": "Tabasco",
+        "Hexadecimal": "#A02712"
+    },
+    {
+        "Color": "Tacao",
+        "Hexadecimal": "#EDB381"
+    },
+    {
+        "Color": "Tacha",
+        "Hexadecimal": "#D6C562"
+    },
+    {
+        "Color": "Tahiti Gold",
+        "Hexadecimal": "#E97C07"
+    },
+    {
+        "Color": "Tahuna Sands",
+        "Hexadecimal": "#EEF0C8"
+    },
+    {
+        "Color": "Tall Poppy",
+        "Hexadecimal": "#B32D29"
+    },
+    {
+        "Color": "Tallow",
+        "Hexadecimal": "#A8A589"
+    },
+    {
+        "Color": "Tamarillo",
+        "Hexadecimal": "#991613"
+    },
+    {
+        "Color": "Tamarind",
+        "Hexadecimal": "#341515"
+    },
+    {
         "Color": "Tan",
         "Hexadecimal": "#D2B48C"
     },
     {
-        "ID": 863,
         "Color": "Tan (Crayola)",
         "Hexadecimal": "#D99A6C"
     },
     {
-        "ID": 864,
+        "Color": "Tan Hide",
+        "Hexadecimal": "#FA9D5A"
+    },
+    {
+        "Color": "Tana",
+        "Hexadecimal": "#D9DCC1"
+    },
+    {
+        "Color": "Tangaroa",
+        "Hexadecimal": "#03163C"
+    },
+    {
         "Color": "Tangerine",
         "Hexadecimal": "#F28500"
     },
     {
-        "ID": 865,
-        "Color": "Tango pink",
-        "Hexadecimal": "#E4717A"
+        "Color": "Tango",
+        "Hexadecimal": "#ED7A1C"
     },
     {
-        "ID": 866,
+        "Color": "Tapa",
+        "Hexadecimal": "#7B7874"
+    },
+    {
+        "Color": "Tapestry",
+        "Hexadecimal": "#B05E81"
+    },
+    {
+        "Color": "Tara",
+        "Hexadecimal": "#E1F6E8"
+    },
+    {
+        "Color": "Tarawera",
+        "Hexadecimal": "#073A50"
+    },
+    {
         "Color": "Tart Orange",
         "Hexadecimal": "#FB4D46"
     },
     {
-        "ID": 867,
-        "Color": "Taupe",
-        "Hexadecimal": "#483C32"
+        "Color": "Tasman",
+        "Hexadecimal": "#CFDCCF"
     },
     {
-        "ID": 868,
-        "Color": "Taupe gray",
+        "Color": "Taupe Gray",
         "Hexadecimal": "#8B8589"
     },
     {
-        "ID": 869,
-        "Color": "Tea green",
+        "Color": "Taupe Gray 2",
+        "Hexadecimal": "#B3AF95"
+    },
+    {
+        "Color": "Tawny Port",
+        "Hexadecimal": "#692545"
+    },
+    {
+        "Color": "Te Papa Green",
+        "Hexadecimal": "#1E433C"
+    },
+    {
+        "Color": "Tea",
+        "Hexadecimal": "#C1BAB0"
+    },
+    {
+        "Color": "Tea Green",
         "Hexadecimal": "#D0F0C0"
     },
     {
-        "ID": 870,
-        "Color": "Tea rose",
-        "Hexadecimal": "#F88379"
+        "Color": "Teak",
+        "Hexadecimal": "#B19461"
     },
     {
-        "ID": 871,
-        "Color": "Tea rose",
-        "Hexadecimal": "#F4C2C2"
-    },
-    {
-        "ID": 872,
         "Color": "Teal",
         "Hexadecimal": "#008080"
     },
     {
-        "ID": 873,
-        "Color": "Teal blue",
+        "Color": "Teal Blue",
         "Hexadecimal": "#367588"
     },
     {
-        "ID": 874,
+        "Color": "Teal Blue 2",
+        "Hexadecimal": "#044259"
+    },
+    {
         "Color": "Telemagenta",
         "Hexadecimal": "#CF3476"
     },
     {
-        "ID": 875,
-        "Color": "Tenné (tawny)",
+        "Color": "Temptress",
+        "Hexadecimal": "#3B000B"
+    },
+    {
+        "Color": "Tenné (Tawny) / Tenn",
         "Hexadecimal": "#CD5700"
     },
     {
-        "ID": 876,
-        "Color": "Terra cotta",
+        "Color": "Tequila",
+        "Hexadecimal": "#FFE6C7"
+    },
+    {
+        "Color": "Terracotta",
         "Hexadecimal": "#E2725B"
     },
     {
-        "ID": 877,
+        "Color": "Texas",
+        "Hexadecimal": "#F8F99C"
+    },
+    {
+        "Color": "Texas Rose",
+        "Hexadecimal": "#FFB555"
+    },
+    {
+        "Color": "Thatch",
+        "Hexadecimal": "#B69D98"
+    },
+    {
+        "Color": "Thatch Green",
+        "Hexadecimal": "#403D19"
+    },
+    {
         "Color": "Thistle",
         "Hexadecimal": "#D8BFD8"
     },
     {
-        "ID": 878,
-        "Color": "Thulian pink",
-        "Hexadecimal": "#DE6FA1"
+        "Color": "Thistle Green",
+        "Hexadecimal": "#CCCAA8"
     },
     {
-        "ID": 879,
+        "Color": "Thunder",
+        "Hexadecimal": "#33292F"
+    },
+    {
+        "Color": "Thunderbird",
+        "Hexadecimal": "#C02B18"
+    },
+    {
+        "Color": "Tia Maria",
+        "Hexadecimal": "#C1440E"
+    },
+    {
+        "Color": "Tiara",
+        "Hexadecimal": "#C3D1D1"
+    },
+    {
+        "Color": "Tiber",
+        "Hexadecimal": "#063537"
+    },
+    {
         "Color": "Tickle Me Pink",
+        "Hexadecimal": "#FC80A5"
+    },
+    {
+        "Color": "Tickle Me Pink 2",
         "Hexadecimal": "#FC89AC"
     },
     {
-        "ID": 880,
-        "Color": "Tiffany Blue",
-        "Hexadecimal": "#0ABAB5"
+        "Color": "Tidal",
+        "Hexadecimal": "#F1FFAD"
     },
     {
-        "ID": 881,
+        "Color": "Tide",
+        "Hexadecimal": "#BFB8B0"
+    },
+    {
+        "Color": "Tiffany Blue",
+        "Hexadecimal": "#81D8D0"
+    },
+    {
+        "Color": "Timber Green",
+        "Hexadecimal": "#16322C"
+    },
+    {
         "Color": "Timberwolf",
+        "Hexadecimal": "#D9D6CF"
+    },
+    {
+        "Color": "Timberwolf 2",
         "Hexadecimal": "#DBD7D2"
     },
     {
-        "ID": 882,
-        "Color": "Titanium yellow",
+        "Color": "Titan White",
+        "Hexadecimal": "#F0EEFF"
+    },
+    {
+        "Color": "Titanium Yellow",
         "Hexadecimal": "#EEE600"
     },
     {
-        "ID": 883,
+        "Color": "Toast",
+        "Hexadecimal": "#9A6E61"
+    },
+    {
+        "Color": "Tobacco Brown",
+        "Hexadecimal": "#715D47"
+    },
+    {
+        "Color": "Toledo",
+        "Hexadecimal": "#3A0020"
+    },
+    {
+        "Color": "Tolopea",
+        "Hexadecimal": "#1B0245"
+    },
+    {
+        "Color": "Tom Thumb",
+        "Hexadecimal": "#3F583B"
+    },
+    {
         "Color": "Tomato",
         "Hexadecimal": "#FF6347"
     },
     {
-        "ID": 884,
-        "Color": "Tropical rainforest",
+        "Color": "Tonys Pink",
+        "Hexadecimal": "#E79F8C"
+    },
+    {
+        "Color": "Topaz",
+        "Hexadecimal": "#7C778A"
+    },
+    {
+        "Color": "Torch Red",
+        "Hexadecimal": "#FD0E35"
+    },
+    {
+        "Color": "Torea Bay",
+        "Hexadecimal": "#0F2D9E"
+    },
+    {
+        "Color": "Tory Blue",
+        "Hexadecimal": "#1450AA"
+    },
+    {
+        "Color": "Tosca",
+        "Hexadecimal": "#8D3F3F"
+    },
+    {
+        "Color": "Totem Pole",
+        "Hexadecimal": "#991B07"
+    },
+    {
+        "Color": "Tower Gray",
+        "Hexadecimal": "#A9BDBF"
+    },
+    {
+        "Color": "Tradewind",
+        "Hexadecimal": "#5FB3AC"
+    },
+    {
+        "Color": "Tranquil",
+        "Hexadecimal": "#E6FFFF"
+    },
+    {
+        "Color": "Travertine",
+        "Hexadecimal": "#FFFDE8"
+    },
+    {
+        "Color": "Tree Poppy",
+        "Hexadecimal": "#FC9C1D"
+    },
+    {
+        "Color": "Treehouse",
+        "Hexadecimal": "#3B2820"
+    },
+    {
+        "Color": "Trendy Green",
+        "Hexadecimal": "#7C881A"
+    },
+    {
+        "Color": "Trendy Pink",
+        "Hexadecimal": "#8C6495"
+    },
+    {
+        "Color": "Trinidad",
+        "Hexadecimal": "#E64E03"
+    },
+    {
+        "Color": "Tropical Blue",
+        "Hexadecimal": "#C3DDF9"
+    },
+    {
+        "Color": "Tropical Rainforest / Tropical Rain Forest",
         "Hexadecimal": "#00755E"
     },
     {
-        "ID": 885,
+        "Color": "Trout",
+        "Hexadecimal": "#4A4E5A"
+    },
+    {
         "Color": "True Blue",
         "Hexadecimal": "#2D68C4"
     },
     {
-        "ID": 886,
+        "Color": "True V",
+        "Hexadecimal": "#8A73D6"
+    },
+    {
         "Color": "Trypan Blue",
         "Hexadecimal": "#1C05B3"
     },
     {
-        "ID": 887,
-        "Color": "Tufts blue",
+        "Color": "Tuatara",
+        "Hexadecimal": "#363534"
+    },
+    {
+        "Color": "Tuft Bush",
+        "Hexadecimal": "#FFDDCD"
+    },
+    {
+        "Color": "Tufts Blue",
         "Hexadecimal": "#3E8EDE"
     },
     {
-        "ID": 888,
+        "Color": "Tulip Tree",
+        "Hexadecimal": "#EAB33B"
+    },
+    {
         "Color": "Tumbleweed",
+        "Hexadecimal": "#DEA681"
+    },
+    {
+        "Color": "Tumbleweed 2",
         "Hexadecimal": "#DEAA88"
     },
     {
-        "ID": 889,
+        "Color": "Tuna",
+        "Hexadecimal": "#353542"
+    },
+    {
+        "Color": "Tundora",
+        "Hexadecimal": "#4A4244"
+    },
+    {
+        "Color": "Turbo",
+        "Hexadecimal": "#FAE600"
+    },
+    {
+        "Color": "Turkish Rose",
+        "Hexadecimal": "#B57281"
+    },
+    {
+        "Color": "Turmeric",
+        "Hexadecimal": "#CABB48"
+    },
+    {
         "Color": "Turquoise",
         "Hexadecimal": "#40E0D0"
     },
     {
-        "ID": 890,
-        "Color": "Turquoise blue",
+        "Color": "Turquoise 2",
+        "Hexadecimal": "#30D5C8"
+    },
+    {
+        "Color": "Turquoise Blue",
+        "Hexadecimal": "#6CDAE7"
+    },
+    {
+        "Color": "Turquoise Blue 2",
         "Hexadecimal": "#00FFEF"
     },
     {
-        "ID": 891,
-        "Color": "Turquoise green",
+        "Color": "Turquoise Green",
         "Hexadecimal": "#A0D6B4"
     },
     {
-        "ID": 892,
-        "Color": "Turtle green",
-        "Hexadecimal": "#8A9A5B"
+        "Color": "Turtle Green",
+        "Hexadecimal": "#2A380B"
     },
     {
-        "ID": 893,
-        "Color": "Tuscan",
-        "Hexadecimal": "#FAD6A5"
-    },
-    {
-        "ID": 894,
-        "Color": "Tuscan brown",
+        "Color": "Tuscan Brown",
         "Hexadecimal": "#6F4E37"
     },
     {
-        "ID": 895,
-        "Color": "Tuscan red",
+        "Color": "Tuscan Red",
         "Hexadecimal": "#7C4848"
     },
     {
-        "ID": 896,
-        "Color": "Tuscan tan",
-        "Hexadecimal": "#A67B5B"
-    },
-    {
-        "ID": 897,
         "Color": "Tuscany",
         "Hexadecimal": "#C09999"
     },
     {
-        "ID": 898,
-        "Color": "Twilight lavender",
+        "Color": "Tuscany 2",
+        "Hexadecimal": "#BD5E2E"
+    },
+    {
+        "Color": "Tusk",
+        "Hexadecimal": "#EEF3C3"
+    },
+    {
+        "Color": "Tussock",
+        "Hexadecimal": "#C5994B"
+    },
+    {
+        "Color": "Tutu",
+        "Hexadecimal": "#FFF1F9"
+    },
+    {
+        "Color": "Twilight",
+        "Hexadecimal": "#E4CFDE"
+    },
+    {
+        "Color": "Twilight Blue",
+        "Hexadecimal": "#EEFDFF"
+    },
+    {
+        "Color": "Twilight Lavender",
         "Hexadecimal": "#8A496B"
     },
     {
-        "ID": 899,
-        "Color": "Tyrian purple",
+        "Color": "Twine",
+        "Hexadecimal": "#C2955D"
+    },
+    {
+        "Color": "Tyrian Purple",
         "Hexadecimal": "#66023C"
     },
     {
-        "ID": 900,
-        "Color": "UA blue",
+        "Color": "UA Blue",
         "Hexadecimal": "#0033AA"
     },
     {
-        "ID": 901,
-        "Color": "UA red",
+        "Color": "UA Red",
         "Hexadecimal": "#D9004C"
     },
     {
-        "ID": 902,
-        "Color": "Ultramarine",
-        "Hexadecimal": "#3F00FF"
-    },
-    {
-        "ID": 903,
-        "Color": "Ultramarine blue",
-        "Hexadecimal": "#4166F5"
-    },
-    {
-        "ID": 904,
-        "Color": "Ultra pink",
-        "Hexadecimal": "#FF6FFF"
-    },
-    {
-        "ID": 905,
-        "Color": "Ultra red",
+        "Color": "Ultra Red",
         "Hexadecimal": "#FC6C85"
     },
     {
-        "ID": 906,
+        "Color": "Ultramarine",
+        "Hexadecimal": "#120A8F"
+    },
+    {
+        "Color": "Ultramarine 2",
+        "Hexadecimal": "#3F00FF"
+    },
+    {
+        "Color": "Ultramarine Blue",
+        "Hexadecimal": "#4166F5"
+    },
+    {
         "Color": "Umber",
         "Hexadecimal": "#635147"
     },
     {
-        "ID": 907,
-        "Color": "Unbleached silk",
+        "Color": "Unbleached Silk",
         "Hexadecimal": "#FFDDCA"
     },
     {
-        "ID": 908,
-        "Color": "United Nations blue",
+        "Color": "United Nations Blue",
         "Hexadecimal": "#5B92E5"
     },
     {
-        "ID": 909,
-        "Color": "University of Pennsylvania red",
+        "Color": "University Of Pennsylvania Red",
         "Hexadecimal": "#A50021"
     },
     {
-        "ID": 910,
-        "Color": "Unmellow yellow",
-        "Hexadecimal": "#FFFF66"
-    },
-    {
-        "ID": 911,
-        "Color": "UP Forest green",
-        "Hexadecimal": "#014421"
-    },
-    {
-        "ID": 912,
-        "Color": "UP maroon",
+        "Color": "UP Maroon",
         "Hexadecimal": "#7B1113"
     },
     {
-        "ID": 913,
-        "Color": "Upsdell red",
+        "Color": "Upsdell Red",
         "Hexadecimal": "#AE2029"
     },
     {
-        "ID": 914,
-        "Color": "Uranian blue",
+        "Color": "Uranian Blue",
         "Hexadecimal": "#AFDBF5"
     },
     {
-        "ID": 915,
-        "Color": "USAFA blue",
+        "Color": "USAFA Blue",
         "Hexadecimal": "#004F98"
     },
     {
-        "ID": 916,
-        "Color": "Van Dyke brown",
+        "Color": "Valencia",
+        "Hexadecimal": "#D84437"
+    },
+    {
+        "Color": "Valentino",
+        "Hexadecimal": "#350E42"
+    },
+    {
+        "Color": "Valhalla",
+        "Hexadecimal": "#2B194F"
+    },
+    {
+        "Color": "Van Cleef",
+        "Hexadecimal": "#49170C"
+    },
+    {
+        "Color": "Van Dyke Brown",
         "Hexadecimal": "#664228"
     },
     {
-        "ID": 917,
         "Color": "Vanilla",
-        "Hexadecimal": "#F3E5AB"
+        "Hexadecimal": "#D1BEA8"
     },
     {
-        "ID": 918,
-        "Color": "Vanilla ice",
+        "Color": "Vanilla Ice",
         "Hexadecimal": "#F38FA9"
     },
     {
-        "ID": 919,
-        "Color": "Vegas gold",
+        "Color": "Vanilla Ice 2",
+        "Hexadecimal": "#F3D9DF"
+    },
+    {
+        "Color": "Varden",
+        "Hexadecimal": "#FFF6DF"
+    },
+    {
+        "Color": "Vegas Gold",
         "Hexadecimal": "#C5B358"
     },
     {
-        "ID": 920,
-        "Color": "Venetian red",
+        "Color": "Venetian Red",
         "Hexadecimal": "#C80815"
     },
     {
-        "ID": 921,
+        "Color": "Venetian Red 2",
+        "Hexadecimal": "#72010F"
+    },
+    {
+        "Color": "Venice Blue",
+        "Hexadecimal": "#055989"
+    },
+    {
+        "Color": "Venus",
+        "Hexadecimal": "#928590"
+    },
+    {
         "Color": "Verdigris",
         "Hexadecimal": "#43B3AE"
     },
     {
-        "ID": 922,
-        "Color": "Vermilion",
-        "Hexadecimal": "#E34234"
+        "Color": "Verdigris 2",
+        "Hexadecimal": "#5D5E37"
     },
     {
-        "ID": 923,
+        "Color": "Verdun Green",
+        "Hexadecimal": "#495400"
+    },
+    {
         "Color": "Vermilion",
+        "Hexadecimal": "#FF4D00"
+    },
+    {
+        "Color": "Vermilion 2",
         "Hexadecimal": "#D9381E"
     },
     {
-        "ID": 924,
-        "Color": "Veronica",
-        "Hexadecimal": "#A020F0"
+        "Color": "Vesuvius",
+        "Hexadecimal": "#B14A0B"
     },
     {
-        "ID": 925,
+        "Color": "Victoria",
+        "Hexadecimal": "#534491"
+    },
+    {
+        "Color": "Vida Loca",
+        "Hexadecimal": "#549019"
+    },
+    {
+        "Color": "Viking",
+        "Hexadecimal": "#64CCDB"
+    },
+    {
+        "Color": "Vin Rouge",
+        "Hexadecimal": "#983D61"
+    },
+    {
+        "Color": "Viola",
+        "Hexadecimal": "#CB8FA9"
+    },
+    {
+        "Color": "Violent Violet",
+        "Hexadecimal": "#290C5E"
+    },
+    {
         "Color": "Violet",
-        "Hexadecimal": "#8F00FF"
+        "Hexadecimal": "#240A40"
     },
     {
-        "ID": 926,
-        "Color": "Violet (color wheel)",
+        "Color": "Violet (Color Wheel)",
         "Hexadecimal": "#7F00FF"
     },
     {
-        "ID": 927,
-        "Color": "Violet (crayola)",
+        "Color": "Violet (Crayola)",
         "Hexadecimal": "#963D7F"
     },
     {
-        "ID": 928,
         "Color": "Violet (RYB)",
         "Hexadecimal": "#8601AF"
     },
     {
-        "ID": 929,
-        "Color": "Violet (web)",
-        "Hexadecimal": "#EE82EE"
+        "Color": "Violet Eggplant",
+        "Hexadecimal": "#991199"
     },
     {
-        "ID": 930,
-        "Color": "Violet-blue",
-        "Hexadecimal": "#324AB2"
-    },
-    {
-        "ID": 931,
-        "Color": "Violet-blue (Crayola)",
-        "Hexadecimal": "#766EC8"
-    },
-    {
-        "ID": 932,
-        "Color": "Violet-red",
+        "Color": "Violet Red",
         "Hexadecimal": "#F75394"
     },
     {
-        "ID": 933,
+        "Color": "Violet Red 2",
+        "Hexadecimal": "#F7468A"
+    },
+    {
+        "Color": "Violet-Blue",
+        "Hexadecimal": "#324AB2"
+    },
+    {
+        "Color": "Violet-Blue (Crayola)",
+        "Hexadecimal": "#766EC8"
+    },
+    {
         "Color": "Viridian",
         "Hexadecimal": "#40826D"
     },
     {
-        "ID": 934,
-        "Color": "Viridian green",
+        "Color": "Viridian Green",
+        "Hexadecimal": "#678975"
+    },
+    {
+        "Color": "Viridian Green 2",
         "Hexadecimal": "#009698"
     },
     {
-        "ID": 935,
-        "Color": "Vivid burgundy",
+        "Color": "Vis Vis",
+        "Hexadecimal": "#FFEFA1"
+    },
+    {
+        "Color": "Vista Blue",
+        "Hexadecimal": "#8FD6B4"
+    },
+    {
+        "Color": "Vista White",
+        "Hexadecimal": "#FCF8F7"
+    },
+    {
+        "Color": "Vivid Burgundy",
         "Hexadecimal": "#9F1D35"
     },
     {
-        "ID": 936,
-        "Color": "Vivid sky blue",
+        "Color": "Vivid Sky Blue",
         "Hexadecimal": "#00CCFF"
     },
     {
-        "ID": 937,
-        "Color": "Vivid tangerine",
+        "Color": "Vivid Tangerine",
+        "Hexadecimal": "#FF9980"
+    },
+    {
+        "Color": "Vivid Tangerine 2",
         "Hexadecimal": "#FFA089"
     },
     {
-        "ID": 938,
-        "Color": "Vivid violet",
+        "Color": "Vivid Violet",
+        "Hexadecimal": "#803790"
+    },
+    {
+        "Color": "Vivid Violet 2",
         "Hexadecimal": "#9F00FF"
     },
     {
-        "ID": 939,
         "Color": "Volt",
         "Hexadecimal": "#CEFF00"
     },
     {
-        "ID": 940,
-        "Color": "Warm black",
+        "Color": "Voodoo",
+        "Hexadecimal": "#533455"
+    },
+    {
+        "Color": "Vulcan",
+        "Hexadecimal": "#10121D"
+    },
+    {
+        "Color": "Wafer",
+        "Hexadecimal": "#DECBC6"
+    },
+    {
+        "Color": "Waikawa Gray",
+        "Hexadecimal": "#5A6E9C"
+    },
+    {
+        "Color": "Waiouru",
+        "Hexadecimal": "#363C0D"
+    },
+    {
+        "Color": "Walnut",
+        "Hexadecimal": "#773F1A"
+    },
+    {
+        "Color": "Warm Black",
         "Hexadecimal": "#004242"
     },
     {
-        "ID": 941,
+        "Color": "Wasabi",
+        "Hexadecimal": "#788A25"
+    },
+    {
+        "Color": "Water Leaf",
+        "Hexadecimal": "#A1E9DE"
+    },
+    {
+        "Color": "Watercourse",
+        "Hexadecimal": "#056F57"
+    },
+    {
+        "Color": "Waterloo",
+        "Hexadecimal": "#7B7C94"
+    },
+    {
+        "Color": "Wattle",
+        "Hexadecimal": "#DCD747"
+    },
+    {
+        "Color": "Watusi",
+        "Hexadecimal": "#FFDDCF"
+    },
+    {
+        "Color": "Wax Flower",
+        "Hexadecimal": "#FFC0A8"
+    },
+    {
+        "Color": "We Peep",
+        "Hexadecimal": "#F7DBE6"
+    },
+    {
+        "Color": "Wedgewood",
+        "Hexadecimal": "#4E7F9E"
+    },
+    {
         "Color": "Weezy Blue",
         "Hexadecimal": "#189BCC"
     },
     {
-        "ID": 942,
+        "Color": "Well Read",
+        "Hexadecimal": "#B43332"
+    },
+    {
+        "Color": "West Coast",
+        "Hexadecimal": "#625119"
+    },
+    {
+        "Color": "West Side",
+        "Hexadecimal": "#FF910F"
+    },
+    {
+        "Color": "Westar",
+        "Hexadecimal": "#DCD9D2"
+    },
+    {
+        "Color": "Wewak",
+        "Hexadecimal": "#F19BAB"
+    },
+    {
         "Color": "Wheat",
         "Hexadecimal": "#F5DEB3"
     },
     {
-        "ID": 943,
+        "Color": "Wheatfield",
+        "Hexadecimal": "#F3EDCF"
+    },
+    {
+        "Color": "Whiskey",
+        "Hexadecimal": "#D59A6F"
+    },
+    {
+        "Color": "Whisper",
+        "Hexadecimal": "#F7F5FA"
+    },
+    {
         "Color": "White",
         "Hexadecimal": "#FFFFFF"
     },
     {
-        "ID": 944,
-        "Color": "Wild blue yonder",
+        "Color": "White Ice",
+        "Hexadecimal": "#DDF9F1"
+    },
+    {
+        "Color": "White Lilac",
+        "Hexadecimal": "#F8F7FC"
+    },
+    {
+        "Color": "White Linen",
+        "Hexadecimal": "#F8F0E8"
+    },
+    {
+        "Color": "White Pointer",
+        "Hexadecimal": "#FEF8FF"
+    },
+    {
+        "Color": "White Rock",
+        "Hexadecimal": "#EAE8D4"
+    },
+    {
+        "Color": "Wild Blue Yonder",
+        "Hexadecimal": "#7A89B8"
+    },
+    {
+        "Color": "Wild Blue Yonder 2",
         "Hexadecimal": "#A2ADD0"
     },
     {
-        "ID": 945,
-        "Color": "Wild orchid",
+        "Color": "Wild Orchid",
         "Hexadecimal": "#D470A2"
     },
     {
-        "ID": 946,
+        "Color": "Wild Rice",
+        "Hexadecimal": "#ECE090"
+    },
+    {
+        "Color": "Wild Sand",
+        "Hexadecimal": "#F4F4F4"
+    },
+    {
         "Color": "Wild Strawberry",
         "Hexadecimal": "#FF43A4"
     },
     {
-        "ID": 947,
-        "Color": "Wild watermelon",
-        "Hexadecimal": "#FC6C85"
+        "Color": "Wild Strawberry 2",
+        "Hexadecimal": "#FF3399"
     },
     {
-        "ID": 948,
-        "Color": "Windsor tan",
+        "Color": "Wild Watermelon",
+        "Hexadecimal": "#FD5B78"
+    },
+    {
+        "Color": "Wild Willow",
+        "Hexadecimal": "#B9C46A"
+    },
+    {
+        "Color": "William",
+        "Hexadecimal": "#3A686C"
+    },
+    {
+        "Color": "Willow Brook",
+        "Hexadecimal": "#DFECDA"
+    },
+    {
+        "Color": "Willow Grove",
+        "Hexadecimal": "#65745D"
+    },
+    {
+        "Color": "Windsor",
+        "Hexadecimal": "#3C0878"
+    },
+    {
+        "Color": "Windsor Tan",
         "Hexadecimal": "#A75502"
     },
     {
-        "ID": 949,
         "Color": "Wine",
         "Hexadecimal": "#722F37"
     },
     {
-        "ID": 950,
-        "Color": "Wine dregs",
-        "Hexadecimal": "#673147"
+        "Color": "Wine Berry",
+        "Hexadecimal": "#591D35"
     },
     {
-        "ID": 951,
+        "Color": "Winter Hazel",
+        "Hexadecimal": "#D5D195"
+    },
+    {
         "Color": "Winter Sky",
         "Hexadecimal": "#FF007C"
     },
     {
-        "ID": 952,
         "Color": "Wintergreen Dream",
         "Hexadecimal": "#56887D"
     },
     {
-        "ID": 953,
+        "Color": "Wisp Pink",
+        "Hexadecimal": "#FEF4F8"
+    },
+    {
         "Color": "Wisteria",
-        "Hexadecimal": "#C9A0DC"
+        "Hexadecimal": "#9771B5"
     },
     {
-        "ID": 954,
-        "Color": "Wood brown",
-        "Hexadecimal": "#C19A6B"
+        "Color": "Wistful",
+        "Hexadecimal": "#A4A6D3"
     },
     {
-        "ID": 955,
+        "Color": "Witch Haze",
+        "Hexadecimal": "#FFFC99"
+    },
+    {
+        "Color": "Wood Bark",
+        "Hexadecimal": "#261105"
+    },
+    {
+        "Color": "Woodland",
+        "Hexadecimal": "#4D5328"
+    },
+    {
+        "Color": "Woodrush",
+        "Hexadecimal": "#302A0F"
+    },
+    {
+        "Color": "Woodsmoke",
+        "Hexadecimal": "#0C0D0F"
+    },
+    {
+        "Color": "Woody Brown",
+        "Hexadecimal": "#483131"
+    },
+    {
         "Color": "Xanadu",
         "Hexadecimal": "#738678"
     },
     {
-        "ID": 956,
         "Color": "Xanthic",
         "Hexadecimal": "#EEED09"
     },
     {
-        "ID": 957,
         "Color": "Xanthous",
         "Hexadecimal": "#F1B42F"
     },
     {
-        "ID": 958,
         "Color": "Yale Blue",
         "Hexadecimal": "#00356B"
     },
     {
-        "ID": 959,
         "Color": "Yellow",
         "Hexadecimal": "#FFFF00"
     },
     {
-        "ID": 960,
         "Color": "Yellow (Crayola)",
         "Hexadecimal": "#FCE883"
     },
     {
-        "ID": 961,
-        "Color": "Yellow (Munsell)",
+        "Color": "Yellow (MUNSELL)",
         "Hexadecimal": "#EFCC00"
     },
     {
-        "ID": 962,
-        "Color": "Yellow (NCS)",
-        "Hexadecimal": "#FFD300"
-    },
-    {
-        "ID": 963,
-        "Color": "Yellow (Pantone)",
+        "Color": "Yellow (PANTONE)",
         "Hexadecimal": "#FEDF00"
     },
     {
-        "ID": 964,
-        "Color": "Yellow (process)",
-        "Hexadecimal": "#FFEF00"
-    },
-    {
-        "ID": 965,
         "Color": "Yellow (RYB)",
         "Hexadecimal": "#FEFE33"
     },
     {
-        "ID": 966,
-        "Color": "Yellow-green",
+        "Color": "Yellow Green",
         "Hexadecimal": "#9ACD32"
     },
     {
-        "ID": 967,
-        "Color": "Yellow-green (Crayola)",
-        "Hexadecimal": "#C5E384"
+        "Color": "Yellow Green 2",
+        "Hexadecimal": "#C5E17A"
     },
     {
-        "ID": 968,
-        "Color": "Yellow-green (Color Wheel)",
-        "Hexadecimal": "#30B21A"
+        "Color": "Yellow Metal",
+        "Hexadecimal": "#716338"
     },
     {
-        "ID": 969,
         "Color": "Yellow Orange",
         "Hexadecimal": "#FFAE42"
     },
     {
-        "ID": 970,
         "Color": "Yellow Orange (Color Wheel)",
         "Hexadecimal": "#FF9505"
     },
     {
-        "ID": 971,
+        "Color": "Yellow Sea",
+        "Hexadecimal": "#FEA904"
+    },
+    {
         "Color": "Yellow Sunshine",
         "Hexadecimal": "#FFF700"
     },
     {
-        "ID": 972,
+        "Color": "Yellow-Green (Color Wheel)",
+        "Hexadecimal": "#30B21A"
+    },
+    {
+        "Color": "Yellow-Green (Crayola)",
+        "Hexadecimal": "#C5E384"
+    },
+    {
         "Color": "YInMn Blue",
         "Hexadecimal": "#2E5090"
     },
     {
-        "ID": 973,
+        "Color": "Your Pink",
+        "Hexadecimal": "#FFC3C0"
+    },
+    {
+        "Color": "Yukon Gold",
+        "Hexadecimal": "#7B6608"
+    },
+    {
+        "Color": "Yuma",
+        "Hexadecimal": "#CEC291"
+    },
+    {
         "Color": "Zaffre",
         "Hexadecimal": "#0014A8"
     },
     {
-        "ID": 974,
+        "Color": "Zambezi",
+        "Hexadecimal": "#685558"
+    },
+    {
+        "Color": "Zanah",
+        "Hexadecimal": "#DAECD6"
+    },
+    {
+        "Color": "Zest",
+        "Hexadecimal": "#E5841B"
+    },
+    {
+        "Color": "Zeus",
+        "Hexadecimal": "#292319"
+    },
+    {
+        "Color": "Ziggurat",
+        "Hexadecimal": "#BFDBE2"
+    },
+    {
+        "Color": "Zinnwaldite",
+        "Hexadecimal": "#EBC2AF"
+    },
+    {
+        "Color": "Zircon",
+        "Hexadecimal": "#F4F8FF"
+    },
+    {
+        "Color": "Zombie",
+        "Hexadecimal": "#E4D69B"
+    },
+    {
         "Color": "Zomp",
         "Hexadecimal": "#39A78E"
+    },
+    {
+        "Color": "Zorba",
+        "Hexadecimal": "#A59B91"
+    },
+    {
+        "Color": "Zuccini",
+        "Hexadecimal": "#044022"
+    },
+    {
+        "Color": "Zumthor",
+        "Hexadecimal": "#EDF6FF"
     }
 ]
 
@@ -4891,11 +9037,10 @@ function generateColor(input) {
         return color;
     }
 
-    // if input is an int, try get color from colorNames array
+    // if input is an int, use it as an index into the colorNames array
     if (typeof input === 'number' && Number.isInteger(input)) {
-        const colorObj = colorNames.find(c => c.ID === input);
-        if (colorObj) {
-            return colorObj.Hexadecimal;
+        if (input >= 0 && input < colorNames.length) {
+            return colorNames[input].Hexadecimal;
         }
     }
 

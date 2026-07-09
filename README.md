@@ -87,9 +87,9 @@ Also performs fuzzy matching:
 generateColor("absolut zero"); // -> "#0048BA" (similar name)
 ```
 
-### 2) Numeric ID from the internal table
+### 2) Numeric index from the internal table
 
-If the input is a number, the plugin looks up by the `ID` field:
+If the input is a number, the plugin looks up by the array index:
 
 ```js
 generateColor(1);   // -> "#0048BA"
@@ -171,7 +171,7 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 ## Processing Order
 
 1. HTML Element
-2. Number (table ID)
+2. Number (array index)
 3. Empty input
 4. `"random"`
 5. HEX
@@ -184,7 +184,7 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 ## Features
 
 - **Deterministic** text fallback — the same input always produces the same color.
-- **Built-in database** with ~1000+ named colors, searchable by name (with fuzzy matching) or numeric ID.
+- **Built-in database** with ~1000+ named colors, searchable by name (with fuzzy matching) or numeric index.
 - **Accepts multiple formats**: HEX (`#rgb`, `#rrggbb`), RGB, RGBA, CSS color names, `"random"`, and HTML elements.
 - **Smart contrast**: `generateReadableColor` dynamically calculates the necessary blend ratio to guarantee **WCAG AA (4.5:1)**, resulting in text that is always readable and aesthetically harmonious.
 - **Pagination**: `listColors()` allows browsing the color database with page support.

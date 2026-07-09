@@ -1019,8 +1019,8 @@
                         <td class="mono"><code>generateColor("Absolute Zero")</code> → <code>"#0048BA"</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><strong>Numeric ID</strong></td>
-                        <td>Looks up by <code>ID</code> field in the internal table</td>
+                        <td class="mono"><strong>Numeric Index</strong></td>
+                        <td>Looks up by array index in the internal table</td>
                         <td class="mono"><code>generateColor(1)</code> → <code>"#0048BA"</code></td>
                     </tr>
                     <tr>
@@ -1068,7 +1068,7 @@
             <p>When you call <code>generateColor()</code>, the library evaluates the input in this order:</p>
             <ol>
                 <li><strong>HTML Element</strong> — extracts <code>textContent</code> and recurses</li>
-                <li><strong>Numeric ID</strong> — looks up in the internal color table</li>
+                <li><strong>Numeric Index</strong> — looks up in the internal color table</li>
                 <li><strong>Empty input</strong> — returns <code>"black"</code></li>
                 <li><strong>"random"</strong> — generates a random hex color</li>
                 <li><strong>HEX string</strong> — parses and normalizes</li>
@@ -1151,7 +1151,7 @@ generateReadableColor(<span class="string">"#85d8fd"</span>);
             </div>
             <p>
                 Returns the entire internal color database in a paginated format. Each item contains
-                <code>ID</code>, <code>Color</code> (name), and <code>Hexadecimal</code>.
+                <code>Color</code> (name) and <code>Hexadecimal</code>.
             </p>
 
             <h4>Parameters</h4>
@@ -1193,7 +1193,7 @@ generateReadableColor(<span class="string">"#85d8fd"</span>);
                     <tr>
                         <td class="mono"><code>items</code></td>
                         <td>Array</td>
-                        <td>Array of <code>{ ID, Color, Hexadecimal }</code> objects</td>
+                        <td>Array of <code>{ Color, Hexadecimal }</code> objects</td>
                     </tr>
                     <tr>
                         <td class="mono"><code>pageNumber</code></td>
@@ -1224,8 +1224,8 @@ listColors(<span class="number">2</span>, <span class="number">10</span>);
 
 <span class="comment">// Useful for building color pickers, tables, or browsers</span>
 <span class="keyword">const</span> result = listColors(<span class="number">1</span>, <span class="number">20</span>);
-result.items.forEach(item => {
-    console.log(item.ID, item.Color, item.Hexadecimal);
+result.items.forEach((item, index) => {
+    console.log(index, item.Color, item.Hexadecimal);
 });</pre>
 
             <!-- ─── generateInvertedColor ─── -->
@@ -1424,7 +1424,7 @@ generateMonochrome(<span class="string">"black"</span>, <span class="number">5</
                     </tr>
                     <tr>
                         <td class="mono"><code>colorNames</code></td>
-                        <td>The full internal array of <code>{ ID, Color, Hexadecimal }</code> objects</td>
+                        <td>The full internal array of <code>{ Color, Hexadecimal }</code> objects</td>
                     </tr>
                 </tbody>
             </table>
@@ -1465,7 +1465,7 @@ isDark(hex);
                     <li><strong>Deterministic</strong> — same text always produces the same color (except
                         <code>"random"</code>)
                     </li>
-                    <li><strong>1000+ named colors</strong> — with fuzzy matching and numeric ID lookup</li>
+                    <li><strong>1000+ named colors</strong> — with fuzzy matching and numeric index lookup</li>
                     <li><strong>Smart contrast</strong> — <code>generateReadableColor</code> guarantees WCAG AA (4.5:1)
                     </li>
                     <li><strong>Color harmonies</strong> — complementary, triadic, square, split-complementary, inverted
@@ -1473,7 +1473,7 @@ isDark(hex);
                     <li><strong>Monochrome palettes</strong> — <code>generateMonochrome</code> with alternating
                         light/dark
                     </li>
-                    <li><strong>Multiple formats</strong> — HEX, RGB, RGBA, CSS names, IDs, random, and generic text
+                    <li><strong>Multiple formats</strong> — HEX, RGB, RGBA, CSS names, indexes, random, and generic text
                     </li>
                     <li><strong>Zero dependencies</strong> — ~38 KB minified, works everywhere</li>
                     <li><strong>Pagination built-in</strong> — <code>listColors</code> with page &amp; size control</li>
@@ -1806,17 +1806,18 @@ isDark(hex);
                 var html = '<div class="color-table-wrap"><table class="color-table">' +
                     '<thead><tr>' +
                     '<th class="col-swatch"></th>' +
-                    '<th class="col-id">ID</th>' +
+                    '<th class="col-id">Idx</th>' +
                     '<th class="col-name">Nome</th>' +
                     '<th class="col-hex">Hexadecimal</th>' +
                     '</tr></thead><tbody>';
 
+                var startIndex = (result.pageNumber - 1) * pageSize;
                 for (var i = 0; i < result.items.length; i++) {
                     var item = result.items[i];
                     html += '<tr>' +
                         '<td class="col-swatch"><span class="color-swatch-dot" style="background:' +
                         item.Hexadecimal + '"></span></td>' +
-                        '<td class="col-id">' + item.ID + '</td>' +
+                        '<td class="col-id">' + (startIndex + i) + '</td>' +
                         '<td class="col-name">' + item.Color + '</td>' +
                         '<td class="col-hex">' + item.Hexadecimal + '</td>' +
                         '</tr>';
