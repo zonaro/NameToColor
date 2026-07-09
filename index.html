@@ -872,7 +872,7 @@
                 </div>
             </form>
 
-            <!-- Preview das cores -->
+            <!-- Color Preview -->
             <div class="preview-wrap">
                 <div class="swatch" id="swatch-bg">
                     <span class="label">Background</span>
@@ -1520,12 +1520,12 @@ isDark(hex);
             /* ─── Prevent form submit ─── */
             form.addEventListener('submit', function (e) { e.preventDefault(); });
 
-            /* ─── Atualiza preview ao digitar ─── */
+            /* ─── Update preview when typing ─── */
             function updatePreview() {
                 var value = input.value.trim();
                 var source = value || 'preview';
 
-                // Gera cores
+
                 var bgColor;
                 try {
                     bgColor = generateColor(source);
@@ -1770,7 +1770,7 @@ isDark(hex);
             renderMonochrome();
 
             // ══════════════════════════════════════════
-            //  NAVEGADOR DE CORES (listColors)
+            //  COLOR BROWSER (listColors)
             // ══════════════════════════════════════════
 
             var pageSize = 15;
@@ -1795,7 +1795,7 @@ isDark(hex);
                 }
 
                 totalItems = result.totalItems;
-                totalBadge.textContent = totalItems + ' cores';
+                totalBadge.textContent = totalItems + ' colors';
 
                 if (!result.items || result.items.length === 0) {
                     browseBody.innerHTML =
