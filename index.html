@@ -1828,13 +1828,11 @@ isReadableForBlindness(<span class="string">"tomato"</span>, <span class="string
                     </tr>
                     <tr>
                         <td class="mono"><code>isHot(input)</code></td>
-                        <td>Returns <code>true</code> if the generated color is warm/hot (combined HSL hue + RGB score
-                            &gt; 0)</td>
+                        <td>Returns <code>true</code> if the generated color is warm/hot (delegates to <code>temperature()</code>)</td>
                     </tr>
                     <tr>
                         <td class="mono"><code>isCold(input)</code></td>
-                        <td>Returns <code>true</code> if the generated color is cold/cool (combined HSL hue + RGB score
-                            &lt; 0)</td>
+                        <td>Returns <code>true</code> if the generated color is cold/cool (delegates to <code>temperature()</code>)</td>
                     </tr>
                     <tr>
                         <td class="mono"><code>mood(input)</code></td>
@@ -2062,39 +2060,38 @@ temperature(<span class="string">"cyan"</span>);
 <span class="comment">// → "VeryCold"</span></pre>
 
             <h5><code>isHot(input)</code> / <code>isCold(input)</code> — Boolean helpers</h5>
-            <pre><span class="keyword">const</span> hex = generateColor(<span class="string">"red"</span>);
-<span class="comment">// hex → "#ff0000"</span>
+            <p>Both functions now <strong>delegate to <code>temperature()</code></strong> internally.</p>
+            <pre><span class="comment">// temperature("red") → "VeryHot"</span>
+isHot(<span class="string">"red"</span>);
+<span class="comment">// → true</span>
 
-isHot(hex);
-<span class="comment">// → true  (combined score: hue 0° = warm, R >> B = warm → total +2)</span>
-
-isCold(hex);
+isCold(<span class="string">"red"</span>);
 <span class="comment">// → false</span>
 
+<span class="comment">// temperature("blue") → "VeryCold"</span>
 isCold(<span class="string">"blue"</span>);
-<span class="comment">// → true  (hue 240° = cool, R < B = cool → total -2)</span>
+<span class="comment">// → true</span>
 
 isHot(<span class="string">"gray"</span>);
-<span class="comment">// → false (achromatic, neutral — both return false)</span>
+<span class="comment">// → false (temperature("gray") → "Neutral")</span>
 
 isCold(<span class="string">"gray"</span>);
 <span class="comment">// → false</span></pre>
 
             <div class="note">
-                <strong>🔥❄️ How it works:</strong> <code>temperature</code> uses a
-                <strong>continuous two-factor scoring system</strong>:
-                <ol>
-                    <li><strong>HSL Hue</strong> — piecewise linear function aligned with warm/cool regions:
-                        0°–90° (warm, +1→0), 90°–210° (cooling, 0→-1), 210°–330° (warming, -1→0),
-                        330°–360° (warm, 0→+1). Achromatic colors (saturation = 0) get 0.</li>
-                    <li><strong>Direct RGB</strong> — <code>V = (R - B) / 255</code>, ranging from
-                        -1 (blue ≫ red) to +1 (red ≫ blue).</li>
-                </ol>
-                The two factors are averaged into a continuous score from -1 (coldest) to +1 (warmest).
-                <code>temperature()</code> maps this to 7 levels (VeryHot, Hot, Neutral Hot,
-                Neutral, Neutral Cold, Cold, VeryCold).
-                <code>isHot</code> and <code>isCold</code> use the original discrete scoring (-2 to +2)
-                for backward compatibility.
+                <strong>🔥❄️ How it works:</strong> <code>isHot</code> and <code>isCold</code> are convenience
+                wrappers around <code>temperature()</code>:
+                <ul>
+                    <li><code>isHot(input)</code> — returns <code>true</code> when
+                        <code>temperature(input)</code> is <code>"VeryHot"</code>, <code>"Hot"</code>, or
+                        <code>"Neutral Hot"</code></li>
+                    <li><code>isCold(input)</code> — returns <code>true</code> when
+                        <code>temperature(input)</code> is <code>"VeryCold"</code>, <code>"Cold"</code>, or
+                        <code>"Neutral Cold"</code></li>
+                    <li>When <code>temperature()</code> returns <code>"Neutral"</code>, both
+                        <code>isHot()</code> and <code>isCold()</code> return <code>false</code></li>
+                </ul>
+                See the <code>temperature()</code> section above for the full scoring algorithm details.
             </div>
 
             <!-- ─── mood ─── -->

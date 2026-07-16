@@ -257,8 +257,8 @@ These helper functions are also exposed globally for fine-grained control:
 | `isLight(input)`                               | Returns `true` if the generated color is light (luminance > 0.5)                                                             |
 | `isDark(input)`                                | Returns `true` if the generated color is dark (luminance ≤ 0.5)                                                              |
 | `temperature(input)`                           | Returns the temperature level as a string: `VeryHot`, `Hot`, `Neutral Hot`, `Neutral`, `Neutral Cold`, `Cold`, or `VeryCold` |
-| `isHot(input)`                                 | Returns `true` if the generated color is warm/hot (combined HSL hue + RGB score > 0)                                         |
-| `isCold(input)`                                | Returns `true` if the generated color is cold/cool (combined HSL hue + RGB score < 0)                                        |
+| `isHot(input)`                                 | Returns `true` if the generated color is warm/hot (delegates to `temperature()`)                                              |
+| `isCold(input)`                                | Returns `true` if the generated color is cold/cool (delegates to `temperature()`)                                             |
 | `mood(input)`                                  | Returns an array of mood/atmosphere names (in English) based on HSL rules, or `[]` if none match                             |
 | `isReadableForBlindness(colorA, colorB, type)` | Checks color readability for protanopia, deuteranopia, tritanopia using Brettel/Vienot simulation + WCAG contrast            |
 
@@ -303,33 +303,32 @@ temperature("cyan");      // → "VeryCold"     — hue 180° (-0.75), R << B (-
 
 #### `isHot(input)` / `isCold(input)` — Boolean helpers
 
+Both functions now **delegate to `temperature()`** internally.
+
 ```js
-isHot("red");     // → true   (red is warm — hue 0°, R > B)
+isHot("red");     // → true   (temperature("red") → "VeryHot")
 isCold("red");    // → false
 
 isHot("blue");    // → false
-isCold("blue");   // → true   (blue is cool — hue 240°, R < B)
+isCold("blue");   // → true   (temperature("blue") → "VeryCold")
 
-isHot("gold");    // → true   (gold is warm — hue 51°, R >> B)
+isHot("gold");    // → true   (temperature("gold") → "VeryHot")
 isCold("gold");   // → false
 
 isHot("cyan");    // → false
-isCold("cyan");   // → true   (cyan is cool — hue 180°, R < B)
+isCold("cyan");   // → true   (temperature("cyan") → "VeryCold")
 
-isHot("gray");    // → false  (gray is achromatic, neutral)
+isHot("gray");    // → false  (temperature("gray") → "Neutral")
 isCold("gray");   // → false
 
-isHot("tomato");  // → true   (warm red-orange)
-isCold("#1E90FF");// → true   (Dodger Blue is cool)
+isHot("tomato");  // → true   (temperature("tomato") → "VeryHot")
+isCold("#1E90FF");// → true   (temperature("dodgerblue") → "Cold")
 ```
 
-> **Note:** `temperature`, `isHot` and `isCold` use the same two-factor scoring system:
-> 1. **HSL Hue** — uses a continuous piecewise function: 0°–90° warm (descending +1→0), 90°–210° cooling (0→-1), 210°–330° warming (-1→0), 330°–360° warm (0→+1). Achromatic colors (saturation = 0) get 0.
-> 2. **Direct RGB** — `V = (R - B) / 255`, ranging from -1 (blue ≫ red) to +1 (red ≫ blue).
->
-> The two factors are averaged into a continuous score from -1 (coldest) to +1 (warmest). `temperature()` maps this score to 7 distinct levels. `isHot` returns `true` when the discrete warmScore (same as the original algorithm) > 0. `isCold` returns `true` when warmScore < 0. If warmScore = 0, both return `false` (neutral color).
->
-> The continuous scoring used by `temperature()` provides finer granularity than the discrete `isHot`/`isCold` system, which means `temperature()` can detect subtle warm/cool leans even when `isHot` and `isCold` both return `false`.
+> **Note:** `isHot` and `isCold` are convenience wrappers around `temperature()`:
+> - `isHot(input)`  → returns `true` when `temperature(input)` is `"VeryHot"`, `"Hot"`, or `"Neutral Hot"`
+> - `isCold(input)` → returns `true` when `temperature(input)` is `"VeryCold"`, `"Cold"`, or `"Neutral Cold"`
+> - When `temperature()` returns `"Neutral"`, both `isHot()` and `isCold()` return `false`.
 
 ### `mood(input)` — Color Mood / Atmosphere Classification
 

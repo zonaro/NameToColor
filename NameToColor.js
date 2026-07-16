@@ -14077,16 +14077,13 @@ function isDark(input) {
  * isHot('gray');      // false — gray is neutral (achromatic)
  */
 function isHot(input) {
-    return temperature(input).contains('hot');
+    return temperature(input).toLowerCase().includes('hot');
 }
 
 /**
  * Determines whether a color generated from any input is considered COLD (cool).
- * It is the logical inverse of isHot() when the color has a defined temperature.
- * Uses the same combined score from HSL Hue and Direct RGB methods.
- *
- * A color is considered cold when the total warmth score is less than 0.
- * If the score equals 0, both isHot() and isCold() return false (neutral color).
+ * Delegates to temperature() internally — returns true when the temperature
+ * level contains "cold" (i.e., Cold or VeryCold).
  *
  * @param {*} input - Any value accepted by generateColor().
  * @returns {boolean} `true` if the color is cold/cool, `false` otherwise.
@@ -14098,7 +14095,7 @@ function isHot(input) {
  * isCold('gray');     // false — gray is neutral (achromatic)
  */
 function isCold(input) {
-    return temperature(input).contains('cold');
+    return temperature(input).toLowerCase().includes('cold');
 }
 
 /**
