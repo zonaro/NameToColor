@@ -13649,9 +13649,10 @@ function generateColor(input) {
     // If input is an HTML element, apply the function to its text content
     if (input instanceof HTMLElement) {
         const text = input.textContent || input.innerText || '';
-        const color = generateColor(text);
-        input.style.color = color;
-        return color;
+        const colors = generateReadableColor(text);
+        input.style.color = colors[0];
+        input.style.backgroundColor = colors[1];
+        return colors[1];
     }
 
     // If input is an array, map generateColor recursively over each element
@@ -13659,11 +13660,25 @@ function generateColor(input) {
         return input.map(function (item) { return generateColor(item); });
     }
 
-    // If input is a number (integer), use it as an index
-    if (typeof input === 'number' && Number.isInteger(input)) {
+    // if input is a number string, convert to number
+    if (typeof input === 'string' && !isNaN(input)) {
+        input = Number(input);
+    }
+
+    // If input is a number, use it as an index
+    if (typeof input === 'number') {
+
+        if (!Number.isInteger(input)) {
+            //multiply by 10 until it is an integer, to allow for decimal inputs
+            while (!Number.isInteger(input)) {
+                input *= 10;
+            }
+        }
+
         if (input >= 0 && input < colorDatabase.length) {
             return colorDatabase[input].Hexadecimal;
         }
+
         // Index out of range: generate deterministic color from the number itself
         var hash = input;
         var color = '#';
@@ -13672,6 +13687,7 @@ function generateColor(input) {
             color += value.toString(16).padStart(2, '0');
         }
         return color;
+
     }
 
     // If input is an object (but not null, Array, or HTMLElement), convert to string
@@ -13679,40 +13695,46 @@ function generateColor(input) {
         return generateColor(String(input));
     }
 
-    var text = String(input || '').trim().toLowerCase();
+    var normalizedText = String(input || '').trim();
 
-    if (text === '') {
+    // separate PascalCase and camelCase words with spaces
+    normalizedText = normalizedText.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Z])([A-Z][a-z])/g, '$1 $2').toLowerCase();
+
+    // if blank or"random" keyword
+    if (normalizedText === '' || normalizedText === 'random') {
         return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
     }
 
-    // "random" keyword
-    if (text === 'random') {
-        return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    //if "transparent" keyword
+    if (normalizedText === 'transparent') {
+        return '#00000000'; // Return transparent color in RGBA hex format
     }
+
+
 
     // Try to set the text as a CSS color
     var s = new Option().style;
-    s.color = text;
+    s.color = normalizedText;
     if (s.color !== '') {
         var ctx = document.createElement('canvas').getContext('2d');
-        ctx.fillStyle = text;
+        ctx.fillStyle = normalizedText;
         return ctx.fillStyle;
     }
 
     // HEX color
-    if (/^#?[0-9a-f]{3}$|^#?[0-9a-f]{6}$/i.test(text)) {
-        return text.startsWith('#') ? text : '#' + text;
+    if (/^#?[0-9a-f]{3}$|^#?[0-9a-f]{6}$/i.test(normalizedText)) {
+        return normalizedText.startsWith('#') ? normalizedText : '#' + normalizedText;
     }
 
     // RGB color
-    if (/^rgb\(\s*(\d{1,3}\s*,\s*){2}\d{1,3}\s*\)$/.test(text)) {
-        var rgb = text.match(/\d{1,3}/g).map(Number);
+    if (/^rgb\(\s*(\d{1,3}\s*,\s*){2}\d{1,3}\s*\)$/.test(normalizedText)) {
+        var rgb = normalizedText.match(/\d{1,3}/g).map(Number);
         return '#' + rgb.map(function (x) { return x.toString(16).padStart(2, '0'); }).join('');
     }
 
     // RGBA color
-    if (/^rgba\(\s*(\d{1,3}\s*,\s*){3}(0|1|0?\.\d+)\s*\)$/.test(text)) {
-        var rgba = text.match(/(\d{1,3}|0|1|0?\.\d+)/g);
+    if (/^rgba\(\s*(\d{1,3}\s*,\s*){3}(0|1|0?\.\d+)\s*\)$/.test(normalizedText)) {
+        var rgba = normalizedText.match(/(\d{1,3}|0|1|0?\.\d+)/g);
         var r = parseInt(rgba[0]);
         var g = parseInt(rgba[1]);
         var b = parseInt(rgba[2]);
@@ -13723,10 +13745,14 @@ function generateColor(input) {
 
 
 
+
     // ─── Name lookup in the color database ───
     // Since each entry can have multiple names (Color array), we search across all names.
+    // First, save the text with spaces intact for later multi-word detection
+    var textForMultipleWords = normalizedText;
 
-    var normalizedText = text.replace(/[^a-z0-9]/g, '');
+    normalizedText = normalizedText.replace(/[^a-z0-9]/g, '');
+
 
     // 1. Exact match (case-insensitive, ignoring non-alphanumeric chars)
     for (var ci = 0; ci < colorDatabase.length; ci++) {
@@ -13743,11 +13769,115 @@ function generateColor(input) {
     for (var ci2 = 0; ci2 < colorDatabase.length; ci2++) {
         var entry2 = colorDatabase[ci2];
         for (var ni2 = 0; ni2 < entry2.Color.length; ni2++) {
-            if (entry2.Color[ni2].toLowerCase().indexOf(text) !== -1) {
+            if (entry2.Color[ni2].toLowerCase().indexOf(normalizedText) !== -1) {
                 return entry2.Hexadecimal;
             }
         }
     }
+
+    // 3. Multiple words (First word color modified iteratively by each subsequent word)
+    var multipleWords = textForMultipleWords.split(/\s+/).filter(Boolean);
+    if (multipleWords.length > 1) {
+
+        // ── Modifier reordering ──
+        // Words starting with "dark", "light", "bright", or "random" are
+        // treated as modifiers for the next non-modifier word. They are moved
+        // after that word so the modifier is applied during the iterative blend.
+        //
+        // Examples:
+        //   "Dark Blue"       → ["Blue", "Dark"]
+        //   "Any Light Red"   → ["Any", "Red", "Light"]
+        //   "Dark Dark Blue"  → ["Blue", "Dark", "Dark"]
+        //   "Darkish Blue"    → ["Blue", "Darkish"]
+        //   "Darker Blue"     → ["Blue", "Dark", "Dark"]   (darker = 2× dark)
+        //   "Lighter Red"     → ["Red", "Light", "Light"]  (lighter = 2× light)
+        //   "Brighter Green"  → ["Green", "Bright", "Bright"]
+        //   "Random Red"      → ["Red", "Random"]  (generates a random variation of Red)
+        //   "Random Dark Red" → ["Red", "Random", "Dark"]
+
+        var modifierPrefixes = ['dark', 'light', 'bright'];
+        var reordered = [];
+        var modifierBuffer = [];
+
+        function isModifierWord(word) {
+            for (var p = 0; p < modifierPrefixes.length; p++) {
+                if (word.indexOf(modifierPrefixes[p]) === 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function isRandomWord(word) {
+            return word.indexOf('random') === 0;
+        }
+
+        for (var wi = 0; wi < multipleWords.length; wi++) {
+            var word = multipleWords[wi];
+
+            if (isModifierWord(word)) {
+                // Expand equivalent modifiers: darker → dark dark, lighter → light light, brighter → bright bright
+                var baseForm = word.replace(/er$/, '');
+                if (baseForm !== word && (baseForm === 'dark' || baseForm === 'light' || baseForm === 'bright')) {
+                    modifierBuffer.push(baseForm);
+                    modifierBuffer.push(baseForm);
+                } else {
+                    modifierBuffer.push(word);
+                }
+            } else if (isRandomWord(word)) {
+                // "Random" words are also moved after the next non-modifier word,
+                // but they don't get the expansion treatment
+                modifierBuffer.push(word);
+            } else {
+                // Non-modifier word: place it first, then flush buffered modifiers after it
+                reordered.push(word);
+                for (var b = 0; b < modifierBuffer.length; b++) {
+                    reordered.push(modifierBuffer[b]);
+                }
+                modifierBuffer = [];
+            }
+        }
+
+        // If any modifiers remain at the end (no following non-modifier word), append them
+        for (var b = 0; b < modifierBuffer.length; b++) {
+            reordered.push(modifierBuffer[b]);
+        }
+
+        multipleWords = reordered;
+
+        // ── Iterative blending ──
+        // Start with the first word's color, then blend each subsequent word
+        // one at a time. Each blend applies 75% of the current color and 25%
+        // of the next word's color, so multiple modifiers compound naturally.
+        // Words starting with "random" generate a random HSL variation of the
+        // current color instead of blending with a deterministic color.
+
+        var ratio = 0.75;
+        var resultColor = generateColor(multipleWords[0]);
+
+        for (var wi2 = 1; wi2 < multipleWords.length; wi2++) {
+            var word = multipleWords[wi2];
+
+            if (isRandomWord(word)) {
+                // Apply a random HSL variation to the current color
+                var hsl = hexToHsl(resultColor);
+                var hueShift = Math.floor(Math.random() * 61) - 30;   // ±30°
+                var satShift = Math.floor(Math.random() * 41) - 20;   // ±20%
+                var lightShift = Math.floor(Math.random() * 41) - 20; // ±20%
+                resultColor = hslToHex(
+                    ((hsl.h + hueShift) % 360 + 360) % 360,
+                    Math.max(0, Math.min(100, hsl.s + satShift)),
+                    Math.max(0, Math.min(100, hsl.l + lightShift))
+                );
+            } else {
+                var wordColor = generateColor(word);
+                resultColor = blendColors(resultColor, wordColor, ratio);
+            }
+        }
+
+        return resultColor;
+    }
+
 
     // 3. Levenshtein distance (best match, max distance threshold)
     var bestMatch = null;
@@ -13798,8 +13928,8 @@ function generateColor(input) {
 
     // ─── Deterministic fallback ───
     var hash2 = 0;
-    for (var i2 = 0; i2 < text.length; i2++) {
-        hash2 = text.charCodeAt(i2) + ((hash2 << 5) - hash2);
+    for (var i2 = 0; i2 < normalizedText.length; i2++) {
+        hash2 = normalizedText.charCodeAt(i2) + ((hash2 << 5) - hash2);
     }
 
     var color2 = '#';
@@ -13822,6 +13952,57 @@ function hexToRgb(hex) {
         g: parseInt(hex.slice(3, 5), 16),
         b: parseInt(hex.slice(5, 7), 16)
     };
+}
+
+/**
+ * Blends two hexadecimal colors together by a ratio.
+ * @param {string} color1 - First color in #rrggbb format.
+ * @param {string} color2 - Second color in #rrggbb format.
+ * @param {number} ratio - Blend ratio (0 = fully color2, 1 = fully color1).
+ * @returns {string} Blended color in #rrggbb format.
+ */
+function blendColors(color1, color2, ratio) {
+    var r1 = parseInt(color1.slice(1, 3), 16);
+    var g1 = parseInt(color1.slice(3, 5), 16);
+    var b1 = parseInt(color1.slice(5, 7), 16);
+
+    var r2 = parseInt(color2.slice(1, 3), 16);
+    var g2 = parseInt(color2.slice(3, 5), 16);
+    var b2 = parseInt(color2.slice(5, 7), 16);
+
+    var r = Math.round(r1 * ratio + r2 * (1 - ratio));
+    var g = Math.round(g1 * ratio + g2 * (1 - ratio));
+    var b = Math.round(b1 * ratio + b2 * (1 - ratio));
+
+    return '#' +
+        r.toString(16).padStart(2, '0') +
+        g.toString(16).padStart(2, '0') +
+        b.toString(16).padStart(2, '0');
+}
+
+/**
+ * Averages an array of hexadecimal colors into a single color.
+ * @param {string[]} colors - Array of colors in #rrggbb format.
+ * @returns {string} Average color in #rrggbb format.
+ */
+function averageColors(colors) {
+    if (!colors || colors.length === 0) {
+        return '#000000';
+    }
+
+    var totalR = 0, totalG = 0, totalB = 0;
+    for (var i = 0; i < colors.length; i++) {
+        var rgb = hexToRgb(colors[i]);
+        totalR += rgb.r;
+        totalG += rgb.g;
+        totalB += rgb.b;
+    }
+
+    var count = colors.length;
+    return '#' +
+        Math.round(totalR / count).toString(16).padStart(2, '0') +
+        Math.round(totalG / count).toString(16).padStart(2, '0') +
+        Math.round(totalB / count).toString(16).padStart(2, '0');
 }
 
 /**

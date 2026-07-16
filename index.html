@@ -28,6 +28,12 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
     <!-- ═══════════════════════════════════════════
+           Typed.js — Hero kbd type animation
+           ═══════════════════════════════════════════ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js">
+    </script>
+
+    <!-- ═══════════════════════════════════════════
            Favicon (emoji-based for simplicity)
            ═══════════════════════════════════════════ -->
     <link rel="icon"
@@ -203,6 +209,25 @@
             margin: 0 0 6px;
             font-size: 1.4rem;
             letter-spacing: 0.02em;
+        }
+
+        .hero h2 {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .hero h2 kbd {
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: background-color 0.2s ease, color 0.2s ease;
+            cursor: default;
+            display: inline-block;
+            min-width: 30px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .hero p {
@@ -843,12 +868,14 @@
 
         <!-- ═══════════ HERO ═══════════ -->
         <section class="card hero">
-            <h1>🎨 NameToColor</h1>
+            <h1>🎨 NameToColor.js - Generate Colors from Text</h1>
+            <h2>Yeah, any text just like <kbd class="typed1">Green</kbd> or <kbd class="typed2">Blue</kbd></h2>
             <p>
                 Interactive plugin tester — converts text, IDs, HEX, RGB, RGBA,
                 arrays, objects, and color names to hexadecimal. Results update
                 automatically as you type.
             </p>
+
         </section>
 
         <!-- ═══════════ MAIN TEST ═══════════ -->
@@ -861,12 +888,12 @@
             <form id="test-form" autocomplete="off">
                 <label for="value-input">Enter a name, ID, color or any text</label>
                 <div class="input-row">
-                    <input id="value-input" type="text"
-                        placeholder="e.g.: Lucas, #00ff7f, rgb(255,0,0), 42, [tomato, 1]" spellcheck="false">
+                    <input id="value-input" type="text" placeholder="e.g.: Lucas, #00ff7f, rgb(255,0,0), 42, tomato"
+                        spellcheck="false">
                 </div>
                 <div class="input-hint">
                     💡 Try: <kbd>random</kbd> ·
-                    <kbd>[tomato, 1, absolute zero]</kbd> ·
+                    <kbd>tomato</kbd> ·
                     <kbd>#ff00aa</kbd> ·
                     <kbd>rgb(100,200,50)</kbd> · <kbd>1</kbd> ·
                     <kbd>spanish sky</kbd>
@@ -1065,6 +1092,17 @@
                         <td class="mono"><code>generateColor("Lucas")</code> → always the same color</td>
                     </tr>
                     <tr>
+                        <td class="mono"><strong>Multiple words</strong></td>
+                        <td>Splits into individual words. Words starting with <code>dark</code>, <code>light</code>,
+                            <code>bright</code>, or <code>random</code> are reordered as modifiers after their target
+                            color. Then each word is blended iteratively (75% current, 25% next).
+                            <code>darker</code>/<code>lighter</code>/<code>brighter</code> count as two modifiers;
+                            <code>random</code> generates a random HSL variation of the current color
+                        </td>
+                        <td class="mono"><code>generateColor("Dark Zonaro")</code> → darkened
+                            Zonaro<br><code>generateColor("Random Red")</code> → random red variation</td>
+                    </tr>
+                    <tr>
                         <td class="mono"><strong>HTML Element</strong></td>
                         <td>Applies the generated color to the element's <code>style.color</code> using its
                             <code>textContent</code>
@@ -1093,6 +1131,10 @@
                 <li><strong>HEX string</strong> — parses and normalizes</li>
                 <li><strong>RGB string</strong> — parses <code>rgb(r, g, b)</code></li>
                 <li><strong>RGBA string</strong> — parses <code>rgba(r, g, b, a)</code></li>
+                <li><strong>Multiple words</strong> — splits and reorders modifiers
+                    (<code>dark</code>/<code>light</code>/<code>bright</code>/<code>random</code>), then blends each
+                    word iteratively (75/25 ratio). <code>random</code> applies a random HSL variation instead of a
+                    fixed blend</li>
                 <li><strong>Exact name match</strong> — searches the internal database for an exact normalized match
                 </li>
                 <li><strong>Contains name match</strong> — searches for partial name matches</li>
@@ -1443,7 +1485,8 @@ generateMonochrome(<span class="string">"black"</span>, <span class="number">5</
                     <tr>
                         <td class="mono"><code>colorName(input)</code></td>
                         <td>Returns the <strong>first</strong> color name matching the generated hex, or
-                            <code>null</code> if not found</td>
+                            <code>null</code> if not found
+                        </td>
                     </tr>
                     <tr>
                         <td class="mono"><code>colorNames(input)</code></td>
@@ -1622,6 +1665,15 @@ isDark(hex);
                     <li><strong>Zero dependencies</strong> — ~38 KB minified, works everywhere</li>
                     <li><strong>Pagination built-in</strong> — <code>listColors</code> with page &amp; size control</li>
                 </ul>
+            </div>
+
+            <div class="note">
+                <strong>🎬 Live Demo Feature:</strong> The page header shows a <strong>Typed.js</strong> animation
+                inside
+                the <code>&lt;kbd&gt;</code> elements. Each character typed calls
+                <code>generateColor()</code> with the partial text and applies the resulting color to both
+                <code>&lt;kbd&gt;</code> elements — demonstrating how the library produces different colors for
+                different text inputs in real time.
             </div>
 
 
@@ -2043,6 +2095,133 @@ isDark(hex);
                     '<div class="empty-state"><span class="emoji">⚠️</span><p>Erro: ' + e.message + '</p></div>';
             }
 
+        })();
+    </script>
+
+    <!-- ═══════════════════════════════════════════════
+         Typed.js — Hero kbd dynamic color animation
+         Cycles through items randomly, calling
+         generateColor() on each character typed.
+         Uses MutationObserver to detect text changes
+         reliably (onCharTyped callback is unreliable
+         in some Typed.js CDN versions).
+         ═══════════════════════════════════════════════ -->
+    <script>
+        (function () {
+            'use strict';
+
+            /* ─── Items to cycle through (separate arrays to avoid color repetition) ─── */
+            var typedItems1 = [
+                'Blue', 'Random', 'Fuchsia', '#00FF00', 'White', 'Random Blue',
+                'Banana Mania', 'Brown', 'Any Text', '98', 'Lime', 'Teal', 'Indigo', 'Tomato'
+            ];
+
+            var typedItems2 = [
+                'RedClaw', 'Green', 'Purple', 'Zonaro', 'Random', 'Yellow', 'Black', 'Random Red',
+                'Amaranth', 'Another Text', '42', 'Cyan', 'Magenta', 'Orange', 'Violet'
+            ];
+
+            /* ─── Utility: shuffle an array in place (Fisher–Yates) ─── */
+            function shuffleArray(arr) {
+                for (var i = arr.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var tmp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = tmp;
+                }
+                return arr;
+            }
+
+            /* ─── Get both <kbd> inside the first <h2> ─── */
+            var heroKbds = document.querySelector('h2').querySelectorAll('kbd');
+            if (!heroKbds || heroKbds.length === 0) return;
+
+            /* ─── Apply color to a single kbd based on its own text ─── */
+            function applyColorToSingleKbd(kbd) {
+                var text = kbd.textContent;
+                if (!text || text.length === 0) return;
+                if (typeof generateColor !== 'function') return;
+
+                try {
+                    var hex = generateColor(text);
+
+                    // Use generateReadableColor for perfect contrast, fallback to white
+                    var textColor = '#ffffff';
+                    if (typeof generateReadableColor === 'function') {
+                        try {
+                            textColor = generateReadableColor(text)[0];
+                        } catch (_) {
+                            var h = hex.replace('#', '');
+                            if (h.length >= 6) {
+                                var r = parseInt(h.slice(0, 2), 16);
+                                var g = parseInt(h.slice(2, 4), 16);
+                                var b = parseInt(h.slice(4, 6), 16);
+                                var lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+                                textColor = lum > 0.5 ? '#1a1a1a' : '#ffffff';
+                            }
+                        }
+                    }
+
+                    kbd.style.backgroundColor = hex;
+                    kbd.style.color = textColor;
+                    kbd.style.borderColor = hex;
+                } catch (_) { }
+            }
+
+            /* ─── Set up an independent MutationObserver for each kbd ─── */
+            var kbdObservers = [];
+            for (var o = 0; o < heroKbds.length; o++) {
+                (function (kbd) {
+                    var lastText = kbd.textContent;
+                    var obs = new MutationObserver(function () {
+                        var currentText = kbd.textContent;
+                        if (currentText !== lastText) {
+                            lastText = currentText;
+                            applyColorToSingleKbd(kbd);
+                        }
+                    });
+                    obs.observe(kbd, {
+                        characterData: true,
+                        childList: true,
+                        subtree: true
+                    });
+                    kbdObservers.push(obs);
+                })(heroKbds[o]);
+            }
+
+            /* ─── Initialize Typed.js on each <kbd> ─── */
+            if (typeof Typed === 'undefined') return;
+
+            // First kbd — typing with items from typedItems1
+            var shuffled1 = shuffleArray(typedItems1.slice());
+            new Typed(heroKbds[0], {
+                strings: shuffled1,
+                typeSpeed: 70,
+                backSpeed: 35,
+                backDelay: 3000,
+                startDelay: 500,
+                loop: true,
+                showCursor: false
+            });
+
+            // Second kbd — independent typing with items from typedItems2
+            if (heroKbds.length > 1) {
+                var shuffled2 = shuffleArray(typedItems2.slice());
+                new Typed(heroKbds[1], {
+                    strings: shuffled2,
+                    typeSpeed: 90,
+                    backSpeed: 45,
+                    backDelay: 4000,
+                    startDelay: 1200,
+                    loop: true,
+                    showCursor: false
+                });
+            }
+
+            // Apply initial color to each kbd from its own current text
+            for (var init = 0; init < heroKbds.length; init++) {
+                applyColorToSingleKbd(heroKbds[init]);
+            }
         })();
     </script>
 

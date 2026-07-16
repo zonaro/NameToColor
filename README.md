@@ -24,6 +24,11 @@ Main function. Accepts various input types and returns a hexadecimal color code 
 
 - **Array** → calls `generateColor` on each element recursively (nested arrays work too), returns an array.
 - **Object** (non-array, non-element) → converted to string first (`String(input)`), then processed.
+- **Multiple words** — splits into individual words and processes them in two phases:
+  1. **Reordering**: words starting with `dark`, `light`, `bright`, or `random` are moved after the next non-modifier word (e.g. `"Dark Blue"` → `["Blue", "Dark"]`).
+  2. **Iterative blending**: starts with the first word's color, then blends each subsequent word one by one (75% current color, 25% incoming color). `"darker"` / `"lighter"` / `"brighter"` count as two modifiers. `"random"` generates a random HSL variation (±30° hue, ±20% saturation, ±20% lightness) of the current color.
+  
+  E.g. `generateColor("Dark Sea Green")` resolves via the database first; `generateColor("Dark Zonaro")` blends `Zonaro` darkened by `Dark`; `generateColor("Random Red")` returns a different red-toned random color each time.
 
 ### `generateReadableColor(input)`
 
@@ -363,6 +368,22 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 - **Utility functions**: `hexToRgb()`, `hexToHsl()`, `hslToHex()`, `relativeLuminance()`, `normalizeHex()`, `isLight()`, `isDark()` for fine-grained control.
 - **Zero dependencies**: runs purely in the browser with vanilla JavaScript.
 - **Small footprint**: ~38 KB minified, no `npm install` required.
+
+## Interactive Test Page
+
+The [interactive test page](https://zonaro.github.io/NameToColor/) includes a live playground that demonstrates all library features in real time.
+
+### Hero Color Animation
+
+The page header features a **Typed.js** animation that cycles through random text items (color names, hex codes, and arbitrary words) inside `<kbd>` elements. As each character is typed:
+
+1. `generateColor()` is called with the current partial text.
+2. The resulting color is applied as the background of both `<kbd>` elements.
+3. `generateReadableColor()` ensures the text remains legible with proper contrast.
+
+This creates a live, evolving color preview that changes with every keystroke — demonstrating how `generateColor()` produces different colors for different text inputs, even partial strings.
+
+> **Note:** The Typed.js library (`typed.js@2.0.12`) is loaded from CDN and is only used on the demo page. It is **not** a dependency of the core `NameToColor.js` library.
 
 ## License
 
