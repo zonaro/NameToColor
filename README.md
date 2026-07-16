@@ -257,8 +257,8 @@ These helper functions are also exposed globally for fine-grained control:
 | `isLight(input)`                               | Returns `true` if the generated color is light (luminance > 0.5)                                                             |
 | `isDark(input)`                                | Returns `true` if the generated color is dark (luminance ≤ 0.5)                                                              |
 | `temperature(input)`                           | Returns the temperature level as a string: `VeryHot`, `Hot`, `Neutral Hot`, `Neutral`, `Neutral Cold`, `Cold`, or `VeryCold` |
-| `isHot(input)`                                 | Returns `true` if the generated color is warm/hot (delegates to `temperature()`)                                              |
-| `isCold(input)`                                | Returns `true` if the generated color is cold/cool (delegates to `temperature()`)                                             |
+| `isHot(input)`                                 | Returns `true` if the generated color is warm/hot (delegates to `temperature()`)                                             |
+| `isCold(input)`                                | Returns `true` if the generated color is cold/cool (delegates to `temperature()`)                                            |
 | `mood(input)`                                  | Returns an array of mood/atmosphere names (in English) based on HSL rules, or `[]` if none match                             |
 | `isReadableForBlindness(colorA, colorB, type)` | Checks color readability for protanopia, deuteranopia, tritanopia using Brettel/Vienot simulation + WCAG contrast            |
 
