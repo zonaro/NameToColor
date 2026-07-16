@@ -6,7 +6,7 @@ Converts text, IDs, and color formats to hexadecimal. The plugin combines an ext
 
 [https://zonaro.github.io/NameToColor/](https://zonaro.github.io/NameToColor/)
 
-Try all plugin features live — including the paginated color database browser with `listColors`.
+Try all plugin features live — including the paginated color database browser with `listColors`, instant search filtering, and one-click copy buttons for ID, Name, and Hex values.
 
 ## CDN Installation
 
@@ -183,19 +183,84 @@ generateMonochrome("black", 5);
 // -> ["#cccccc", "#999999", "#666666", "#333333", "#000000"]
 ```
 
+### `isReadableForBlindness(colorA, colorB, type)`
+
+Checks whether two colors are **readable** (accessible) for various types of **color blindness**, simulating how the colors are perceived by a person with that condition and calculating the WCAG 2.1 contrast ratio between the simulated perceptions.
+
+Uses **simplified Brettel/Vienot matrices** applied to linearized sRGB values.
+
+#### Parameters
+
+| Parameter | Type     | Description                                                                                                                                                |
+| --------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `colorA`  | `*`      | First color (any value accepted by `generateColor()`)                                                                                                      |
+| `colorB`  | `*`      | Second color (any value accepted by `generateColor()`)                                                                                                     |
+| `type`    | `string` | Type of color blindness: `"protanopia"` (red-deficient), `"deuteranopia"` (green-deficient), `"tritanopia"` (blue-deficient), or `"all"` (tests all three) |
+
+#### Return Value
+
+For a **specific type**, returns:
+
+```js
+{
+  readable: boolean,      // true if simulated contrast >= 4.5:1 (WCAG AA)
+  contrast: number,        // the exact simulated contrast ratio
+  simulatedColorA: string, // HEX of color A as seen by the color blind person
+  simulatedColorB: string  // HEX of color B as seen by the color blind person
+}
+```
+
+For `"all"`, returns an object mapping each type plus an `accessibleForAll` flag.
+
+#### Algorithm
+
+The function follows these precise steps:
+
+1. **Linearization** — Converts sRGB to linear RGB using the standard gamma expansion (threshold 0.04045)
+2. **CVD Simulation** — Multiplies linear channels by the simplified Brettel/Vienot matrices for the selected type
+3. **Delinearization** — Converts back to sRGB (threshold 0.0031308), multiplies by 255, and clamps
+4. **WCAG Contrast** — Calculates the relative luminance of each simulated color and the contrast ratio between them
+
+#### Examples
+
+```js
+// Test if red text on green background is readable for protanopia
+isReadableForBlindness("#ff0000", "#00ff00", "protanopia");
+// → { readable: false, contrast: 1.2, simulatedColorA: "#c6c500", simulatedColorB: "#b0b187" }
+
+// Test all three types at once
+isReadableForBlindness("white", "black", "all");
+// → { protanopia: {...}, deuteranopia: {...}, tritanopia: {...}, accessibleForAll: true }
+
+// Check a real UI scenario with color names
+isReadableForBlindness("tomato", "rebeccapurple", "deuteranopia");
+// → { readable: true, contrast: 4.53, simulatedColorA: "#d6df51", simulatedColorB: "#575a85" }
+```
+
+<div class="note">
+
+> **💡 Tip:** A contrast ratio below **3.0:1** is considered illegible for UI elements. A ratio below **4.5:1** fails WCAG AA for normal text. Use this function to verify your color pairs are accessible to people with color vision deficiencies.
+
+</div>
+
 ## Utility Functions
 
 These helper functions are also exposed globally for fine-grained control:
 
-| Function                 | Description                                                                           |
-| ------------------------ | ------------------------------------------------------------------------------------- |
-| `hexToRgb(hex)`          | Converts `#rrggbb` to `{ r, g, b }` (0–255)                                           |
-| `hexToHsl(hex)`          | Converts `#rrggbb` to `{ h, s, l }` (hue 0–360°, saturation 0–100%, lightness 0–100%) |
-| `hslToHex(h, s, l)`      | Converts HSL values back to `#rrggbb`                                                 |
-| `relativeLuminance(hex)` | Returns the WCAG relative luminance (0–1)                                             |
-| `normalizeHex(value)`    | Normalizes `black`, `white`, `#rgb`, `#rrggbbaa` to `#rrggbb`                         |
-| `isLight(input)`         | Returns `true` if the generated color is light (luminance > 0.5)                      |
-| `isDark(input)`          | Returns `true` if the generated color is dark (luminance ≤ 0.5)                       |
+| Function                                       | Description                                                                                                                  |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `hexToRgb(hex)`                                | Converts `#rrggbb` to `{ r, g, b }` (0–255)                                                                                  |
+| `hexToHsl(hex)`                                | Converts `#rrggbb` to `{ h, s, l }` (hue 0–360°, saturation 0–100%, lightness 0–100%)                                        |
+| `hslToHex(h, s, l)`                            | Converts HSL values back to `#rrggbb`                                                                                        |
+| `relativeLuminance(hex)`                       | Returns the WCAG relative luminance (0–1)                                                                                    |
+| `normalizeHex(value)`                          | Normalizes `black`, `white`, `#rgb`, `#rrggbbaa` to `#rrggbb`                                                                |
+| `isLight(input)`                               | Returns `true` if the generated color is light (luminance > 0.5)                                                             |
+| `isDark(input)`                                | Returns `true` if the generated color is dark (luminance ≤ 0.5)                                                              |
+| `temperature(input)`                           | Returns the temperature level as a string: `VeryHot`, `Hot`, `Neutral Hot`, `Neutral`, `Neutral Cold`, `Cold`, or `VeryCold` |
+| `isHot(input)`                                 | Returns `true` if the generated color is warm/hot (combined HSL hue + RGB score > 0)                                         |
+| `isCold(input)`                                | Returns `true` if the generated color is cold/cool (combined HSL hue + RGB score < 0)                                        |
+| `mood(input)`                                  | Returns an array of mood/atmosphere names (in English) based on HSL rules, or `[]` if none match                             |
+| `isReadableForBlindness(colorA, colorB, type)` | Checks color readability for protanopia, deuteranopia, tritanopia using Brettel/Vienot simulation + WCAG contrast            |
 
 ### Luminance & Light/Dark helpers
 
@@ -214,6 +279,92 @@ isDark(hex);
 ```
 
 > **Note:** `isLight` and `isDark` are complementary — a color is either light *or* dark, never both, never neither. The threshold is a relative luminance of **0.5**.
+
+### Temperature (Warm/Cool) helpers
+
+#### `temperature(input)` — 7 Temperature Levels
+
+Returns the temperature level of a color as one of 7 strings: `VeryHot`, `Hot`, `Neutral Hot`, `Neutral`, `Neutral Cold`, `Cold`, or `VeryCold`.
+
+```js
+temperature("red");       // → "VeryHot"      — hue 0° (+1), R >> B (+1)
+temperature("gold");      // → "VeryHot"      — hue 51° (+0.43), R >> B (+1)
+temperature("tomato");    // → "VeryHot"      — hue 9° (+0.9), R >> B (+0.72)
+temperature("pink");      // → "Hot"          — hue 350° (+0.67), R > B (+0.2)
+temperature("chartreuse");// → "Neutral Hot"  — hue 90° (0), R > B (+0.5)
+temperature("gray");      // → "Neutral"      — achromatic, R = B (0)
+temperature("green");     // → "Neutral Cold" — hue 120° (-0.25), R = B (0)
+temperature("magenta");   // → "Neutral Cold" — hue 300° (-0.25), R = B (0)
+temperature("purple");    // → "Neutral Cold" — hue 270° (-0.5), R = B (0)
+temperature("aquamarine");// → "Cold"         — hue 160° (-0.58), R < B (-0.33)
+temperature("blue");      // → "VeryCold"     — hue 240° (-0.75), R << B (-1)
+temperature("cyan");      // → "VeryCold"     — hue 180° (-0.75), R << B (-1)
+```
+
+#### `isHot(input)` / `isCold(input)` — Boolean helpers
+
+```js
+isHot("red");     // → true   (red is warm — hue 0°, R > B)
+isCold("red");    // → false
+
+isHot("blue");    // → false
+isCold("blue");   // → true   (blue is cool — hue 240°, R < B)
+
+isHot("gold");    // → true   (gold is warm — hue 51°, R >> B)
+isCold("gold");   // → false
+
+isHot("cyan");    // → false
+isCold("cyan");   // → true   (cyan is cool — hue 180°, R < B)
+
+isHot("gray");    // → false  (gray is achromatic, neutral)
+isCold("gray");   // → false
+
+isHot("tomato");  // → true   (warm red-orange)
+isCold("#1E90FF");// → true   (Dodger Blue is cool)
+```
+
+> **Note:** `temperature`, `isHot` and `isCold` use the same two-factor scoring system:
+> 1. **HSL Hue** — uses a continuous piecewise function: 0°–90° warm (descending +1→0), 90°–210° cooling (0→-1), 210°–330° warming (-1→0), 330°–360° warm (0→+1). Achromatic colors (saturation = 0) get 0.
+> 2. **Direct RGB** — `V = (R - B) / 255`, ranging from -1 (blue ≫ red) to +1 (red ≫ blue).
+>
+> The two factors are averaged into a continuous score from -1 (coldest) to +1 (warmest). `temperature()` maps this score to 7 distinct levels. `isHot` returns `true` when the discrete warmScore (same as the original algorithm) > 0. `isCold` returns `true` when warmScore < 0. If warmScore = 0, both return `false` (neutral color).
+>
+> The continuous scoring used by `temperature()` provides finer granularity than the discrete `isHot`/`isCold` system, which means `temperature()` can detect subtle warm/cool leans even when `isHot` and `isCold` both return `false`.
+
+### `mood(input)` — Color Mood / Atmosphere Classification
+
+Returns an array of **mood** (atmosphere) names in English that best describe the generated color, based on mathematical rules in HSL space. If no mood matches (exact or by proximity), returns an empty array `[]`.
+
+```js
+mood("#FF4500");        // ["Vibrant"]                        — OrangeRed
+mood("#0000FF");        // ["Futuristic"]                     — pure blue
+mood("#4682B4");        // ["Calm","Corporate","Sophisticated"] — Steel Blue
+mood("#1A1A1A");        // ["Corporate"]                      — near-black gray
+mood("#FFFFFF");        // ["Corporate"]                      — white (S &lt; 10)
+mood("invalid");        // []                                 — invalid
+```
+
+**How it works:**
+
+1. Generates the color via `generateColor(input)` and converts it to HSL.
+2. Checks exact rules — if the color's H, S, L values fit one or more mood definitions exactly, those moods are returned.
+3. If no exact match is found, uses a **proximity scoring** system that calculates how close the HSL values are to each mood's ideal ranges, then returns moods above a threshold.
+4. If no mood scores high enough, returns `[]`.
+
+**The 10 moods:**
+
+| Mood          | HSL Rule (Exact)                       | Description                                  |
+| ------------- | -------------------------------------- | -------------------------------------------- |
+| Vibrant       | S ≥ 80, L 50–70, H 0–60 or 330–360     | High saturation, medium lightness, warm hues |
+| Futuristic    | S ≥ 90, L 45–55, H 180–220 or 280–320  | Very high saturation, cool hues              |
+| Fun           | S 65–90, L 65–80                       | High saturation, high lightness (bright)     |
+| Soft Pastel   | S 15–40, L 80–95                       | Low saturation, high lightness (delicate)    |
+| Calm          | H 160–260, S 20–50, L 60–85            | Cool hues, serene                            |
+| Vintage       | H 20–50, S 30–50, L 40–60              | Warm muted hues, retro feel                  |
+| Organic       | H 30–45 or 90–140, S 40–60, L 40–55    | Earthy greens & warm hues                    |
+| Sophisticated | S 40–75, L 10–35                       | Medium saturation, deep elegant colors       |
+| Dark          | S 5–25, L 10–25                        | Near-black muted colors                      |
+| Corporate     | (H 210–230 & S 10–30) or S < 10 (gray) | Low-saturation blue or pure grays            |
 
 ## Input Types
 

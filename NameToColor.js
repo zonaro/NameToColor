@@ -14065,6 +14065,192 @@ function isDark(input) {
 }
 
 /**
+ * Determines whether a color generated from any input is considered HOT (warm).
+ * Uses a combined score from two methods:
+ * 1. HSL Hue — warm hues are 0°–90° and 330°–360° (reds, oranges, yellows);
+ *    cool hues are 90°–330° (greens, blues, purples).
+ * 2. Direct RGB — V_temperature = R - B; positive means warmer (more red),
+ *    negative means cooler (more blue).
+ *
+ * Each method contributes +1 (warm) or -1 (cool) to a warmth score.
+ * A color is considered hot when the total score is greater than 0.
+ * Achromatic colors (saturation = 0) skip the hue rule.
+ *
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {boolean} `true` if the color is hot/warm, `false` otherwise.
+ *
+ * @example
+ * isHot('red');       // true  — red is warm
+ * isHot('blue');      // false — blue is cool
+ * isHot('gold');      // true  — gold is warm
+ * isHot('gray');      // false — gray is neutral (achromatic)
+ */
+function isHot(input) {
+    var hex = normalizeHex(generateColor(input));
+    if (!hex) {
+        return false;
+    }
+
+    var rgb = hexToRgb(hex);
+    var hsl = hexToHsl(hex);
+    var warmScore = 0;
+
+    // HSL Hue contribution (skip achromatic colors)
+    if (hsl.s > 0) {
+        if (hsl.h <= 90 || hsl.h >= 330) {
+            warmScore++;  // warm hue
+        } else {
+            warmScore--;  // cool hue
+        }
+    }
+
+    // Direct RGB contribution (V_temperature = R - B)
+    if (rgb.r > rgb.b) {
+        warmScore++;
+    } else if (rgb.r < rgb.b) {
+        warmScore--;
+    }
+
+    return warmScore > 0;
+}
+
+/**
+ * Determines whether a color generated from any input is considered COLD (cool).
+ * It is the logical inverse of isHot() when the color has a defined temperature.
+ * Uses the same combined score from HSL Hue and Direct RGB methods.
+ *
+ * A color is considered cold when the total warmth score is less than 0.
+ * If the score equals 0, both isHot() and isCold() return false (neutral color).
+ *
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {boolean} `true` if the color is cold/cool, `false` otherwise.
+ *
+ * @example
+ * isCold('blue');     // true  — blue is cool
+ * isCold('red');      // false — red is warm
+ * isCold('cyan');     // true  — cyan is cool
+ * isCold('gray');     // false — gray is neutral (achromatic)
+ */
+function isCold(input) {
+    var hex = normalizeHex(generateColor(input));
+    if (!hex) {
+        return false;
+    }
+
+    var rgb = hexToRgb(hex);
+    var hsl = hexToHsl(hex);
+    var warmScore = 0;
+
+    // HSL Hue contribution (skip achromatic colors)
+    if (hsl.s > 0) {
+        if (hsl.h <= 90 || hsl.h >= 330) {
+            warmScore++;  // warm hue
+        } else {
+            warmScore--;  // cool hue
+        }
+    }
+
+    // Direct RGB contribution (V_temperature = R - B)
+    if (rgb.r > rgb.b) {
+        warmScore++;
+    } else if (rgb.r < rgb.b) {
+        warmScore--;
+    }
+
+    return warmScore < 0;
+}
+
+/**
+ * Returns the temperature level of a color generated from any input.
+ * Uses a continuous two-factor scoring system for smooth, intuitive results:
+ *
+ * 1. **HSL Hue** — mapped via a piecewise linear function aligned with the
+ *    warm/cool regions (0°–90° warm, 90°–330° cool, 330°–360° warm):
+ *    - 0° (red) = +1 (warmest) → 90° (yellow-green) = 0 (neutral)
+ *    - 90° → 210° (teal) = -1 (coldest) → 330° (pink) = 0 (neutral)
+ *    - 330° → 360° (red) = +1 (warmest)
+ *    Achromatic colors (saturation = 0) get a score of 0 for this factor.
+ *
+ * 2. **Direct RGB** — normalized difference `(R - B) / 255`, ranging from
+ *    -1 (blue ≫ red) to +1 (red ≫ blue).
+ *
+ * The two factors are averaged into a final score ranging from -1 (coldest)
+ * to +1 (warmest), which is then mapped to 7 distinct levels.
+ *
+ * | Score Range       | Returns       |
+ * |-------------------|---------------|
+ * | > 0.6             | VeryHot       |
+ * | > 0.25            | Hot           |
+ * | > 0.02            | Neutral Hot   |
+ * | -0.02 to 0.02     | Neutral       |
+ * | < -0.02           | Neutral Cold  |
+ * | < -0.25           | Cold          |
+ * | < -0.6            | VeryCold      |
+ *
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {string} One of: "VeryHot", "Hot", "Neutral Hot", "Neutral",
+ *   "Neutral Cold", "Cold", "VeryCold".
+ *
+ * @example
+ * temperature('red');          // "VeryHot"       — hue 0° (+1), R >> B (≈+1)
+ * temperature('gold');         // "VeryHot"       — hue 51° (+0.43), R >> B (+1)
+ * temperature('tomato');       // "VeryHot"       — hue 9° (+0.9), R >> B (+0.72)
+ * temperature('pink');         // "Hot"           — hue 350° (+0.67), R > B (+0.2)
+ * temperature('chartreuse');   // "Neutral Hot"   — hue 90° (0), R > B (+0.5)
+ * temperature('gray');         // "Neutral"       — achromatic, R = B (0)
+ * temperature('magenta');      // "Neutral Cold"  — hue 300° (-0.25), R = B (0)
+ * temperature('green');        // "Neutral Cold"  — hue 120° (-0.25), R = B (0)
+ * temperature('purple');       // "Cold"          — hue 270° (-0.5), R = B (0)
+ * temperature('#1E90FF');      // "VeryCold"      — hue 210° (-1), R << B (-0.88)
+ * temperature('cyan');         // "VeryCold"      — hue 180° (-0.75), R << B (-1)
+ * temperature('blue');         // "VeryCold"      — hue 240° (-0.75), R << B (-1)
+ */
+function temperature(input) {
+    var hex = normalizeHex(generateColor(input));
+    if (!hex) {
+        return 'Neutral';
+    }
+
+    var rgb = hexToRgb(hex);
+    var hsl = hexToHsl(hex);
+
+    // ── Hue warmth: continuous -1 to +1 (piecewise linear) ──
+    // Regions: 0°–90° warm, 90°–210° cooling, 210°–330° warming, 330°–360° warm
+    var hueWarmth = 0;
+    if (hsl.s > 0) {
+        var h = hsl.h;
+        if (h <= 90) {
+            // 0° (red) = +1 → 90° (yellow-green) = 0
+            hueWarmth = 1 - h / 90;
+        } else if (h <= 210) {
+            // 90° = 0 → 210° (teal) = -1 (coldest point)
+            hueWarmth = -(h - 90) / 120;
+        } else if (h <= 330) {
+            // 210° = -1 → 330° (pink) = 0
+            hueWarmth = -(330 - h) / 120;
+        } else {
+            // 330° = 0 → 360° (red) = +1
+            hueWarmth = (h - 330) / 30;
+        }
+    }
+
+    // ── RGB warmth: continuous -1 to +1 ──
+    var rgbWarmth = (rgb.r - rgb.b) / 255;
+
+    // ── Combined score (-1 to +1) ──
+    var score = (hueWarmth + rgbWarmth) / 2;
+
+    // ── Map to 7 levels ──
+    if (score > 0.6) return 'VeryHot';
+    if (score > 0.25) return 'Hot';
+    if (score > 0.02) return 'Neutral Hot';
+    if (score >= -0.02) return 'Neutral';
+    if (score >= -0.25) return 'Neutral Cold';
+    if (score >= -0.6) return 'Cold';
+    return 'VeryCold';
+}
+
+/**
  * Normalizes a color string to #rrggbb hexadecimal format.
  * Accepts #rrggbb, #rgb, #rrggbbaa, black, white and returns null if invalid.
  * @param {string} value
@@ -14170,6 +14356,263 @@ function hslToHex(h, s, l) {
         Math.round(r * 255).toString(16).padStart(2, '0') +
         Math.round(g * 255).toString(16).padStart(2, '0') +
         Math.round(b * 255).toString(16).padStart(2, '0');
+}
+
+/**
+ * ═══════════════════════════════════════════════════════════════
+ *  Mood Classification
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+/**
+ * Classifies the mood(s) / atmosphere of a color based on its HSL values.
+ *
+ * The function evaluates the generated color against a set of mathematical
+ * rules that define different color moods (atmospheres). If the color fits
+ * one or more rules exactly, those moods are returned. If no rule matches
+ * exactly, a proximity-based scoring system finds the closest mood(s). If
+ * no mood is close enough, an empty array is returned.
+ *
+ * **Mood Reference Table**
+ *
+ * | Mood          | Description                                                            |
+ * |---------------|------------------------------------------------------------------------|
+ * | Vibrant       | High saturation, medium lightness, warm-red hues (reds, oranges, yellows) |
+ * | Futuristic    | Very high saturation, medium lightness, cool hues (cyans, blues, purples) |
+ * | Fun           | High saturation, high lightness (bright, playful colors)                  |
+ * | Soft Pastel   | Low saturation, high lightness (delicate, muted colors)                   |
+ * | Calm          | Cool blue-green hues, medium-low saturation, medium-high lightness        |
+ * | Vintage       | Warm muted hues, medium saturation, medium lightness (retro feel)         |
+ * | Organic       | Earthy greens & warm hues, medium saturation, medium lightness            |
+ * | Sophisticated | Medium saturation, low lightness (deep, elegant colors)                   |
+ * | Dark          | Very low saturation, very low lightness (near-black muted colors)         |
+ * | Corporate     | Low-saturation blue, or pure grays (professional, business-like)         |
+ *
+ * @param {*} input - Any value accepted by generateColor().
+ * @returns {string[]} Array of mood names in English, or empty array if no mood matches.
+ *
+ * @example
+ * mood('#FF4500');        // ["Vibrant"]               — OrangeRed
+ * mood('#0000FF');        // ["Futuristic"]             — pure blue
+ * mood('#4682B4');        // ["Calm","Corporate","Sophisticated"] — Steel Blue
+ * mood('#1A1A1A');        // ["Corporate"]              — near-black gray
+ * mood('#FFFFFF');        // ["Corporate"]              — white (S &lt; 10)
+ * mood('invalid color');  // []
+ */
+function mood(input) {
+    // ── 1. Generate normalized hex color ──
+    var hex = normalizeHex(generateColor(input));
+    if (!hex) {
+        return [];
+    }
+
+    // ── 2. Convert to HSL ──
+    var hsl = hexToHsl(hex);
+    var h = hsl.h;
+    var s = hsl.s;
+    var l = hsl.l;
+
+    // ── 3. Define mood rules ──
+    var moodRules = [
+        {
+            name: 'Vibrant',
+            check: function (h, s, l) {
+                return s >= 80 && l >= 50 && l <= 70 && (h <= 60 || h >= 330);
+            },
+            constrainH: true, hRanges: [[0, 60], [330, 360]],
+            constrainS: true, sRange: [80, 100],
+            constrainL: true, lRange: [50, 70]
+        },
+        {
+            name: 'Futuristic',
+            check: function (h, s, l) {
+                return s >= 90 && l >= 45 && l <= 55 && ((h >= 180 && h <= 220) || (h >= 280 && h <= 320));
+            },
+            constrainH: true, hRanges: [[180, 220], [280, 320]],
+            constrainS: true, sRange: [90, 100],
+            constrainL: true, lRange: [45, 55]
+        },
+        {
+            name: 'Fun',
+            check: function (h, s, l) {
+                return s >= 65 && s <= 90 && l >= 65 && l <= 80;
+            },
+            constrainS: true, sRange: [65, 90],
+            constrainL: true, lRange: [65, 80]
+        },
+        {
+            name: 'Soft Pastel',
+            check: function (h, s, l) {
+                return s >= 15 && s <= 40 && l >= 80 && l <= 95;
+            },
+            constrainS: true, sRange: [15, 40],
+            constrainL: true, lRange: [80, 95]
+        },
+        {
+            name: 'Calm',
+            check: function (h, s, l) {
+                return h >= 160 && h <= 260 && s >= 20 && s <= 50 && l >= 60 && l <= 85;
+            },
+            constrainH: true, hRanges: [[160, 260]],
+            constrainS: true, sRange: [20, 50],
+            constrainL: true, lRange: [60, 85]
+        },
+        {
+            name: 'Vintage',
+            check: function (h, s, l) {
+                return h >= 20 && h <= 50 && s >= 30 && s <= 50 && l >= 40 && l <= 60;
+            },
+            constrainH: true, hRanges: [[20, 50]],
+            constrainS: true, sRange: [30, 50],
+            constrainL: true, lRange: [40, 60]
+        },
+        {
+            name: 'Organic',
+            check: function (h, s, l) {
+                return ((h >= 30 && h <= 45) || (h >= 90 && h <= 140)) && s >= 40 && s <= 60 && l >= 40 && l <= 55;
+            },
+            constrainH: true, hRanges: [[30, 45], [90, 140]],
+            constrainS: true, sRange: [40, 60],
+            constrainL: true, lRange: [40, 55]
+        },
+        {
+            name: 'Sophisticated',
+            check: function (h, s, l) {
+                return s >= 40 && s <= 75 && l >= 10 && l <= 35;
+            },
+            constrainS: true, sRange: [40, 75],
+            constrainL: true, lRange: [10, 35]
+        },
+        {
+            name: 'Dark',
+            check: function (h, s, l) {
+                return s >= 5 && s <= 25 && l >= 10 && l <= 25;
+            },
+            constrainS: true, sRange: [5, 25],
+            constrainL: true, lRange: [10, 25]
+        },
+        {
+            name: 'Corporate',
+            check: function (h, s, l) {
+                return (h >= 210 && h <= 230 && s >= 10 && s <= 30) || s < 10;
+            },
+            constrainH: true, hRanges: [[210, 230]],
+            constrainS: true, sRange: [0, 30],
+            constrainL: false,
+            // Two proximity modes: "blue" (constrained H+S) and "gray" (only S near 0)
+            proximityMode: 'corporate'
+        }
+    ];
+
+    // ── 4. Check exact matches ──
+    var moods = [];
+    for (var i = 0; i < moodRules.length; i++) {
+        if (moodRules[i].check(h, s, l)) {
+            moods.push(moodRules[i].name);
+        }
+    }
+
+    // ── 5. If no exact match, use proximity scoring ──
+    if (moods.length === 0) {
+        var scores = [];
+        for (var i = 0; i < moodRules.length; i++) {
+            var rule = moodRules[i];
+            var productScore = 1.0;
+            var dimCount = 0;
+
+            // H dimension score (multiplicative — any far dimension kills the score)
+            if (rule.constrainH && rule.hRanges) {
+                dimCount++;
+                productScore *= dimensionScore(h, rule.hRanges);
+            }
+
+            // S dimension score
+            if (rule.constrainS && rule.sRange) {
+                dimCount++;
+                productScore *= dimensionScore(s, [rule.sRange]);
+            }
+
+            // L dimension score
+            if (rule.constrainL && rule.lRange) {
+                dimCount++;
+                productScore *= dimensionScore(l, [rule.lRange]);
+            }
+
+            // Special handling for Corporate: two proximity modes
+            if (rule.proximityMode === 'corporate') {
+                // Mode 1: Blue (H in [210,230], S in [0,30])
+                var hScore = dimensionScore(h, [[210, 230]]);
+                var sScore = dimensionScore(s, [[0, 30]]);
+                var blueScore = hScore * sScore;
+
+                // Mode 2: Gray (only S very low, no H constraint)
+                var grayScore = dimensionScore(s, [[0, 10]]);
+
+                productScore = Math.max(blueScore, grayScore);
+            }
+
+            scores.push({ name: rule.name, score: productScore });
+        }
+
+        // Sort by score descending
+        scores.sort(function (a, b) { return b.score - a.score; });
+
+        // Collect moods with score above threshold
+        // Threshold: with 3 dimensions, each needs about 0.7 fit for product ≈ 0.34
+        // With 2 dimensions, each needs about 0.55 fit for product ≈ 0.3
+        var PROXIMITY_THRESHOLD = 0.3;
+        for (var i = 0; i < scores.length; i++) {
+            if (scores[i].score >= PROXIMITY_THRESHOLD) {
+                moods.push(scores[i].name);
+            }
+        }
+    }
+
+    return moods;
+}
+
+/**
+ * Calculates how close a value is to one or more allowed ranges using
+ * Gaussian decay. Returns 1.0 if the value is inside any range, or a
+ * smooth score (0.0 to 1.0) based on distance to the nearest range.
+ *
+ * Gaussian sigma is set to half the range width, providing a natural
+ * falloff: at one full width away, score ≈ 0.135; at two widths, ≈ 0.018.
+ *
+ * @param {number} value - The value to evaluate.
+ * @param {number[][]} ranges - Array of [min, max] ranges.
+ * @returns {number} Score from 0.0 (far) to 1.0 (inside range).
+ */
+function dimensionScore(value, ranges) {
+    var minDist = Infinity;
+    var nearestWidth = 0;
+
+    for (var i = 0; i < ranges.length; i++) {
+        var min = ranges[i][0];
+        var max = ranges[i][1];
+
+        // Inside this range — perfect score
+        if (value >= min && value <= max) {
+            return 1.0;
+        }
+
+        // Distance to nearest boundary
+        var dist = Math.min(Math.abs(value - min), Math.abs(value - max));
+        if (dist < minDist) {
+            minDist = dist;
+            nearestWidth = max - min;
+        }
+    }
+
+    if (nearestWidth <= 0) {
+        return 0;
+    }
+
+    // Gaussian decay: sigma = half the range width
+    // At dist = 0 (at boundary) → e^0 = 1
+    // At dist = nearestWidth (one full width away) → e^(-2) ≈ 0.135
+    var sigma = nearestWidth / 2;
+    return Math.exp(-(minDist * minDist) / (2 * sigma * sigma));
 }
 
 /**
@@ -14782,4 +15225,180 @@ function findNearestColor(hex) {
     }
 
     return bestEntry;
+}
+
+/**
+ * Checks whether two colors are readable (accessible) for various types of color blindness,
+ * simulating how the colors are perceived by a person with that condition and calculating
+ * the WCAG 2.1 contrast ratio between the simulated perceptions.
+ *
+ * The simulation uses simplified Brettel/Vienot matrices applied to linearized sRGB values.
+ *
+ * @param {*} colorA - First color (any value accepted by generateColor()).
+ * @param {*} colorB - Second color (any value accepted by generateColor()).
+ * @param {string} type - Type of color blindness to simulate:
+ *   "protanopia" (red-deficient), "deuteranopia" (green-deficient),
+ *   "tritanopia" (blue-deficient), or "all" (tests all three types).
+ * @returns {Object} Result object with readability information.
+ *
+ * @example
+ * // Test specific type
+ * isReadableForBlindness("#ff0000", "#00ff00", "protanopia");
+ * // → { readable: false, contrast: 1.35, simulatedColorA: "#777777", simulatedColorB: "#777777" }
+ *
+ * @example
+ * // Test all types
+ * isReadableForBlindness("white", "black", "all");
+ * // → { protanopia: {...}, deuteranopia: {...}, tritanopia: {...}, accessibleForAll: true }
+ */
+function isReadableForBlindness(colorA, colorB, type) {
+    // ── Validate type parameter ──
+    var VALID_TYPES = ['protanopia', 'deuteranopia', 'tritanopia', 'all'];
+    if (VALID_TYPES.indexOf(type) === -1) {
+        type = 'all';
+    }
+
+    // ── Step 0: Resolve both inputs to valid hex colors ──
+    var hexA = normalizeHex(generateColor(colorA));
+    var hexB = normalizeHex(generateColor(colorB));
+
+    if (!hexA || !hexB) {
+        var fallback = {
+            readable: false,
+            contrast: 1,
+            simulatedColorA: '#000000',
+            simulatedColorB: '#000000'
+        };
+        if (type === 'all') {
+            return {
+                protanopia: fallback,
+                deuteranopia: fallback,
+                tritanopia: fallback,
+                accessibleForAll: false
+            };
+        }
+        return fallback;
+    }
+
+    // ── Parse RGB values (0–255) ──
+    var rgbA = hexToRgb(hexA);
+    var rgbB = hexToRgb(hexB);
+
+    // ── Step 1: Linearize sRGB → Linear RGB ──
+    // Uses the standard sRGB linearization formula with threshold 0.04045
+    function linearize(channel) {
+        var srgb = channel / 255;
+        if (srgb <= 0.04045) {
+            return srgb / 12.92;
+        }
+        return Math.pow((srgb + 0.055) / 1.055, 2.4);
+    }
+
+    // ── Step 3 helper: Delinearize Linear RGB → sRGB ──
+    function delinearize(channel) {
+        if (channel <= 0.0031308) {
+            return channel * 12.92;
+        }
+        return 1.055 * Math.pow(channel, 1 / 2.4) - 0.055;
+    }
+
+    // ── Step 2 & 3: Simulate color blindness for a single type ──
+    // Returns { r, g, b } in 0–255 range (sRGB, clamped)
+    function simulateColorBlindness(r, g, b, cvdType) {
+        // Linearize
+        var rLin = linearize(r);
+        var gLin = linearize(g);
+        var bLin = linearize(b);
+
+        var rSim, gSim, bSim;
+
+        // Apply the simplified Brettel/Vienot matrices
+        if (cvdType === 'protanopia') {
+            // Protanopia: absent L-cones (red-deficient)
+            rSim = 0.56667 * rLin + 0.43333 * gLin + 0.0 * bLin;
+            gSim = 0.55833 * rLin + 0.44167 * gLin + 0.0 * bLin;
+            bSim = 0.0 * rLin + 0.24167 * gLin + 0.75833 * bLin;
+        } else if (cvdType === 'deuteranopia') {
+            // Deuteranopia: absent M-cones (green-deficient)
+            rSim = 0.625 * rLin + 0.375 * gLin + 0.0 * bLin;
+            gSim = 0.70 * rLin + 0.30 * gLin + 0.0 * bLin;
+            bSim = 0.0 * rLin + 0.30 * gLin + 0.70 * bLin;
+        } else if (cvdType === 'tritanopia') {
+            // Tritanopia: absent S-cones (blue-deficient)
+            rSim = 0.95 * rLin + 0.05 * gLin + 0.0 * bLin;
+            gSim = 0.0 * rLin + 0.43333 * gLin + 0.56667 * bLin;
+            bSim = 0.0 * rLin + 0.475 * gLin + 0.525 * bLin;
+        }
+
+        // Delinearize (return to sRGB)
+        var rOut = delinearize(rSim);
+        var gOut = delinearize(gSim);
+        var bOut = delinearize(bSim);
+
+        // Convert to 0–255 range and clamp
+        return {
+            r: Math.max(0, Math.min(255, Math.round(rOut * 255))),
+            g: Math.max(0, Math.min(255, Math.round(gOut * 255))),
+            b: Math.max(0, Math.min(255, Math.round(bOut * 255)))
+        };
+    }
+
+    // ── Step 4 helper: Calculate relative luminance (WCAG 2.1) ──
+    // The WCAG formula requires linear RGB values, so we linearize the sRGB again
+    function simulatedLuminance(r, g, b) {
+        var toLin = function (ch) {
+            var srgb = ch / 255;
+            return srgb <= 0.04045 ? srgb / 12.92 : Math.pow((srgb + 0.055) / 1.055, 2.4);
+        };
+        return 0.2126 * toLin(r) + 0.7152 * toLin(g) + 0.0722 * toLin(b);
+    }
+
+    // ── Step 4 helper: Calculate WCAG contrast ratio ──
+    function calculateContrast(simA, simB) {
+        var lumA = simulatedLuminance(simA.r, simA.g, simA.b);
+        var lumB = simulatedLuminance(simB.r, simB.g, simB.b);
+        var lighter = Math.max(lumA, lumB);
+        var darker = Math.min(lumA, lumB);
+        return (lighter + 0.05) / (darker + 0.05);
+    }
+
+    // ── Helper: Convert {r, g, b} to hex string ──
+    function rgbToHex(r, g, b) {
+        return '#' +
+            r.toString(16).padStart(2, '0') +
+            g.toString(16).padStart(2, '0') +
+            b.toString(16).padStart(2, '0');
+    }
+
+    // ── Evaluate a single CVD type ──
+    function evaluateType(cvdType) {
+        var simA = simulateColorBlindness(rgbA.r, rgbA.g, rgbA.b, cvdType);
+        var simB = simulateColorBlindness(rgbB.r, rgbB.g, rgbB.b, cvdType);
+        var contrast = calculateContrast(simA, simB);
+
+        return {
+            readable: contrast >= 4.5,
+            contrast: parseFloat(contrast.toFixed(2)),
+            simulatedColorA: rgbToHex(simA.r, simA.g, simA.b),
+            simulatedColorB: rgbToHex(simB.r, simB.g, simB.b)
+        };
+    }
+
+    // ── Step 5: Return results ──
+    if (type === 'all') {
+        var resultProtanopia = evaluateType('protanopia');
+        var resultDeuteranopia = evaluateType('deuteranopia');
+        var resultTritanopia = evaluateType('tritanopia');
+
+        return {
+            protanopia: resultProtanopia,
+            deuteranopia: resultDeuteranopia,
+            tritanopia: resultTritanopia,
+            accessibleForAll: resultProtanopia.readable &&
+                resultDeuteranopia.readable &&
+                resultTritanopia.readable
+        };
+    }
+
+    return evaluateType(type);
 }
