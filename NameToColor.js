@@ -14066,15 +14066,6 @@ function isDark(input) {
 
 /**
  * Determines whether a color generated from any input is considered HOT (warm).
- * Uses a combined score from two methods:
- * 1. HSL Hue — warm hues are 0°–90° and 330°–360° (reds, oranges, yellows);
- *    cool hues are 90°–330° (greens, blues, purples).
- * 2. Direct RGB — V_temperature = R - B; positive means warmer (more red),
- *    negative means cooler (more blue).
- *
- * Each method contributes +1 (warm) or -1 (cool) to a warmth score.
- * A color is considered hot when the total score is greater than 0.
- * Achromatic colors (saturation = 0) skip the hue rule.
  *
  * @param {*} input - Any value accepted by generateColor().
  * @returns {boolean} `true` if the color is hot/warm, `false` otherwise.
@@ -14086,32 +14077,7 @@ function isDark(input) {
  * isHot('gray');      // false — gray is neutral (achromatic)
  */
 function isHot(input) {
-    var hex = normalizeHex(generateColor(input));
-    if (!hex) {
-        return false;
-    }
-
-    var rgb = hexToRgb(hex);
-    var hsl = hexToHsl(hex);
-    var warmScore = 0;
-
-    // HSL Hue contribution (skip achromatic colors)
-    if (hsl.s > 0) {
-        if (hsl.h <= 90 || hsl.h >= 330) {
-            warmScore++;  // warm hue
-        } else {
-            warmScore--;  // cool hue
-        }
-    }
-
-    // Direct RGB contribution (V_temperature = R - B)
-    if (rgb.r > rgb.b) {
-        warmScore++;
-    } else if (rgb.r < rgb.b) {
-        warmScore--;
-    }
-
-    return warmScore > 0;
+    return temperature(input).contains('hot');
 }
 
 /**
@@ -14132,32 +14098,7 @@ function isHot(input) {
  * isCold('gray');     // false — gray is neutral (achromatic)
  */
 function isCold(input) {
-    var hex = normalizeHex(generateColor(input));
-    if (!hex) {
-        return false;
-    }
-
-    var rgb = hexToRgb(hex);
-    var hsl = hexToHsl(hex);
-    var warmScore = 0;
-
-    // HSL Hue contribution (skip achromatic colors)
-    if (hsl.s > 0) {
-        if (hsl.h <= 90 || hsl.h >= 330) {
-            warmScore++;  // warm hue
-        } else {
-            warmScore--;  // cool hue
-        }
-    }
-
-    // Direct RGB contribution (V_temperature = R - B)
-    if (rgb.r > rgb.b) {
-        warmScore++;
-    } else if (rgb.r < rgb.b) {
-        warmScore--;
-    }
-
-    return warmScore < 0;
+    return temperature(input).contains('cold');
 }
 
 /**
