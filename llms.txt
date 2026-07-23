@@ -1,0 +1,24 @@
+# NameToColor
+
+> NameToColor is a zero-dependency JavaScript library for web browsers that converts text, IDs, color names, and common color formats into deterministic hexadecimal colors.
+
+The core library is English-only and runs directly in the browser without Node.js, imports, or build tooling. Optional data-only language packs add translated color names, input aliases, theme aliases, and localized labels without replacing the English data.
+
+The built-in database contains 2,254 hashless hexadecimal-to-name pairs and 2,362 English names. Internal color keys use six hexadecimal digits without `#`, for example `"000000": ["Black"]`. Public APIs continue to accept and return standard colors such as `#000000`.
+
+Primary global APIs include `generateColor()`, `generateReadableColor()`, `generateThemePalette()`, `listColors()`, `colorName()`, `colorNames()`, color harmony generators, accessibility checks, temperature classification, and mood classification.
+
+## Documentation
+
+- [README](https://raw.githubusercontent.com/zonaro/NameToColor/main/README.md): Complete installation guide, API reference, examples, input processing rules, language-pack format, and database format.
+- [Interactive documentation](https://zonaro.github.io/NameToColor/): Semantic HTML documentation and live browser playground for the public API.
+
+## Source
+
+- [GitHub repository](https://github.com/zonaro/NameToColor): Canonical source repository and project history.
+- [Core browser library](https://raw.githubusercontent.com/zonaro/NameToColor/main/NameToColor.js): English implementation and built-in color database.
+- [Brazilian Portuguese language pack](https://raw.githubusercontent.com/zonaro/NameToColor/main/NameToColor.ptBR.js): Optional data-only `pt-BR` translations and aliases.
+
+## Optional
+
+- [CDN build](https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js): Direct browser-ready core script served from jsDelivr.

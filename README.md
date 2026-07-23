@@ -8,6 +8,10 @@ Converts text, IDs, and color formats to hexadecimal. The plugin combines an ext
 
 Try all plugin features live — including the paginated color database browser with `listColors`, instant search filtering, and one-click copy buttons for ID, Name, and Hex values.
 
+## LLM-Readable Documentation
+
+The published site exposes [`/llms.txt`](https://zonaro.github.io/NameToColor/llms.txt), a concise Markdown guide for language models and coding agents. It summarizes the browser-only runtime, hashless color-pair format, primary APIs, documentation, source files, and optional translation pack.
+
 ## CDN Installation
 
 ```html
@@ -70,12 +74,27 @@ registerNameToColorLanguage({
     Nature: ["translated nature"]
   },
   colorNames: {
-    "#ff0000": ["Translated Red"]
+    "ff0000": ["Translated Red"]
   }
 });
 ```
 
+The keys inside `colorNames` are always six hexadecimal digits **without** a leading `#`. The library adds `#` when returning a color through its public APIs.
+
 The locale parameter only changes returned labels. Omitting it preserves the original English output. If a requested translation is unavailable, name helpers fall back to the native English color name.
+
+## Color Database Format
+
+The English database in `NameToColor.js` uses direct hexadecimal-to-names pairs:
+
+```js
+const colorDatabase = {
+  "000000": ["Black"],
+  "00FFFF": ["Aqua", "Cyan", "Spanish Sky Blue"]
+};
+```
+
+Each key is a unique six-digit hexadecimal value without `#`, and each value is an array so synonyms can share the same color. Optional translation packs use the same hashless key format in their `colorNames` object. Public functions such as `generateColor()` and `listColors()` continue to return regular `#rrggbb` values.
 
 ## Functions
 
@@ -125,7 +144,7 @@ el.style.backgroundColor = backgroundColor;
 
 ### `listColors(pageNumber?, pageSize?)`
 
-Returns the internal color database in a paginated format. Entries with multiple color names (synonyms) are flattened so each name appears as its own `{ Color, Hexadecimal }` item.
+Returns the internal hexadecimal-to-names database in a paginated format. Pairs with multiple color names (synonyms) are flattened so each name appears as its own `{ Color, Hexadecimal }` item. This public result keeps `#` in `Hexadecimal`.
 
 ```js
 // All colors on one page
@@ -524,7 +543,7 @@ generateColor("absolut zero"); // -> "#0048BA" (similar name)
 
 ### 3) Numeric index from the internal table
 
-If the input is a number, the plugin looks up by the array index. If the index is out of range, a deterministic color is generated from the number itself:
+If the input is a number, the plugin looks up the hexadecimal key at that position in declaration order. If the index is out of range, a deterministic color is generated from the number itself:
 
 ```js
 generateColor(1);   // -> "#0048BA"
@@ -616,7 +635,7 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 
 1. HTML Element
 2. Array (recursive)
-3. Number (array index, then deterministic fallback)
+3. Number (hexadecimal-key declaration order, then deterministic fallback)
 4. Object (converted to string)
 5. Exact color names and input keywords from loaded language packs
 6. Empty input
@@ -633,7 +652,7 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 ## Features
 
 - **Deterministic** text fallback — the same input always produces the same color.
-- **Built-in database** with 2000+ named colors (2254+ entries), searchable by name (exact, contains, or fuzzy via Levenshtein) or numeric index.
+- **Built-in database** with 2000+ named colors (2254+ hashless hexadecimal-to-names pairs), searchable by name (exact, contains, or fuzzy via Levenshtein) or numeric index.
 - **Color name lookup**: `colorName()`, `colorNames()`, `closestName()`, `closestNames()` for finding color names from any input.
 - **Color harmonies**: `generateInvertedColor()`, `generateComplementary()`, `generateTriadic()`, `generateSquare()`, `generateSplitComplementary()` for color scheme exploration.
 - **Monochrome palettes**: `generateMonochrome()` creates harmonious single-hue palettes.

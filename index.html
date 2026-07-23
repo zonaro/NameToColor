@@ -8,9 +8,9 @@
     <!-- ═══════════════════════════════════════════
          Primary Meta Tags
          ═══════════════════════════════════════════ -->
-    <title>NameToColor — Convert Text to Hex Color | JavaScript Library</title>
+    <title>NameToColor — Text and Color Names to HEX in JavaScript</title>
     <meta name="description"
-        content="NameToColor is a multilingual, zero-dependency JavaScript library that converts text and translated color names to hexadecimal, generates semantic palettes for 69 curated themes, and provides WCAG AA contrast and color harmonies.">
+        content="Convert text and 2,000+ English or Portuguese color names to deterministic HEX with a zero-dependency browser JavaScript library, palettes, harmonies, and WCAG tools.">
     <meta name="keywords"
         content="color converter,hex color,javascript library,multilingual color names,portuguese color names,language pack,color name to hex,text to color,semantic color palette,theme palette generator,mood colors,WCAG contrast">
     <meta name="author" content="zonaro">
@@ -18,6 +18,8 @@
     <meta name="generator" content="NameToColor">
     <link rel="canonical" href="https://zonaro.github.io/NameToColor/">
     <link rel="sitemap" type="application/xml" href="https://zonaro.github.io/NameToColor/sitemap.xml">
+    <link rel="alternate" type="text/plain" href="https://zonaro.github.io/NameToColor/llms.txt"
+        title="NameToColor documentation for language models">
     <link rel="alternate" hreflang="en" href="https://zonaro.github.io/NameToColor/">
     <link rel="alternate" hreflang="x-default" href="https://zonaro.github.io/NameToColor/">
 
@@ -50,9 +52,9 @@
     <!-- ═══════════════════════════════════════════
            Open Graph (Facebook, LinkedIn, Discord)
            ═══════════════════════════════════════════ -->
-    <meta property="og:title" content="NameToColor — Convert Text to Colors | JavaScript Library">
+    <meta property="og:title" content="NameToColor — Text and Color Names to HEX in JavaScript">
     <meta property="og:description"
-        content="Multilingual, zero-dependency JavaScript library for translated color names, 69 curated semantic theme palettes, WCAG AA contrast, color harmonies, and 2000+ native names.">
+        content="Convert text and 2,000+ English or Portuguese color names to deterministic HEX with palettes, harmonies, and WCAG accessibility tools.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://zonaro.github.io/NameToColor/">
     <meta property="og:site_name" content="NameToColor">
@@ -61,10 +63,10 @@
     <!-- ═══════════════════════════════════════════
            Twitter Card
            ═══════════════════════════════════════════ -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="NameToColor — Convert Text to Colors | JavaScript Library">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="NameToColor — Text and Color Names to HEX in JavaScript">
     <meta name="twitter:description"
-        content="Generate colors from English or Portuguese names and semantic themes with optional data-only language packs and zero dependencies.">
+        content="Zero-dependency browser JavaScript for deterministic HEX colors, 2,000+ English or Portuguese names, palettes, harmonies, and WCAG tools.">
 
     <!-- ═══════════════════════════════════════════
            PWA / Mobile / Theme
@@ -77,18 +79,61 @@
     <meta name="mobile-web-app-capable" content="yes">
 
     <!-- ═══════════════════════════════════════════
-           JSON-LD Structured Data (Schema.org)
+           Website Structured Data (Schema.org)
+           ═══════════════════════════════════════════ -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "@id": "https://zonaro.github.io/NameToColor/#website",
+            "url": "https://zonaro.github.io/NameToColor/",
+            "name": "NameToColor",
+            "alternateName": [
+                "Name To Color",
+                "NameToColor.js"
+            ],
+            "description": "Browser JavaScript library for deterministic hexadecimal colors from text and multilingual color names.",
+            "inLanguage": "en",
+            "mainEntity": {
+                "@id": "https://zonaro.github.io/NameToColor/#application"
+            }
+        }
+    </script>
+
+    <!-- ═══════════════════════════════════════════
+           Web Application Structured Data (Schema.org)
            ═══════════════════════════════════════════ -->
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
             "@type": "WebApplication",
+            "@id": "https://zonaro.github.io/NameToColor/#application",
             "name": "NameToColor",
             "url": "https://zonaro.github.io/NameToColor/",
-            "description": "Multilingual JavaScript library that converts English and translated color names to hexadecimal, generates deterministic semantic palettes for 69 curated themes, and supports optional data-only language packs.",
+            "description": "Zero-dependency browser JavaScript library that converts text and English or Portuguese color names to deterministic hexadecimal colors, semantic palettes, harmonies, and accessible color pairs.",
             "applicationCategory": "UtilityApplication",
+            "applicationSubCategory": "DeveloperApplication",
             "operatingSystem": "All (browser-based)",
             "browserRequirements": "Requires JavaScript",
+            "isAccessibleForFree": true,
+            "isPartOf": {
+                "@id": "https://zonaro.github.io/NameToColor/#website"
+            },
+            "downloadUrl": "https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js",
+            "isBasedOn": {
+                "@id": "https://zonaro.github.io/NameToColor/#source"
+            },
+            "sameAs": [
+                "https://github.com/zonaro/NameToColor"
+            ],
+            "featureList": [
+                "Deterministic text-to-HEX conversion",
+                "2,362 built-in English color names",
+                "Optional data-only language packs",
+                "Semantic theme palettes",
+                "Color harmonies and monochrome palettes",
+                "WCAG contrast and color-vision accessibility tools"
+            ],
             "offers": {
                 "@type": "Offer",
                 "price": "0",
@@ -100,8 +145,30 @@
                 "url": "https://github.com/zonaro"
             },
             "softwareVersion": "1.0",
-            "license": "https://github.com/zonaro/NameToColor/blob/main/LICENSE",
-            "keywords": "color converter, hex, javascript, multilingual color names, Portuguese color names, language packs, semantic color palette, theme palette generator, mood colors, WCAG"
+            "dateModified": "2026-07-23",
+            "license": "https://opensource.org/license/mit",
+            "keywords": "color converter, hex, JavaScript, multilingual color names, Portuguese color names, language packs, semantic color palette, theme palette generator, mood colors, WCAG"
+        }
+    </script>
+
+    <!-- ═══════════════════════════════════════════
+           Source Code Structured Data (Schema.org)
+           ═══════════════════════════════════════════ -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareSourceCode",
+            "@id": "https://zonaro.github.io/NameToColor/#source",
+            "name": "NameToColor source code",
+            "url": "https://github.com/zonaro/NameToColor",
+            "description": "Browser-only JavaScript source for NameToColor and its hashless hexadecimal-to-name database.",
+            "codeRepository": "https://github.com/zonaro/NameToColor",
+            "programmingLanguage": {
+                "@type": "ComputerLanguage",
+                "name": "JavaScript"
+            },
+            "runtimePlatform": "Web browser",
+            "license": "https://opensource.org/license/mit"
         }
     </script>
 
@@ -1503,6 +1570,24 @@ colorName(<span class="string">"#ff0000"</span>, <span class="string">"pt-BR"</s
                 loaded packs and <code>registerNameToColorLanguage(pack)</code> to add future data-only languages.
             </p>
 
+            <h4>Color pair format</h4>
+            <p>
+                The English database and every translation pack store names in direct hexadecimal-to-array pairs.
+                Keys contain exactly six hexadecimal digits and omit the leading <code>#</code>; public functions
+                still return standard <code>#rrggbb</code> colors.
+            </p>
+            <pre><span class="keyword">const</span> colorDatabase = {
+    <span class="string">"000000"</span>: [<span class="string">"Black"</span>],
+    <span class="string">"00FFFF"</span>: [<span class="string">"Aqua"</span>, <span class="string">"Cyan"</span>, <span class="string">"Spanish Sky Blue"</span>]
+};
+
+registerNameToColorLanguage({
+    locale: <span class="string">"example"</span>,
+    colorNames: {
+        <span class="string">"ff0000"</span>: [<span class="string">"Translated Red"</span>]
+    }
+});</pre>
+
             <!-- ─── generateColor ─── -->
             <h3 id="function-generateColor" data-api-function="generateColor"><span aria-hidden="true">🎯</span>
                 <code>generateColor(input)</code>
@@ -1543,7 +1628,7 @@ colorName(<span class="string">"#ff0000"</span>, <span class="string">"pt-BR"</s
                     </tr>
                     <tr>
                         <td class="mono"><strong>Numeric Index</strong></td>
-                        <td>Looks up by array index; if out of range, generates a deterministic color from the number
+                        <td>Looks up the hexadecimal key at that declaration-order position; if out of range, generates a deterministic color from the number
                         </td>
                         <td class="mono"><code>generateColor(1)</code> → <code>"#0048BA"</code></td>
                     </tr>
@@ -1609,8 +1694,8 @@ colorName(<span class="string">"#ff0000"</span>, <span class="string">"pt-BR"</s
             <ol>
                 <li><strong>HTML Element</strong> — extracts <code>textContent</code> and recurses</li>
                 <li><strong>Array</strong> — maps each element recursively</li>
-                <li><strong>Numeric Index</strong> — looks up in the internal color table; deterministic fallback if out
-                    of range</li>
+                <li><strong>Numeric Index</strong> — looks up the hexadecimal key at that declaration-order position;
+                    deterministic fallback if out of range</li>
                 <li><strong>Object</strong> — converts to string and recurses</li>
                 <li><strong>Empty input</strong> — returns a random color</li>
                 <li><strong>"random"</strong> — generates a random hex color</li>
@@ -1700,9 +1785,9 @@ generateReadableColor(<span class="string">"#85d8fd"</span>);
                     class="param">{ items, pageNumber, pageCount, totalItems }</span>
             </div>
             <p>
-                Returns the entire internal color database in a paginated format. Each color name
-                appears as its own item (entries with multiple names are flattened). Each item contains
-                <code>Color</code> (name) and <code>Hexadecimal</code>.
+                Returns the entire internal hexadecimal-to-names database in a paginated format. Each color name
+                appears as its own item (pairs with multiple names are flattened). Each item contains
+                <code>Color</code> (name) and <code>Hexadecimal</code>, with the regular leading <code>#</code>.
             </p>
 
             <h4>Parameters</h4>
@@ -1767,11 +1852,11 @@ generateReadableColor(<span class="string">"#85d8fd"</span>);
             <h4>Examples</h4>
             <pre><span class="comment">// Get all colors (no pagination)</span>
 listColors();
-<span class="comment">// → { items: [...], pageNumber: 1, pageCount: 1, totalItems: 2370 }</span>
+<span class="comment">// → { items: [...], pageNumber: 1, pageCount: 1, totalItems: 2362 }</span>
 
 <span class="comment">// Page 2 with 10 items per page</span>
 listColors(<span class="number">2</span>, <span class="number">10</span>);
-<span class="comment">// → { items: [...], pageNumber: 2, pageCount: 237, totalItems: 2370 }</span>
+<span class="comment">// → { items: [...], pageNumber: 2, pageCount: 237, totalItems: 2362 }</span>
 
 <span class="comment">// Useful for building color pickers, tables, or browsers</span>
 <span class="keyword">const</span> result = listColors(<span class="number">1</span>, <span class="number">20</span>);
@@ -2227,8 +2312,8 @@ isReadableForBlindness(<span class="string">"tomato"</span>, <span class="string
                     </tr>
                     <tr>
                         <td class="mono"><code>colorDatabase</code></td>
-                        <td>The full internal array of <code>{ Color: string[], Hexadecimal }</code> objects (each entry
-                            can store multiple names)</td>
+                        <td>The internal <code>{ "rrggbb": string[] }</code> map. Keys omit <code>#</code>, and each
+                            array can store multiple English names for the same color.</td>
                     </tr>
                     <tr>
                         <td class="mono"><code>isReadableForBlindness(colorA, colorB, type)</code></td>
@@ -2668,6 +2753,7 @@ mood(<span class="string">"invalid color"</span>);
         <!-- ═══════════ FOOTER ═══════════ -->
         <footer class="footer">
             <a href="https://github.com/zonaro/NameToColor" target="_blank" rel="noopener">NameToColor</a>
+            &middot; <a href="llms.txt" type="text/plain">LLM guide</a>
             &middot; Zero-dependency plugin &middot; Made with 💖 by RedClaw 🦞
         </footer>
 
@@ -3252,12 +3338,15 @@ mood(<span class="string">"invalid color"</span>);
                 var localizedSeen = {};
                 var languages = [];
                 try { languages = listNameToColorLanguages(); } catch (_) { }
-                for (var fi = 0; fi < colorDatabase.length; fi++) {
-                    var entry = colorDatabase[fi];
-                    for (var fj = 0; fj < entry.Color.length; fj++) {
+                var colorKeys = colorDatabaseKeys;
+                for (var fi = 0; fi < colorKeys.length; fi++) {
+                    var colorKey = colorKeys[fi];
+                    var hexadecimal = '#' + colorKey;
+                    var englishNames = colorDatabase[colorKey];
+                    for (var fj = 0; fj < englishNames.length; fj++) {
                         flatList.push({
-                            Color: entry.Color[fj],
-                            Hexadecimal: entry.Hexadecimal,
+                            Color: englishNames[fj],
+                            Hexadecimal: hexadecimal,
                             Language: 'en'
                         });
                     }
@@ -3267,14 +3356,14 @@ mood(<span class="string">"invalid color"</span>);
                             continue;
                         }
                         var localizedNames = getNameToColorLanguageColorNames(
-                            entry.Hexadecimal,
+                            colorKey,
                             languages[languageIndex].locale
                         );
                         if (!localizedNames) {
                             continue;
                         }
                         for (var localizedIndex = 0; localizedIndex < localizedNames.length; localizedIndex++) {
-                            var localizedKey = entry.Hexadecimal.toLowerCase() + '|' +
+                            var localizedKey = colorKey.toLowerCase() + '|' +
                                 normalizeBrowserSearchText(localizedNames[localizedIndex]);
                             if (localizedSeen[localizedKey]) {
                                 continue;
@@ -3282,7 +3371,7 @@ mood(<span class="string">"invalid color"</span>);
                             localizedSeen[localizedKey] = true;
                             flatList.push({
                                 Color: localizedNames[localizedIndex],
-                                Hexadecimal: entry.Hexadecimal,
+                                Hexadecimal: hexadecimal,
                                 Language: languages[languageIndex].locale
                             });
                         }

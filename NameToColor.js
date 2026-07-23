@@ -1,13643 +1,2572 @@
 /**
- * Internal list of known colors with name(s) and hexadecimal values.
- * Each entry's Color property is an array of one or more names for the same hex value.
- * @type {Array<{Color: string[], Hexadecimal: string}>}
+ * Internal color-name database.
+ * Each six-digit hexadecimal key omits the leading "#" and maps directly to
+ * an array containing every English name for that color.
+ * @type {Object<string, string[]>}
  */
-const colorDatabase = [
-    {
-        "Color": [
-            "Abbey"
-        ],
-        "Hexadecimal": "#4C4F56"
-    },
-    {
-        "Color": [
-            "Absolute Zero"
-        ],
-        "Hexadecimal": "#0048BA"
-    },
-    {
-        "Color": [
-            "Acadia"
-        ],
-        "Hexadecimal": "#1B1404"
-    },
-    {
-        "Color": [
-            "Acapulco"
-        ],
-        "Hexadecimal": "#7CB0A1"
-    },
-    {
-        "Color": [
-            "Acid Green"
-        ],
-        "Hexadecimal": "#B0BF1A"
-    },
-    {
-        "Color": [
-            "Aero"
-        ],
-        "Hexadecimal": "#7CB9E8"
-    },
-    {
-        "Color": [
-            "Aero Blue"
-        ],
-        "Hexadecimal": "#C9FFE5"
-    },
-    {
-        "Color": [
-            "Aero Blue 2"
-        ],
-        "Hexadecimal": "#C0E8D5"
-    },
-    {
-        "Color": [
-            "Affair"
-        ],
-        "Hexadecimal": "#714693"
-    },
-    {
-        "Color": [
-            "African Violet"
-        ],
-        "Hexadecimal": "#B284BE"
-    },
-    {
-        "Color": [
-            "Air Superiority Blue"
-        ],
-        "Hexadecimal": "#72A0C1"
-    },
-    {
-        "Color": [
-            "Akaroa"
-        ],
-        "Hexadecimal": "#D4C4A8"
-    },
-    {
-        "Color": [
-            "Alabaster"
-        ],
-        "Hexadecimal": "#FAFAFA"
-    },
-    {
-        "Color": [
-            "Alabaster 2"
-        ],
-        "Hexadecimal": "#EDEAE0"
-    },
-    {
-        "Color": [
-            "Albescent White"
-        ],
-        "Hexadecimal": "#F5E9D3"
-    },
-    {
-        "Color": [
-            "Algae Green"
-        ],
-        "Hexadecimal": "#93DFB8"
-    },
-    {
-        "Color": [
-            "Alice Blue"
-        ],
-        "Hexadecimal": "#F0F8FF"
-    },
-    {
-        "Color": [
-            "Alloy Orange"
-        ],
-        "Hexadecimal": "#C46210"
-    },
-    {
-        "Color": [
-            "Allports"
-        ],
-        "Hexadecimal": "#0076A3"
-    },
-    {
-        "Color": [
-            "Almond"
-        ],
-        "Hexadecimal": "#EED9C4"
-    },
-    {
-        "Color": [
-            "Almond 2"
-        ],
-        "Hexadecimal": "#EFDECD"
-    },
-    {
-        "Color": [
-            "Almond Frost"
-        ],
-        "Hexadecimal": "#907B71"
-    },
-    {
-        "Color": [
-            "Alpine"
-        ],
-        "Hexadecimal": "#AF8F2C"
-    },
-    {
-        "Color": [
-            "Alto"
-        ],
-        "Hexadecimal": "#DBDBDB"
-    },
-    {
-        "Color": [
-            "Aluminium"
-        ],
-        "Hexadecimal": "#A9ACB6"
-    },
-    {
-        "Color": [
-            "Amaranth"
-        ],
-        "Hexadecimal": "#E52B50"
-    },
-    {
-        "Color": [
-            "Amaranth (M&P)"
-        ],
-        "Hexadecimal": "#9F2B68"
-    },
-    {
-        "Color": [
-            "Amaranth Pink"
-        ],
-        "Hexadecimal": "#F19CBB"
-    },
-    {
-        "Color": [
-            "Amaranth Purple"
-        ],
-        "Hexadecimal": "#AB274F"
-    },
-    {
-        "Color": [
-            "Amaranth Red"
-        ],
-        "Hexadecimal": "#D3212D"
-    },
-    {
-        "Color": [
-            "Amazon"
-        ],
-        "Hexadecimal": "#3B7A57"
-    },
-    {
-        "Color": [
-            "Amber"
-        ],
-        "Hexadecimal": "#FFBF00"
-    },
-    {
-        "Color": [
-            "Amber (SAE/ECE)"
-        ],
-        "Hexadecimal": "#FF7E00"
-    },
-    {
-        "Color": [
-            "Americano"
-        ],
-        "Hexadecimal": "#87756E"
-    },
-    {
-        "Color": [
-            "Amethyst"
-        ],
-        "Hexadecimal": "#9966CC"
-    },
-    {
-        "Color": [
-            "Amethyst Smoke"
-        ],
-        "Hexadecimal": "#A397B4"
-    },
-    {
-        "Color": [
-            "Amour"
-        ],
-        "Hexadecimal": "#F9EAF3"
-    },
-    {
-        "Color": [
-            "Amulet"
-        ],
-        "Hexadecimal": "#7B9F80"
-    },
-    {
-        "Color": [
-            "Anakiwa"
-        ],
-        "Hexadecimal": "#9DE5FF"
-    },
-    {
-        "Color": [
-            "Android Green"
-        ],
-        "Hexadecimal": "#3DDC84"
-    },
-    {
-        "Color": [
-            "Antique Brass"
-        ],
-        "Hexadecimal": "#CD9575"
-    },
-    {
-        "Color": [
-            "Antique Brass 2"
-        ],
-        "Hexadecimal": "#C88A65"
-    },
-    {
-        "Color": [
-            "Antique Bronze"
-        ],
-        "Hexadecimal": "#704A07"
-    },
-    {
-        "Color": [
-            "Antique Bronze 2"
-        ],
-        "Hexadecimal": "#665D1E"
-    },
-    {
-        "Color": [
-            "Antique Fuchsia"
-        ],
-        "Hexadecimal": "#915C83"
-    },
-    {
-        "Color": [
-            "Antique Ruby"
-        ],
-        "Hexadecimal": "#841B2D"
-    },
-    {
-        "Color": [
-            "Antique White"
-        ],
-        "Hexadecimal": "#FAEBD7"
-    },
-    {
-        "Color": [
-            "Anzac"
-        ],
-        "Hexadecimal": "#E0B646"
-    },
-    {
-        "Color": [
-            "Ao"
-        ],
-        "Hexadecimal": "#008000"
-    },
-    {
-        "Color": [
-            "Apache"
-        ],
-        "Hexadecimal": "#DFBE6F"
-    },
-    {
-        "Color": [
-            "Apple"
-        ],
-        "Hexadecimal": "#4FA83D"
-    },
-    {
-        "Color": [
-            "Apple Blossom"
-        ],
-        "Hexadecimal": "#AF4D43"
-    },
-    {
-        "Color": [
-            "Apple Green"
-        ],
-        "Hexadecimal": "#8DB600"
-    },
-    {
-        "Color": [
-            "Apple Green 2"
-        ],
-        "Hexadecimal": "#E2F3EC"
-    },
-    {
-        "Color": [
-            "Apricot"
-        ],
-        "Hexadecimal": "#EB9373"
-    },
-    {
-        "Color": [
-            "Apricot Peach"
-        ],
-        "Hexadecimal": "#FBCEB1"
-    },
-    {
-        "Color": [
-            "Apricot White"
-        ],
-        "Hexadecimal": "#FFFEEC"
-    },
-    {
-        "Color": [
-            "Aqua",
-            "Cyan",
-            "Spanish Sky Blue"
-        ],
-        "Hexadecimal": "#00FFFF"
-    },
-    {
-        "Color": [
-            "Aqua Deep"
-        ],
-        "Hexadecimal": "#014B43"
-    },
-    {
-        "Color": [
-            "Aqua Haze"
-        ],
-        "Hexadecimal": "#EDF5F5"
-    },
-    {
-        "Color": [
-            "Aqua Island"
-        ],
-        "Hexadecimal": "#A1DAD7"
-    },
-    {
-        "Color": [
-            "Aqua Spring"
-        ],
-        "Hexadecimal": "#EAF9F5"
-    },
-    {
-        "Color": [
-            "Aqua Squeeze"
-        ],
-        "Hexadecimal": "#E8F5F2"
-    },
-    {
-        "Color": [
-            "Aquamarine"
-        ],
-        "Hexadecimal": "#7FFFD4"
-    },
-    {
-        "Color": [
-            "Aquamarine Blue"
-        ],
-        "Hexadecimal": "#71D9E2"
-    },
-    {
-        "Color": [
-            "Arapawa"
-        ],
-        "Hexadecimal": "#110C6C"
-    },
-    {
-        "Color": [
-            "Arctic Lime"
-        ],
-        "Hexadecimal": "#D0FF14"
-    },
-    {
-        "Color": [
-            "Armadillo"
-        ],
-        "Hexadecimal": "#433E37"
-    },
-    {
-        "Color": [
-            "Army Green"
-        ],
-        "Hexadecimal": "#4B5320"
-    },
-    {
-        "Color": [
-            "Arrowtown"
-        ],
-        "Hexadecimal": "#948771"
-    },
-    {
-        "Color": [
-            "Artichoke"
-        ],
-        "Hexadecimal": "#8F9779"
-    },
-    {
-        "Color": [
-            "Arylide Yellow",
-            "Hansa Yellow"
-        ],
-        "Hexadecimal": "#E9D66B"
-    },
-    {
-        "Color": [
-            "Ash"
-        ],
-        "Hexadecimal": "#C6C3B5"
-    },
-    {
-        "Color": [
-            "Ash Gray"
-        ],
-        "Hexadecimal": "#B2BEB5"
-    },
-    {
-        "Color": [
-            "Asparagus"
-        ],
-        "Hexadecimal": "#87A96B"
-    },
-    {
-        "Color": [
-            "Asparagus 2"
-        ],
-        "Hexadecimal": "#7BA05B"
-    },
-    {
-        "Color": [
-            "Asphalt"
-        ],
-        "Hexadecimal": "#130A06"
-    },
-    {
-        "Color": [
-            "Astra"
-        ],
-        "Hexadecimal": "#FAEAB9"
-    },
-    {
-        "Color": [
-            "Astral"
-        ],
-        "Hexadecimal": "#327DA0"
-    },
-    {
-        "Color": [
-            "Astronaut"
-        ],
-        "Hexadecimal": "#283A77"
-    },
-    {
-        "Color": [
-            "Astronaut Blue"
-        ],
-        "Hexadecimal": "#013E62"
-    },
-    {
-        "Color": [
-            "Athens Gray"
-        ],
-        "Hexadecimal": "#EEF0F3"
-    },
-    {
-        "Color": [
-            "Aths Special"
-        ],
-        "Hexadecimal": "#ECEBCE"
-    },
-    {
-        "Color": [
-            "Atlantis"
-        ],
-        "Hexadecimal": "#97CD2D"
-    },
-    {
-        "Color": [
-            "Atoll"
-        ],
-        "Hexadecimal": "#0A6F75"
-    },
-    {
-        "Color": [
-            "Atomic Tangerine"
-        ],
-        "Hexadecimal": "#FF9966"
-    },
-    {
-        "Color": [
-            "Au Chico"
-        ],
-        "Hexadecimal": "#97605D"
-    },
-    {
-        "Color": [
-            "Aubergine"
-        ],
-        "Hexadecimal": "#3B0910"
-    },
-    {
-        "Color": [
-            "Auburn"
-        ],
-        "Hexadecimal": "#A52A2A"
-    },
-    {
-        "Color": [
-            "Aureolin"
-        ],
-        "Hexadecimal": "#FDEE00"
-    },
-    {
-        "Color": [
-            "Australian Mint"
-        ],
-        "Hexadecimal": "#F5FFBE"
-    },
-    {
-        "Color": [
-            "Avocado"
-        ],
-        "Hexadecimal": "#568203"
-    },
-    {
-        "Color": [
-            "Avocado 2"
-        ],
-        "Hexadecimal": "#888D65"
-    },
-    {
-        "Color": [
-            "Axolotl"
-        ],
-        "Hexadecimal": "#4E6649"
-    },
-    {
-        "Color": [
-            "Azalea"
-        ],
-        "Hexadecimal": "#F7C8DA"
-    },
-    {
-        "Color": [
-            "Aztec"
-        ],
-        "Hexadecimal": "#0D1C19"
-    },
-    {
-        "Color": [
-            "Azure"
-        ],
-        "Hexadecimal": "#315BA1"
-    },
-    {
-        "Color": [
-            "Azure (X11/Web Color)"
-        ],
-        "Hexadecimal": "#F0FFFF"
-    },
-    {
-        "Color": [
-            "Azure Radiance"
-        ],
-        "Hexadecimal": "#007FFF"
-    },
-    {
-        "Color": [
-            "B'dazzled Blue"
-        ],
-        "Hexadecimal": "#2E5894"
-    },
-    {
-        "Color": [
-            "Baby Blue"
-        ],
-        "Hexadecimal": "#89CFF0"
-    },
-    {
-        "Color": [
-            "Baby Blue Eyes"
-        ],
-        "Hexadecimal": "#A1CAF1"
-    },
-    {
-        "Color": [
-            "Baby Pink",
-            "Tea Rose"
-        ],
-        "Hexadecimal": "#F4C2C2"
-    },
-    {
-        "Color": [
-            "Baby Powder"
-        ],
-        "Hexadecimal": "#FEFEFA"
-    },
-    {
-        "Color": [
-            "Bahama Blue"
-        ],
-        "Hexadecimal": "#026395"
-    },
-    {
-        "Color": [
-            "Bahia"
-        ],
-        "Hexadecimal": "#A5CB0C"
-    },
-    {
-        "Color": [
-            "Baja White"
-        ],
-        "Hexadecimal": "#FFF8D1"
-    },
-    {
-        "Color": [
-            "Baker-Miller Pink",
-            "Schauss Pink"
-        ],
-        "Hexadecimal": "#FF91AF"
-    },
-    {
-        "Color": [
-            "Bali Hai"
-        ],
-        "Hexadecimal": "#859FAF"
-    },
-    {
-        "Color": [
-            "Baltic Sea"
-        ],
-        "Hexadecimal": "#2A2630"
-    },
-    {
-        "Color": [
-            "Bamboo"
-        ],
-        "Hexadecimal": "#DA6304"
-    },
-    {
-        "Color": [
-            "Banana Mania"
-        ],
-        "Hexadecimal": "#FAE7B5"
-    },
-    {
-        "Color": [
-            "Banana Mania 2"
-        ],
-        "Hexadecimal": "#FBE7B2"
-    },
-    {
-        "Color": [
-            "Bandicoot"
-        ],
-        "Hexadecimal": "#858470"
-    },
-    {
-        "Color": [
-            "Barberry"
-        ],
-        "Hexadecimal": "#DED717"
-    },
-    {
-        "Color": [
-            "Barbie Pink"
-        ],
-        "Hexadecimal": "#DA1884"
-    },
-    {
-        "Color": [
-            "Barley Corn"
-        ],
-        "Hexadecimal": "#A68B5B"
-    },
-    {
-        "Color": [
-            "Barley White"
-        ],
-        "Hexadecimal": "#FFF4CE"
-    },
-    {
-        "Color": [
-            "Barn Red"
-        ],
-        "Hexadecimal": "#7C0A02"
-    },
-    {
-        "Color": [
-            "Barossa"
-        ],
-        "Hexadecimal": "#44012D"
-    },
-    {
-        "Color": [
-            "Bastille"
-        ],
-        "Hexadecimal": "#292130"
-    },
-    {
-        "Color": [
-            "Battleship Gray"
-        ],
-        "Hexadecimal": "#828F72"
-    },
-    {
-        "Color": [
-            "Battleship Grey",
-            "Old Silver"
-        ],
-        "Hexadecimal": "#848482"
-    },
-    {
-        "Color": [
-            "Bay Leaf"
-        ],
-        "Hexadecimal": "#7DA98D"
-    },
-    {
-        "Color": [
-            "Bay Of Many"
-        ],
-        "Hexadecimal": "#273A81"
-    },
-    {
-        "Color": [
-            "Bazaar"
-        ],
-        "Hexadecimal": "#98777B"
-    },
-    {
-        "Color": [
-            "Bean"
-        ],
-        "Hexadecimal": "#3D0C02"
-    },
-    {
-        "Color": [
-            "Beau Blue",
-            "Pale Aqua"
-        ],
-        "Hexadecimal": "#BCD4E6"
-    },
-    {
-        "Color": [
-            "Beauty Bush"
-        ],
-        "Hexadecimal": "#EEC1BE"
-    },
-    {
-        "Color": [
-            "Beaver"
-        ],
-        "Hexadecimal": "#9F8170"
-    },
-    {
-        "Color": [
-            "Beaver 2"
-        ],
-        "Hexadecimal": "#926F5B"
-    },
-    {
-        "Color": [
-            "Beeswax"
-        ],
-        "Hexadecimal": "#FEF2C7"
-    },
-    {
-        "Color": [
-            "Beige"
-        ],
-        "Hexadecimal": "#F5F5DC"
-    },
-    {
-        "Color": [
-            "Bermuda"
-        ],
-        "Hexadecimal": "#7DD8C6"
-    },
-    {
-        "Color": [
-            "Bermuda Gray"
-        ],
-        "Hexadecimal": "#6B8BA2"
-    },
-    {
-        "Color": [
-            "Beryl Green"
-        ],
-        "Hexadecimal": "#DEE5C0"
-    },
-    {
-        "Color": [
-            "Bianca"
-        ],
-        "Hexadecimal": "#FCFBF3"
-    },
-    {
-        "Color": [
-            "Big Dip O’Ruby"
-        ],
-        "Hexadecimal": "#9C2542"
-    },
-    {
-        "Color": [
-            "Big Stone"
-        ],
-        "Hexadecimal": "#162A40"
-    },
-    {
-        "Color": [
-            "Bilbao"
-        ],
-        "Hexadecimal": "#327C14"
-    },
-    {
-        "Color": [
-            "Biloba Flower"
-        ],
-        "Hexadecimal": "#B2A1EA"
-    },
-    {
-        "Color": [
-            "Birch"
-        ],
-        "Hexadecimal": "#373021"
-    },
-    {
-        "Color": [
-            "Bird Flower"
-        ],
-        "Hexadecimal": "#D4CD16"
-    },
-    {
-        "Color": [
-            "Biscay"
-        ],
-        "Hexadecimal": "#1B3162"
-    },
-    {
-        "Color": [
-            "Bismark"
-        ],
-        "Hexadecimal": "#497183"
-    },
-    {
-        "Color": [
-            "Bison Hide"
-        ],
-        "Hexadecimal": "#C1B7A4"
-    },
-    {
-        "Color": [
-            "Bisque"
-        ],
-        "Hexadecimal": "#FFE4C4"
-    },
-    {
-        "Color": [
-            "Bistre"
-        ],
-        "Hexadecimal": "#3D2B1F"
-    },
-    {
-        "Color": [
-            "Bistre Brown",
-            "Drab",
-            "Mode Beige"
-        ],
-        "Hexadecimal": "#967117"
-    },
-    {
-        "Color": [
-            "Bitter"
-        ],
-        "Hexadecimal": "#868974"
-    },
-    {
-        "Color": [
-            "Bitter Lemon"
-        ],
-        "Hexadecimal": "#CAE00D"
-    },
-    {
-        "Color": [
-            "Bitter Lime",
-            "Lime (Color Wheel)",
-            "Lime"
-        ],
-        "Hexadecimal": "#BFFF00"
-    },
-    {
-        "Color": [
-            "Bittersweet"
-        ],
-        "Hexadecimal": "#FE6F5E"
-    },
-    {
-        "Color": [
-            "Bittersweet Shimmer"
-        ],
-        "Hexadecimal": "#BF4F51"
-    },
-    {
-        "Color": [
-            "Bizarre"
-        ],
-        "Hexadecimal": "#EEDEDA"
-    },
-    {
-        "Color": [
-            "Black"
-        ],
-        "Hexadecimal": "#000000"
-    },
-    {
-        "Color": [
-            "Black Bean"
-        ],
-        "Hexadecimal": "#081910"
-    },
-    {
-        "Color": [
-            "Black Chocolate"
-        ],
-        "Hexadecimal": "#1B1811"
-    },
-    {
-        "Color": [
-            "Black Coffee"
-        ],
-        "Hexadecimal": "#3B2F2F"
-    },
-    {
-        "Color": [
-            "Black Coral"
-        ],
-        "Hexadecimal": "#54626F"
-    },
-    {
-        "Color": [
-            "Black Forest"
-        ],
-        "Hexadecimal": "#0B1304"
-    },
-    {
-        "Color": [
-            "Black Haze"
-        ],
-        "Hexadecimal": "#F6F7F7"
-    },
-    {
-        "Color": [
-            "Black Marlin"
-        ],
-        "Hexadecimal": "#3E2C1C"
-    },
-    {
-        "Color": [
-            "Black Olive"
-        ],
-        "Hexadecimal": "#242E16"
-    },
-    {
-        "Color": [
-            "Black Olive 2"
-        ],
-        "Hexadecimal": "#3B3C36"
-    },
-    {
-        "Color": [
-            "Black Pearl"
-        ],
-        "Hexadecimal": "#041322"
-    },
-    {
-        "Color": [
-            "Black Rock"
-        ],
-        "Hexadecimal": "#0D0332"
-    },
-    {
-        "Color": [
-            "Black Rose"
-        ],
-        "Hexadecimal": "#67032D"
-    },
-    {
-        "Color": [
-            "Black Russian"
-        ],
-        "Hexadecimal": "#0A001C"
-    },
-    {
-        "Color": [
-            "Black Shadows"
-        ],
-        "Hexadecimal": "#BFAFB2"
-    },
-    {
-        "Color": [
-            "Black Squeeze"
-        ],
-        "Hexadecimal": "#F2FAFA"
-    },
-    {
-        "Color": [
-            "Black White"
-        ],
-        "Hexadecimal": "#FFFEF6"
-    },
-    {
-        "Color": [
-            "Blackberry"
-        ],
-        "Hexadecimal": "#4D0135"
-    },
-    {
-        "Color": [
-            "Blackcurrant"
-        ],
-        "Hexadecimal": "#32293A"
-    },
-    {
-        "Color": [
-            "Blanched Almond"
-        ],
-        "Hexadecimal": "#FFEBCD"
-    },
-    {
-        "Color": [
-            "Blast-Off Bronze"
-        ],
-        "Hexadecimal": "#A57164"
-    },
-    {
-        "Color": [
-            "Blaze Orange"
-        ],
-        "Hexadecimal": "#FF6600"
-    },
-    {
-        "Color": [
-            "Bleach White"
-        ],
-        "Hexadecimal": "#FEF3D8"
-    },
-    {
-        "Color": [
-            "Bleached Cedar"
-        ],
-        "Hexadecimal": "#2C2133"
-    },
-    {
-        "Color": [
-            "Bleu De France"
-        ],
-        "Hexadecimal": "#318CE7"
-    },
-    {
-        "Color": [
-            "Blizzard Blue"
-        ],
-        "Hexadecimal": "#A3E3ED"
-    },
-    {
-        "Color": [
-            "Blizzard Blue 2"
-        ],
-        "Hexadecimal": "#ACE5EE"
-    },
-    {
-        "Color": [
-            "Blond"
-        ],
-        "Hexadecimal": "#FAF0BE"
-    },
-    {
-        "Color": [
-            "Blood Red"
-        ],
-        "Hexadecimal": "#660000"
-    },
-    {
-        "Color": [
-            "Blossom"
-        ],
-        "Hexadecimal": "#DCB4BC"
-    },
-    {
-        "Color": [
-            "Blue"
-        ],
-        "Hexadecimal": "#0000FF"
-    },
-    {
-        "Color": [
-            "Blue (Crayola)"
-        ],
-        "Hexadecimal": "#1F75FE"
-    },
-    {
-        "Color": [
-            "Blue (MUNSELL)"
-        ],
-        "Hexadecimal": "#0093AF"
-    },
-    {
-        "Color": [
-            "Blue (NCS)"
-        ],
-        "Hexadecimal": "#0087BD"
-    },
-    {
-        "Color": [
-            "Blue (PANTONE)"
-        ],
-        "Hexadecimal": "#0018A8"
-    },
-    {
-        "Color": [
-            "Blue (Pigment)"
-        ],
-        "Hexadecimal": "#333399"
-    },
-    {
-        "Color": [
-            "Blue (RYB)"
-        ],
-        "Hexadecimal": "#0247FE"
-    },
-    {
-        "Color": [
-            "Blue Bayoux"
-        ],
-        "Hexadecimal": "#496679"
-    },
-    {
-        "Color": [
-            "Blue Bell"
-        ],
-        "Hexadecimal": "#A2A2D0"
-    },
-    {
-        "Color": [
-            "Blue Bell 2"
-        ],
-        "Hexadecimal": "#9999CC"
-    },
-    {
-        "Color": [
-            "Blue Chalk"
-        ],
-        "Hexadecimal": "#F1E9FF"
-    },
-    {
-        "Color": [
-            "Blue Charcoal"
-        ],
-        "Hexadecimal": "#010D1A"
-    },
-    {
-        "Color": [
-            "Blue Chill"
-        ],
-        "Hexadecimal": "#0C8990"
-    },
-    {
-        "Color": [
-            "Blue Diamond"
-        ],
-        "Hexadecimal": "#380474"
-    },
-    {
-        "Color": [
-            "Blue Dianne"
-        ],
-        "Hexadecimal": "#204852"
-    },
-    {
-        "Color": [
-            "Blue Gem"
-        ],
-        "Hexadecimal": "#2C0E8C"
-    },
-    {
-        "Color": [
-            "Blue Haze"
-        ],
-        "Hexadecimal": "#BFBED8"
-    },
-    {
-        "Color": [
-            "Blue Jeans"
-        ],
-        "Hexadecimal": "#5DADEC"
-    },
-    {
-        "Color": [
-            "Blue Lagoon"
-        ],
-        "Hexadecimal": "#017987"
-    },
-    {
-        "Color": [
-            "Blue Marguerite"
-        ],
-        "Hexadecimal": "#7666C6"
-    },
-    {
-        "Color": [
-            "Blue Ribbon"
-        ],
-        "Hexadecimal": "#0066FF"
-    },
-    {
-        "Color": [
-            "Blue Romance"
-        ],
-        "Hexadecimal": "#D2F6DE"
-    },
-    {
-        "Color": [
-            "Blue Sapphire"
-        ],
-        "Hexadecimal": "#126180"
-    },
-    {
-        "Color": [
-            "Blue Smoke"
-        ],
-        "Hexadecimal": "#748881"
-    },
-    {
-        "Color": [
-            "Blue Stone"
-        ],
-        "Hexadecimal": "#016162"
-    },
-    {
-        "Color": [
-            "Blue Violet"
-        ],
-        "Hexadecimal": "#8A2BE2"
-    },
-    {
-        "Color": [
-            "Blue Violet 2"
-        ],
-        "Hexadecimal": "#6456B7"
-    },
-    {
-        "Color": [
-            "Blue Whale"
-        ],
-        "Hexadecimal": "#042E4C"
-    },
-    {
-        "Color": [
-            "Blue Yonder"
-        ],
-        "Hexadecimal": "#5072A7"
-    },
-    {
-        "Color": [
-            "Blue Zodiac"
-        ],
-        "Hexadecimal": "#13264D"
-    },
-    {
-        "Color": [
-            "Blue-Gray",
-            "Livid"
-        ],
-        "Hexadecimal": "#6699CC"
-    },
-    {
-        "Color": [
-            "Blue-Green"
-        ],
-        "Hexadecimal": "#0D98BA"
-    },
-    {
-        "Color": [
-            "Blue-Green (Color Wheel)"
-        ],
-        "Hexadecimal": "#064E40"
-    },
-    {
-        "Color": [
-            "Blue-Violet (Color Wheel)"
-        ],
-        "Hexadecimal": "#4D1A7F"
-    },
-    {
-        "Color": [
-            "Blue-Violet (Crayola)"
-        ],
-        "Hexadecimal": "#7366BD"
-    },
-    {
-        "Color": [
-            "Bluetiful"
-        ],
-        "Hexadecimal": "#3C69E7"
-    },
-    {
-        "Color": [
-            "Blumine"
-        ],
-        "Hexadecimal": "#18587A"
-    },
-    {
-        "Color": [
-            "Blush"
-        ],
-        "Hexadecimal": "#DE5D83"
-    },
-    {
-        "Color": [
-            "Blush 2"
-        ],
-        "Hexadecimal": "#B44668"
-    },
-    {
-        "Color": [
-            "Bole"
-        ],
-        "Hexadecimal": "#79443B"
-    },
-    {
-        "Color": [
-            "Bombay"
-        ],
-        "Hexadecimal": "#AFB1B8"
-    },
-    {
-        "Color": [
-            "Bon Jour"
-        ],
-        "Hexadecimal": "#E5E0E1"
-    },
-    {
-        "Color": [
-            "Bondi Blue"
-        ],
-        "Hexadecimal": "#0095B6"
-    },
-    {
-        "Color": [
-            "Bone"
-        ],
-        "Hexadecimal": "#E3DAC9"
-    },
-    {
-        "Color": [
-            "Bone 2"
-        ],
-        "Hexadecimal": "#E4D1C0"
-    },
-    {
-        "Color": [
-            "Bordeaux"
-        ],
-        "Hexadecimal": "#5C0120"
-    },
-    {
-        "Color": [
-            "Bossanova"
-        ],
-        "Hexadecimal": "#4E2A5A"
-    },
-    {
-        "Color": [
-            "Boston Blue"
-        ],
-        "Hexadecimal": "#3B91B4"
-    },
-    {
-        "Color": [
-            "Botticelli"
-        ],
-        "Hexadecimal": "#C7DDE5"
-    },
-    {
-        "Color": [
-            "Bottle Green"
-        ],
-        "Hexadecimal": "#006A4E"
-    },
-    {
-        "Color": [
-            "Bottle Green 2"
-        ],
-        "Hexadecimal": "#093624"
-    },
-    {
-        "Color": [
-            "Boulder"
-        ],
-        "Hexadecimal": "#7A7A7A"
-    },
-    {
-        "Color": [
-            "Bouquet"
-        ],
-        "Hexadecimal": "#AE809E"
-    },
-    {
-        "Color": [
-            "Bourbon"
-        ],
-        "Hexadecimal": "#BA6F1E"
-    },
-    {
-        "Color": [
-            "Bracken"
-        ],
-        "Hexadecimal": "#4A2A04"
-    },
-    {
-        "Color": [
-            "Brandy"
-        ],
-        "Hexadecimal": "#DEC196"
-    },
-    {
-        "Color": [
-            "Brandy 2"
-        ],
-        "Hexadecimal": "#87413F"
-    },
-    {
-        "Color": [
-            "Brandy Punch"
-        ],
-        "Hexadecimal": "#CD8429"
-    },
-    {
-        "Color": [
-            "Brandy Rose"
-        ],
-        "Hexadecimal": "#BB8983"
-    },
-    {
-        "Color": [
-            "Breaker Bay"
-        ],
-        "Hexadecimal": "#5DA19F"
-    },
-    {
-        "Color": [
-            "Brick Red"
-        ],
-        "Hexadecimal": "#C62D42"
-    },
-    {
-        "Color": [
-            "Brick Red 2"
-        ],
-        "Hexadecimal": "#CB4154"
-    },
-    {
-        "Color": [
-            "Bridal Heath"
-        ],
-        "Hexadecimal": "#FFFAF4"
-    },
-    {
-        "Color": [
-            "Bridesmaid"
-        ],
-        "Hexadecimal": "#FEF0EC"
-    },
-    {
-        "Color": [
-            "Bright Gray"
-        ],
-        "Hexadecimal": "#3C4151"
-    },
-    {
-        "Color": [
-            "Bright Green"
-        ],
-        "Hexadecimal": "#66FF00"
-    },
-    {
-        "Color": [
-            "Bright Lilac"
-        ],
-        "Hexadecimal": "#D891EF"
-    },
-    {
-        "Color": [
-            "Bright Maroon",
-            "Maroon (Crayola)",
-            "Maroon Flush"
-        ],
-        "Hexadecimal": "#C32148"
-    },
-    {
-        "Color": [
-            "Bright Navy Blue",
-            "Navy Blue (Crayola)"
-        ],
-        "Hexadecimal": "#1974D2"
-    },
-    {
-        "Color": [
-            "Bright Red"
-        ],
-        "Hexadecimal": "#B10000"
-    },
-    {
-        "Color": [
-            "Bright Sun"
-        ],
-        "Hexadecimal": "#FED33C"
-    },
-    {
-        "Color": [
-            "Bright Turquoise"
-        ],
-        "Hexadecimal": "#08E8DE"
-    },
-    {
-        "Color": [
-            "Bright Yellow (Crayola)"
-        ],
-        "Hexadecimal": "#FFAA1D"
-    },
-    {
-        "Color": [
-            "Brilliant Rose"
-        ],
-        "Hexadecimal": "#FF55A3"
-    },
-    {
-        "Color": [
-            "Brink Pink"
-        ],
-        "Hexadecimal": "#FB607F"
-    },
-    {
-        "Color": [
-            "British Racing Green"
-        ],
-        "Hexadecimal": "#004225"
-    },
-    {
-        "Color": [
-            "Bronco"
-        ],
-        "Hexadecimal": "#ABA196"
-    },
-    {
-        "Color": [
-            "Bronze"
-        ],
-        "Hexadecimal": "#CD7F32"
-    },
-    {
-        "Color": [
-            "Bronze 2"
-        ],
-        "Hexadecimal": "#3F2109"
-    },
-    {
-        "Color": [
-            "Bronze Olive"
-        ],
-        "Hexadecimal": "#4E420C"
-    },
-    {
-        "Color": [
-            "Bronzetone"
-        ],
-        "Hexadecimal": "#4D400F"
-    },
-    {
-        "Color": [
-            "Broom"
-        ],
-        "Hexadecimal": "#FFEC13"
-    },
-    {
-        "Color": [
-            "Brown"
-        ],
-        "Hexadecimal": "#964B00"
-    },
-    {
-        "Color": [
-            "Brown 2"
-        ],
-        "Hexadecimal": "#88540B"
-    },
-    {
-        "Color": [
-            "Brown Bramble"
-        ],
-        "Hexadecimal": "#592804"
-    },
-    {
-        "Color": [
-            "Brown Derby"
-        ],
-        "Hexadecimal": "#492615"
-    },
-    {
-        "Color": [
-            "Brown Pod"
-        ],
-        "Hexadecimal": "#401801"
-    },
-    {
-        "Color": [
-            "Brown Rust"
-        ],
-        "Hexadecimal": "#AF593E"
-    },
-    {
-        "Color": [
-            "Brown Sugar"
-        ],
-        "Hexadecimal": "#AF6E4D"
-    },
-    {
-        "Color": [
-            "Brown Tumbleweed"
-        ],
-        "Hexadecimal": "#37290E"
-    },
-    {
-        "Color": [
-            "Brunswick Green",
-            "English Green"
-        ],
-        "Hexadecimal": "#1B4D3E"
-    },
-    {
-        "Color": [
-            "Bubbles"
-        ],
-        "Hexadecimal": "#E7FEFF"
-    },
-    {
-        "Color": [
-            "Buccaneer"
-        ],
-        "Hexadecimal": "#622F30"
-    },
-    {
-        "Color": [
-            "Bud"
-        ],
-        "Hexadecimal": "#A8AE9C"
-    },
-    {
-        "Color": [
-            "Bud Green"
-        ],
-        "Hexadecimal": "#7BB661"
-    },
-    {
-        "Color": [
-            "Buddha Gold"
-        ],
-        "Hexadecimal": "#C1A004"
-    },
-    {
-        "Color": [
-            "Buff"
-        ],
-        "Hexadecimal": "#FFC680"
-    },
-    {
-        "Color": [
-            "Buff 2"
-        ],
-        "Hexadecimal": "#F0DC82"
-    },
-    {
-        "Color": [
-            "Bulgarian Rose"
-        ],
-        "Hexadecimal": "#480607"
-    },
-    {
-        "Color": [
-            "Bull Shot"
-        ],
-        "Hexadecimal": "#864D1E"
-    },
-    {
-        "Color": [
-            "Bunker"
-        ],
-        "Hexadecimal": "#0D1117"
-    },
-    {
-        "Color": [
-            "Bunting"
-        ],
-        "Hexadecimal": "#151F4C"
-    },
-    {
-        "Color": [
-            "Burgundy"
-        ],
-        "Hexadecimal": "#900020"
-    },
-    {
-        "Color": [
-            "Burgundy 2"
-        ],
-        "Hexadecimal": "#800020"
-    },
-    {
-        "Color": [
-            "Burlywood"
-        ],
-        "Hexadecimal": "#DEB887"
-    },
-    {
-        "Color": [
-            "Burnham"
-        ],
-        "Hexadecimal": "#002E20"
-    },
-    {
-        "Color": [
-            "Burning Orange"
-        ],
-        "Hexadecimal": "#FF7034"
-    },
-    {
-        "Color": [
-            "Burning Sand"
-        ],
-        "Hexadecimal": "#D99376"
-    },
-    {
-        "Color": [
-            "Burnished Brown"
-        ],
-        "Hexadecimal": "#A17A74"
-    },
-    {
-        "Color": [
-            "Burnt Maroon"
-        ],
-        "Hexadecimal": "#420303"
-    },
-    {
-        "Color": [
-            "Burnt Orange"
-        ],
-        "Hexadecimal": "#CC5500"
-    },
-    {
-        "Color": [
-            "Burnt Sienna"
-        ],
-        "Hexadecimal": "#E97451"
-    },
-    {
-        "Color": [
-            "Burnt Umber"
-        ],
-        "Hexadecimal": "#8A3324"
-    },
-    {
-        "Color": [
-            "Bush"
-        ],
-        "Hexadecimal": "#0D2E1C"
-    },
-    {
-        "Color": [
-            "Buttercup"
-        ],
-        "Hexadecimal": "#F3AD16"
-    },
-    {
-        "Color": [
-            "Buttered Rum"
-        ],
-        "Hexadecimal": "#A1750D"
-    },
-    {
-        "Color": [
-            "Butterfly Bush"
-        ],
-        "Hexadecimal": "#624E9A"
-    },
-    {
-        "Color": [
-            "Buttermilk"
-        ],
-        "Hexadecimal": "#FFF1B5"
-    },
-    {
-        "Color": [
-            "Buttery White"
-        ],
-        "Hexadecimal": "#FFFCEA"
-    },
-    {
-        "Color": [
-            "Byzantine"
-        ],
-        "Hexadecimal": "#BD33A4"
-    },
-    {
-        "Color": [
-            "Byzantium"
-        ],
-        "Hexadecimal": "#702963"
-    },
-    {
-        "Color": [
-            "Cab Sav"
-        ],
-        "Hexadecimal": "#4D0A18"
-    },
-    {
-        "Color": [
-            "Cabaret"
-        ],
-        "Hexadecimal": "#D94972"
-    },
-    {
-        "Color": [
-            "Cabbage Pont"
-        ],
-        "Hexadecimal": "#3F4C3A"
-    },
-    {
-        "Color": [
-            "Cactus"
-        ],
-        "Hexadecimal": "#587156"
-    },
-    {
-        "Color": [
-            "Cadet"
-        ],
-        "Hexadecimal": "#536872"
-    },
-    {
-        "Color": [
-            "Cadet Blue"
-        ],
-        "Hexadecimal": "#5F9EA0"
-    },
-    {
-        "Color": [
-            "Cadet Blue (Crayola)"
-        ],
-        "Hexadecimal": "#A9B2C3"
-    },
-    {
-        "Color": [
-            "Cadet Grey"
-        ],
-        "Hexadecimal": "#91A3B0"
-    },
-    {
-        "Color": [
-            "Cadillac"
-        ],
-        "Hexadecimal": "#B04C6A"
-    },
-    {
-        "Color": [
-            "Cadmium Green"
-        ],
-        "Hexadecimal": "#006B3C"
-    },
-    {
-        "Color": [
-            "Cadmium Orange"
-        ],
-        "Hexadecimal": "#ED872D"
-    },
-    {
-        "Color": [
-            "Cadmium Red"
-        ],
-        "Hexadecimal": "#E30022"
-    },
-    {
-        "Color": [
-            "Cadmium Yellow"
-        ],
-        "Hexadecimal": "#FFF600"
-    },
-    {
-        "Color": [
-            "Café Au Lait",
-            "French Beige",
-            "Tuscan Tan"
-        ],
-        "Hexadecimal": "#A67B5B"
-    },
-    {
-        "Color": [
-            "Café Noir"
-        ],
-        "Hexadecimal": "#4B3621"
-    },
-    {
-        "Color": [
-            "Cafe Royale"
-        ],
-        "Hexadecimal": "#6F440C"
-    },
-    {
-        "Color": [
-            "Calico"
-        ],
-        "Hexadecimal": "#E0C095"
-    },
-    {
-        "Color": [
-            "California"
-        ],
-        "Hexadecimal": "#FE9D04"
-    },
-    {
-        "Color": [
-            "Calypso"
-        ],
-        "Hexadecimal": "#31728D"
-    },
-    {
-        "Color": [
-            "Camarone"
-        ],
-        "Hexadecimal": "#00581A"
-    },
-    {
-        "Color": [
-            "Cambridge Blue"
-        ],
-        "Hexadecimal": "#A3C1AD"
-    },
-    {
-        "Color": [
-            "Camel",
-            "Fallow",
-            "Lion",
-            "Wood Brown"
-        ],
-        "Hexadecimal": "#C19A6B"
-    },
-    {
-        "Color": [
-            "Camelot"
-        ],
-        "Hexadecimal": "#893456"
-    },
-    {
-        "Color": [
-            "Cameo"
-        ],
-        "Hexadecimal": "#D9B99B"
-    },
-    {
-        "Color": [
-            "Cameo Pink"
-        ],
-        "Hexadecimal": "#EFBBCC"
-    },
-    {
-        "Color": [
-            "Camouflage"
-        ],
-        "Hexadecimal": "#3C3910"
-    },
-    {
-        "Color": [
-            "Camouflage Green"
-        ],
-        "Hexadecimal": "#78866B"
-    },
-    {
-        "Color": [
-            "Can Can"
-        ],
-        "Hexadecimal": "#D591A4"
-    },
-    {
-        "Color": [
-            "Canary"
-        ],
-        "Hexadecimal": "#F3FB62"
-    },
-    {
-        "Color": [
-            "Canary Yellow",
-            "Process Yellow",
-            "Yellow (Process)"
-        ],
-        "Hexadecimal": "#FFEF00"
-    },
-    {
-        "Color": [
-            "Candlelight"
-        ],
-        "Hexadecimal": "#FCD917"
-    },
-    {
-        "Color": [
-            "Candy Apple Red"
-        ],
-        "Hexadecimal": "#FF0800"
-    },
-    {
-        "Color": [
-            "Candy Corn"
-        ],
-        "Hexadecimal": "#FBEC5D"
-    },
-    {
-        "Color": [
-            "Candy Pink",
-            "Tango Pink"
-        ],
-        "Hexadecimal": "#E4717A"
-    },
-    {
-        "Color": [
-            "Cannon Black"
-        ],
-        "Hexadecimal": "#251706"
-    },
-    {
-        "Color": [
-            "Cannon Pink"
-        ],
-        "Hexadecimal": "#894367"
-    },
-    {
-        "Color": [
-            "Cape Cod"
-        ],
-        "Hexadecimal": "#3C4443"
-    },
-    {
-        "Color": [
-            "Cape Honey"
-        ],
-        "Hexadecimal": "#FEE5AC"
-    },
-    {
-        "Color": [
-            "Cape Palliser"
-        ],
-        "Hexadecimal": "#A26645"
-    },
-    {
-        "Color": [
-            "Caper"
-        ],
-        "Hexadecimal": "#DCEDB4"
-    },
-    {
-        "Color": [
-            "Capri",
-            "Deep Sky Blue"
-        ],
-        "Hexadecimal": "#00BFFF"
-    },
-    {
-        "Color": [
-            "Caput Mortuum"
-        ],
-        "Hexadecimal": "#592720"
-    },
-    {
-        "Color": [
-            "Caramel"
-        ],
-        "Hexadecimal": "#FFDDAF"
-    },
-    {
-        "Color": [
-            "Cararra"
-        ],
-        "Hexadecimal": "#EEEEE8"
-    },
-    {
-        "Color": [
-            "Cardin Green"
-        ],
-        "Hexadecimal": "#01361C"
-    },
-    {
-        "Color": [
-            "Cardinal"
-        ],
-        "Hexadecimal": "#C41E3A"
-    },
-    {
-        "Color": [
-            "Cardinal Pink"
-        ],
-        "Hexadecimal": "#8C055E"
-    },
-    {
-        "Color": [
-            "Careys Pink"
-        ],
-        "Hexadecimal": "#D29EAA"
-    },
-    {
-        "Color": [
-            "Caribbean Green"
-        ],
-        "Hexadecimal": "#00CC99"
-    },
-    {
-        "Color": [
-            "Carissma"
-        ],
-        "Hexadecimal": "#EA88A8"
-    },
-    {
-        "Color": [
-            "Carla"
-        ],
-        "Hexadecimal": "#F3FFD8"
-    },
-    {
-        "Color": [
-            "Carmine"
-        ],
-        "Hexadecimal": "#960018"
-    },
-    {
-        "Color": [
-            "Carmine (M&P)"
-        ],
-        "Hexadecimal": "#D70040"
-    },
-    {
-        "Color": [
-            "Carnaby Tan"
-        ],
-        "Hexadecimal": "#5C2E01"
-    },
-    {
-        "Color": [
-            "Carnation"
-        ],
-        "Hexadecimal": "#F95A61"
-    },
-    {
-        "Color": [
-            "Carnation Pink"
-        ],
-        "Hexadecimal": "#FFA6C9"
-    },
-    {
-        "Color": [
-            "Carnelian",
-            "Cornell Red"
-        ],
-        "Hexadecimal": "#B31B1B"
-    },
-    {
-        "Color": [
-            "Carolina Blue"
-        ],
-        "Hexadecimal": "#56A0D3"
-    },
-    {
-        "Color": [
-            "Carousel Pink"
-        ],
-        "Hexadecimal": "#F9E0ED"
-    },
-    {
-        "Color": [
-            "Carrot Orange"
-        ],
-        "Hexadecimal": "#ED9121"
-    },
-    {
-        "Color": [
-            "Casablanca"
-        ],
-        "Hexadecimal": "#F8B853"
-    },
-    {
-        "Color": [
-            "Casal"
-        ],
-        "Hexadecimal": "#2F6168"
-    },
-    {
-        "Color": [
-            "Cascade"
-        ],
-        "Hexadecimal": "#8BA9A5"
-    },
-    {
-        "Color": [
-            "Cashmere"
-        ],
-        "Hexadecimal": "#E6BEA5"
-    },
-    {
-        "Color": [
-            "Casper"
-        ],
-        "Hexadecimal": "#ADBED1"
-    },
-    {
-        "Color": [
-            "Castleton Green"
-        ],
-        "Hexadecimal": "#00563F"
-    },
-    {
-        "Color": [
-            "Castro"
-        ],
-        "Hexadecimal": "#52001F"
-    },
-    {
-        "Color": [
-            "Catalina Blue"
-        ],
-        "Hexadecimal": "#062A78"
-    },
-    {
-        "Color": [
-            "Catawba"
-        ],
-        "Hexadecimal": "#703642"
-    },
-    {
-        "Color": [
-            "Catskill White"
-        ],
-        "Hexadecimal": "#EEF6F7"
-    },
-    {
-        "Color": [
-            "Cavern Pink"
-        ],
-        "Hexadecimal": "#E3BEBE"
-    },
-    {
-        "Color": [
-            "Cedar"
-        ],
-        "Hexadecimal": "#3E1C14"
-    },
-    {
-        "Color": [
-            "Cedar Chest"
-        ],
-        "Hexadecimal": "#C95A49"
-    },
-    {
-        "Color": [
-            "Cedar Wood Finish"
-        ],
-        "Hexadecimal": "#711A00"
-    },
-    {
-        "Color": [
-            "Celadon"
-        ],
-        "Hexadecimal": "#ACE1AF"
-    },
-    {
-        "Color": [
-            "Celadon Blue",
-            "Deep Cerulean"
-        ],
-        "Hexadecimal": "#007BA7"
-    },
-    {
-        "Color": [
-            "Celadon Green"
-        ],
-        "Hexadecimal": "#2F847C"
-    },
-    {
-        "Color": [
-            "Celery"
-        ],
-        "Hexadecimal": "#B8C25D"
-    },
-    {
-        "Color": [
-            "Celeste"
-        ],
-        "Hexadecimal": "#D1D2CA"
-    },
-    {
-        "Color": [
-            "Cello"
-        ],
-        "Hexadecimal": "#1E385B"
-    },
-    {
-        "Color": [
-            "Celtic"
-        ],
-        "Hexadecimal": "#163222"
-    },
-    {
-        "Color": [
-            "Celtic Blue"
-        ],
-        "Hexadecimal": "#246BCE"
-    },
-    {
-        "Color": [
-            "Cement"
-        ],
-        "Hexadecimal": "#8D7662"
-    },
-    {
-        "Color": [
-            "Ceramic"
-        ],
-        "Hexadecimal": "#FCFFF9"
-    },
-    {
-        "Color": [
-            "Cerise",
-            "Cerise Red"
-        ],
-        "Hexadecimal": "#DE3163"
-    },
-    {
-        "Color": [
-            "Cerulean"
-        ],
-        "Hexadecimal": "#02A4D3"
-    },
-    {
-        "Color": [
-            "Cerulean (Crayola)"
-        ],
-        "Hexadecimal": "#1DACD6"
-    },
-    {
-        "Color": [
-            "Cerulean Blue"
-        ],
-        "Hexadecimal": "#2A52BE"
-    },
-    {
-        "Color": [
-            "Cerulean Frost"
-        ],
-        "Hexadecimal": "#6D9BC3"
-    },
-    {
-        "Color": [
-            "Cg Blue"
-        ],
-        "Hexadecimal": "#007AA5"
-    },
-    {
-        "Color": [
-            "Cg Red"
-        ],
-        "Hexadecimal": "#E03C31"
-    },
-    {
-        "Color": [
-            "Chablis"
-        ],
-        "Hexadecimal": "#FFF4F3"
-    },
-    {
-        "Color": [
-            "Chalet Green"
-        ],
-        "Hexadecimal": "#516E3D"
-    },
-    {
-        "Color": [
-            "Chalky"
-        ],
-        "Hexadecimal": "#EED794"
-    },
-    {
-        "Color": [
-            "Chambray"
-        ],
-        "Hexadecimal": "#354E8C"
-    },
-    {
-        "Color": [
-            "Chamois"
-        ],
-        "Hexadecimal": "#EDDCB1"
-    },
-    {
-        "Color": [
-            "Champagne"
-        ],
-        "Hexadecimal": "#F7E7CE"
-    },
-    {
-        "Color": [
-            "Champagne 2"
-        ],
-        "Hexadecimal": "#FAECCC"
-    },
-    {
-        "Color": [
-            "Champagne Pink"
-        ],
-        "Hexadecimal": "#F1DDCF"
-    },
-    {
-        "Color": [
-            "Chantilly"
-        ],
-        "Hexadecimal": "#F8C3DF"
-    },
-    {
-        "Color": [
-            "Charade"
-        ],
-        "Hexadecimal": "#292937"
-    },
-    {
-        "Color": [
-            "Charcoal"
-        ],
-        "Hexadecimal": "#36454F"
-    },
-    {
-        "Color": [
-            "Chardon"
-        ],
-        "Hexadecimal": "#FFF3F1"
-    },
-    {
-        "Color": [
-            "Chardonnay"
-        ],
-        "Hexadecimal": "#FFCD8C"
-    },
-    {
-        "Color": [
-            "Charleston Green"
-        ],
-        "Hexadecimal": "#232B2B"
-    },
-    {
-        "Color": [
-            "Charlotte"
-        ],
-        "Hexadecimal": "#BAEEF9"
-    },
-    {
-        "Color": [
-            "Charm"
-        ],
-        "Hexadecimal": "#D47494"
-    },
-    {
-        "Color": [
-            "Charm Pink"
-        ],
-        "Hexadecimal": "#E68FAC"
-    },
-    {
-        "Color": [
-            "Chartreuse (Traditional)",
-            "Chartreuse Yellow"
-        ],
-        "Hexadecimal": "#DFFF00"
-    },
-    {
-        "Color": [
-            "Chartreuse (Web)",
-            "Chartreuse"
-        ],
-        "Hexadecimal": "#7FFF00"
-    },
-    {
-        "Color": [
-            "Chateau Green"
-        ],
-        "Hexadecimal": "#40A860"
-    },
-    {
-        "Color": [
-            "Chatelle"
-        ],
-        "Hexadecimal": "#BDB3C7"
-    },
-    {
-        "Color": [
-            "Chathams Blue"
-        ],
-        "Hexadecimal": "#175579"
-    },
-    {
-        "Color": [
-            "Chelsea Cucumber"
-        ],
-        "Hexadecimal": "#83AA5D"
-    },
-    {
-        "Color": [
-            "Chelsea Gem"
-        ],
-        "Hexadecimal": "#9E5302"
-    },
-    {
-        "Color": [
-            "Chenin"
-        ],
-        "Hexadecimal": "#DFCD6F"
-    },
-    {
-        "Color": [
-            "Cherokee"
-        ],
-        "Hexadecimal": "#FCDA98"
-    },
-    {
-        "Color": [
-            "Cherry Blossom Pink"
-        ],
-        "Hexadecimal": "#FFB7C5"
-    },
-    {
-        "Color": [
-            "Cherry Pie"
-        ],
-        "Hexadecimal": "#2A0359"
-    },
-    {
-        "Color": [
-            "Cherrywood"
-        ],
-        "Hexadecimal": "#651A14"
-    },
-    {
-        "Color": [
-            "Cherub"
-        ],
-        "Hexadecimal": "#F8D9E9"
-    },
-    {
-        "Color": [
-            "Chestnut"
-        ],
-        "Hexadecimal": "#954535"
-    },
-    {
-        "Color": [
-            "Chetwode Blue"
-        ],
-        "Hexadecimal": "#8581D9"
-    },
-    {
-        "Color": [
-            "Chicago"
-        ],
-        "Hexadecimal": "#5D5C58"
-    },
-    {
-        "Color": [
-            "Chiffon"
-        ],
-        "Hexadecimal": "#F1FFC8"
-    },
-    {
-        "Color": [
-            "Chilean Fire"
-        ],
-        "Hexadecimal": "#F77703"
-    },
-    {
-        "Color": [
-            "Chilean Heath"
-        ],
-        "Hexadecimal": "#FFFDE6"
-    },
-    {
-        "Color": [
-            "Chili Red"
-        ],
-        "Hexadecimal": "#E23D28"
-    },
-    {
-        "Color": [
-            "China Ivory"
-        ],
-        "Hexadecimal": "#FCFFE7"
-    },
-    {
-        "Color": [
-            "China Pink",
-            "Liseran Purple",
-            "Thulian Pink"
-        ],
-        "Hexadecimal": "#DE6FA1"
-    },
-    {
-        "Color": [
-            "China Rose"
-        ],
-        "Hexadecimal": "#A8516E"
-    },
-    {
-        "Color": [
-            "Chinese Red"
-        ],
-        "Hexadecimal": "#AA381E"
-    },
-    {
-        "Color": [
-            "Chinese Violet"
-        ],
-        "Hexadecimal": "#856088"
-    },
-    {
-        "Color": [
-            "Chinese Yellow"
-        ],
-        "Hexadecimal": "#FFB200"
-    },
-    {
-        "Color": [
-            "Chino"
-        ],
-        "Hexadecimal": "#CEC7A7"
-    },
-    {
-        "Color": [
-            "Chinook"
-        ],
-        "Hexadecimal": "#A8E3BD"
-    },
-    {
-        "Color": [
-            "Chocolate"
-        ],
-        "Hexadecimal": "#370202"
-    },
-    {
-        "Color": [
-            "Chocolate (Traditional)",
-            "Cinnamon"
-        ],
-        "Hexadecimal": "#7B3F00"
-    },
-    {
-        "Color": [
-            "Chocolate (Web)",
-            "Hot Cinnamon"
-        ],
-        "Hexadecimal": "#D2691E"
-    },
-    {
-        "Color": [
-            "Chocolate Cosmos"
-        ],
-        "Hexadecimal": "#58111A"
-    },
-    {
-        "Color": [
-            "Christalle"
-        ],
-        "Hexadecimal": "#33036B"
-    },
-    {
-        "Color": [
-            "Christi"
-        ],
-        "Hexadecimal": "#67A712"
-    },
-    {
-        "Color": [
-            "Christine"
-        ],
-        "Hexadecimal": "#E7730A"
-    },
-    {
-        "Color": [
-            "Chrome White"
-        ],
-        "Hexadecimal": "#E8F1D4"
-    },
-    {
-        "Color": [
-            "Chrome Yellow"
-        ],
-        "Hexadecimal": "#FFA700"
-    },
-    {
-        "Color": [
-            "Cinder"
-        ],
-        "Hexadecimal": "#0E0E18"
-    },
-    {
-        "Color": [
-            "Cinderella"
-        ],
-        "Hexadecimal": "#FDE1DC"
-    },
-    {
-        "Color": [
-            "Cinereous"
-        ],
-        "Hexadecimal": "#98817B"
-    },
-    {
-        "Color": [
-            "Cinnabar"
-        ],
-        "Hexadecimal": "#E34234"
-    },
-    {
-        "Color": [
-            "Cinnamon Satin"
-        ],
-        "Hexadecimal": "#CD607E"
-    },
-    {
-        "Color": [
-            "Cioccolato"
-        ],
-        "Hexadecimal": "#55280C"
-    },
-    {
-        "Color": [
-            "Citrine"
-        ],
-        "Hexadecimal": "#E4D00A"
-    },
-    {
-        "Color": [
-            "Citrine White"
-        ],
-        "Hexadecimal": "#FAF7D6"
-    },
-    {
-        "Color": [
-            "Citron"
-        ],
-        "Hexadecimal": "#9FA91F"
-    },
-    {
-        "Color": [
-            "Citron 2"
-        ],
-        "Hexadecimal": "#9EA91F"
-    },
-    {
-        "Color": [
-            "Citrus"
-        ],
-        "Hexadecimal": "#A1C50A"
-    },
-    {
-        "Color": [
-            "Clairvoyant"
-        ],
-        "Hexadecimal": "#480656"
-    },
-    {
-        "Color": [
-            "Clam Shell"
-        ],
-        "Hexadecimal": "#D4B6AF"
-    },
-    {
-        "Color": [
-            "Claret"
-        ],
-        "Hexadecimal": "#7F1734"
-    },
-    {
-        "Color": [
-            "Classic Rose"
-        ],
-        "Hexadecimal": "#FBCCE7"
-    },
-    {
-        "Color": [
-            "Clay Ash"
-        ],
-        "Hexadecimal": "#BDC8B3"
-    },
-    {
-        "Color": [
-            "Clay Creek"
-        ],
-        "Hexadecimal": "#8A8360"
-    },
-    {
-        "Color": [
-            "Clear Day"
-        ],
-        "Hexadecimal": "#E9FFFD"
-    },
-    {
-        "Color": [
-            "Clementine"
-        ],
-        "Hexadecimal": "#E96E00"
-    },
-    {
-        "Color": [
-            "Clinker"
-        ],
-        "Hexadecimal": "#371D09"
-    },
-    {
-        "Color": [
-            "Cloud"
-        ],
-        "Hexadecimal": "#C7C4BF"
-    },
-    {
-        "Color": [
-            "Cloud Burst"
-        ],
-        "Hexadecimal": "#202E54"
-    },
-    {
-        "Color": [
-            "Cloudy"
-        ],
-        "Hexadecimal": "#ACA59F"
-    },
-    {
-        "Color": [
-            "Clover"
-        ],
-        "Hexadecimal": "#384910"
-    },
-    {
-        "Color": [
-            "Cobalt Blue",
-            "Cobalt"
-        ],
-        "Hexadecimal": "#0047AB"
-    },
-    {
-        "Color": [
-            "Cocoa Bean"
-        ],
-        "Hexadecimal": "#481C1C"
-    },
-    {
-        "Color": [
-            "Cocoa Brown"
-        ],
-        "Hexadecimal": "#301F1E"
-    },
-    {
-        "Color": [
-            "Coconut Cream"
-        ],
-        "Hexadecimal": "#F8F7DC"
-    },
-    {
-        "Color": [
-            "Cod Gray"
-        ],
-        "Hexadecimal": "#0B0B0B"
-    },
-    {
-        "Color": [
-            "Coffee"
-        ],
-        "Hexadecimal": "#706555"
-    },
-    {
-        "Color": [
-            "Coffee Bean"
-        ],
-        "Hexadecimal": "#2A140E"
-    },
-    {
-        "Color": [
-            "Cognac"
-        ],
-        "Hexadecimal": "#9F381D"
-    },
-    {
-        "Color": [
-            "Cola"
-        ],
-        "Hexadecimal": "#3F2500"
-    },
-    {
-        "Color": [
-            "Cold Purple"
-        ],
-        "Hexadecimal": "#ABA0D9"
-    },
-    {
-        "Color": [
-            "Cold Turkey"
-        ],
-        "Hexadecimal": "#CEBABA"
-    },
-    {
-        "Color": [
-            "Colonial White"
-        ],
-        "Hexadecimal": "#FFEDBC"
-    },
-    {
-        "Color": [
-            "Columbia Blue"
-        ],
-        "Hexadecimal": "#B9D9EB"
-    },
-    {
-        "Color": [
-            "Comet"
-        ],
-        "Hexadecimal": "#5C5D75"
-    },
-    {
-        "Color": [
-            "Como"
-        ],
-        "Hexadecimal": "#517C66"
-    },
-    {
-        "Color": [
-            "Conch"
-        ],
-        "Hexadecimal": "#C9D9D2"
-    },
-    {
-        "Color": [
-            "Concord"
-        ],
-        "Hexadecimal": "#7C7B7A"
-    },
-    {
-        "Color": [
-            "Concrete"
-        ],
-        "Hexadecimal": "#F2F2F2"
-    },
-    {
-        "Color": [
-            "Confetti"
-        ],
-        "Hexadecimal": "#E9D75A"
-    },
-    {
-        "Color": [
-            "Congo Brown"
-        ],
-        "Hexadecimal": "#593737"
-    },
-    {
-        "Color": [
-            "Congo Pink",
-            "Coral Pink",
-            "Tea Rose"
-        ],
-        "Hexadecimal": "#F88379"
-    },
-    {
-        "Color": [
-            "Congress Blue"
-        ],
-        "Hexadecimal": "#02478E"
-    },
-    {
-        "Color": [
-            "Conifer"
-        ],
-        "Hexadecimal": "#ACDD4D"
-    },
-    {
-        "Color": [
-            "Contessa"
-        ],
-        "Hexadecimal": "#C6726B"
-    },
-    {
-        "Color": [
-            "Cool Grey"
-        ],
-        "Hexadecimal": "#8C92AC"
-    },
-    {
-        "Color": [
-            "Copper"
-        ],
-        "Hexadecimal": "#B87333"
-    },
-    {
-        "Color": [
-            "Copper (Crayola)",
-            "Copperfield"
-        ],
-        "Hexadecimal": "#DA8A67"
-    },
-    {
-        "Color": [
-            "Copper Canyon"
-        ],
-        "Hexadecimal": "#7E3A15"
-    },
-    {
-        "Color": [
-            "Copper Penny"
-        ],
-        "Hexadecimal": "#AD6F69"
-    },
-    {
-        "Color": [
-            "Copper Red"
-        ],
-        "Hexadecimal": "#CB6D51"
-    },
-    {
-        "Color": [
-            "Copper Rose"
-        ],
-        "Hexadecimal": "#996666"
-    },
-    {
-        "Color": [
-            "Copper Rust"
-        ],
-        "Hexadecimal": "#944747"
-    },
-    {
-        "Color": [
-            "Coquelicot"
-        ],
-        "Hexadecimal": "#FF3800"
-    },
-    {
-        "Color": [
-            "Coral"
-        ],
-        "Hexadecimal": "#FF7F50"
-    },
-    {
-        "Color": [
-            "Coral Red"
-        ],
-        "Hexadecimal": "#FF4040"
-    },
-    {
-        "Color": [
-            "Coral Reef"
-        ],
-        "Hexadecimal": "#C7BCA2"
-    },
-    {
-        "Color": [
-            "Coral Tree"
-        ],
-        "Hexadecimal": "#A86B6B"
-    },
-    {
-        "Color": [
-            "Cordovan"
-        ],
-        "Hexadecimal": "#893F45"
-    },
-    {
-        "Color": [
-            "Corduroy"
-        ],
-        "Hexadecimal": "#606E68"
-    },
-    {
-        "Color": [
-            "Coriander"
-        ],
-        "Hexadecimal": "#C4D0B0"
-    },
-    {
-        "Color": [
-            "Cork"
-        ],
-        "Hexadecimal": "#40291D"
-    },
-    {
-        "Color": [
-            "Corn"
-        ],
-        "Hexadecimal": "#E7BF05"
-    },
-    {
-        "Color": [
-            "Corn Field"
-        ],
-        "Hexadecimal": "#F8FACD"
-    },
-    {
-        "Color": [
-            "Corn Harvest"
-        ],
-        "Hexadecimal": "#8B6B0B"
-    },
-    {
-        "Color": [
-            "Cornflower Blue"
-        ],
-        "Hexadecimal": "#6495ED"
-    },
-    {
-        "Color": [
-            "Cornflower Lilac"
-        ],
-        "Hexadecimal": "#FFB0AC"
-    },
-    {
-        "Color": [
-            "Cornsilk"
-        ],
-        "Hexadecimal": "#FFF8DC"
-    },
-    {
-        "Color": [
-            "Corvette"
-        ],
-        "Hexadecimal": "#FAD3A2"
-    },
-    {
-        "Color": [
-            "Cosmic"
-        ],
-        "Hexadecimal": "#76395D"
-    },
-    {
-        "Color": [
-            "Cosmic Cobalt"
-        ],
-        "Hexadecimal": "#2E2D88"
-    },
-    {
-        "Color": [
-            "Cosmic Latte"
-        ],
-        "Hexadecimal": "#FFF8E7"
-    },
-    {
-        "Color": [
-            "Cosmos"
-        ],
-        "Hexadecimal": "#FFD8D9"
-    },
-    {
-        "Color": [
-            "Costa Del Sol"
-        ],
-        "Hexadecimal": "#615D30"
-    },
-    {
-        "Color": [
-            "Cotton Candy"
-        ],
-        "Hexadecimal": "#FFBCD9"
-    },
-    {
-        "Color": [
-            "Cotton Candy 2"
-        ],
-        "Hexadecimal": "#FFB7D5"
-    },
-    {
-        "Color": [
-            "Cotton Seed"
-        ],
-        "Hexadecimal": "#C2BDB6"
-    },
-    {
-        "Color": [
-            "County Green"
-        ],
-        "Hexadecimal": "#01371A"
-    },
-    {
-        "Color": [
-            "Cowboy"
-        ],
-        "Hexadecimal": "#4D282D"
-    },
-    {
-        "Color": [
-            "Coyote Brown"
-        ],
-        "Hexadecimal": "#81613C"
-    },
-    {
-        "Color": [
-            "Crail"
-        ],
-        "Hexadecimal": "#B95140"
-    },
-    {
-        "Color": [
-            "Cranberry"
-        ],
-        "Hexadecimal": "#DB5079"
-    },
-    {
-        "Color": [
-            "Crater Brown"
-        ],
-        "Hexadecimal": "#462425"
-    },
-    {
-        "Color": [
-            "Cream"
-        ],
-        "Hexadecimal": "#FFFDD0"
-    },
-    {
-        "Color": [
-            "Cream Brulee"
-        ],
-        "Hexadecimal": "#FFE5A0"
-    },
-    {
-        "Color": [
-            "Cream Can"
-        ],
-        "Hexadecimal": "#F5C85C"
-    },
-    {
-        "Color": [
-            "Creole"
-        ],
-        "Hexadecimal": "#1E0F04"
-    },
-    {
-        "Color": [
-            "Crete"
-        ],
-        "Hexadecimal": "#737829"
-    },
-    {
-        "Color": [
-            "Crimson"
-        ],
-        "Hexadecimal": "#DC143C"
-    },
-    {
-        "Color": [
-            "Crimson (UA)"
-        ],
-        "Hexadecimal": "#9E1B32"
-    },
-    {
-        "Color": [
-            "Crocodile"
-        ],
-        "Hexadecimal": "#736D58"
-    },
-    {
-        "Color": [
-            "Crown Of Thorns"
-        ],
-        "Hexadecimal": "#771F1F"
-    },
-    {
-        "Color": [
-            "Crowshead"
-        ],
-        "Hexadecimal": "#1C1208"
-    },
-    {
-        "Color": [
-            "Cruise"
-        ],
-        "Hexadecimal": "#B5ECDF"
-    },
-    {
-        "Color": [
-            "Crusoe"
-        ],
-        "Hexadecimal": "#004816"
-    },
-    {
-        "Color": [
-            "Crusta"
-        ],
-        "Hexadecimal": "#FD7B33"
-    },
-    {
-        "Color": [
-            "Crystal"
-        ],
-        "Hexadecimal": "#A7D8DE"
-    },
-    {
-        "Color": [
-            "Cultured"
-        ],
-        "Hexadecimal": "#F5F5F5"
-    },
-    {
-        "Color": [
-            "Cumin"
-        ],
-        "Hexadecimal": "#924321"
-    },
-    {
-        "Color": [
-            "Cumulus"
-        ],
-        "Hexadecimal": "#FDFFD5"
-    },
-    {
-        "Color": [
-            "Cupid"
-        ],
-        "Hexadecimal": "#FBBEDA"
-    },
-    {
-        "Color": [
-            "Curious Blue"
-        ],
-        "Hexadecimal": "#2596D1"
-    },
-    {
-        "Color": [
-            "Cutty Sark"
-        ],
-        "Hexadecimal": "#507672"
-    },
-    {
-        "Color": [
-            "Cyan (Process)"
-        ],
-        "Hexadecimal": "#00B7EB"
-    },
-    {
-        "Color": [
-            "Cyber Grape"
-        ],
-        "Hexadecimal": "#58427C"
-    },
-    {
-        "Color": [
-            "Cyber Yellow",
-            "Yellow (NCS)"
-        ],
-        "Hexadecimal": "#FFD300"
-    },
-    {
-        "Color": [
-            "Cyclamen"
-        ],
-        "Hexadecimal": "#F56FA1"
-    },
-    {
-        "Color": [
-            "Cyprus"
-        ],
-        "Hexadecimal": "#003E40"
-    },
-    {
-        "Color": [
-            "Daintree"
-        ],
-        "Hexadecimal": "#012731"
-    },
-    {
-        "Color": [
-            "Dairy Cream"
-        ],
-        "Hexadecimal": "#F9E4BC"
-    },
-    {
-        "Color": [
-            "Daisy Bush"
-        ],
-        "Hexadecimal": "#4F2398"
-    },
-    {
-        "Color": [
-            "Dallas"
-        ],
-        "Hexadecimal": "#6E4B26"
-    },
-    {
-        "Color": [
-            "Dandelion"
-        ],
-        "Hexadecimal": "#FED85D"
-    },
-    {
-        "Color": [
-            "Danube"
-        ],
-        "Hexadecimal": "#6093D1"
-    },
-    {
-        "Color": [
-            "Dark Blue"
-        ],
-        "Hexadecimal": "#0000C8"
-    },
-    {
-        "Color": [
-            "Dark Blue-Gray"
-        ],
-        "Hexadecimal": "#666699"
-    },
-    {
-        "Color": [
-            "Dark Brown"
-        ],
-        "Hexadecimal": "#654321"
-    },
-    {
-        "Color": [
-            "Dark Burgundy"
-        ],
-        "Hexadecimal": "#770F05"
-    },
-    {
-        "Color": [
-            "Dark Byzantium"
-        ],
-        "Hexadecimal": "#5D3954"
-    },
-    {
-        "Color": [
-            "Dark Cornflower Blue"
-        ],
-        "Hexadecimal": "#26428B"
-    },
-    {
-        "Color": [
-            "Dark Cyan"
-        ],
-        "Hexadecimal": "#008B8B"
-    },
-    {
-        "Color": [
-            "Dark Ebony"
-        ],
-        "Hexadecimal": "#3C2005"
-    },
-    {
-        "Color": [
-            "Dark Electric Blue",
-            "Payne's Grey"
-        ],
-        "Hexadecimal": "#536878"
-    },
-    {
-        "Color": [
-            "Dark Fern"
-        ],
-        "Hexadecimal": "#0A480D"
-    },
-    {
-        "Color": [
-            "Dark Goldenrod"
-        ],
-        "Hexadecimal": "#B8860B"
-    },
-    {
-        "Color": [
-            "Dark Green"
-        ],
-        "Hexadecimal": "#013220"
-    },
-    {
-        "Color": [
-            "Dark Green (X11)"
-        ],
-        "Hexadecimal": "#006400"
-    },
-    {
-        "Color": [
-            "Dark Jungle Green"
-        ],
-        "Hexadecimal": "#1A2421"
-    },
-    {
-        "Color": [
-            "Dark Khaki"
-        ],
-        "Hexadecimal": "#BDB76B"
-    },
-    {
-        "Color": [
-            "Dark Lava",
-            "Taupe"
-        ],
-        "Hexadecimal": "#483C32"
-    },
-    {
-        "Color": [
-            "Dark Liver"
-        ],
-        "Hexadecimal": "#534B4F"
-    },
-    {
-        "Color": [
-            "Dark Liver (Horses)"
-        ],
-        "Hexadecimal": "#543D37"
-    },
-    {
-        "Color": [
-            "Dark Magenta"
-        ],
-        "Hexadecimal": "#8B008B"
-    },
-    {
-        "Color": [
-            "Dark Moss Green"
-        ],
-        "Hexadecimal": "#4A5D23"
-    },
-    {
-        "Color": [
-            "Dark Olive Green"
-        ],
-        "Hexadecimal": "#556B2F"
-    },
-    {
-        "Color": [
-            "Dark Orange"
-        ],
-        "Hexadecimal": "#FF8C00"
-    },
-    {
-        "Color": [
-            "Dark Orchid"
-        ],
-        "Hexadecimal": "#9932CC"
-    },
-    {
-        "Color": [
-            "Dark Pastel Green"
-        ],
-        "Hexadecimal": "#03C03C"
-    },
-    {
-        "Color": [
-            "Dark Purple"
-        ],
-        "Hexadecimal": "#301934"
-    },
-    {
-        "Color": [
-            "Dark Red"
-        ],
-        "Hexadecimal": "#8B0000"
-    },
-    {
-        "Color": [
-            "Dark Salmon"
-        ],
-        "Hexadecimal": "#E9967A"
-    },
-    {
-        "Color": [
-            "Dark Sea Green"
-        ],
-        "Hexadecimal": "#8FBC8F"
-    },
-    {
-        "Color": [
-            "Dark Sienna"
-        ],
-        "Hexadecimal": "#3C1414"
-    },
-    {
-        "Color": [
-            "Dark Sky Blue"
-        ],
-        "Hexadecimal": "#8CBED6"
-    },
-    {
-        "Color": [
-            "Dark Slate Blue"
-        ],
-        "Hexadecimal": "#483D8B"
-    },
-    {
-        "Color": [
-            "Dark Slate Gray"
-        ],
-        "Hexadecimal": "#2F4F4F"
-    },
-    {
-        "Color": [
-            "Dark Spring Green"
-        ],
-        "Hexadecimal": "#177245"
-    },
-    {
-        "Color": [
-            "Dark Tan"
-        ],
-        "Hexadecimal": "#661010"
-    },
-    {
-        "Color": [
-            "Dark Turquoise"
-        ],
-        "Hexadecimal": "#00CED1"
-    },
-    {
-        "Color": [
-            "Dark Violet"
-        ],
-        "Hexadecimal": "#9400D3"
-    },
-    {
-        "Color": [
-            "Dartmouth Green"
-        ],
-        "Hexadecimal": "#00703C"
-    },
-    {
-        "Color": [
-            "Davy's Grey"
-        ],
-        "Hexadecimal": "#555555"
-    },
-    {
-        "Color": [
-            "Dawn"
-        ],
-        "Hexadecimal": "#A6A29A"
-    },
-    {
-        "Color": [
-            "Dawn Pink"
-        ],
-        "Hexadecimal": "#F3E9E5"
-    },
-    {
-        "Color": [
-            "De York"
-        ],
-        "Hexadecimal": "#7AC488"
-    },
-    {
-        "Color": [
-            "Deco"
-        ],
-        "Hexadecimal": "#D2DA97"
-    },
-    {
-        "Color": [
-            "Deep Blue"
-        ],
-        "Hexadecimal": "#220878"
-    },
-    {
-        "Color": [
-            "Deep Blush"
-        ],
-        "Hexadecimal": "#E47698"
-    },
-    {
-        "Color": [
-            "Deep Bronze"
-        ],
-        "Hexadecimal": "#4A3004"
-    },
-    {
-        "Color": [
-            "Deep Cerise",
-            "Cerise"
-        ],
-        "Hexadecimal": "#DA3287"
-    },
-    {
-        "Color": [
-            "Deep Champagne",
-            "Sunset",
-            "Tuscan"
-        ],
-        "Hexadecimal": "#FAD6A5"
-    },
-    {
-        "Color": [
-            "Deep Chestnut"
-        ],
-        "Hexadecimal": "#B94E48"
-    },
-    {
-        "Color": [
-            "Deep Cove"
-        ],
-        "Hexadecimal": "#051040"
-    },
-    {
-        "Color": [
-            "Deep Fir"
-        ],
-        "Hexadecimal": "#002900"
-    },
-    {
-        "Color": [
-            "Deep Forest Green"
-        ],
-        "Hexadecimal": "#182D09"
-    },
-    {
-        "Color": [
-            "Deep Jungle Green"
-        ],
-        "Hexadecimal": "#004B49"
-    },
-    {
-        "Color": [
-            "Deep Koamaru"
-        ],
-        "Hexadecimal": "#1B127B"
-    },
-    {
-        "Color": [
-            "Deep Oak"
-        ],
-        "Hexadecimal": "#412010"
-    },
-    {
-        "Color": [
-            "Deep Pink"
-        ],
-        "Hexadecimal": "#FF1493"
-    },
-    {
-        "Color": [
-            "Deep Saffron"
-        ],
-        "Hexadecimal": "#FF9933"
-    },
-    {
-        "Color": [
-            "Deep Sapphire"
-        ],
-        "Hexadecimal": "#082567"
-    },
-    {
-        "Color": [
-            "Deep Sea"
-        ],
-        "Hexadecimal": "#01826B"
-    },
-    {
-        "Color": [
-            "Deep Sea Green"
-        ],
-        "Hexadecimal": "#095859"
-    },
-    {
-        "Color": [
-            "Deep Space Sparkle"
-        ],
-        "Hexadecimal": "#4A646C"
-    },
-    {
-        "Color": [
-            "Deep Taupe"
-        ],
-        "Hexadecimal": "#7E5E60"
-    },
-    {
-        "Color": [
-            "Deep Teal"
-        ],
-        "Hexadecimal": "#003532"
-    },
-    {
-        "Color": [
-            "Del Rio"
-        ],
-        "Hexadecimal": "#B09A95"
-    },
-    {
-        "Color": [
-            "Dell"
-        ],
-        "Hexadecimal": "#396413"
-    },
-    {
-        "Color": [
-            "Delta"
-        ],
-        "Hexadecimal": "#A4A49D"
-    },
-    {
-        "Color": [
-            "Deluge"
-        ],
-        "Hexadecimal": "#7563A8"
-    },
-    {
-        "Color": [
-            "Denim"
-        ],
-        "Hexadecimal": "#1560BD"
-    },
-    {
-        "Color": [
-            "Denim Blue"
-        ],
-        "Hexadecimal": "#2243B6"
-    },
-    {
-        "Color": [
-            "Derby"
-        ],
-        "Hexadecimal": "#FFEED8"
-    },
-    {
-        "Color": [
-            "Desert"
-        ],
-        "Hexadecimal": "#AE6020"
-    },
-    {
-        "Color": [
-            "Desert Sand"
-        ],
-        "Hexadecimal": "#EDC9AF"
-    },
-    {
-        "Color": [
-            "Desert Storm"
-        ],
-        "Hexadecimal": "#F8F8F7"
-    },
-    {
-        "Color": [
-            "Dew"
-        ],
-        "Hexadecimal": "#EAFFFE"
-    },
-    {
-        "Color": [
-            "Di Serria"
-        ],
-        "Hexadecimal": "#DB995E"
-    },
-    {
-        "Color": [
-            "Diesel"
-        ],
-        "Hexadecimal": "#130000"
-    },
-    {
-        "Color": [
-            "Dim Gray"
-        ],
-        "Hexadecimal": "#696969"
-    },
-    {
-        "Color": [
-            "Dingley"
-        ],
-        "Hexadecimal": "#5D7747"
-    },
-    {
-        "Color": [
-            "Disco"
-        ],
-        "Hexadecimal": "#871550"
-    },
-    {
-        "Color": [
-            "Dixie"
-        ],
-        "Hexadecimal": "#E29418"
-    },
-    {
-        "Color": [
-            "Dodger Blue"
-        ],
-        "Hexadecimal": "#1E90FF"
-    },
-    {
-        "Color": [
-            "Dogwood Rose"
-        ],
-        "Hexadecimal": "#D71868"
-    },
-    {
-        "Color": [
-            "Dolly"
-        ],
-        "Hexadecimal": "#F9FF8B"
-    },
-    {
-        "Color": [
-            "Dolphin"
-        ],
-        "Hexadecimal": "#646077"
-    },
-    {
-        "Color": [
-            "Domino"
-        ],
-        "Hexadecimal": "#8E775E"
-    },
-    {
-        "Color": [
-            "Don Juan"
-        ],
-        "Hexadecimal": "#5D4C51"
-    },
-    {
-        "Color": [
-            "Donkey Brown"
-        ],
-        "Hexadecimal": "#A69279"
-    },
-    {
-        "Color": [
-            "Dorado"
-        ],
-        "Hexadecimal": "#6B5755"
-    },
-    {
-        "Color": [
-            "Double Colonial White"
-        ],
-        "Hexadecimal": "#EEE3AD"
-    },
-    {
-        "Color": [
-            "Double Pearl Lusta"
-        ],
-        "Hexadecimal": "#FCF4D0"
-    },
-    {
-        "Color": [
-            "Double Spanish White"
-        ],
-        "Hexadecimal": "#E6D7B9"
-    },
-    {
-        "Color": [
-            "Dove Gray"
-        ],
-        "Hexadecimal": "#6D6C6C"
-    },
-    {
-        "Color": [
-            "Downriver"
-        ],
-        "Hexadecimal": "#092256"
-    },
-    {
-        "Color": [
-            "Downy"
-        ],
-        "Hexadecimal": "#6FD0C5"
-    },
-    {
-        "Color": [
-            "Driftwood"
-        ],
-        "Hexadecimal": "#AF8751"
-    },
-    {
-        "Color": [
-            "Drover"
-        ],
-        "Hexadecimal": "#FDF7AD"
-    },
-    {
-        "Color": [
-            "Duke Blue"
-        ],
-        "Hexadecimal": "#00009C"
-    },
-    {
-        "Color": [
-            "Dull Lavender"
-        ],
-        "Hexadecimal": "#A899E6"
-    },
-    {
-        "Color": [
-            "Dune"
-        ],
-        "Hexadecimal": "#383533"
-    },
-    {
-        "Color": [
-            "Dust Storm"
-        ],
-        "Hexadecimal": "#E5CCC9"
-    },
-    {
-        "Color": [
-            "Dusty Gray"
-        ],
-        "Hexadecimal": "#A8989B"
-    },
-    {
-        "Color": [
-            "Dutch White"
-        ],
-        "Hexadecimal": "#EFDFBB"
-    },
-    {
-        "Color": [
-            "Eagle"
-        ],
-        "Hexadecimal": "#B6BAA4"
-    },
-    {
-        "Color": [
-            "Earls Green"
-        ],
-        "Hexadecimal": "#C9B93B"
-    },
-    {
-        "Color": [
-            "Early Dawn"
-        ],
-        "Hexadecimal": "#FFF9E6"
-    },
-    {
-        "Color": [
-            "Earth Yellow"
-        ],
-        "Hexadecimal": "#E1A95F"
-    },
-    {
-        "Color": [
-            "East Bay"
-        ],
-        "Hexadecimal": "#414C7D"
-    },
-    {
-        "Color": [
-            "East Side"
-        ],
-        "Hexadecimal": "#AC91CE"
-    },
-    {
-        "Color": [
-            "Eastern Blue"
-        ],
-        "Hexadecimal": "#1E9AB0"
-    },
-    {
-        "Color": [
-            "Ebb"
-        ],
-        "Hexadecimal": "#E9E3E3"
-    },
-    {
-        "Color": [
-            "Ebony"
-        ],
-        "Hexadecimal": "#555D50"
-    },
-    {
-        "Color": [
-            "Ebony 2"
-        ],
-        "Hexadecimal": "#0C0B1D"
-    },
-    {
-        "Color": [
-            "Ebony Clay"
-        ],
-        "Hexadecimal": "#26283B"
-    },
-    {
-        "Color": [
-            "Eclipse"
-        ],
-        "Hexadecimal": "#311C17"
-    },
-    {
-        "Color": [
-            "Ecru",
-            "Sand"
-        ],
-        "Hexadecimal": "#C2B280"
-    },
-    {
-        "Color": [
-            "Ecru White"
-        ],
-        "Hexadecimal": "#F5F3E5"
-    },
-    {
-        "Color": [
-            "Ecstasy"
-        ],
-        "Hexadecimal": "#FA7814"
-    },
-    {
-        "Color": [
-            "Eden"
-        ],
-        "Hexadecimal": "#105852"
-    },
-    {
-        "Color": [
-            "Edgewater"
-        ],
-        "Hexadecimal": "#C8E3D7"
-    },
-    {
-        "Color": [
-            "Edward"
-        ],
-        "Hexadecimal": "#A2AEAB"
-    },
-    {
-        "Color": [
-            "Eerie Black"
-        ],
-        "Hexadecimal": "#1B1B1B"
-    },
-    {
-        "Color": [
-            "Egg Sour"
-        ],
-        "Hexadecimal": "#FFF4DD"
-    },
-    {
-        "Color": [
-            "Egg White"
-        ],
-        "Hexadecimal": "#FFEFC1"
-    },
-    {
-        "Color": [
-            "Eggplant"
-        ],
-        "Hexadecimal": "#614051"
-    },
-    {
-        "Color": [
-            "Eggshell"
-        ],
-        "Hexadecimal": "#F0EAD6"
-    },
-    {
-        "Color": [
-            "Egyptian Blue"
-        ],
-        "Hexadecimal": "#1034A6"
-    },
-    {
-        "Color": [
-            "Eigengrau"
-        ],
-        "Hexadecimal": "#16161D"
-    },
-    {
-        "Color": [
-            "El Paso"
-        ],
-        "Hexadecimal": "#1E1708"
-    },
-    {
-        "Color": [
-            "El Salva"
-        ],
-        "Hexadecimal": "#8F3E33"
-    },
-    {
-        "Color": [
-            "Electric Blue"
-        ],
-        "Hexadecimal": "#7DF9FF"
-    },
-    {
-        "Color": [
-            "Electric Green",
-            "Green"
+const colorDatabase = {
+    "4C4F56": ["Abbey"],
+    "0048BA": ["Absolute Zero"],
+    "1B1404": ["Acadia"],
+    "7CB0A1": ["Acapulco"],
+    "B0BF1A": ["Acid Green"],
+    "7CB9E8": ["Aero"],
+    "C9FFE5": ["Aero Blue"],
+    "C0E8D5": ["Aero Blue 2"],
+    "714693": ["Affair"],
+    "B284BE": ["African Violet"],
+    "72A0C1": ["Air Superiority Blue"],
+    "D4C4A8": ["Akaroa"],
+    "FAFAFA": ["Alabaster"],
+    "EDEAE0": ["Alabaster 2"],
+    "F5E9D3": ["Albescent White"],
+    "93DFB8": ["Algae Green"],
+    "F0F8FF": ["Alice Blue"],
+    "C46210": ["Alloy Orange"],
+    "0076A3": ["Allports"],
+    "EED9C4": ["Almond"],
+    "EFDECD": ["Almond 2"],
+    "907B71": ["Almond Frost"],
+    "AF8F2C": ["Alpine"],
+    "DBDBDB": ["Alto"],
+    "A9ACB6": ["Aluminium"],
+    "E52B50": ["Amaranth"],
+    "9F2B68": ["Amaranth (M\u0026P)"],
+    "F19CBB": ["Amaranth Pink"],
+    "AB274F": ["Amaranth Purple"],
+    "D3212D": ["Amaranth Red"],
+    "3B7A57": ["Amazon"],
+    "FFBF00": ["Amber"],
+    "FF7E00": ["Amber (SAE/ECE)"],
+    "87756E": ["Americano"],
+    "9966CC": ["Amethyst"],
+    "A397B4": ["Amethyst Smoke"],
+    "F9EAF3": ["Amour"],
+    "7B9F80": ["Amulet"],
+    "9DE5FF": ["Anakiwa"],
+    "3DDC84": ["Android Green"],
+    "CD9575": ["Antique Brass"],
+    "C88A65": ["Antique Brass 2"],
+    "704A07": ["Antique Bronze"],
+    "665D1E": ["Antique Bronze 2"],
+    "915C83": ["Antique Fuchsia"],
+    "841B2D": ["Antique Ruby"],
+    "FAEBD7": ["Antique White"],
+    "E0B646": ["Anzac"],
+    "008000": ["Ao"],
+    "DFBE6F": ["Apache"],
+    "4FA83D": ["Apple"],
+    "AF4D43": ["Apple Blossom"],
+    "8DB600": ["Apple Green"],
+    "E2F3EC": ["Apple Green 2"],
+    "EB9373": ["Apricot"],
+    "FBCEB1": ["Apricot Peach"],
+    "FFFEEC": ["Apricot White"],
+    "00FFFF": ["Aqua","Cyan","Spanish Sky Blue"],
+    "014B43": ["Aqua Deep"],
+    "EDF5F5": ["Aqua Haze"],
+    "A1DAD7": ["Aqua Island"],
+    "EAF9F5": ["Aqua Spring"],
+    "E8F5F2": ["Aqua Squeeze"],
+    "7FFFD4": ["Aquamarine"],
+    "71D9E2": ["Aquamarine Blue"],
+    "110C6C": ["Arapawa"],
+    "D0FF14": ["Arctic Lime"],
+    "433E37": ["Armadillo"],
+    "4B5320": ["Army Green"],
+    "948771": ["Arrowtown"],
+    "8F9779": ["Artichoke"],
+    "E9D66B": ["Arylide Yellow","Hansa Yellow"],
+    "C6C3B5": ["Ash"],
+    "B2BEB5": ["Ash Gray"],
+    "87A96B": ["Asparagus"],
+    "7BA05B": ["Asparagus 2"],
+    "130A06": ["Asphalt"],
+    "FAEAB9": ["Astra"],
+    "327DA0": ["Astral"],
+    "283A77": ["Astronaut"],
+    "013E62": ["Astronaut Blue"],
+    "EEF0F3": ["Athens Gray"],
+    "ECEBCE": ["Aths Special"],
+    "97CD2D": ["Atlantis"],
+    "0A6F75": ["Atoll"],
+    "FF9966": ["Atomic Tangerine"],
+    "97605D": ["Au Chico"],
+    "3B0910": ["Aubergine"],
+    "A52A2A": ["Auburn"],
+    "FDEE00": ["Aureolin"],
+    "F5FFBE": ["Australian Mint"],
+    "568203": ["Avocado"],
+    "888D65": ["Avocado 2"],
+    "4E6649": ["Axolotl"],
+    "F7C8DA": ["Azalea"],
+    "0D1C19": ["Aztec"],
+    "315BA1": ["Azure"],
+    "F0FFFF": ["Azure (X11/Web Color)"],
+    "007FFF": ["Azure Radiance"],
+    "2E5894": ["B\u0027dazzled Blue"],
+    "89CFF0": ["Baby Blue"],
+    "A1CAF1": ["Baby Blue Eyes"],
+    "F4C2C2": ["Baby Pink","Tea Rose"],
+    "FEFEFA": ["Baby Powder"],
+    "026395": ["Bahama Blue"],
+    "A5CB0C": ["Bahia"],
+    "FFF8D1": ["Baja White"],
+    "FF91AF": ["Baker-Miller Pink","Schauss Pink"],
+    "859FAF": ["Bali Hai"],
+    "2A2630": ["Baltic Sea"],
+    "DA6304": ["Bamboo"],
+    "FAE7B5": ["Banana Mania"],
+    "FBE7B2": ["Banana Mania 2"],
+    "858470": ["Bandicoot"],
+    "DED717": ["Barberry"],
+    "DA1884": ["Barbie Pink"],
+    "A68B5B": ["Barley Corn"],
+    "FFF4CE": ["Barley White"],
+    "7C0A02": ["Barn Red"],
+    "44012D": ["Barossa"],
+    "292130": ["Bastille"],
+    "828F72": ["Battleship Gray"],
+    "848482": ["Battleship Grey","Old Silver"],
+    "7DA98D": ["Bay Leaf"],
+    "273A81": ["Bay Of Many"],
+    "98777B": ["Bazaar"],
+    "3D0C02": ["Bean"],
+    "BCD4E6": ["Beau Blue","Pale Aqua"],
+    "EEC1BE": ["Beauty Bush"],
+    "9F8170": ["Beaver"],
+    "926F5B": ["Beaver 2"],
+    "FEF2C7": ["Beeswax"],
+    "F5F5DC": ["Beige"],
+    "7DD8C6": ["Bermuda"],
+    "6B8BA2": ["Bermuda Gray"],
+    "DEE5C0": ["Beryl Green"],
+    "FCFBF3": ["Bianca"],
+    "9C2542": ["Big Dip O’Ruby"],
+    "162A40": ["Big Stone"],
+    "327C14": ["Bilbao"],
+    "B2A1EA": ["Biloba Flower"],
+    "373021": ["Birch"],
+    "D4CD16": ["Bird Flower"],
+    "1B3162": ["Biscay"],
+    "497183": ["Bismark"],
+    "C1B7A4": ["Bison Hide"],
+    "FFE4C4": ["Bisque"],
+    "3D2B1F": ["Bistre"],
+    "967117": ["Bistre Brown","Drab","Mode Beige"],
+    "868974": ["Bitter"],
+    "CAE00D": ["Bitter Lemon"],
+    "BFFF00": ["Bitter Lime","Lime (Color Wheel)","Lime"],
+    "FE6F5E": ["Bittersweet"],
+    "BF4F51": ["Bittersweet Shimmer"],
+    "EEDEDA": ["Bizarre"],
+    "000000": ["Black"],
+    "081910": ["Black Bean"],
+    "1B1811": ["Black Chocolate"],
+    "3B2F2F": ["Black Coffee"],
+    "54626F": ["Black Coral"],
+    "0B1304": ["Black Forest"],
+    "F6F7F7": ["Black Haze"],
+    "3E2C1C": ["Black Marlin"],
+    "242E16": ["Black Olive"],
+    "3B3C36": ["Black Olive 2"],
+    "041322": ["Black Pearl"],
+    "0D0332": ["Black Rock"],
+    "67032D": ["Black Rose"],
+    "0A001C": ["Black Russian"],
+    "BFAFB2": ["Black Shadows"],
+    "F2FAFA": ["Black Squeeze"],
+    "FFFEF6": ["Black White"],
+    "4D0135": ["Blackberry"],
+    "32293A": ["Blackcurrant"],
+    "FFEBCD": ["Blanched Almond"],
+    "A57164": ["Blast-Off Bronze"],
+    "FF6600": ["Blaze Orange"],
+    "FEF3D8": ["Bleach White"],
+    "2C2133": ["Bleached Cedar"],
+    "318CE7": ["Bleu De France"],
+    "A3E3ED": ["Blizzard Blue"],
+    "ACE5EE": ["Blizzard Blue 2"],
+    "FAF0BE": ["Blond"],
+    "660000": ["Blood Red"],
+    "DCB4BC": ["Blossom"],
+    "0000FF": ["Blue"],
+    "1F75FE": ["Blue (Crayola)"],
+    "0093AF": ["Blue (MUNSELL)"],
+    "0087BD": ["Blue (NCS)"],
+    "0018A8": ["Blue (PANTONE)"],
+    "333399": ["Blue (Pigment)"],
+    "0247FE": ["Blue (RYB)"],
+    "496679": ["Blue Bayoux"],
+    "A2A2D0": ["Blue Bell"],
+    "9999CC": ["Blue Bell 2"],
+    "F1E9FF": ["Blue Chalk"],
+    "010D1A": ["Blue Charcoal"],
+    "0C8990": ["Blue Chill"],
+    "380474": ["Blue Diamond"],
+    "204852": ["Blue Dianne"],
+    "2C0E8C": ["Blue Gem"],
+    "BFBED8": ["Blue Haze"],
+    "5DADEC": ["Blue Jeans"],
+    "017987": ["Blue Lagoon"],
+    "7666C6": ["Blue Marguerite"],
+    "0066FF": ["Blue Ribbon"],
+    "D2F6DE": ["Blue Romance"],
+    "126180": ["Blue Sapphire"],
+    "748881": ["Blue Smoke"],
+    "016162": ["Blue Stone"],
+    "8A2BE2": ["Blue Violet"],
+    "6456B7": ["Blue Violet 2"],
+    "042E4C": ["Blue Whale"],
+    "5072A7": ["Blue Yonder"],
+    "13264D": ["Blue Zodiac"],
+    "6699CC": ["Blue-Gray","Livid"],
+    "0D98BA": ["Blue-Green"],
+    "064E40": ["Blue-Green (Color Wheel)"],
+    "4D1A7F": ["Blue-Violet (Color Wheel)"],
+    "7366BD": ["Blue-Violet (Crayola)"],
+    "3C69E7": ["Bluetiful"],
+    "18587A": ["Blumine"],
+    "DE5D83": ["Blush"],
+    "B44668": ["Blush 2"],
+    "79443B": ["Bole"],
+    "AFB1B8": ["Bombay"],
+    "E5E0E1": ["Bon Jour"],
+    "0095B6": ["Bondi Blue"],
+    "E3DAC9": ["Bone"],
+    "E4D1C0": ["Bone 2"],
+    "5C0120": ["Bordeaux"],
+    "4E2A5A": ["Bossanova"],
+    "3B91B4": ["Boston Blue"],
+    "C7DDE5": ["Botticelli"],
+    "006A4E": ["Bottle Green"],
+    "093624": ["Bottle Green 2"],
+    "7A7A7A": ["Boulder"],
+    "AE809E": ["Bouquet"],
+    "BA6F1E": ["Bourbon"],
+    "4A2A04": ["Bracken"],
+    "DEC196": ["Brandy"],
+    "87413F": ["Brandy 2"],
+    "CD8429": ["Brandy Punch"],
+    "BB8983": ["Brandy Rose"],
+    "5DA19F": ["Breaker Bay"],
+    "C62D42": ["Brick Red"],
+    "CB4154": ["Brick Red 2"],
+    "FFFAF4": ["Bridal Heath"],
+    "FEF0EC": ["Bridesmaid"],
+    "3C4151": ["Bright Gray"],
+    "66FF00": ["Bright Green"],
+    "D891EF": ["Bright Lilac"],
+    "C32148": ["Bright Maroon","Maroon (Crayola)","Maroon Flush"],
+    "1974D2": ["Bright Navy Blue","Navy Blue (Crayola)"],
+    "B10000": ["Bright Red"],
+    "FED33C": ["Bright Sun"],
+    "08E8DE": ["Bright Turquoise"],
+    "FFAA1D": ["Bright Yellow (Crayola)"],
+    "FF55A3": ["Brilliant Rose"],
+    "FB607F": ["Brink Pink"],
+    "004225": ["British Racing Green"],
+    "ABA196": ["Bronco"],
+    "CD7F32": ["Bronze"],
+    "3F2109": ["Bronze 2"],
+    "4E420C": ["Bronze Olive"],
+    "4D400F": ["Bronzetone"],
+    "FFEC13": ["Broom"],
+    "964B00": ["Brown"],
+    "88540B": ["Brown 2"],
+    "592804": ["Brown Bramble"],
+    "492615": ["Brown Derby"],
+    "401801": ["Brown Pod"],
+    "AF593E": ["Brown Rust"],
+    "AF6E4D": ["Brown Sugar"],
+    "37290E": ["Brown Tumbleweed"],
+    "1B4D3E": ["Brunswick Green","English Green"],
+    "E7FEFF": ["Bubbles"],
+    "622F30": ["Buccaneer"],
+    "A8AE9C": ["Bud"],
+    "7BB661": ["Bud Green"],
+    "C1A004": ["Buddha Gold"],
+    "FFC680": ["Buff"],
+    "F0DC82": ["Buff 2"],
+    "480607": ["Bulgarian Rose"],
+    "864D1E": ["Bull Shot"],
+    "0D1117": ["Bunker"],
+    "151F4C": ["Bunting"],
+    "900020": ["Burgundy"],
+    "800020": ["Burgundy 2"],
+    "DEB887": ["Burlywood"],
+    "002E20": ["Burnham"],
+    "FF7034": ["Burning Orange"],
+    "D99376": ["Burning Sand"],
+    "A17A74": ["Burnished Brown"],
+    "420303": ["Burnt Maroon"],
+    "CC5500": ["Burnt Orange"],
+    "E97451": ["Burnt Sienna"],
+    "8A3324": ["Burnt Umber"],
+    "0D2E1C": ["Bush"],
+    "F3AD16": ["Buttercup"],
+    "A1750D": ["Buttered Rum"],
+    "624E9A": ["Butterfly Bush"],
+    "FFF1B5": ["Buttermilk"],
+    "FFFCEA": ["Buttery White"],
+    "BD33A4": ["Byzantine"],
+    "702963": ["Byzantium"],
+    "4D0A18": ["Cab Sav"],
+    "D94972": ["Cabaret"],
+    "3F4C3A": ["Cabbage Pont"],
+    "587156": ["Cactus"],
+    "536872": ["Cadet"],
+    "5F9EA0": ["Cadet Blue"],
+    "A9B2C3": ["Cadet Blue (Crayola)"],
+    "91A3B0": ["Cadet Grey"],
+    "B04C6A": ["Cadillac"],
+    "006B3C": ["Cadmium Green"],
+    "ED872D": ["Cadmium Orange"],
+    "E30022": ["Cadmium Red"],
+    "FFF600": ["Cadmium Yellow"],
+    "A67B5B": ["Café Au Lait","French Beige","Tuscan Tan"],
+    "4B3621": ["Café Noir"],
+    "6F440C": ["Cafe Royale"],
+    "E0C095": ["Calico"],
+    "FE9D04": ["California"],
+    "31728D": ["Calypso"],
+    "00581A": ["Camarone"],
+    "A3C1AD": ["Cambridge Blue"],
+    "C19A6B": ["Camel","Fallow","Lion","Wood Brown"],
+    "893456": ["Camelot"],
+    "D9B99B": ["Cameo"],
+    "EFBBCC": ["Cameo Pink"],
+    "3C3910": ["Camouflage"],
+    "78866B": ["Camouflage Green"],
+    "D591A4": ["Can Can"],
+    "F3FB62": ["Canary"],
+    "FFEF00": ["Canary Yellow","Process Yellow","Yellow (Process)"],
+    "FCD917": ["Candlelight"],
+    "FF0800": ["Candy Apple Red"],
+    "FBEC5D": ["Candy Corn"],
+    "E4717A": ["Candy Pink","Tango Pink"],
+    "251706": ["Cannon Black"],
+    "894367": ["Cannon Pink"],
+    "3C4443": ["Cape Cod"],
+    "FEE5AC": ["Cape Honey"],
+    "A26645": ["Cape Palliser"],
+    "DCEDB4": ["Caper"],
+    "00BFFF": ["Capri","Deep Sky Blue"],
+    "592720": ["Caput Mortuum"],
+    "FFDDAF": ["Caramel"],
+    "EEEEE8": ["Cararra"],
+    "01361C": ["Cardin Green"],
+    "C41E3A": ["Cardinal"],
+    "8C055E": ["Cardinal Pink"],
+    "D29EAA": ["Careys Pink"],
+    "00CC99": ["Caribbean Green"],
+    "EA88A8": ["Carissma"],
+    "F3FFD8": ["Carla"],
+    "960018": ["Carmine"],
+    "D70040": ["Carmine (M\u0026P)"],
+    "5C2E01": ["Carnaby Tan"],
+    "F95A61": ["Carnation"],
+    "FFA6C9": ["Carnation Pink"],
+    "B31B1B": ["Carnelian","Cornell Red"],
+    "56A0D3": ["Carolina Blue"],
+    "F9E0ED": ["Carousel Pink"],
+    "ED9121": ["Carrot Orange"],
+    "F8B853": ["Casablanca"],
+    "2F6168": ["Casal"],
+    "8BA9A5": ["Cascade"],
+    "E6BEA5": ["Cashmere"],
+    "ADBED1": ["Casper"],
+    "00563F": ["Castleton Green"],
+    "52001F": ["Castro"],
+    "062A78": ["Catalina Blue"],
+    "703642": ["Catawba"],
+    "EEF6F7": ["Catskill White"],
+    "E3BEBE": ["Cavern Pink"],
+    "3E1C14": ["Cedar"],
+    "C95A49": ["Cedar Chest"],
+    "711A00": ["Cedar Wood Finish"],
+    "ACE1AF": ["Celadon"],
+    "007BA7": ["Celadon Blue","Deep Cerulean"],
+    "2F847C": ["Celadon Green"],
+    "B8C25D": ["Celery"],
+    "D1D2CA": ["Celeste"],
+    "1E385B": ["Cello"],
+    "163222": ["Celtic"],
+    "246BCE": ["Celtic Blue"],
+    "8D7662": ["Cement"],
+    "FCFFF9": ["Ceramic"],
+    "DE3163": ["Cerise","Cerise Red"],
+    "02A4D3": ["Cerulean"],
+    "1DACD6": ["Cerulean (Crayola)"],
+    "2A52BE": ["Cerulean Blue"],
+    "6D9BC3": ["Cerulean Frost"],
+    "007AA5": ["Cg Blue"],
+    "E03C31": ["Cg Red"],
+    "FFF4F3": ["Chablis"],
+    "516E3D": ["Chalet Green"],
+    "EED794": ["Chalky"],
+    "354E8C": ["Chambray"],
+    "EDDCB1": ["Chamois"],
+    "F7E7CE": ["Champagne"],
+    "FAECCC": ["Champagne 2"],
+    "F1DDCF": ["Champagne Pink"],
+    "F8C3DF": ["Chantilly"],
+    "292937": ["Charade"],
+    "36454F": ["Charcoal"],
+    "FFF3F1": ["Chardon"],
+    "FFCD8C": ["Chardonnay"],
+    "232B2B": ["Charleston Green"],
+    "BAEEF9": ["Charlotte"],
+    "D47494": ["Charm"],
+    "E68FAC": ["Charm Pink"],
+    "DFFF00": ["Chartreuse (Traditional)","Chartreuse Yellow"],
+    "7FFF00": ["Chartreuse (Web)","Chartreuse"],
+    "40A860": ["Chateau Green"],
+    "BDB3C7": ["Chatelle"],
+    "175579": ["Chathams Blue"],
+    "83AA5D": ["Chelsea Cucumber"],
+    "9E5302": ["Chelsea Gem"],
+    "DFCD6F": ["Chenin"],
+    "FCDA98": ["Cherokee"],
+    "FFB7C5": ["Cherry Blossom Pink"],
+    "2A0359": ["Cherry Pie"],
+    "651A14": ["Cherrywood"],
+    "F8D9E9": ["Cherub"],
+    "954535": ["Chestnut"],
+    "8581D9": ["Chetwode Blue"],
+    "5D5C58": ["Chicago"],
+    "F1FFC8": ["Chiffon"],
+    "F77703": ["Chilean Fire"],
+    "FFFDE6": ["Chilean Heath"],
+    "E23D28": ["Chili Red"],
+    "FCFFE7": ["China Ivory"],
+    "DE6FA1": ["China Pink","Liseran Purple","Thulian Pink"],
+    "A8516E": ["China Rose"],
+    "AA381E": ["Chinese Red"],
+    "856088": ["Chinese Violet"],
+    "FFB200": ["Chinese Yellow"],
+    "CEC7A7": ["Chino"],
+    "A8E3BD": ["Chinook"],
+    "370202": ["Chocolate"],
+    "7B3F00": ["Chocolate (Traditional)","Cinnamon"],
+    "D2691E": ["Chocolate (Web)","Hot Cinnamon"],
+    "58111A": ["Chocolate Cosmos"],
+    "33036B": ["Christalle"],
+    "67A712": ["Christi"],
+    "E7730A": ["Christine"],
+    "E8F1D4": ["Chrome White"],
+    "FFA700": ["Chrome Yellow"],
+    "0E0E18": ["Cinder"],
+    "FDE1DC": ["Cinderella"],
+    "98817B": ["Cinereous"],
+    "E34234": ["Cinnabar"],
+    "CD607E": ["Cinnamon Satin"],
+    "55280C": ["Cioccolato"],
+    "E4D00A": ["Citrine"],
+    "FAF7D6": ["Citrine White"],
+    "9FA91F": ["Citron"],
+    "9EA91F": ["Citron 2"],
+    "A1C50A": ["Citrus"],
+    "480656": ["Clairvoyant"],
+    "D4B6AF": ["Clam Shell"],
+    "7F1734": ["Claret"],
+    "FBCCE7": ["Classic Rose"],
+    "BDC8B3": ["Clay Ash"],
+    "8A8360": ["Clay Creek"],
+    "E9FFFD": ["Clear Day"],
+    "E96E00": ["Clementine"],
+    "371D09": ["Clinker"],
+    "C7C4BF": ["Cloud"],
+    "202E54": ["Cloud Burst"],
+    "ACA59F": ["Cloudy"],
+    "384910": ["Clover"],
+    "0047AB": ["Cobalt Blue","Cobalt"],
+    "481C1C": ["Cocoa Bean"],
+    "301F1E": ["Cocoa Brown"],
+    "F8F7DC": ["Coconut Cream"],
+    "0B0B0B": ["Cod Gray"],
+    "706555": ["Coffee"],
+    "2A140E": ["Coffee Bean"],
+    "9F381D": ["Cognac"],
+    "3F2500": ["Cola"],
+    "ABA0D9": ["Cold Purple"],
+    "CEBABA": ["Cold Turkey"],
+    "FFEDBC": ["Colonial White"],
+    "B9D9EB": ["Columbia Blue"],
+    "5C5D75": ["Comet"],
+    "517C66": ["Como"],
+    "C9D9D2": ["Conch"],
+    "7C7B7A": ["Concord"],
+    "F2F2F2": ["Concrete"],
+    "E9D75A": ["Confetti"],
+    "593737": ["Congo Brown"],
+    "F88379": ["Congo Pink","Coral Pink","Tea Rose"],
+    "02478E": ["Congress Blue"],
+    "ACDD4D": ["Conifer"],
+    "C6726B": ["Contessa"],
+    "8C92AC": ["Cool Grey"],
+    "B87333": ["Copper"],
+    "DA8A67": ["Copper (Crayola)","Copperfield"],
+    "7E3A15": ["Copper Canyon"],
+    "AD6F69": ["Copper Penny"],
+    "CB6D51": ["Copper Red"],
+    "996666": ["Copper Rose"],
+    "944747": ["Copper Rust"],
+    "FF3800": ["Coquelicot"],
+    "FF7F50": ["Coral"],
+    "FF4040": ["Coral Red"],
+    "C7BCA2": ["Coral Reef"],
+    "A86B6B": ["Coral Tree"],
+    "893F45": ["Cordovan"],
+    "606E68": ["Corduroy"],
+    "C4D0B0": ["Coriander"],
+    "40291D": ["Cork"],
+    "E7BF05": ["Corn"],
+    "F8FACD": ["Corn Field"],
+    "8B6B0B": ["Corn Harvest"],
+    "6495ED": ["Cornflower Blue"],
+    "FFB0AC": ["Cornflower Lilac"],
+    "FFF8DC": ["Cornsilk"],
+    "FAD3A2": ["Corvette"],
+    "76395D": ["Cosmic"],
+    "2E2D88": ["Cosmic Cobalt"],
+    "FFF8E7": ["Cosmic Latte"],
+    "FFD8D9": ["Cosmos"],
+    "615D30": ["Costa Del Sol"],
+    "FFBCD9": ["Cotton Candy"],
+    "FFB7D5": ["Cotton Candy 2"],
+    "C2BDB6": ["Cotton Seed"],
+    "01371A": ["County Green"],
+    "4D282D": ["Cowboy"],
+    "81613C": ["Coyote Brown"],
+    "B95140": ["Crail"],
+    "DB5079": ["Cranberry"],
+    "462425": ["Crater Brown"],
+    "FFFDD0": ["Cream"],
+    "FFE5A0": ["Cream Brulee"],
+    "F5C85C": ["Cream Can"],
+    "1E0F04": ["Creole"],
+    "737829": ["Crete"],
+    "DC143C": ["Crimson"],
+    "9E1B32": ["Crimson (UA)"],
+    "736D58": ["Crocodile"],
+    "771F1F": ["Crown Of Thorns"],
+    "1C1208": ["Crowshead"],
+    "B5ECDF": ["Cruise"],
+    "004816": ["Crusoe"],
+    "FD7B33": ["Crusta"],
+    "A7D8DE": ["Crystal"],
+    "F5F5F5": ["Cultured"],
+    "924321": ["Cumin"],
+    "FDFFD5": ["Cumulus"],
+    "FBBEDA": ["Cupid"],
+    "2596D1": ["Curious Blue"],
+    "507672": ["Cutty Sark"],
+    "00B7EB": ["Cyan (Process)"],
+    "58427C": ["Cyber Grape"],
+    "FFD300": ["Cyber Yellow","Yellow (NCS)"],
+    "F56FA1": ["Cyclamen"],
+    "003E40": ["Cyprus"],
+    "012731": ["Daintree"],
+    "F9E4BC": ["Dairy Cream"],
+    "4F2398": ["Daisy Bush"],
+    "6E4B26": ["Dallas"],
+    "FED85D": ["Dandelion"],
+    "6093D1": ["Danube"],
+    "0000C8": ["Dark Blue"],
+    "666699": ["Dark Blue-Gray"],
+    "654321": ["Dark Brown"],
+    "770F05": ["Dark Burgundy"],
+    "5D3954": ["Dark Byzantium"],
+    "26428B": ["Dark Cornflower Blue"],
+    "008B8B": ["Dark Cyan"],
+    "3C2005": ["Dark Ebony"],
+    "536878": ["Dark Electric Blue","Payne\u0027s Grey"],
+    "0A480D": ["Dark Fern"],
+    "B8860B": ["Dark Goldenrod"],
+    "013220": ["Dark Green"],
+    "006400": ["Dark Green (X11)"],
+    "1A2421": ["Dark Jungle Green"],
+    "BDB76B": ["Dark Khaki"],
+    "483C32": ["Dark Lava","Taupe"],
+    "534B4F": ["Dark Liver"],
+    "543D37": ["Dark Liver (Horses)"],
+    "8B008B": ["Dark Magenta"],
+    "4A5D23": ["Dark Moss Green"],
+    "556B2F": ["Dark Olive Green"],
+    "FF8C00": ["Dark Orange"],
+    "9932CC": ["Dark Orchid"],
+    "03C03C": ["Dark Pastel Green"],
+    "301934": ["Dark Purple"],
+    "8B0000": ["Dark Red"],
+    "E9967A": ["Dark Salmon"],
+    "8FBC8F": ["Dark Sea Green"],
+    "3C1414": ["Dark Sienna"],
+    "8CBED6": ["Dark Sky Blue"],
+    "483D8B": ["Dark Slate Blue"],
+    "2F4F4F": ["Dark Slate Gray"],
+    "177245": ["Dark Spring Green"],
+    "661010": ["Dark Tan"],
+    "00CED1": ["Dark Turquoise"],
+    "9400D3": ["Dark Violet"],
+    "00703C": ["Dartmouth Green"],
+    "555555": ["Davy\u0027s Grey"],
+    "A6A29A": ["Dawn"],
+    "F3E9E5": ["Dawn Pink"],
+    "7AC488": ["De York"],
+    "D2DA97": ["Deco"],
+    "220878": ["Deep Blue"],
+    "E47698": ["Deep Blush"],
+    "4A3004": ["Deep Bronze"],
+    "DA3287": ["Deep Cerise","Cerise"],
+    "FAD6A5": ["Deep Champagne","Sunset","Tuscan"],
+    "B94E48": ["Deep Chestnut"],
+    "051040": ["Deep Cove"],
+    "002900": ["Deep Fir"],
+    "182D09": ["Deep Forest Green"],
+    "004B49": ["Deep Jungle Green"],
+    "1B127B": ["Deep Koamaru"],
+    "412010": ["Deep Oak"],
+    "FF1493": ["Deep Pink"],
+    "FF9933": ["Deep Saffron"],
+    "082567": ["Deep Sapphire"],
+    "01826B": ["Deep Sea"],
+    "095859": ["Deep Sea Green"],
+    "4A646C": ["Deep Space Sparkle"],
+    "7E5E60": ["Deep Taupe"],
+    "003532": ["Deep Teal"],
+    "B09A95": ["Del Rio"],
+    "396413": ["Dell"],
+    "A4A49D": ["Delta"],
+    "7563A8": ["Deluge"],
+    "1560BD": ["Denim"],
+    "2243B6": ["Denim Blue"],
+    "FFEED8": ["Derby"],
+    "AE6020": ["Desert"],
+    "EDC9AF": ["Desert Sand"],
+    "F8F8F7": ["Desert Storm"],
+    "EAFFFE": ["Dew"],
+    "DB995E": ["Di Serria"],
+    "130000": ["Diesel"],
+    "696969": ["Dim Gray"],
+    "5D7747": ["Dingley"],
+    "871550": ["Disco"],
+    "E29418": ["Dixie"],
+    "1E90FF": ["Dodger Blue"],
+    "D71868": ["Dogwood Rose"],
+    "F9FF8B": ["Dolly"],
+    "646077": ["Dolphin"],
+    "8E775E": ["Domino"],
+    "5D4C51": ["Don Juan"],
+    "A69279": ["Donkey Brown"],
+    "6B5755": ["Dorado"],
+    "EEE3AD": ["Double Colonial White"],
+    "FCF4D0": ["Double Pearl Lusta"],
+    "E6D7B9": ["Double Spanish White"],
+    "6D6C6C": ["Dove Gray"],
+    "092256": ["Downriver"],
+    "6FD0C5": ["Downy"],
+    "AF8751": ["Driftwood"],
+    "FDF7AD": ["Drover"],
+    "00009C": ["Duke Blue"],
+    "A899E6": ["Dull Lavender"],
+    "383533": ["Dune"],
+    "E5CCC9": ["Dust Storm"],
+    "A8989B": ["Dusty Gray"],
+    "EFDFBB": ["Dutch White"],
+    "B6BAA4": ["Eagle"],
+    "C9B93B": ["Earls Green"],
+    "FFF9E6": ["Early Dawn"],
+    "E1A95F": ["Earth Yellow"],
+    "414C7D": ["East Bay"],
+    "AC91CE": ["East Side"],
+    "1E9AB0": ["Eastern Blue"],
+    "E9E3E3": ["Ebb"],
+    "555D50": ["Ebony"],
+    "0C0B1D": ["Ebony 2"],
+    "26283B": ["Ebony Clay"],
+    "311C17": ["Eclipse"],
+    "C2B280": ["Ecru","Sand"],
+    "F5F3E5": ["Ecru White"],
+    "FA7814": ["Ecstasy"],
+    "105852": ["Eden"],
+    "C8E3D7": ["Edgewater"],
+    "A2AEAB": ["Edward"],
+    "1B1B1B": ["Eerie Black"],
+    "FFF4DD": ["Egg Sour"],
+    "FFEFC1": ["Egg White"],
+    "614051": ["Eggplant"],
+    "F0EAD6": ["Eggshell"],
+    "1034A6": ["Egyptian Blue"],
+    "16161D": ["Eigengrau"],
+    "1E1708": ["El Paso"],
+    "8F3E33": ["El Salva"],
+    "7DF9FF": ["Electric Blue"],
+    "00FF00": ["Electric Green","Green"],
+    "6F00FF": ["Electric Indigo"],
+    "CCFF00": ["Electric Lime"],
+    "BF00FF": ["Electric Purple"],
+    "8B00FF": ["Electric Violet"],
+    "8F00FF": ["Electric Violet","Violet"],
+    "123447": ["Elephant"],
+    "088370": ["Elf Green"],
+    "1C7C7D": ["Elm"],
+    "50C878": ["Emerald","Paris Green"],
+    "6C3082": ["Eminence"],
+    "514649": ["Emperor"],
+    "817377": ["Empress"],
+    "0056A7": ["Endeavour"],
+    "F8DD5C": ["Energy Yellow"],
+    "022D15": ["English Holly"],
+    "B48395": ["English Lavender"],
+    "AB4B52": ["English Red"],
+    "CC474B": ["English Vermillion"],
+    "563C5C": ["English Violet"],
+    "3E2B23": ["English Walnut"],
+    "8BA690": ["Envy"],
+    "E1BC64": ["Equator"],
+    "00FF40": ["Erin"],
+    "612718": ["Espresso"],
+    "211A0E": ["Eternity"],
+    "96C8A2": ["Eton Blue"],
+    "278A5B": ["Eucalyptus"],
+    "CFA39D": ["Eunry"],
+    "024E46": ["Evening Sea"],
+    "1C402E": ["Everglade"],
+    "427977": ["Faded Jade"],
+    "FFEFEC": ["Fair Pink"],
+    "7F626D": ["Falcon"],
+    "801818": ["Falu Red"],
+    "B53389": ["Fandango"],
+    "DE5285": ["Fandango Pink"],
+    "FAF3F0": ["Fantasy"],
+    "F400A1": ["Fashion Fuchsia","Hollywood Cerise"],
+    "E5AA70": ["Fawn"],
+    "796A78": ["Fedora"],
+    "9FDD8C": ["Feijoa"],
+    "4D5D53": ["Feldgrau"],
+    "63B76C": ["Fern"],
+    "657220": ["Fern Frond"],
+    "4F7942": ["Fern Green"],
+    "704F50": ["Ferra"],
+    "FBE96C": ["Festival"],
+    "F0FCEA": ["Feta"],
+    "6C541E": ["Field Drab"],
+    "B35213": ["Fiery Orange"],
+    "FF5470": ["Fiery Rose"],
+    "626649": ["Finch"],
+    "556D56": ["Finlandia"],
+    "692D54": ["Finn"],
+    "405169": ["Fiord"],
+    "AA4203": ["Fire"],
+    "E89928": ["Fire Bush"],
+    "CE2029": ["Fire Engine Red"],
+    "E95C4B": ["Fire Opal"],
+    "B22222": ["Firebrick"],
+    "0E2A30": ["Firefly"],
+    "E25822": ["Flame"],
+    "DA5B38": ["Flame Pea"],
+    "FF7D07": ["Flamenco"],
+    "F2552A": ["Flamingo"],
+    "EEDC82": ["Flax"],
+    "7B8265": ["Flax Smoke"],
+    "6F6A61": ["Flint"],
+    "A2006D": ["Flirt"],
+    "FFFAF0": ["Floral White"],
+    "15F4EE": ["Fluorescent Blue"],
+    "CA3435": ["Flush Mahogany"],
+    "D8FCFA": ["Foam"],
+    "D7D0FF": ["Fog"],
+    "CBCAB6": ["Foggy Gray"],
+    "5FA777": ["Forest Green (Crayola)","Aqua Forest"],
+    "014421": ["Forest Green (Traditional)","UP Forest Green"],
+    "228B22": ["Forest Green (Web)","Forest Green"],
+    "FFF1EE": ["Forget Me Not"],
+    "56B4BE": ["Fountain Blue"],
+    "FFDEB3": ["Frangipani"],
+    "856D4D": ["French Bistre"],
+    "0072BB": ["French Blue"],
+    "FD3F92": ["French Fuchsia"],
+    "BDBDC6": ["French Gray"],
+    "ECC7EE": ["French Lilac"],
+    "9EFD38": ["French Lime"],
+    "D473D4": ["French Mauve"],
+    "BDEDFD": ["French Pass"],
+    "FD6C9E": ["French Pink"],
+    "C72C48": ["French Raspberry"],
+    "F64A8A": ["French Rose"],
+    "77B5FE": ["French Sky Blue"],
+    "8806CE": ["French Violet"],
+    "990066": ["Fresh Eggplant"],
+    "807E79": ["Friar Gray"],
+    "B1E2C1": ["Fringy Flower"],
+    "F57584": ["Froly"],
+    "EDF5DD": ["Frost"],
+    "E936A7": ["Frostbite"],
+    "DBFFF8": ["Frosted Mint"],
+    "E4F6E7": ["Frostee"],
+    "4F9D5D": ["Fruit Salad"],
+    "C154C1": ["Fuchsia (Crayola)","Fuchsia Pink"],
+    "FF00FF": ["Fuchsia","Magenta"],
+    "7A58C1": ["Fuchsia Blue"],
+    "CC397B": ["Fuchsia Purple"],
+    "C74375": ["Fuchsia Rose"],
+    "BEDE0D": ["Fuego"],
+    "ECA927": ["Fuel Yellow"],
+    "E48400": ["Fulvous"],
+    "1959A8": ["Fun Blue"],
+    "016D39": ["Fun Green"],
+    "54534D": ["Fuscous Gray"],
+    "87421F": ["Fuzzy Wuzzy"],
+    "C45655": ["Fuzzy Wuzzy Brown"],
+    "163531": ["Gable Green"],
+    "DCDCDC": ["Gainsboro"],
+    "EFEFEF": ["Gallery"],
+    "DCB20C": ["Galliano"],
+    "E49B0F": ["Gamboge"],
+    "D18F1B": ["Geebung"],
+    "007F66": ["Generic Viridian"],
+    "15736B": ["Genoa"],
+    "FB8989": ["Geraldine"],
+    "D4DFE2": ["Geyser"],
+    "C7C9D5": ["Ghost"],
+    "F8F8FF": ["Ghost White"],
+    "523C94": ["Gigas"],
+    "B8B56A": ["Gimblet"],
+    "E8F2EB": ["Gin"],
+    "FFF9E2": ["Gin Fizz"],
+    "F8E4BF": ["Givry"],
+    "80B3C4": ["Glacier"],
+    "61845F": ["Glade Green"],
+    "6082B6": ["Glaucous"],
+    "AB92B3": ["Glossy Grape"],
+    "726D4E": ["Go Ben"],
+    "00AB66": ["Go Green"],
+    "3D7D52": ["Goblin"],
+    "A57C00": ["Gold"],
+    "E6BE8A": ["Gold (Crayola)","Gold Sand"],
+    "D4AF37": ["Gold (Metallic)"],
+    "FFD700": ["Gold (Web) (Golden)"],
+    "F18200": ["Gold Drop"],
+    "85754E": ["Gold Fusion"],
+    "DEBA13": ["Gold Tips"],
+    "E28913": ["Golden Bell"],
+    "996515": ["Golden Brown"],
+    "F0D52D": ["Golden Dream"],
+    "F5FB3D": ["Golden Fizz"],
+    "FDE295": ["Golden Glow"],
+    "DAA520": ["Golden Grass"],
+    "FCC200": ["Golden Poppy"],
+    "F0DB7D": ["Golden Sand"],
+    "FFCC5C": ["Golden Tainoi"],
+    "FFDF00": ["Golden Yellow"],
+    "FCD667": ["Goldenrod"],
+    "261414": ["Gondola"],
+    "0B1107": ["Gordons Green"],
+    "FFF14F": ["Gorse"],
+    "069B81": ["Gossamer"],
+    "D2F8B0": ["Gossip"],
+    "00573F": ["Gotham Green"],
+    "6D92A1": ["Gothic"],
+    "2F3CB3": ["Governor Bay"],
+    "E4D5B7": ["Grain Brown"],
+    "FFD38C": ["Grandis"],
+    "676767": ["Granite Gray"],
+    "8D8974": ["Granite Green"],
+    "D5F6E3": ["Granny Apple"],
+    "84A0A0": ["Granny Smith"],
+    "A8E4A0": ["Granny Smith Apple"],
+    "9DE093": ["Granny Smith Apple 2"],
+    "381A51": ["Grape"],
+    "251607": ["Graphite"],
+    "4A444B": ["Gravel"],
+    "808080": ["Grey","Gray"],
+    "BEBEBE": ["Gray (X11 Gray)"],
+    "465945": ["Gray Asparagus"],
+    "A2AAB3": ["Gray Chateau"],
+    "C3C3BD": ["Gray Nickel"],
+    "E7ECE6": ["Gray Nurse"],
+    "A9A491": ["Gray Olive"],
+    "C1BECD": ["Gray Suit"],
+    "1CAC78": ["Green (Crayola)"],
+    "00A877": ["Green (MUNSELL)"],
+    "009F6B": ["Green (NCS)"],
+    "00AD43": ["Green (PANTONE)"],
+    "00A550": ["Green (Pigment)"],
+    "66B032": ["Green (RYB)"],
+    "01A368": ["Green Haze"],
+    "24500F": ["Green House"],
+    "25311C": ["Green Kelp"],
+    "436A0D": ["Green Leaf"],
+    "A7F432": ["Green Lizard"],
+    "CBD3B0": ["Green Mist"],
+    "1D6142": ["Green Pea"],
+    "6EAEA1": ["Green Sheen"],
+    "A4AF6E": ["Green Smoke"],
+    "B8C1B1": ["Green Spring"],
+    "032B52": ["Green Vogue"],
+    "101405": ["Green Waterloo"],
+    "E8EBE0": ["Green White"],
+    "1164B4": ["Green-Blue"],
+    "2887C8": ["Green-Blue (Crayola)"],
+    "009966": ["Green-Cyan"],
+    "F0E891": ["Green-Yellow (Crayola)"],
+    "ADFF2F": ["Green-Yellow","Green Yellow"],
+    "D54600": ["Grenadier"],
+    "A99A86": ["Grullo"],
+    "BA0101": ["Guardsman Red"],
+    "051657": ["Gulf Blue"],
+    "80B3AE": ["Gulf Stream"],
+    "9DACB7": ["Gull Gray"],
+    "B6D3BF": ["Gum Leaf"],
+    "7CA1A6": ["Gumbo"],
+    "414257": ["Gun Powder"],
+    "2A3439": ["Gunmetal"],
+    "828685": ["Gunsmoke"],
+    "9A9577": ["Gurkha"],
+    "98811B": ["Hacienda"],
+    "6B2A14": ["Hairy Heath"],
+    "1B1035": ["Haiti"],
+    "FFFEE1": ["Half And Half"],
+    "85C4CC": ["Half Baked"],
+    "FDF6D3": ["Half Colonial White"],
+    "FEF7DE": ["Half Dutch White"],
+    "FEF4DB": ["Half Spanish White"],
+    "E5D8AF": ["Hampton"],
+    "446CCF": ["Han Blue"],
+    "5218FA": ["Han Purple"],
+    "3FFF00": ["Harlequin"],
+    "E6F2EA": ["Harp"],
+    "E0B974": ["Harvest Gold"],
+    "DA9100": ["Harvest Gold 2"],
+    "5590D9": ["Havelock Blue"],
+    "9D5616": ["Hawaiian Tan"],
+    "D4E2FC": ["Hawkes Blue"],
+    "FF7A00": ["Heat Wave"],
+    "541012": ["Heath"],
+    "B7C3D0": ["Heather"],
+    "B6B095": ["Heathered Gray"],
+    "2B3228": ["Heavy Metal"],
+    "DF73FF": ["Heliotrope"],
+    "AA98A9": ["Heliotrope Gray","Rose Quartz"],
+    "5E5D3B": ["Hemlock"],
+    "907874": ["Hemp"],
+    "B6316C": ["Hibiscus"],
+    "6F8E63": ["Highland"],
+    "ACA586": ["Hillary"],
+    "6A5D1B": ["Himalaya"],
+    "E6FFE9": ["Hint Of Green"],
+    "FBF9F9": ["Hint Of Red"],
+    "FAFDE4": ["Hint Of Yellow"],
+    "589AAF": ["Hippie Blue"],
+    "53824B": ["Hippie Green"],
+    "AE4560": ["Hippie Pink"],
+    "A1ADB5": ["Hit Gray"],
+    "FFAB81": ["Hit Pink"],
+    "C8A528": ["Hokey Pokey"],
+    "65869F": ["Hoki"],
+    "011D13": ["Holly"],
+    "4F1C70": ["Honey Flower"],
+    "F0FFF0": ["Honeydew"],
+    "EDFC84": ["Honeysuckle"],
+    "006DB0": ["Honolulu Blue"],
+    "49796B": ["Hooker\u0027s Green"],
+    "D06DA1": ["Hopbush"],
+    "5A87A0": ["Horizon"],
+    "604913": ["Horses Neck"],
+    "FF1DCE": ["Hot Magenta"],
+    "FF69B4": ["Hot Pink"],
+    "B38007": ["Hot Toddy"],
+    "CFF9F3": ["Humming Bird"],
+    "355E3B": ["Hunter Green"],
+    "161D10": ["Hunter Green 2"],
+    "877C7B": ["Hurricane"],
+    "B7A458": ["Husk"],
+    "B1F4E7": ["Ice Cold"],
+    "DAF4F0": ["Iceberg"],
+    "71A6D2": ["Iceberg 2"],
+    "FCF75E": ["Icterine"],
+    "319177": ["Illuminating Emerald"],
+    "F6A4C9": ["Illusion"],
+    "ED2939": ["Imperial Red","Red (PANTONE)"],
+    "B0E313": ["Inch Worm"],
+    "B2EC5D": ["Inchworm"],
+    "4C516D": ["Independence"],
+    "138808": ["India Green"],
+    "CD5C5C": ["Indian Red","Chestnut Rose"],
+    "4D1E01": ["Indian Tan"],
+    "E3A857": ["Indian Yellow"],
+    "4F69C6": ["Indigo"],
+    "00416A": ["Indigo Dye"],
+    "C26B03": ["Indochine"],
+    "002FA7": ["International Klein Blue"],
+    "130A8F": ["International Klein Blue 2"],
+    "FF4F00": ["International Orange (Aerospace)","International Orange"],
+    "BA160C": ["International Orange (Engineering)"],
+    "C0362C": ["International Orange (Golden Gate Bridge)"],
+    "5A4FCF": ["Iris"],
+    "5F3D26": ["Irish Coffee"],
+    "433120": ["Iroko"],
+    "D4D7D9": ["Iron"],
+    "676662": ["Ironside Gray"],
+    "86483C": ["Ironstone"],
+    "B3446C": ["Irresistible","Raspberry Rose"],
+    "F4F0EC": ["Isabelline"],
+    "FFFCEE": ["Island Spice"],
+    "B2FFFF": ["Italian Sky Blue"],
+    "FFFFF0": ["Ivory"],
+    "2E0329": ["Jacaranda"],
+    "3A2A6A": ["Jacarta"],
+    "2E1905": ["Jacko Bean"],
+    "20208D": ["Jacksons Purple"],
+    "00A86B": ["Jade"],
+    "EF863F": ["Jaffa"],
+    "C2E8E5": ["Jagged Ice"],
+    "350E57": ["Jagger"],
+    "080110": ["Jaguar"],
+    "5B3013": ["Jambalaya"],
+    "F4EBD3": ["Janna"],
+    "9D2933": ["Japanese Carmine"],
+    "0A6906": ["Japanese Laurel"],
+    "780109": ["Japanese Maple"],
+    "5B3256": ["Japanese Violet"],
+    "D87C63": ["Japonica"],
+    "F8DE7E": ["Jasmine","Mellow Yellow"],
+    "1FC2C2": ["Java"],
+    "A50B5E": ["Jazzberry Jam"],
+    "297B9A": ["Jelly Bean"],
+    "343434": ["Jet"],
+    "B5D2CE": ["Jet Stream"],
+    "126B40": ["Jewel"],
+    "3B1F1F": ["Jon"],
+    "F4CA16": ["Jonquil"],
+    "EEFF9A": ["Jonquil 2"],
+    "8AB9F1": ["Jordy Blue"],
+    "544333": ["Judge Gray"],
+    "7C7B82": ["Jumbo"],
+    "BDDA57": ["June Bud"],
+    "29AB87": ["Jungle Green"],
+    "B4CFD3": ["Jungle Mist"],
+    "6D9292": ["Juniper"],
+    "ECCDB9": ["Just Right"],
+    "5E483E": ["Kabul"],
+    "004620": ["Kaitoke Green"],
+    "C6C8BD": ["Kangaroo"],
+    "1E1609": ["Karaka"],
+    "FFEAD4": ["Karry"],
+    "507096": ["Kashmir Blue"],
+    "4CBB17": ["Kelly Green"],
+    "454936": ["Kelp"],
+    "7C1C05": ["Kenyan Copper"],
+    "3AB09E": ["Keppel"],
+    "E8F48C": ["Key Lime"],
+    "BFC921": ["Key Lime Pie"],
+    "C3B091": ["Khaki (Web)","Indian Khaki"],
+    "F0E68C": ["Khaki (X11) (Light Khaki)","Khaki"],
+    "E1EAD4": ["Kidnapper"],
+    "240C02": ["Kilamanjaro"],
+    "3A6A47": ["Killarney"],
+    "736C9F": ["Kimberly"],
+    "3E0480": ["Kingfisher Daisy"],
+    "882D17": ["Kobe","Sienna"],
+    "E79FC4": ["Kobi"],
+    "6B4423": ["Kobicha"],
+    "6E6D57": ["Kokoda"],
+    "354230": ["Kombu Green"],
+    "8F4B0E": ["Korma"],
+    "FFBD5F": ["Koromiko"],
+    "FFE772": ["Kournikova"],
+    "512888": ["Ksu Purple"],
+    "886221": ["Kumera"],
+    "368716": ["La Palma"],
+    "B3C110": ["La Rioja"],
+    "D6CADD": ["Languid Lavender"],
+    "26619C": ["Lapis Lazuli"],
+    "C6E610": ["Las Palmas"],
+    "C8B568": ["Laser"],
+    "FFFF66": ["Laser Lemon","Unmellow Yellow"],
+    "749378": ["Laurel"],
+    "A9BA9D": ["Laurel Green"],
+    "CF1020": ["Lava"],
+    "B57EDC": ["Lavender (Floral)","Lavender"],
+    "E6E6FA": ["Lavender (Web)"],
+    "CCCCFF": ["Lavender Blue","Periwinkle"],
+    "FFF0F5": ["Lavender Blush"],
+    "BDBBD7": ["Lavender Gray"],
+    "C4C3D0": ["Lavender Gray 2"],
+    "EE82EE": ["Lavender Magenta"],
+    "FBAED2": ["Lavender Pink"],
+    "967BB6": ["Lavender Purple"],
+    "FBA0E3": ["Lavender Rose"],
+    "7CFC00": ["Lawn Green"],
+    "967059": ["Leather"],
+    "FDE910": ["Lemon"],
+    "FFFACD": ["Lemon Chiffon"],
+    "CCA01D": ["Lemon Curry"],
+    "AC9E22": ["Lemon Ginger"],
+    "FDFF00": ["Lemon Glacier"],
+    "9B9E8F": ["Lemon Grass"],
+    "F6EABE": ["Lemon Meringue"],
+    "FFF44F": ["Lemon Yellow"],
+    "FFFF9F": ["Lemon Yellow (Crayola)"],
+    "545AA7": ["Liberty"],
+    "FDD5B1": ["Light Apricot"],
+    "ADD8E6": ["Light Blue"],
+    "F08080": ["Light Coral"],
+    "93CCEA": ["Light Cornflower Blue","Cornflower"],
+    "E0FFFF": ["Light Cyan"],
+    "C8AD7F": ["Light French Beige"],
+    "FAFAD2": ["Light Goldenrod Yellow"],
+    "D3D3D3": ["Light Gray"],
+    "90EE90": ["Light Green"],
+    "FED8B1": ["Light Orange"],
+    "C5CBE1": ["Light Periwinkle"],
+    "FFB6C1": ["Light Pink"],
+    "FFA07A": ["Light Salmon"],
+    "20B2AA": ["Light Sea Green"],
+    "87CEFA": ["Light Sky Blue"],
+    "778899": ["Light Slate Gray"],
+    "B0C4DE": ["Light Steel Blue"],
+    "C9A0DC": ["Light Wisteria"],
+    "FFFFE0": ["Light Yellow"],
+    "FCC01E": ["Lightning Yellow"],
+    "C8A2C8": ["Lilac"],
+    "9874D3": ["Lilac Bush"],
+    "AE98AA": ["Lilac Luster"],
+    "C8AABF": ["Lily"],
+    "E7F8FF": ["Lily White"],
+    "76BD17": ["Lima"],
+    "32CD32": ["Lime Green"],
+    "6F9D02": ["Limeade"],
+    "747D63": ["Limed Ash"],
+    "AC8A56": ["Limed Oak"],
+    "394851": ["Limed Spruce"],
+    "195905": ["Lincoln Green"],
+    "FAF0E6": ["Linen"],
+    "D9E4F5": ["Link Water"],
+    "AB0563": ["Lipstick"],
+    "423921": ["Lisbon Brown"],
+    "6CA0DC": ["Little Boy Blue"],
+    "674C47": ["Liver"],
+    "B86D29": ["Liver (Dogs)"],
+    "6C2E1F": ["Liver (Organ)"],
+    "987456": ["Liver Chestnut"],
+    "4D282E": ["Livid Brown"],
+    "EEF4DE": ["Loafer"],
+    "BDC9CE": ["Loblolly"],
+    "2C8C84": ["Lochinvar"],
+    "007EC7": ["Lochmara"],
+    "A8AF8E": ["Locust"],
+    "242A1D": ["Log Cabin"],
+    "AAA9CD": ["Logan"],
+    "DFCFDB": ["Lola"],
+    "BEA6C3": ["London Hue"],
+    "6D0101": ["Lonestar"],
+    "863C3C": ["Lotus"],
+    "460B41": ["Loulou"],
+    "AF9F1C": ["Lucky"],
+    "1A1A68": ["Lucky Point"],
+    "3C493A": ["Lunar Green"],
+    "A7882C": ["Luxor Gold"],
+    "697E9A": ["Lynch"],
+    "D9F7FF": ["Mabel"],
+    "FFB97B": ["Macaroni And Cheese"],
+    "FFBD88": ["Macaroni And Cheese 2"],
+    "B7F0BE": ["Madang"],
+    "CC3336": ["Madder Lake"],
+    "09255D": ["Madison"],
+    "3F3002": ["Madras"],
+    "F653A6": ["Magenta (Crayola)"],
+    "CA1F7B": ["Magenta (Dye)"],
+    "D0417E": ["Magenta (PANTONE)"],
+    "FF0090": ["Magenta (Process)"],
+    "9F4576": ["Magenta Haze"],
+    "AAF0D1": ["Magic Mint"],
+    "F8F4FF": ["Magnolia"],
+    "F2E8D7": ["Magnolia 2"],
+    "C04000": ["Mahogany"],
+    "4E0606": ["Mahogany 2"],
+    "B06608": ["Mai Tai"],
+    "F5D5A0": ["Maize"],
+    "F2C649": ["Maize (Crayola)"],
+    "6050DC": ["Majorelle Blue"],
+    "897D6D": ["Makara"],
+    "444954": ["Mako"],
+    "0BDA51": ["Malachite"],
+    "7DC8F7": ["Malibu"],
+    "233418": ["Mallard"],
+    "BDB2A1": ["Malta"],
+    "8E8190": ["Mamba"],
+    "979AAA": ["Manatee"],
+    "8D90A1": ["Manatee 2"],
+    "AD781B": ["Mandalay"],
+    "F37A48": ["Mandarin"],
+    "E25465": ["Mandy"],
+    "F2C3B2": ["Mandys Pink"],
+    "FDBE02": ["Mango"],
+    "FF8243": ["Mango Tango"],
+    "E77200": ["Mango Tango 2"],
+    "F5C999": ["Manhattan"],
+    "74C365": ["Mantis"],
+    "8B9C90": ["Mantle"],
+    "EEEF78": ["Manz"],
+    "880085": ["Mardi Gras"],
+    "350036": ["Mardi Gras 2"],
+    "EAA221": ["Marigold"],
+    "B98D28": ["Marigold 2"],
+    "FBE870": ["Marigold Yellow"],
+    "286ACD": ["Mariner"],
+    "800000": ["Maroon (Web)","Maroon"],
+    "B03060": ["Maroon (X11)"],
+    "520C17": ["Maroon Oak"],
+    "0B0F08": ["Marshland"],
+    "AFA09E": ["Martini"],
+    "363050": ["Martinique"],
+    "F8DB9D": ["Marzipan"],
+    "403B38": ["Masala"],
+    "1B659D": ["Matisse"],
+    "B05D54": ["Matrix"],
+    "4E3B41": ["Matterhorn"],
+    "E0B0FF": ["Mauve"],
+    "915F6D": ["Mauve Taupe","Raspberry Glace"],
+    "EF98AA": ["Mauvelous"],
+    "F091A9": ["Mauvelous 2"],
+    "D8C2D5": ["Maverick"],
+    "47ABCC": ["Maximum Blue"],
+    "30BFBF": ["Maximum Blue Green"],
+    "ACACE6": ["Maximum Blue Purple"],
+    "5E8C31": ["Maximum Green"],
+    "D9E650": ["Maximum Green Yellow"],
+    "733380": ["Maximum Purple"],
+    "D92121": ["Maximum Red"],
+    "A63A79": ["Maximum Red Purple"],
+    "FAFA37": ["Maximum Yellow"],
+    "F2BA49": ["Maximum Yellow Red"],
+    "4C9141": ["May Green"],
+    "73C2FB": ["Maya Blue"],
+    "66DDAA": ["Medium Aquamarine"],
+    "0000CD": ["Medium Blue"],
+    "E2062C": ["Medium Candy Apple Red"],
+    "AF4035": ["Medium Carmine"],
+    "F3E5AB": ["Medium Champagne"],
+    "BA55D3": ["Medium Orchid"],
+    "9370DB": ["Medium Purple"],
+    "BB3385": ["Medium Red Violet"],
+    "3CB371": ["Medium Sea Green"],
+    "7B68EE": ["Medium Slate Blue"],
+    "00FA9A": ["Medium Spring Green"],
+    "48D1CC": ["Medium Turquoise"],
+    "C71585": ["Medium Violet-Red","Red-Violet","Red Violet"],
+    "E4C2D5": ["Melanie"],
+    "300529": ["Melanzane"],
+    "F8B878": ["Mellow Apricot"],
+    "FEBAAD": ["Melon"],
+    "C7C1FF": ["Melrose"],
+    "E5E5E5": ["Mercury"],
+    "F6F0E6": ["Merino"],
+    "413C37": ["Merlin"],
+    "831923": ["Merlot"],
+    "49371B": ["Metallic Bronze"],
+    "71291D": ["Metallic Copper"],
+    "D3AF37": ["Metallic Gold"],
+    "0A7E8C": ["Metallic Seaweed"],
+    "9C7C38": ["Metallic Sunburst"],
+    "D07D12": ["Meteor"],
+    "3C1F76": ["Meteorite"],
+    "E4007C": ["Mexican Pink"],
+    "A72525": ["Mexican Red"],
+    "5F5F6E": ["Mid Gray"],
+    "7ED4E6": ["Middle Blue"],
+    "8DD9CC": ["Middle Blue Green"],
+    "8B72BE": ["Middle Blue Purple"],
+    "4D8C57": ["Middle Green"],
+    "ACBF60": ["Middle Green Yellow"],
+    "8B8680": ["Middle Grey","Natural Gray"],
+    "D982B5": ["Middle Purple"],
+    "E58E73": ["Middle Red"],
+    "A55353": ["Middle Red Purple"],
+    "FFEB00": ["Middle Yellow"],
+    "ECB176": ["Middle Yellow Red"],
+    "011635": ["Midnight"],
+    "702670": ["Midnight 2"],
+    "191970": ["Midnight Blue"],
+    "003366": ["Midnight Blue 2"],
+    "004953": ["Midnight Green (Eagle Green)"],
+    "041004": ["Midnight Moss"],
+    "2D2510": ["Mikado"],
+    "FFC40C": ["Mikado Yellow"],
+    "FAFFA4": ["Milan"],
+    "B81104": ["Milano Red"],
+    "FFF6D4": ["Milk Punch"],
+    "594433": ["Millbrook"],
+    "FFDAE9": ["Mimi Pink"],
+    "F8FDD3": ["Mimosa"],
+    "E3F988": ["Mindaro"],
+    "323232": ["Mine Shaft"],
+    "3F5D53": ["Mineral Green"],
+    "36747D": ["Ming"],
+    "F5E050": ["Minion Yellow"],
+    "3F307F": ["Minsk"],
+    "3EB489": ["Mint"],
+    "F5FFFA": ["Mint Cream"],
+    "98FF98": ["Mint Green"],
+    "F1EEC1": ["Mint Julep"],
+    "C4F4EB": ["Mint Tulip"],
+    "161928": ["Mirage"],
+    "D1D2DD": ["Mischka"],
+    "C4C4BC": ["Mist Gray"],
+    "BBB477": ["Misty Moss"],
+    "FFE4E1": ["Misty Rose"],
+    "7F7589": ["Mobster"],
+    "6E1D14": ["Moccaccino"],
+    "782D19": ["Mocha"],
+    "C04737": ["Mojo"],
+    "FFA194": ["Mona Lisa"],
+    "8B0723": ["Monarch"],
+    "4A3C30": ["Mondo"],
+    "B5A27F": ["Mongoose"],
+    "8A8389": ["Monsoon"],
+    "83D0C6": ["Monte Carlo"],
+    "C7031E": ["Monza"],
+    "7F76D3": ["Moody Blue"],
+    "FCFEDA": ["Moon Glow"],
+    "DCDDCC": ["Moon Mist"],
+    "D6CEF6": ["Moon Raker"],
+    "8DA399": ["Morning Blue"],
+    "9EDEE0": ["Morning Glory"],
+    "441D00": ["Morocco Brown"],
+    "504351": ["Mortar"],
+    "036A6E": ["Mosque"],
+    "ADDFAD": ["Moss Green"],
+    "8A9A5B": ["Moss Green","Turtle Green"],
+    "30BA8F": ["Mountain Meadow"],
+    "1AB385": ["Mountain Meadow 2"],
+    "959396": ["Mountain Mist"],
+    "997A8D": ["Mountbatten Pink"],
+    "18453B": ["Msu Green"],
+    "B78E5C": ["Muddy Waters"],
+    "AA8B5B": ["Muesli"],
+    "C54B8C": ["Mulberry"],
+    "C8509B": ["Mulberry (Crayola)"],
+    "5C0536": ["Mulberry Wood"],
+    "8C472F": ["Mule Fawn"],
+    "4E4562": ["Mulled Wine"],
+    "FFDB58": ["Mustard"],
+    "D69188": ["My Pink"],
+    "FFB31F": ["My Sin"],
+    "317873": ["Myrtle Green"],
+    "D65282": ["Mystic"],
+    "E2EBED": ["Mystic 2"],
+    "AD4379": ["Mystic Maroon"],
+    "F6ADC6": ["Nadeshiko Pink"],
+    "4B5D52": ["Nandor"],
+    "ACA494": ["Napa"],
+    "FADA5E": ["Naples Yellow","Royal Yellow","Stil De Grain Yellow"],
+    "EDF9F1": ["Narvik"],
+    "FFDEAD": ["Navajo White"],
+    "000080": ["Navy Blue"],
+    "CBDBD6": ["Nebula"],
+    "FFE2C5": ["Negroni"],
+    "4666FF": ["Neon Blue"],
+    "FFA343": ["Neon Carrot"],
+    "FE4164": ["Neon Fuchsia"],
+    "39FF14": ["Neon Green"],
+    "8EABC1": ["Nepal"],
+    "7CB7BB": ["Neptune"],
+    "140600": ["Nero"],
+    "646E75": ["Nevada"],
+    "F3D69D": ["New Orleans"],
+    "D7837F": ["New York Pink"],
+    "06A189": ["Niagara"],
+    "727472": ["Nickel"],
+    "1F120F": ["Night Rider"],
+    "AA375A": ["Night Shadz"],
+    "193751": ["Nile Blue"],
+    "B7B1B1": ["Nobel"],
+    "BAB1A2": ["Nomad"],
+    "A4DDED": ["Non-Photo Blue"],
+    "A8BD9F": ["Norway"],
+    "C59922": ["Nugget"],
+    "81422C": ["Nutmeg"],
+    "683600": ["Nutmeg Wood Finish"],
+    "E9FFDB": ["Nyanza"],
+    "FEEFCE": ["Oasis"],
+    "02866F": ["Observatory"],
+    "4F42B5": ["Ocean Blue"],
+    "41AA78": ["Ocean Green"],
+    "48BF91": ["Ocean Green 2"],
+    "CC7722": ["Ochre"],
+    "E6F8F3": ["Off Green"],
+    "FEF9E3": ["Off Yellow"],
+    "281E15": ["Oil"],
+    "901E1E": ["Old Brick"],
+    "43302E": ["Old Burgundy"],
+    "724A2F": ["Old Copper"],
+    "CFB53B": ["Old Gold"],
+    "FDF5E6": ["Old Lace"],
+    "796878": ["Old Lavender"],
+    "673147": ["Old Mauve","Wine Dregs"],
+    "C08081": ["Old Rose"],
+    "808000": ["Olive"],
+    "6B8E23": ["Olive Drab (#3)","Olive Drab"],
+    "3C341F": ["Olive Drab #7"],
+    "B5B35C": ["Olive Green"],
+    "8B8470": ["Olive Haze"],
+    "716E10": ["Olivetone"],
+    "9AB973": ["Olivine"],
+    "CDF4FF": ["Onahau"],
+    "2F270E": ["Onion"],
+    "353839": ["Onyx"],
+    "A8C3BC": ["Opal"],
+    "A9C6C2": ["Opal 2"],
+    "B784A7": ["Opera Mauve"],
+    "8E6F70": ["Opium"],
+    "377475": ["Oracle"],
+    "FF7538": ["Orange (Crayola)"],
+    "FF5800": ["Orange (PANTONE)"],
+    "FFA500": ["Orange (Web)","Web Orange"],
+    "FF7F00": ["Orange","Flush Orange"],
+    "FF9F00": ["Orange Peel"],
+    "FFA000": ["Orange Peel 2"],
+    "C45719": ["Orange Roughy"],
+    "FA5B3D": ["Orange Soda"],
+    "FEFCED": ["Orange White"],
+    "FF5349": ["Orange-Red (Crayola)","Red-Orange"],
+    "FF681F": ["Orange-Red","Red-Orange (Crayola)","Orange"],
+    "F5BD1F": ["Orange-Yellow"],
+    "F8D568": ["Orange-Yellow (Crayola)"],
+    "DA70D6": ["Orchid"],
+    "E29CD2": ["Orchid (Crayola)","Light Orchid"],
+    "F2BDCD": ["Orchid Pink"],
+    "FFFDF3": ["Orchid White"],
+    "9B4703": ["Oregon"],
+    "015E85": ["Orient"],
+    "C69191": ["Oriental Pink"],
+    "F3FBD4": ["Orinoco"],
+    "878D91": ["Oslo Gray"],
+    "E9F8ED": ["Ottoman"],
+    "841617": ["Ou Crimson Red"],
+    "2D383A": ["Outer Space (Crayola)","Outer Space"],
+    "FF6037": ["Outrageous Orange"],
+    "FF6E4A": ["Outrageous Orange 2"],
+    "4A0000": ["Oxblood"],
+    "002147": ["Oxford Blue"],
+    "384555": ["Oxford Blue 2"],
+    "779E86": ["Oxley"],
+    "DAFAFF": ["Oyster Bay"],
+    "E9CECD": ["Oyster Pink"],
+    "A65529": ["Paarl"],
+    "776F61": ["Pablo"],
+    "1CA9C9": ["Pacific Blue"],
+    "009DC4": ["Pacific Blue 2"],
+    "778120": ["Pacifika"],
+    "411F10": ["Paco"],
+    "ADE6C4": ["Padua"],
+    "006600": ["Pakistan Green"],
+    "682860": ["Palatinate Purple"],
+    "FFFF99": ["Pale Canary"],
+    "9BC4E2": ["Pale Cerulean"],
+    "ED7A9B": ["Pale Dogwood","Rose Pompadour"],
+    "C0D3B9": ["Pale Leaf"],
+    "988D77": ["Pale Oyster"],
+    "FADADD": ["Pale Pink"],
+    "FDFEB8": ["Pale Prim"],
+    "FAE6FA": ["Pale Purple (PANTONE)"],
+    "FFE1F2": ["Pale Rose"],
+    "C9C0BB": ["Pale Silver","Silver (Crayola)","Silver Rust"],
+    "6E7783": ["Pale Sky"],
+    "C3BFC1": ["Pale Slate"],
+    "ECEBBD": ["Pale Spring Bud","Spring Green (Crayola)","Fall Green"],
+    "09230F": ["Palm Green"],
+    "19330E": ["Palm Leaf"],
+    "F4F2EE": ["Pampas"],
+    "EAF6EE": ["Panache"],
+    "EDCDAB": ["Pancho"],
+    "78184A": ["Pansy Purple"],
+    "009B7D": ["Paolo Veronese Green"],
+    "FFEFD5": ["Papaya Whip"],
+    "8D0226": ["Paprika"],
+    "E63E62": ["Paradise Pink"],
+    "317D82": ["Paradiso"],
+    "F1E9D2": ["Parchment"],
+    "FFF46E": ["Paris Daisy"],
+    "26056A": ["Paris M"],
+    "CADCD4": ["Paris White"],
+    "134F19": ["Parsley"],
+    "77DD77": ["Pastel Green"],
+    "FFD1DC": ["Pastel Pink"],
+    "DEA5A4": ["Pastel Pink 2"],
+    "639A8F": ["Patina"],
+    "800080": ["Patriarch","Purple (Web)"],
+    "DEF5FF": ["Pattens Blue"],
+    "260368": ["Paua"],
+    "D7C498": ["Pavlova"],
+    "FFE5B4": ["Peach"],
+    "FFCBA4": ["Peach (Crayola)","Flesh"],
+    "FFF0DB": ["Peach Cream"],
+    "FFCC99": ["Peach Orange"],
+    "FFDAB9": ["Peach Puff"],
+    "FFDCD6": ["Peach Schnapps"],
+    "FADFAD": ["Peach Yellow"],
+    "782F16": ["Peanut"],
+    "D1E231": ["Pear"],
+    "E8E0D5": ["Pearl Bush"],
+    "FCF4DC": ["Pearl Lusta"],
+    "B768A2": ["Pearly Purple"],
+    "716B56": ["Peat"],
+    "3EABBF": ["Pelorous"],
+    "E3F5E1": ["Peppermint"],
+    "A9BEF2": ["Perano"],
+    "D0BEF8": ["Perfume"],
+    "E1E6D6": ["Periglacial Blue"],
+    "C3CDE6": ["Periwinkle (Crayola)","Periwinkle Gray"],
+    "E12C2C": ["Permanent Geranium Lake"],
+    "1C39BB": ["Persian Blue"],
+    "00A693": ["Persian Green"],
+    "32127A": ["Persian Indigo"],
+    "D99058": ["Persian Orange"],
+    "F77FBE": ["Persian Pink"],
+    "701C1C": ["Persian Plum","Prune"],
+    "CC3333": ["Persian Red"],
+    "FE28A2": ["Persian Rose"],
+    "FF6B53": ["Persimmon"],
+    "EC5800": ["Persimmon 2"],
+    "7F3A02": ["Peru Tan"],
+    "7C7631": ["Pesto"],
+    "DB9690": ["Petite Orchid"],
+    "96A8A1": ["Pewter"],
+    "8BA8B7": ["Pewter Blue"],
+    "A3807B": ["Pharlap"],
+    "DF00FF": ["Phlox","Psychedelic Purple"],
+    "000F89": ["Phthalo Blue"],
+    "123524": ["Phthalo Green"],
+    "FFF39D": ["Picasso"],
+    "6E4826": ["Pickled Bean"],
+    "314459": ["Pickled Bluewood"],
+    "2E2787": ["Picotee Blue"],
+    "45B1E8": ["Picton Blue"],
+    "C30B4E": ["Pictorial Carmine"],
+    "FDD7E4": ["Pig Pink"],
+    "AFBDD9": ["Pigeon Post"],
+    "FDDDE6": ["Piggy Pink"],
+    "4B0082": ["Pigment Indigo"],
+    "6D5E54": ["Pine Cone"],
+    "C7CD90": ["Pine Glade"],
+    "01796F": ["Pine Green"],
+    "2A2F23": ["Pine Tree"],
+    "171F04": ["Pine Tree 2"],
+    "FFC0CB": ["Pink"],
+    "D74894": ["Pink (PANTONE)"],
+    "FF66FF": ["Pink Flamingo"],
+    "FC74FD": ["Pink Flamingo 2"],
+    "E1C0C8": ["Pink Flare"],
+    "FFDDF4": ["Pink Lace"],
+    "FFF1D8": ["Pink Lady"],
+    "D8B2D1": ["Pink Lavender"],
+    "F78FA7": ["Pink Sherbet"],
+    "BEB5B7": ["Pink Swan"],
+    "C96323": ["Piper"],
+    "FEF4CC": ["Pipi"],
+    "FFE1DF": ["Pippin"],
+    "BA7F03": ["Pirate Gold"],
+    "9DC209": ["Pistachio"],
+    "93C572": ["Pistachio 2"],
+    "C0D8B6": ["Pixie Green"],
+    "FF9000": ["Pizazz"],
+    "C99415": ["Pizza"],
+    "27504B": ["Plantation"],
+    "E5E4E2": ["Platinum"],
+    "843179": ["Plum"],
+    "DDA0DD": ["Plum (Web)"],
+    "8E4585": ["Plum 2"],
+    "5946B2": ["Plump Purple"],
+    "8F021C": ["Pohutukawa"],
+    "E5F9F6": ["Polar"],
+    "5DA493": ["Polished Pine"],
+    "8DA8CC": ["Polo Blue"],
+    "F34723": ["Pomegranate"],
+    "86608E": ["Pomp And Power"],
+    "660045": ["Pompadour"],
+    "BE4F62": ["Popstar"],
+    "EFF2F3": ["Porcelain"],
+    "EAAE69": ["Porsche"],
+    "251F4F": ["Port Gore"],
+    "FFFFB4": ["Portafino"],
+    "8B9FEE": ["Portage"],
+    "F9E663": ["Portica"],
+    "FF5A36": ["Portland Orange"],
+    "F5E7E2": ["Pot Pourri"],
+    "8C5738": ["Potters Clay"],
+    "BCC9C2": ["Powder Ash"],
+    "B0E0E6": ["Powder Blue"],
+    "9A3820": ["Prairie Sand"],
+    "D0C0E5": ["Prelude"],
+    "F0E2EC": ["Prim"],
+    "EDEA99": ["Primrose"],
+    "F58025": ["Princeton Orange"],
+    "FEF5F1": ["Provincial Pink"],
+    "003153": ["Prussian Blue"],
+    "CC8899": ["Puce"],
+    "7D2C14": ["Pueblo"],
+    "3FC1AA": ["Puerto Rico"],
+    "644117": ["Pullman Brown (Ups Brown)"],
+    "C2CAC4": ["Pumice"],
+    "FF7518": ["Pumpkin"],
+    "B1610B": ["Pumpkin Skin"],
+    "DC4333": ["Punch"],
+    "4D3D14": ["Punga"],
+    "6A0DAD": ["Purple"],
+    "9F00C5": ["Purple (MUNSELL)"],
+    "A020F0": ["Purple (X11)","Veronica"],
+    "660099": ["Purple 2"],
+    "652DC1": ["Purple Heart"],
+    "9678B6": ["Purple Mountain Majesty","Purple Mountain\u0027s Majesty"],
+    "4E5180": ["Purple Navy"],
+    "FE4EDA": ["Purple Pizzazz"],
+    "FF00CC": ["Purple Pizzazz 2"],
+    "9C51B6": ["Purple Plum"],
+    "9A4EAE": ["Purpureus"],
+    "E7CD8C": ["Putty"],
+    "FFFDF4": ["Quarter Pearl Lusta"],
+    "F7F2E1": ["Quarter Spanish White"],
+    "436B95": ["Queen Blue"],
+    "E8CCD7": ["Queen Pink"],
+    "A6A6A6": ["Quick Silver"],
+    "BD978E": ["Quicksand"],
+    "D6D6D1": ["Quill Gray"],
+    "8E3A59": ["Quinacridone Magenta"],
+    "623F2D": ["Quincy"],
+    "0C1911": ["Racing Green"],
+    "FF355E": ["Radical Red"],
+    "EADAB8": ["Raffia"],
+    "B9C8AC": ["Rainee"],
+    "242124": ["Raisin Black"],
+    "FBAB60": ["Rajah"],
+    "F7B668": ["Rajah 2"],
+    "2E3222": ["Rangitoto"],
+    "1C1E13": ["Rangoon Green"],
+    "E30B5D": ["Raspberry"],
+    "727B89": ["Raven"],
+    "D27D46": ["Raw Sienna"],
+    "D68A59": ["Raw Sienna 2"],
+    "734A12": ["Raw Umber"],
+    "826644": ["Raw Umber 2"],
+    "FF33CC": ["Razzle Dazzle Rose"],
+    "E30B5C": ["Razzmatazz"],
+    "E3256B": ["Razzmatazz 2"],
+    "8D4E85": ["Razzmic Berry"],
+    "663399": ["Rebecca Purple"],
+    "3C1206": ["Rebel"],
+    "FF0000": ["Red"],
+    "EE204D": ["Red (Crayola)"],
+    "F2003C": ["Red (MUNSELL)"],
+    "C40233": ["Red (NCS)"],
+    "ED1C24": ["Red (Pigment)"],
+    "FE2712": ["Red (RYB)"],
+    "7B3801": ["Red Beech"],
+    "8E0000": ["Red Berry"],
+    "DA6A41": ["Red Damask"],
+    "860111": ["Red Devil"],
+    "FF3F34": ["Red Orange"],
+    "6E0902": ["Red Oxide"],
+    "ED0A3F": ["Red Ribbon"],
+    "80341F": ["Red Robin"],
+    "FD3A4A": ["Red Salsa"],
+    "D05F04": ["Red Stage"],
+    "FF4500": ["Red-Orange (Color Wheel)"],
+    "E40078": ["Red-Purple"],
+    "922B3E": ["Red-Violet (Color Wheel)"],
+    "C0448F": ["Red-Violet (Crayola)"],
+    "5D1E0F": ["Redwood"],
+    "A45A52": ["Redwood 2"],
+    "C9FFA2": ["Reef"],
+    "9F821C": ["Reef Gold"],
+    "013F6A": ["Regal Blue"],
+    "86949F": ["Regent Gray"],
+    "AAD6E6": ["Regent St Blue"],
+    "FEEBF3": ["Remy"],
+    "A86515": ["Reno Sand"],
+    "002387": ["Resolution Blue"],
+    "2C1632": ["Revolver"],
+    "2E3F62": ["Rhino"],
+    "777696": ["Rhythm"],
+    "FFFEF0": ["Rice Cake"],
+    "EEFFE2": ["Rice Flower"],
+    "004040": ["Rich Black"],
+    "010B13": ["Rich Black (Fogra29)"],
+    "010203": ["Rich Black (Fogra39)"],
+    "A85307": ["Rich Gold"],
+    "444C38": ["Rifle Green"],
+    "BBD009": ["Rio Grande"],
+    "F4D81C": ["Ripe Lemon"],
+    "410056": ["Ripe Plum"],
+    "8BE6D8": ["Riptide"],
+    "434C59": ["River Bed"],
+    "EAC674": ["Rob Roy"],
+    "00CCCC": ["Robin Egg Blue","Robin\u0027s Egg Blue"],
+    "4D3833": ["Rock"],
+    "9EB1CD": ["Rock Blue"],
+    "BA450C": ["Rock Spray"],
+    "8A7F80": ["Rocket Metallic"],
+    "C9B29B": ["Rodeo Dust"],
+    "A91101": ["Rojo Spanish Red"],
+    "747D83": ["Rolling Stone"],
+    "DE6360": ["Roman"],
+    "795D4C": ["Roman Coffee"],
+    "838996": ["Roman Silver"],
+    "FFFEFD": ["Romance"],
+    "FFD2B7": ["Romantic"],
+    "ECC54E": ["Ronchi"],
+    "A62F20": ["Roof Terracotta"],
+    "8E4D1E": ["Rope"],
+    "FF007F": ["Rose"],
+    "F9429E": ["Rose Bonbon"],
+    "FBB2A3": ["Rose Bud"],
+    "800B47": ["Rose Bud Cherry"],
+    "9E5E6F": ["Rose Dust"],
+    "674846": ["Rose Ebony"],
+    "E7BCB4": ["Rose Fog"],
+    "E32636": ["Rose Madder","Alizarin Crimson"],
+    "BF5500": ["Rose Of Sharon"],
+    "FF66CC": ["Rose Pink"],
+    "C21E56": ["Rose Red"],
+    "905D5D": ["Rose Taupe"],
+    "AB4E52": ["Rose Vale"],
+    "FFF6F5": ["Rose White"],
+    "65000B": ["Rosewood"],
+    "D40000": ["Rosso Corsa"],
+    "BC8F8F": ["Rosy Brown"],
+    "C6A84B": ["Roti"],
+    "A23B6C": ["Rouge"],
+    "002366": ["Royal Blue (Dark)"],
+    "4169E1": ["Royal Blue (Light)","Royal Blue"],
+    "AB3472": ["Royal Heath"],
+    "6B3FA0": ["Royal Purple"],
+    "7851A9": ["Royal Purple 2"],
+    "CE4676": ["Ruber"],
+    "D10056": ["Rubine Red"],
+    "E0115F": ["Ruby"],
+    "9B111E": ["Ruby Red"],
+    "A81C07": ["Rufous"],
+    "796989": ["Rum"],
+    "F9F8E4": ["Rum Swizzle"],
+    "80461B": ["Russet"],
+    "755A57": ["Russett"],
+    "679267": ["Russian Green"],
+    "32174D": ["Russian Violet"],
+    "B7410E": ["Rust"],
+    "480404": ["Rustic Red"],
+    "86560A": ["Rusty Nail"],
+    "DA2C43": ["Rusty Red"],
+    "043927": ["Sacramento State Green"],
+    "4C3024": ["Saddle"],
+    "8B4513": ["Saddle Brown"],
+    "583401": ["Saddle Brown 2"],
+    "FF7800": ["Safety Orange"],
+    "FF6700": ["Safety Orange (Blaze Orange)"],
+    "EED202": ["Safety Yellow"],
+    "F4C430": ["Saffron"],
+    "F9BF58": ["Saffron Mango"],
+    "9EA587": ["Sage"],
+    "BCB88A": ["Sage 2"],
+    "B7A214": ["Sahara"],
+    "F1E788": ["Sahara Sand"],
+    "B8E0F9": ["Sail"],
+    "097F4B": ["Salem"],
+    "FF8C69": ["Salmon"],
+    "FA8072": ["Salmon 2"],
+    "FF91A4": ["Salmon Pink","Pink Salmon"],
+    "FEDB8D": ["Salomie"],
+    "685E6E": ["Salt Box"],
+    "F1F7F2": ["Saltpan"],
+    "3A2010": ["Sambuca"],
+    "0B6207": ["San Felix"],
+    "304B6A": ["San Juan"],
+    "456CAC": ["San Marino"],
+    "826F65": ["Sand Dune"],
+    "AA8D6F": ["Sandal"],
+    "AB917A": ["Sandrift"],
+    "796D62": ["Sandstone"],
+    "F5E7A2": ["Sandwisp"],
+    "FFEAC8": ["Sandy Beach"],
+    "F4A460": ["Sandy Brown"],
+    "92000A": ["Sangria"],
+    "8D3D38": ["Sanguine Brown"],
+    "B16D52": ["Santa Fe"],
+    "9FA0B1": ["Santas Gray"],
+    "507D2A": ["Sap Green"],
+    "DED4A4": ["Sapling"],
+    "0F52BA": ["Sapphire"],
+    "2F519E": ["Sapphire 2"],
+    "0067A5": ["Sapphire Blue","Sapphire (Crayola)"],
+    "555B10": ["Saratoga"],
+    "E6E4D4": ["Satin Linen"],
+    "CBA135": ["Satin Sheen Gold"],
+    "FFF5F3": ["Sauvignon"],
+    "FFF4E0": ["Sazerac"],
+    "675FA6": ["Scampi"],
+    "CFFAF4": ["Scandal"],
+    "FF2400": ["Scarlet"],
+    "431560": ["Scarlet Gum"],
+    "950015": ["Scarlett"],
+    "585562": ["Scarpa Flow"],
+    "A9B497": ["Schist"],
+    "FFD800": ["School Bus Yellow"],
+    "8B847E": ["Schooner"],
+    "0066CC": ["Science Blue"],
+    "2EBFD4": ["Scooter"],
+    "695F62": ["Scorpion"],
+    "FFFBDC": ["Scotch Mist"],
+    "66FF66": ["Screamin\u0027 Green"],
+    "FBA129": ["Sea Buckthorn"],
+    "2E8B57": ["Sea Green"],
+    "00FFCD": ["Sea Green (Crayola)"],
+    "C5DBCA": ["Sea Mist"],
+    "78A39C": ["Sea Nymph"],
+    "ED989E": ["Sea Pink"],
+    "80CCEA": ["Seagull"],
+    "59260B": ["Seal Brown"],
+    "731E8F": ["Seance"],
+    "F1F1F1": ["Seashell"],
+    "FFF5EE": ["Seashell Peach"],
+    "1B2F11": ["Seaweed"],
+    "F0EEFD": ["Selago"],
+    "FFBA00": ["Selective Yellow"],
+    "704214": ["Sepia"],
+    "2B0202": ["Sepia Black"],
+    "9E5B40": ["Sepia Skin"],
+    "FFF4E8": ["Serenade"],
+    "837050": ["Shadow"],
+    "8A795D": ["Shadow 2"],
+    "778BA5": ["Shadow Blue"],
+    "9AC2B8": ["Shadow Green"],
+    "AAA5A9": ["Shady Lady"],
+    "4EABD1": ["Shakespeare"],
+    "FBFFBA": ["Shalimar"],
+    "33CC99": ["Shamrock"],
+    "009E60": ["Shamrock Green"],
+    "25272C": ["Shark"],
+    "8FD400": ["Sheen Green"],
+    "004950": ["Sherpa Blue"],
+    "02402C": ["Sherwood Green"],
+    "E8B9B3": ["Shilo"],
+    "D98695": ["Shimmering Blush"],
+    "6B4E31": ["Shingle Fawn"],
+    "5FA778": ["Shiny Shamrock"],
+    "788BBA": ["Ship Cove"],
+    "3E3A44": ["Ship Gray"],
+    "B20931": ["Shiraz"],
+    "E292C0": ["Shocking"],
+    "FC0FC0": ["Shocking Pink"],
+    "FF6FFF": ["Shocking Pink (Crayola)","Ultra Pink","Blush Pink"],
+    "5F6672": ["Shuttle Gray"],
+    "646A54": ["Siam"],
+    "F3E7BB": ["Sidecar"],
+    "BDB1A8": ["Silk"],
+    "C0C0C0": ["Silver"],
+    "AAA9AD": ["Silver (Metallic)"],
+    "ACACAC": ["Silver Chalice"],
+    "C4AEAD": ["Silver Pink"],
+    "BFC1C2": ["Silver Sand"],
+    "66B58F": ["Silver Tree"],
+    "9FD7D3": ["Sinbad"],
+    "CB410B": ["Sinopia"],
+    "7A013A": ["Siren"],
+    "718080": ["Sirocco"],
+    "D3CBBA": ["Sisal"],
+    "FF3855": ["Sizzling Red"],
+    "FFDB00": ["Sizzling Sunrise"],
+    "CAE6DA": ["Skeptic"],
+    "007474": ["Skobeloff"],
+    "87CEEB": ["Sky Blue"],
+    "76D7EA": ["Sky Blue (Crayola)"],
+    "CF71AF": ["Sky Magenta"],
+    "6A5ACD": ["Slate Blue"],
+    "708090": ["Slate Gray"],
+    "299617": ["Slimy Green"],
+    "003399": ["Smalt"],
+    "51808F": ["Smalt Blue"],
+    "C84186": ["Smitten"],
+    "605B73": ["Smoky"],
+    "100C08": ["Smoky Black"],
+    "FFFAFA": ["Snow"],
+    "F7FAF7": ["Snow Drift"],
+    "E4FFD1": ["Snow Flurry"],
+    "D6FFDB": ["Snowy Mint"],
+    "E2D8ED": ["Snuff"],
+    "FFFBF9": ["Soapstone"],
+    "D1C6B4": ["Soft Amber"],
+    "F5EDEF": ["Soft Peach"],
+    "893843": ["Solid Pink"],
+    "FEF8E2": ["Solitaire"],
+    "EAF6FF": ["Solitude"],
+    "757575": ["Sonic Silver"],
+    "FD7C07": ["Sorbus"],
+    "CEB98F": ["Sorrell Brown"],
+    "6A6051": ["Soya Bean"],
+    "1D2951": ["Space Cadet"],
+    "807532": ["Spanish Bistre"],
+    "0070B8": ["Spanish Blue"],
+    "D10047": ["Spanish Carmine"],
+    "989898": ["Spanish Gray"],
+    "819885": ["Spanish Green"],
+    "009150": ["Spanish Green 2"],
+    "E86100": ["Spanish Orange"],
+    "F7BFBE": ["Spanish Pink"],
+    "E60026": ["Spanish Red"],
+    "4C2882": ["Spanish Violet"],
+    "007F5C": ["Spanish Viridian"],
+    "2F5A57": ["Spectra"],
+    "6A442E": ["Spice"],
+    "885342": ["Spicy Mix"],
+    "74640D": ["Spicy Mustard"],
+    "816E71": ["Spicy Pink"],
+    "B6D1EA": ["Spindle"],
+    "79DEEC": ["Spray"],
+    "A7FC00": ["Spring Bud"],
+    "87FF2A": ["Spring Frost"],
+    "00FF7F": ["Spring Green"],
+    "578363": ["Spring Leaves"],
+    "ACCBB1": ["Spring Rain"],
+    "F6FFDC": ["Spring Sun"],
+    "F8F6F1": ["Spring Wood"],
+    "C1D7B0": ["Sprout"],
+    "AAABB7": ["Spun Pearl"],
+    "8F8176": ["Squirrel"],
+    "2D569B": ["St Tropaz"],
+    "23297A": ["St. Patrick\u0027s Blue"],
+    "8A8F8A": ["Stack"],
+    "007BB8": ["Star Command Blue"],
+    "9F9F9C": ["Star Dust"],
+    "E5D7BD": ["Stark White"],
+    "ECF245": ["Starship"],
+    "4682B4": ["Steel Blue"],
+    "262335": ["Steel Gray"],
+    "CC33CC": ["Steel Pink"],
+    "5F8A8B": ["Steel Teal"],
+    "9C3336": ["Stiletto"],
+    "928573": ["Stonewall"],
+    "646463": ["Storm Dust"],
+    "717486": ["Storm Gray"],
+    "000741": ["Stratos"],
+    "D4BF8D": ["Straw"],
+    "E4D96F": ["Straw 2"],
+    "FA5053": ["Strawberry"],
+    "FF9361": ["Strawberry Blonde"],
+    "956387": ["Strikemaster"],
+    "325D52": ["Stromboli"],
+    "714AB2": ["Studio"],
+    "BAC7C9": ["Submarine"],
+    "F9FFF6": ["Sugar Cane"],
+    "914E75": ["Sugar Plum"],
+    "C1F07C": ["Sulu"],
+    "96BBAB": ["Summer Green"],
+    "FBAC13": ["Sun"],
+    "C9B35B": ["Sundance"],
+    "FFB1B3": ["Sundown"],
+    "E4D422": ["Sunflower"],
+    "E16865": ["Sunglo"],
+    "FFCC33": ["Sunglow"],
+    "E3AB57": ["Sunray"],
+    "FE4C40": ["Sunset Orange"],
+    "FF9E2C": ["Sunshade"],
+    "CF6BA9": ["Super Pink"],
+    "FFC901": ["Supernova"],
+    "BBD7C1": ["Surf"],
+    "CFE5D2": ["Surf Crest"],
+    "0C7A79": ["Surfie Green"],
+    "87AB39": ["Sushi"],
+    "888387": ["Suva Gray"],
+    "001B1C": ["Swamp"],
+    "ACB78E": ["Swamp Green"],
+    "DCF0EA": ["Swans Down"],
+    "A83731": ["Sweet Brown"],
+    "FBEA8C": ["Sweet Corn"],
+    "FD9FA2": ["Sweet Pink"],
+    "D3CDC5": ["Swirl"],
+    "DDD6D5": ["Swiss Coffee"],
+    "908D39": ["Sycamore"],
+    "D44500": ["Syracuse Orange"],
+    "A02712": ["Tabasco"],
+    "EDB381": ["Tacao"],
+    "D6C562": ["Tacha"],
+    "E97C07": ["Tahiti Gold"],
+    "EEF0C8": ["Tahuna Sands"],
+    "B32D29": ["Tall Poppy"],
+    "A8A589": ["Tallow"],
+    "991613": ["Tamarillo"],
+    "341515": ["Tamarind"],
+    "D2B48C": ["Tan"],
+    "D99A6C": ["Tan (Crayola)"],
+    "FA9D5A": ["Tan Hide"],
+    "D9DCC1": ["Tana"],
+    "03163C": ["Tangaroa"],
+    "F28500": ["Tangerine"],
+    "ED7A1C": ["Tango"],
+    "7B7874": ["Tapa"],
+    "B05E81": ["Tapestry"],
+    "E1F6E8": ["Tara"],
+    "073A50": ["Tarawera"],
+    "FB4D46": ["Tart Orange"],
+    "CFDCCF": ["Tasman"],
+    "8B8589": ["Taupe Gray"],
+    "B3AF95": ["Taupe Gray 2"],
+    "692545": ["Tawny Port"],
+    "1E433C": ["Te Papa Green"],
+    "C1BAB0": ["Tea"],
+    "D0F0C0": ["Tea Green"],
+    "B19461": ["Teak"],
+    "008080": ["Teal"],
+    "367588": ["Teal Blue"],
+    "044259": ["Teal Blue 2"],
+    "CF3476": ["Telemagenta"],
+    "3B000B": ["Temptress"],
+    "CD5700": ["Tenné (Tawny)","Tenn"],
+    "FFE6C7": ["Tequila"],
+    "E2725B": ["Terracotta"],
+    "F8F99C": ["Texas"],
+    "FFB555": ["Texas Rose"],
+    "B69D98": ["Thatch"],
+    "403D19": ["Thatch Green"],
+    "D8BFD8": ["Thistle"],
+    "CCCAA8": ["Thistle Green"],
+    "33292F": ["Thunder"],
+    "C02B18": ["Thunderbird"],
+    "C1440E": ["Tia Maria"],
+    "C3D1D1": ["Tiara"],
+    "063537": ["Tiber"],
+    "FC80A5": ["Tickle Me Pink"],
+    "FC89AC": ["Tickle Me Pink 2"],
+    "F1FFAD": ["Tidal"],
+    "BFB8B0": ["Tide"],
+    "81D8D0": ["Tiffany Blue"],
+    "16322C": ["Timber Green"],
+    "D9D6CF": ["Timberwolf"],
+    "DBD7D2": ["Timberwolf 2"],
+    "F0EEFF": ["Titan White"],
+    "EEE600": ["Titanium Yellow"],
+    "9A6E61": ["Toast"],
+    "715D47": ["Tobacco Brown"],
+    "3A0020": ["Toledo"],
+    "1B0245": ["Tolopea"],
+    "3F583B": ["Tom Thumb"],
+    "FF6347": ["Tomato"],
+    "E79F8C": ["Tonys Pink"],
+    "7C778A": ["Topaz"],
+    "FD0E35": ["Torch Red"],
+    "0F2D9E": ["Torea Bay"],
+    "1450AA": ["Tory Blue"],
+    "8D3F3F": ["Tosca"],
+    "991B07": ["Totem Pole"],
+    "A9BDBF": ["Tower Gray"],
+    "5FB3AC": ["Tradewind"],
+    "E6FFFF": ["Tranquil"],
+    "FFFDE8": ["Travertine"],
+    "FC9C1D": ["Tree Poppy"],
+    "3B2820": ["Treehouse"],
+    "7C881A": ["Trendy Green"],
+    "8C6495": ["Trendy Pink"],
+    "E64E03": ["Trinidad"],
+    "C3DDF9": ["Tropical Blue"],
+    "00755E": ["Tropical Rainforest","Tropical Rain Forest"],
+    "4A4E5A": ["Trout"],
+    "2D68C4": ["True Blue"],
+    "8A73D6": ["True V"],
+    "1C05B3": ["Trypan Blue"],
+    "363534": ["Tuatara"],
+    "FFDDCD": ["Tuft Bush"],
+    "3E8EDE": ["Tufts Blue"],
+    "EAB33B": ["Tulip Tree"],
+    "DEA681": ["Tumbleweed"],
+    "DEAA88": ["Tumbleweed 2"],
+    "353542": ["Tuna"],
+    "4A4244": ["Tundora"],
+    "FAE600": ["Turbo"],
+    "B57281": ["Turkish Rose"],
+    "CABB48": ["Turmeric"],
+    "40E0D0": ["Turquoise"],
+    "30D5C8": ["Turquoise 2"],
+    "6CDAE7": ["Turquoise Blue"],
+    "00FFEF": ["Turquoise Blue 2"],
+    "A0D6B4": ["Turquoise Green"],
+    "2A380B": ["Turtle Green"],
+    "6F4E37": ["Tuscan Brown"],
+    "7C4848": ["Tuscan Red"],
+    "C09999": ["Tuscany"],
+    "BD5E2E": ["Tuscany 2"],
+    "EEF3C3": ["Tusk"],
+    "C5994B": ["Tussock"],
+    "FFF1F9": ["Tutu"],
+    "E4CFDE": ["Twilight"],
+    "EEFDFF": ["Twilight Blue"],
+    "8A496B": ["Twilight Lavender"],
+    "C2955D": ["Twine"],
+    "66023C": ["Tyrian Purple"],
+    "0033AA": ["UA Blue"],
+    "D9004C": ["UA Red"],
+    "FC6C85": ["Ultra Red"],
+    "120A8F": ["Ultramarine"],
+    "3F00FF": ["Ultramarine 2"],
+    "4166F5": ["Ultramarine Blue"],
+    "635147": ["Umber"],
+    "FFDDCA": ["Unbleached Silk"],
+    "5B92E5": ["United Nations Blue"],
+    "A50021": ["University Of Pennsylvania Red"],
+    "7B1113": ["UP Maroon"],
+    "AE2029": ["Upsdell Red"],
+    "AFDBF5": ["Uranian Blue"],
+    "004F98": ["USAFA Blue"],
+    "D84437": ["Valencia"],
+    "350E42": ["Valentino"],
+    "2B194F": ["Valhalla"],
+    "49170C": ["Van Cleef"],
+    "664228": ["Van Dyke Brown"],
+    "D1BEA8": ["Vanilla"],
+    "F38FA9": ["Vanilla Ice"],
+    "F3D9DF": ["Vanilla Ice 2"],
+    "FFF6DF": ["Varden"],
+    "C5B358": ["Vegas Gold"],
+    "C80815": ["Venetian Red"],
+    "72010F": ["Venetian Red 2"],
+    "055989": ["Venice Blue"],
+    "928590": ["Venus"],
+    "43B3AE": ["Verdigris"],
+    "5D5E37": ["Verdigris 2"],
+    "495400": ["Verdun Green"],
+    "FF4D00": ["Vermilion"],
+    "D9381E": ["Vermilion 2"],
+    "B14A0B": ["Vesuvius"],
+    "534491": ["Victoria"],
+    "549019": ["Vida Loca"],
+    "64CCDB": ["Viking"],
+    "983D61": ["Vin Rouge"],
+    "CB8FA9": ["Viola"],
+    "290C5E": ["Violent Violet"],
+    "240A40": ["Violet"],
+    "7F00FF": ["Violet (Color Wheel)"],
+    "963D7F": ["Violet (Crayola)"],
+    "8601AF": ["Violet (RYB)"],
+    "991199": ["Violet Eggplant"],
+    "F75394": ["Violet Red"],
+    "F7468A": ["Violet Red 2"],
+    "324AB2": ["Violet-Blue"],
+    "766EC8": ["Violet-Blue (Crayola)"],
+    "40826D": ["Viridian"],
+    "678975": ["Viridian Green"],
+    "009698": ["Viridian Green 2"],
+    "FFEFA1": ["Vis Vis"],
+    "8FD6B4": ["Vista Blue"],
+    "FCF8F7": ["Vista White"],
+    "9F1D35": ["Vivid Burgundy"],
+    "00CCFF": ["Vivid Sky Blue"],
+    "FF9980": ["Vivid Tangerine"],
+    "FFA089": ["Vivid Tangerine 2"],
+    "803790": ["Vivid Violet"],
+    "9F00FF": ["Vivid Violet 2"],
+    "CEFF00": ["Volt"],
+    "533455": ["Voodoo"],
+    "10121D": ["Vulcan"],
+    "DECBC6": ["Wafer"],
+    "5A6E9C": ["Waikawa Gray"],
+    "363C0D": ["Waiouru"],
+    "773F1A": ["Walnut"],
+    "004242": ["Warm Black"],
+    "788A25": ["Wasabi"],
+    "A1E9DE": ["Water Leaf"],
+    "056F57": ["Watercourse"],
+    "7B7C94": ["Waterloo"],
+    "DCD747": ["Wattle"],
+    "FFDDCF": ["Watusi"],
+    "FFC0A8": ["Wax Flower"],
+    "F7DBE6": ["We Peep"],
+    "4E7F9E": ["Wedgewood"],
+    "189BCC": ["Weezy Blue"],
+    "B43332": ["Well Read"],
+    "625119": ["West Coast"],
+    "FF910F": ["West Side"],
+    "DCD9D2": ["Westar"],
+    "F19BAB": ["Wewak"],
+    "F5DEB3": ["Wheat"],
+    "F3EDCF": ["Wheatfield"],
+    "D59A6F": ["Whiskey"],
+    "F7F5FA": ["Whisper"],
+    "FFFFFF": ["White"],
+    "DDF9F1": ["White Ice"],
+    "F8F7FC": ["White Lilac"],
+    "F8F0E8": ["White Linen"],
+    "FEF8FF": ["White Pointer"],
+    "EAE8D4": ["White Rock"],
+    "7A89B8": ["Wild Blue Yonder"],
+    "A2ADD0": ["Wild Blue Yonder 2"],
+    "D470A2": ["Wild Orchid"],
+    "ECE090": ["Wild Rice"],
+    "F4F4F4": ["Wild Sand"],
+    "FF43A4": ["Wild Strawberry"],
+    "FF3399": ["Wild Strawberry 2"],
+    "FD5B78": ["Wild Watermelon"],
+    "B9C46A": ["Wild Willow"],
+    "3A686C": ["William"],
+    "DFECDA": ["Willow Brook"],
+    "65745D": ["Willow Grove"],
+    "3C0878": ["Windsor"],
+    "A75502": ["Windsor Tan"],
+    "722F37": ["Wine"],
+    "591D35": ["Wine Berry"],
+    "D5D195": ["Winter Hazel"],
+    "FF007C": ["Winter Sky"],
+    "56887D": ["Wintergreen Dream"],
+    "FEF4F8": ["Wisp Pink"],
+    "9771B5": ["Wisteria"],
+    "A4A6D3": ["Wistful"],
+    "FFFC99": ["Witch Haze"],
+    "261105": ["Wood Bark"],
+    "4D5328": ["Woodland"],
+    "302A0F": ["Woodrush"],
+    "0C0D0F": ["Woodsmoke"],
+    "483131": ["Woody Brown"],
+    "738678": ["Xanadu"],
+    "EEED09": ["Xanthic"],
+    "F1B42F": ["Xanthous"],
+    "00356B": ["Yale Blue"],
+    "FFFF00": ["Yellow"],
+    "FCE883": ["Yellow (Crayola)"],
+    "EFCC00": ["Yellow (MUNSELL)"],
+    "FEDF00": ["Yellow (PANTONE)"],
+    "FEFE33": ["Yellow (RYB)"],
+    "9ACD32": ["Yellow Green"],
+    "C5E17A": ["Yellow Green 2"],
+    "716338": ["Yellow Metal"],
+    "FFAE42": ["Yellow Orange"],
+    "FF9505": ["Yellow Orange (Color Wheel)"],
+    "FEA904": ["Yellow Sea"],
+    "FFF700": ["Yellow Sunshine"],
+    "30B21A": ["Yellow-Green (Color Wheel)"],
+    "C5E384": ["Yellow-Green (Crayola)"],
+    "2E5090": ["YInMn Blue"],
+    "FFC3C0": ["Your Pink"],
+    "7B6608": ["Yukon Gold"],
+    "CEC291": ["Yuma"],
+    "0014A8": ["Zaffre"],
+    "685558": ["Zambezi"],
+    "DAECD6": ["Zanah"],
+    "E5841B": ["Zest"],
+    "292319": ["Zeus"],
+    "BFDBE2": ["Ziggurat"],
+    "EBC2AF": ["Zinnwaldite"],
+    "F4F8FF": ["Zircon"],
+    "E4D69B": ["Zombie"],
+    "39A78E": ["Zomp"],
+    "A59B91": ["Zorba"],
+    "044022": ["Zuccini"],
+    "EDF6FF": ["Zumthor"]
+};
 
-        ],
-        "Hexadecimal": "#00FF00"
-    },
-    {
-        "Color": [
-            "Electric Indigo"
-        ],
-        "Hexadecimal": "#6F00FF"
-    },
-    {
-        "Color": [
-            "Electric Lime"
-        ],
-        "Hexadecimal": "#CCFF00"
-    },
-    {
-        "Color": [
-            "Electric Purple"
-        ],
-        "Hexadecimal": "#BF00FF"
-    },
-    {
-        "Color": [
-            "Electric Violet"
-        ],
-        "Hexadecimal": "#8B00FF"
-    },
-    {
-        "Color": [
-            "Electric Violet",
-            "Violet"
-        ],
-        "Hexadecimal": "#8F00FF"
-    },
-    {
-        "Color": [
-            "Elephant"
-        ],
-        "Hexadecimal": "#123447"
-    },
-    {
-        "Color": [
-            "Elf Green"
-        ],
-        "Hexadecimal": "#088370"
-    },
-    {
-        "Color": [
-            "Elm"
-        ],
-        "Hexadecimal": "#1C7C7D"
-    },
-    {
-        "Color": [
-            "Emerald",
-            "Paris Green"
-        ],
-        "Hexadecimal": "#50C878"
-    },
-    {
-        "Color": [
-            "Eminence"
-        ],
-        "Hexadecimal": "#6C3082"
-    },
-    {
-        "Color": [
-            "Emperor"
-        ],
-        "Hexadecimal": "#514649"
-    },
-    {
-        "Color": [
-            "Empress"
-        ],
-        "Hexadecimal": "#817377"
-    },
-    {
-        "Color": [
-            "Endeavour"
-        ],
-        "Hexadecimal": "#0056A7"
-    },
-    {
-        "Color": [
-            "Energy Yellow"
-        ],
-        "Hexadecimal": "#F8DD5C"
-    },
-    {
-        "Color": [
-            "English Holly"
-        ],
-        "Hexadecimal": "#022D15"
-    },
-    {
-        "Color": [
-            "English Lavender"
-        ],
-        "Hexadecimal": "#B48395"
-    },
-    {
-        "Color": [
-            "English Red"
-        ],
-        "Hexadecimal": "#AB4B52"
-    },
-    {
-        "Color": [
-            "English Vermillion"
-        ],
-        "Hexadecimal": "#CC474B"
-    },
-    {
-        "Color": [
-            "English Violet"
-        ],
-        "Hexadecimal": "#563C5C"
-    },
-    {
-        "Color": [
-            "English Walnut"
-        ],
-        "Hexadecimal": "#3E2B23"
-    },
-    {
-        "Color": [
-            "Envy"
-        ],
-        "Hexadecimal": "#8BA690"
-    },
-    {
-        "Color": [
-            "Equator"
-        ],
-        "Hexadecimal": "#E1BC64"
-    },
-    {
-        "Color": [
-            "Erin"
-        ],
-        "Hexadecimal": "#00FF40"
-    },
-    {
-        "Color": [
-            "Espresso"
-        ],
-        "Hexadecimal": "#612718"
-    },
-    {
-        "Color": [
-            "Eternity"
-        ],
-        "Hexadecimal": "#211A0E"
-    },
-    {
-        "Color": [
-            "Eton Blue"
-        ],
-        "Hexadecimal": "#96C8A2"
-    },
-    {
-        "Color": [
-            "Eucalyptus"
-        ],
-        "Hexadecimal": "#278A5B"
-    },
-    {
-        "Color": [
-            "Eunry"
-        ],
-        "Hexadecimal": "#CFA39D"
-    },
-    {
-        "Color": [
-            "Evening Sea"
-        ],
-        "Hexadecimal": "#024E46"
-    },
-    {
-        "Color": [
-            "Everglade"
-        ],
-        "Hexadecimal": "#1C402E"
-    },
-    {
-        "Color": [
-            "Faded Jade"
-        ],
-        "Hexadecimal": "#427977"
-    },
-    {
-        "Color": [
-            "Fair Pink"
-        ],
-        "Hexadecimal": "#FFEFEC"
-    },
-    {
-        "Color": [
-            "Falcon"
-        ],
-        "Hexadecimal": "#7F626D"
-    },
-    {
-        "Color": [
-            "Falu Red"
-        ],
-        "Hexadecimal": "#801818"
-    },
-    {
-        "Color": [
-            "Fandango"
-        ],
-        "Hexadecimal": "#B53389"
-    },
-    {
-        "Color": [
-            "Fandango Pink"
-        ],
-        "Hexadecimal": "#DE5285"
-    },
-    {
-        "Color": [
-            "Fantasy"
-        ],
-        "Hexadecimal": "#FAF3F0"
-    },
-    {
-        "Color": [
-            "Fashion Fuchsia",
-            "Hollywood Cerise"
-        ],
-        "Hexadecimal": "#F400A1"
-    },
-    {
-        "Color": [
-            "Fawn"
-        ],
-        "Hexadecimal": "#E5AA70"
-    },
-    {
-        "Color": [
-            "Fedora"
-        ],
-        "Hexadecimal": "#796A78"
-    },
-    {
-        "Color": [
-            "Feijoa"
-        ],
-        "Hexadecimal": "#9FDD8C"
-    },
-    {
-        "Color": [
-            "Feldgrau"
-        ],
-        "Hexadecimal": "#4D5D53"
-    },
-    {
-        "Color": [
-            "Fern"
-        ],
-        "Hexadecimal": "#63B76C"
-    },
-    {
-        "Color": [
-            "Fern Frond"
-        ],
-        "Hexadecimal": "#657220"
-    },
-    {
-        "Color": [
-            "Fern Green"
-        ],
-        "Hexadecimal": "#4F7942"
-    },
-    {
-        "Color": [
-            "Ferra"
-        ],
-        "Hexadecimal": "#704F50"
-    },
-    {
-        "Color": [
-            "Festival"
-        ],
-        "Hexadecimal": "#FBE96C"
-    },
-    {
-        "Color": [
-            "Feta"
-        ],
-        "Hexadecimal": "#F0FCEA"
-    },
-    {
-        "Color": [
-            "Field Drab"
-        ],
-        "Hexadecimal": "#6C541E"
-    },
-    {
-        "Color": [
-            "Fiery Orange"
-        ],
-        "Hexadecimal": "#B35213"
-    },
-    {
-        "Color": [
-            "Fiery Rose"
-        ],
-        "Hexadecimal": "#FF5470"
-    },
-    {
-        "Color": [
-            "Finch"
-        ],
-        "Hexadecimal": "#626649"
-    },
-    {
-        "Color": [
-            "Finlandia"
-        ],
-        "Hexadecimal": "#556D56"
-    },
-    {
-        "Color": [
-            "Finn"
-        ],
-        "Hexadecimal": "#692D54"
-    },
-    {
-        "Color": [
-            "Fiord"
-        ],
-        "Hexadecimal": "#405169"
-    },
-    {
-        "Color": [
-            "Fire"
-        ],
-        "Hexadecimal": "#AA4203"
-    },
-    {
-        "Color": [
-            "Fire Bush"
-        ],
-        "Hexadecimal": "#E89928"
-    },
-    {
-        "Color": [
-            "Fire Engine Red"
-        ],
-        "Hexadecimal": "#CE2029"
-    },
-    {
-        "Color": [
-            "Fire Opal"
-        ],
-        "Hexadecimal": "#E95C4B"
-    },
-    {
-        "Color": [
-            "Firebrick"
-        ],
-        "Hexadecimal": "#B22222"
-    },
-    {
-        "Color": [
-            "Firefly"
-        ],
-        "Hexadecimal": "#0E2A30"
-    },
-    {
-        "Color": [
-            "Flame"
-        ],
-        "Hexadecimal": "#E25822"
-    },
-    {
-        "Color": [
-            "Flame Pea"
-        ],
-        "Hexadecimal": "#DA5B38"
-    },
-    {
-        "Color": [
-            "Flamenco"
-        ],
-        "Hexadecimal": "#FF7D07"
-    },
-    {
-        "Color": [
-            "Flamingo"
-        ],
-        "Hexadecimal": "#F2552A"
-    },
-    {
-        "Color": [
-            "Flax"
-        ],
-        "Hexadecimal": "#EEDC82"
-    },
-    {
-        "Color": [
-            "Flax Smoke"
-        ],
-        "Hexadecimal": "#7B8265"
-    },
-    {
-        "Color": [
-            "Flint"
-        ],
-        "Hexadecimal": "#6F6A61"
-    },
-    {
-        "Color": [
-            "Flirt"
-        ],
-        "Hexadecimal": "#A2006D"
-    },
-    {
-        "Color": [
-            "Floral White"
-        ],
-        "Hexadecimal": "#FFFAF0"
-    },
-    {
-        "Color": [
-            "Fluorescent Blue"
-        ],
-        "Hexadecimal": "#15F4EE"
-    },
-    {
-        "Color": [
-            "Flush Mahogany"
-        ],
-        "Hexadecimal": "#CA3435"
-    },
-    {
-        "Color": [
-            "Foam"
-        ],
-        "Hexadecimal": "#D8FCFA"
-    },
-    {
-        "Color": [
-            "Fog"
-        ],
-        "Hexadecimal": "#D7D0FF"
-    },
-    {
-        "Color": [
-            "Foggy Gray"
-        ],
-        "Hexadecimal": "#CBCAB6"
-    },
-    {
-        "Color": [
-            "Forest Green (Crayola)",
-            "Aqua Forest"
-        ],
-        "Hexadecimal": "#5FA777"
-    },
-    {
-        "Color": [
-            "Forest Green (Traditional)",
-            "UP Forest Green"
-        ],
-        "Hexadecimal": "#014421"
-    },
-    {
-        "Color": [
-            "Forest Green (Web)",
-            "Forest Green"
-        ],
-        "Hexadecimal": "#228B22"
-    },
-    {
-        "Color": [
-            "Forget Me Not"
-        ],
-        "Hexadecimal": "#FFF1EE"
-    },
-    {
-        "Color": [
-            "Fountain Blue"
-        ],
-        "Hexadecimal": "#56B4BE"
-    },
-    {
-        "Color": [
-            "Frangipani"
-        ],
-        "Hexadecimal": "#FFDEB3"
-    },
-    {
-        "Color": [
-            "French Bistre"
-        ],
-        "Hexadecimal": "#856D4D"
-    },
-    {
-        "Color": [
-            "French Blue"
-        ],
-        "Hexadecimal": "#0072BB"
-    },
-    {
-        "Color": [
-            "French Fuchsia"
-        ],
-        "Hexadecimal": "#FD3F92"
-    },
-    {
-        "Color": [
-            "French Gray"
-        ],
-        "Hexadecimal": "#BDBDC6"
-    },
-    {
-        "Color": [
-            "French Lilac"
-        ],
-        "Hexadecimal": "#ECC7EE"
-    },
-    {
-        "Color": [
-            "French Lime"
-        ],
-        "Hexadecimal": "#9EFD38"
-    },
-    {
-        "Color": [
-            "French Mauve"
-        ],
-        "Hexadecimal": "#D473D4"
-    },
-    {
-        "Color": [
-            "French Pass"
-        ],
-        "Hexadecimal": "#BDEDFD"
-    },
-    {
-        "Color": [
-            "French Pink"
-        ],
-        "Hexadecimal": "#FD6C9E"
-    },
-    {
-        "Color": [
-            "French Raspberry"
-        ],
-        "Hexadecimal": "#C72C48"
-    },
-    {
-        "Color": [
-            "French Rose"
-        ],
-        "Hexadecimal": "#F64A8A"
-    },
-    {
-        "Color": [
-            "French Sky Blue"
-        ],
-        "Hexadecimal": "#77B5FE"
-    },
-    {
-        "Color": [
-            "French Violet"
-        ],
-        "Hexadecimal": "#8806CE"
-    },
-    {
-        "Color": [
-            "Fresh Eggplant"
-        ],
-        "Hexadecimal": "#990066"
-    },
-    {
-        "Color": [
-            "Friar Gray"
-        ],
-        "Hexadecimal": "#807E79"
-    },
-    {
-        "Color": [
-            "Fringy Flower"
-        ],
-        "Hexadecimal": "#B1E2C1"
-    },
-    {
-        "Color": [
-            "Froly"
-        ],
-        "Hexadecimal": "#F57584"
-    },
-    {
-        "Color": [
-            "Frost"
-        ],
-        "Hexadecimal": "#EDF5DD"
-    },
-    {
-        "Color": [
-            "Frostbite"
-        ],
-        "Hexadecimal": "#E936A7"
-    },
-    {
-        "Color": [
-            "Frosted Mint"
-        ],
-        "Hexadecimal": "#DBFFF8"
-    },
-    {
-        "Color": [
-            "Frostee"
-        ],
-        "Hexadecimal": "#E4F6E7"
-    },
-    {
-        "Color": [
-            "Fruit Salad"
-        ],
-        "Hexadecimal": "#4F9D5D"
-    },
-    {
-        "Color": [
-            "Fuchsia (Crayola)",
-            "Fuchsia Pink"
-        ],
-        "Hexadecimal": "#C154C1"
-    },
-    {
-        "Color": [
-            "Fuchsia",
-            "Magenta"
-        ],
-        "Hexadecimal": "#FF00FF"
-    },
-    {
-        "Color": [
-            "Fuchsia Blue"
-        ],
-        "Hexadecimal": "#7A58C1"
-    },
-    {
-        "Color": [
-            "Fuchsia Purple"
-        ],
-        "Hexadecimal": "#CC397B"
-    },
-    {
-        "Color": [
-            "Fuchsia Rose"
-        ],
-        "Hexadecimal": "#C74375"
-    },
-    {
-        "Color": [
-            "Fuego"
-        ],
-        "Hexadecimal": "#BEDE0D"
-    },
-    {
-        "Color": [
-            "Fuel Yellow"
-        ],
-        "Hexadecimal": "#ECA927"
-    },
-    {
-        "Color": [
-            "Fulvous"
-        ],
-        "Hexadecimal": "#E48400"
-    },
-    {
-        "Color": [
-            "Fun Blue"
-        ],
-        "Hexadecimal": "#1959A8"
-    },
-    {
-        "Color": [
-            "Fun Green"
-        ],
-        "Hexadecimal": "#016D39"
-    },
-    {
-        "Color": [
-            "Fuscous Gray"
-        ],
-        "Hexadecimal": "#54534D"
-    },
-    {
-        "Color": [
-            "Fuzzy Wuzzy"
-        ],
-        "Hexadecimal": "#87421F"
-    },
-    {
-        "Color": [
-            "Fuzzy Wuzzy Brown"
-        ],
-        "Hexadecimal": "#C45655"
-    },
-    {
-        "Color": [
-            "Gable Green"
-        ],
-        "Hexadecimal": "#163531"
-    },
-    {
-        "Color": [
-            "Gainsboro"
-        ],
-        "Hexadecimal": "#DCDCDC"
-    },
-    {
-        "Color": [
-            "Gallery"
-        ],
-        "Hexadecimal": "#EFEFEF"
-    },
-    {
-        "Color": [
-            "Galliano"
-        ],
-        "Hexadecimal": "#DCB20C"
-    },
-    {
-        "Color": [
-            "Gamboge"
-        ],
-        "Hexadecimal": "#E49B0F"
-    },
-    {
-        "Color": [
-            "Geebung"
-        ],
-        "Hexadecimal": "#D18F1B"
-    },
-    {
-        "Color": [
-            "Generic Viridian"
-        ],
-        "Hexadecimal": "#007F66"
-    },
-    {
-        "Color": [
-            "Genoa"
-        ],
-        "Hexadecimal": "#15736B"
-    },
-    {
-        "Color": [
-            "Geraldine"
-        ],
-        "Hexadecimal": "#FB8989"
-    },
-    {
-        "Color": [
-            "Geyser"
-        ],
-        "Hexadecimal": "#D4DFE2"
-    },
-    {
-        "Color": [
-            "Ghost"
-        ],
-        "Hexadecimal": "#C7C9D5"
-    },
-    {
-        "Color": [
-            "Ghost White"
-        ],
-        "Hexadecimal": "#F8F8FF"
-    },
-    {
-        "Color": [
-            "Gigas"
-        ],
-        "Hexadecimal": "#523C94"
-    },
-    {
-        "Color": [
-            "Gimblet"
-        ],
-        "Hexadecimal": "#B8B56A"
-    },
-    {
-        "Color": [
-            "Gin"
-        ],
-        "Hexadecimal": "#E8F2EB"
-    },
-    {
-        "Color": [
-            "Gin Fizz"
-        ],
-        "Hexadecimal": "#FFF9E2"
-    },
-    {
-        "Color": [
-            "Givry"
-        ],
-        "Hexadecimal": "#F8E4BF"
-    },
-    {
-        "Color": [
-            "Glacier"
-        ],
-        "Hexadecimal": "#80B3C4"
-    },
-    {
-        "Color": [
-            "Glade Green"
-        ],
-        "Hexadecimal": "#61845F"
-    },
-    {
-        "Color": [
-            "Glaucous"
-        ],
-        "Hexadecimal": "#6082B6"
-    },
-    {
-        "Color": [
-            "Glossy Grape"
-        ],
-        "Hexadecimal": "#AB92B3"
-    },
-    {
-        "Color": [
-            "Go Ben"
-        ],
-        "Hexadecimal": "#726D4E"
-    },
-    {
-        "Color": [
-            "Go Green"
-        ],
-        "Hexadecimal": "#00AB66"
-    },
-    {
-        "Color": [
-            "Goblin"
-        ],
-        "Hexadecimal": "#3D7D52"
-    },
-    {
-        "Color": [
-            "Gold"
-        ],
-        "Hexadecimal": "#A57C00"
-    },
-    {
-        "Color": [
-            "Gold (Crayola)",
-            "Gold Sand"
-        ],
-        "Hexadecimal": "#E6BE8A"
-    },
-    {
-        "Color": [
-            "Gold (Metallic)"
-        ],
-        "Hexadecimal": "#D4AF37"
-    },
-    {
-        "Color": [
-            "Gold (Web) (Golden)"
-        ],
-        "Hexadecimal": "#FFD700"
-    },
-    {
-        "Color": [
-            "Gold Drop"
-        ],
-        "Hexadecimal": "#F18200"
-    },
-    {
-        "Color": [
-            "Gold Fusion"
-        ],
-        "Hexadecimal": "#85754E"
-    },
-    {
-        "Color": [
-            "Gold Tips"
-        ],
-        "Hexadecimal": "#DEBA13"
-    },
-    {
-        "Color": [
-            "Golden Bell"
-        ],
-        "Hexadecimal": "#E28913"
-    },
-    {
-        "Color": [
-            "Golden Brown"
-        ],
-        "Hexadecimal": "#996515"
-    },
-    {
-        "Color": [
-            "Golden Dream"
-        ],
-        "Hexadecimal": "#F0D52D"
-    },
-    {
-        "Color": [
-            "Golden Fizz"
-        ],
-        "Hexadecimal": "#F5FB3D"
-    },
-    {
-        "Color": [
-            "Golden Glow"
-        ],
-        "Hexadecimal": "#FDE295"
-    },
-    {
-        "Color": [
-            "Golden Grass"
-        ],
-        "Hexadecimal": "#DAA520"
-    },
-    {
-        "Color": [
-            "Golden Poppy"
-        ],
-        "Hexadecimal": "#FCC200"
-    },
-    {
-        "Color": [
-            "Golden Sand"
-        ],
-        "Hexadecimal": "#F0DB7D"
-    },
-    {
-        "Color": [
-            "Golden Tainoi"
-        ],
-        "Hexadecimal": "#FFCC5C"
-    },
-    {
-        "Color": [
-            "Golden Yellow"
-        ],
-        "Hexadecimal": "#FFDF00"
-    },
-    {
-        "Color": [
-            "Goldenrod"
-        ],
-        "Hexadecimal": "#FCD667"
-    },
-    {
-        "Color": [
-            "Gondola"
-        ],
-        "Hexadecimal": "#261414"
-    },
-    {
-        "Color": [
-            "Gordons Green"
-        ],
-        "Hexadecimal": "#0B1107"
-    },
-    {
-        "Color": [
-            "Gorse"
-        ],
-        "Hexadecimal": "#FFF14F"
-    },
-    {
-        "Color": [
-            "Gossamer"
-        ],
-        "Hexadecimal": "#069B81"
-    },
-    {
-        "Color": [
-            "Gossip"
-        ],
-        "Hexadecimal": "#D2F8B0"
-    },
-    {
-        "Color": [
-            "Gotham Green"
-        ],
-        "Hexadecimal": "#00573F"
-    },
-    {
-        "Color": [
-            "Gothic"
-        ],
-        "Hexadecimal": "#6D92A1"
-    },
-    {
-        "Color": [
-            "Governor Bay"
-        ],
-        "Hexadecimal": "#2F3CB3"
-    },
-    {
-        "Color": [
-            "Grain Brown"
-        ],
-        "Hexadecimal": "#E4D5B7"
-    },
-    {
-        "Color": [
-            "Grandis"
-        ],
-        "Hexadecimal": "#FFD38C"
-    },
-    {
-        "Color": [
-            "Granite Gray"
-        ],
-        "Hexadecimal": "#676767"
-    },
-    {
-        "Color": [
-            "Granite Green"
-        ],
-        "Hexadecimal": "#8D8974"
-    },
-    {
-        "Color": [
-            "Granny Apple"
-        ],
-        "Hexadecimal": "#D5F6E3"
-    },
-    {
-        "Color": [
-            "Granny Smith"
-        ],
-        "Hexadecimal": "#84A0A0"
-    },
-    {
-        "Color": [
-            "Granny Smith Apple"
-        ],
-        "Hexadecimal": "#A8E4A0"
-    },
-    {
-        "Color": [
-            "Granny Smith Apple 2"
-        ],
-        "Hexadecimal": "#9DE093"
-    },
-    {
-        "Color": [
-            "Grape"
-        ],
-        "Hexadecimal": "#381A51"
-    },
-    {
-        "Color": [
-            "Graphite"
-        ],
-        "Hexadecimal": "#251607"
-    },
-    {
-        "Color": [
-            "Gravel"
-        ],
-        "Hexadecimal": "#4A444B"
-    },
-    {
-        "Color": [
-            "Grey",
-            "Gray"
-        ],
-        "Hexadecimal": "#808080"
-    },
-    {
-        "Color": [
-            "Gray (X11 Gray)"
-        ],
-        "Hexadecimal": "#BEBEBE"
-    },
-    {
-        "Color": [
-            "Gray Asparagus"
-        ],
-        "Hexadecimal": "#465945"
-    },
-    {
-        "Color": [
-            "Gray Chateau"
-        ],
-        "Hexadecimal": "#A2AAB3"
-    },
-    {
-        "Color": [
-            "Gray Nickel"
-        ],
-        "Hexadecimal": "#C3C3BD"
-    },
-    {
-        "Color": [
-            "Gray Nurse"
-        ],
-        "Hexadecimal": "#E7ECE6"
-    },
-    {
-        "Color": [
-            "Gray Olive"
-        ],
-        "Hexadecimal": "#A9A491"
-    },
-    {
-        "Color": [
-            "Gray Suit"
-        ],
-        "Hexadecimal": "#C1BECD"
-    },
-    {
-        "Color": [
-            "Green (Crayola)"
-        ],
-        "Hexadecimal": "#1CAC78"
-    },
-    {
-        "Color": [
-            "Green (MUNSELL)"
-        ],
-        "Hexadecimal": "#00A877"
-    },
-    {
-        "Color": [
-            "Green (NCS)"
-        ],
-        "Hexadecimal": "#009F6B"
-    },
-    {
-        "Color": [
-            "Green (PANTONE)"
-        ],
-        "Hexadecimal": "#00AD43"
-    },
-    {
-        "Color": [
-            "Green (Pigment)"
-        ],
-        "Hexadecimal": "#00A550"
-    },
-    {
-        "Color": [
-            "Green (RYB)"
-        ],
-        "Hexadecimal": "#66B032"
-    },
-    {
-        "Color": [
-            "Green Haze"
-        ],
-        "Hexadecimal": "#01A368"
-    },
-    {
-        "Color": [
-            "Green House"
-        ],
-        "Hexadecimal": "#24500F"
-    },
-    {
-        "Color": [
-            "Green Kelp"
-        ],
-        "Hexadecimal": "#25311C"
-    },
-    {
-        "Color": [
-            "Green Leaf"
-        ],
-        "Hexadecimal": "#436A0D"
-    },
-    {
-        "Color": [
-            "Green Lizard"
-        ],
-        "Hexadecimal": "#A7F432"
-    },
-    {
-        "Color": [
-            "Green Mist"
-        ],
-        "Hexadecimal": "#CBD3B0"
-    },
-    {
-        "Color": [
-            "Green Pea"
-        ],
-        "Hexadecimal": "#1D6142"
-    },
-    {
-        "Color": [
-            "Green Sheen"
-        ],
-        "Hexadecimal": "#6EAEA1"
-    },
-    {
-        "Color": [
-            "Green Smoke"
-        ],
-        "Hexadecimal": "#A4AF6E"
-    },
-    {
-        "Color": [
-            "Green Spring"
-        ],
-        "Hexadecimal": "#B8C1B1"
-    },
-    {
-        "Color": [
-            "Green Vogue"
-        ],
-        "Hexadecimal": "#032B52"
-    },
-    {
-        "Color": [
-            "Green Waterloo"
-        ],
-        "Hexadecimal": "#101405"
-    },
-    {
-        "Color": [
-            "Green White"
-        ],
-        "Hexadecimal": "#E8EBE0"
-    },
-    {
-        "Color": [
-            "Green-Blue"
-        ],
-        "Hexadecimal": "#1164B4"
-    },
-    {
-        "Color": [
-            "Green-Blue (Crayola)"
-        ],
-        "Hexadecimal": "#2887C8"
-    },
-    {
-        "Color": [
-            "Green-Cyan"
-        ],
-        "Hexadecimal": "#009966"
-    },
-    {
-        "Color": [
-            "Green-Yellow (Crayola)"
-        ],
-        "Hexadecimal": "#F0E891"
-    },
-    {
-        "Color": [
-            "Green-Yellow",
-            "Green Yellow"
-        ],
-        "Hexadecimal": "#ADFF2F"
-    },
-    {
-        "Color": [
-            "Grenadier"
-        ],
-        "Hexadecimal": "#D54600"
-    },
-    {
-        "Color": [
-            "Grullo"
-        ],
-        "Hexadecimal": "#A99A86"
-    },
-    {
-        "Color": [
-            "Guardsman Red"
-        ],
-        "Hexadecimal": "#BA0101"
-    },
-    {
-        "Color": [
-            "Gulf Blue"
-        ],
-        "Hexadecimal": "#051657"
-    },
-    {
-        "Color": [
-            "Gulf Stream"
-        ],
-        "Hexadecimal": "#80B3AE"
-    },
-    {
-        "Color": [
-            "Gull Gray"
-        ],
-        "Hexadecimal": "#9DACB7"
-    },
-    {
-        "Color": [
-            "Gum Leaf"
-        ],
-        "Hexadecimal": "#B6D3BF"
-    },
-    {
-        "Color": [
-            "Gumbo"
-        ],
-        "Hexadecimal": "#7CA1A6"
-    },
-    {
-        "Color": [
-            "Gun Powder"
-        ],
-        "Hexadecimal": "#414257"
-    },
-    {
-        "Color": [
-            "Gunmetal"
-        ],
-        "Hexadecimal": "#2a3439"
-    },
-    {
-        "Color": [
-            "Gunsmoke"
-        ],
-        "Hexadecimal": "#828685"
-    },
-    {
-        "Color": [
-            "Gurkha"
-        ],
-        "Hexadecimal": "#9A9577"
-    },
-    {
-        "Color": [
-            "Hacienda"
-        ],
-        "Hexadecimal": "#98811B"
-    },
-    {
-        "Color": [
-            "Hairy Heath"
-        ],
-        "Hexadecimal": "#6B2A14"
-    },
-    {
-        "Color": [
-            "Haiti"
-        ],
-        "Hexadecimal": "#1B1035"
-    },
-    {
-        "Color": [
-            "Half And Half"
-        ],
-        "Hexadecimal": "#FFFEE1"
-    },
-    {
-        "Color": [
-            "Half Baked"
-        ],
-        "Hexadecimal": "#85C4CC"
-    },
-    {
-        "Color": [
-            "Half Colonial White"
-        ],
-        "Hexadecimal": "#FDF6D3"
-    },
-    {
-        "Color": [
-            "Half Dutch White"
-        ],
-        "Hexadecimal": "#FEF7DE"
-    },
-    {
-        "Color": [
-            "Half Spanish White"
-        ],
-        "Hexadecimal": "#FEF4DB"
-    },
-    {
-        "Color": [
-            "Hampton"
-        ],
-        "Hexadecimal": "#E5D8AF"
-    },
-    {
-        "Color": [
-            "Han Blue"
-        ],
-        "Hexadecimal": "#446CCF"
-    },
-    {
-        "Color": [
-            "Han Purple"
-        ],
-        "Hexadecimal": "#5218FA"
-    },
-    {
-        "Color": [
-            "Harlequin"
-        ],
-        "Hexadecimal": "#3FFF00"
-    },
-    {
-        "Color": [
-            "Harp"
-        ],
-        "Hexadecimal": "#E6F2EA"
-    },
-    {
-        "Color": [
-            "Harvest Gold"
-        ],
-        "Hexadecimal": "#E0B974"
-    },
-    {
-        "Color": [
-            "Harvest Gold 2"
-        ],
-        "Hexadecimal": "#DA9100"
-    },
-    {
-        "Color": [
-            "Havelock Blue"
-        ],
-        "Hexadecimal": "#5590D9"
-    },
-    {
-        "Color": [
-            "Hawaiian Tan"
-        ],
-        "Hexadecimal": "#9D5616"
-    },
-    {
-        "Color": [
-            "Hawkes Blue"
-        ],
-        "Hexadecimal": "#D4E2FC"
-    },
-    {
-        "Color": [
-            "Heat Wave"
-        ],
-        "Hexadecimal": "#FF7A00"
-    },
-    {
-        "Color": [
-            "Heath"
-        ],
-        "Hexadecimal": "#541012"
-    },
-    {
-        "Color": [
-            "Heather"
-        ],
-        "Hexadecimal": "#B7C3D0"
-    },
-    {
-        "Color": [
-            "Heathered Gray"
-        ],
-        "Hexadecimal": "#B6B095"
-    },
-    {
-        "Color": [
-            "Heavy Metal"
-        ],
-        "Hexadecimal": "#2B3228"
-    },
-    {
-        "Color": [
-            "Heliotrope"
-        ],
-        "Hexadecimal": "#DF73FF"
-    },
-    {
-        "Color": [
-            "Heliotrope Gray",
-            "Rose Quartz"
-        ],
-        "Hexadecimal": "#AA98A9"
-    },
-    {
-        "Color": [
-            "Hemlock"
-        ],
-        "Hexadecimal": "#5E5D3B"
-    },
-    {
-        "Color": [
-            "Hemp"
-        ],
-        "Hexadecimal": "#907874"
-    },
-    {
-        "Color": [
-            "Hibiscus"
-        ],
-        "Hexadecimal": "#B6316C"
-    },
-    {
-        "Color": [
-            "Highland"
-        ],
-        "Hexadecimal": "#6F8E63"
-    },
-    {
-        "Color": [
-            "Hillary"
-        ],
-        "Hexadecimal": "#ACA586"
-    },
-    {
-        "Color": [
-            "Himalaya"
-        ],
-        "Hexadecimal": "#6A5D1B"
-    },
-    {
-        "Color": [
-            "Hint Of Green"
-        ],
-        "Hexadecimal": "#E6FFE9"
-    },
-    {
-        "Color": [
-            "Hint Of Red"
-        ],
-        "Hexadecimal": "#FBF9F9"
-    },
-    {
-        "Color": [
-            "Hint Of Yellow"
-        ],
-        "Hexadecimal": "#FAFDE4"
-    },
-    {
-        "Color": [
-            "Hippie Blue"
-        ],
-        "Hexadecimal": "#589AAF"
-    },
-    {
-        "Color": [
-            "Hippie Green"
-        ],
-        "Hexadecimal": "#53824B"
-    },
-    {
-        "Color": [
-            "Hippie Pink"
-        ],
-        "Hexadecimal": "#AE4560"
-    },
-    {
-        "Color": [
-            "Hit Gray"
-        ],
-        "Hexadecimal": "#A1ADB5"
-    },
-    {
-        "Color": [
-            "Hit Pink"
-        ],
-        "Hexadecimal": "#FFAB81"
-    },
-    {
-        "Color": [
-            "Hokey Pokey"
-        ],
-        "Hexadecimal": "#C8A528"
-    },
-    {
-        "Color": [
-            "Hoki"
-        ],
-        "Hexadecimal": "#65869F"
-    },
-    {
-        "Color": [
-            "Holly"
-        ],
-        "Hexadecimal": "#011D13"
-    },
-    {
-        "Color": [
-            "Honey Flower"
-        ],
-        "Hexadecimal": "#4F1C70"
-    },
-    {
-        "Color": [
-            "Honeydew"
-        ],
-        "Hexadecimal": "#F0FFF0"
-    },
-    {
-        "Color": [
-            "Honeysuckle"
-        ],
-        "Hexadecimal": "#EDFC84"
-    },
-    {
-        "Color": [
-            "Honolulu Blue"
-        ],
-        "Hexadecimal": "#006DB0"
-    },
-    {
-        "Color": [
-            "Hooker's Green"
-        ],
-        "Hexadecimal": "#49796B"
-    },
-    {
-        "Color": [
-            "Hopbush"
-        ],
-        "Hexadecimal": "#D06DA1"
-    },
-    {
-        "Color": [
-            "Horizon"
-        ],
-        "Hexadecimal": "#5A87A0"
-    },
-    {
-        "Color": [
-            "Horses Neck"
-        ],
-        "Hexadecimal": "#604913"
-    },
-    {
-        "Color": [
-            "Hot Magenta"
-        ],
-        "Hexadecimal": "#FF1DCE"
-    },
-    {
-        "Color": [
-            "Hot Pink"
-        ],
-        "Hexadecimal": "#FF69B4"
-    },
-    {
-        "Color": [
-            "Hot Toddy"
-        ],
-        "Hexadecimal": "#B38007"
-    },
-    {
-        "Color": [
-            "Humming Bird"
-        ],
-        "Hexadecimal": "#CFF9F3"
-    },
-    {
-        "Color": [
-            "Hunter Green"
-        ],
-        "Hexadecimal": "#355E3B"
-    },
-    {
-        "Color": [
-            "Hunter Green 2"
-        ],
-        "Hexadecimal": "#161D10"
-    },
-    {
-        "Color": [
-            "Hurricane"
-        ],
-        "Hexadecimal": "#877C7B"
-    },
-    {
-        "Color": [
-            "Husk"
-        ],
-        "Hexadecimal": "#B7A458"
-    },
-    {
-        "Color": [
-            "Ice Cold"
-        ],
-        "Hexadecimal": "#B1F4E7"
-    },
-    {
-        "Color": [
-            "Iceberg"
-        ],
-        "Hexadecimal": "#DAF4F0"
-    },
-    {
-        "Color": [
-            "Iceberg 2"
-        ],
-        "Hexadecimal": "#71A6D2"
-    },
-    {
-        "Color": [
-            "Icterine"
-        ],
-        "Hexadecimal": "#FCF75E"
-    },
-    {
-        "Color": [
-            "Illuminating Emerald"
-        ],
-        "Hexadecimal": "#319177"
-    },
-    {
-        "Color": [
-            "Illusion"
-        ],
-        "Hexadecimal": "#F6A4C9"
-    },
-    {
-        "Color": [
-            "Imperial Red",
-            "Red (PANTONE)"
-        ],
-        "Hexadecimal": "#ED2939"
-    },
-    {
-        "Color": [
-            "Inch Worm"
-        ],
-        "Hexadecimal": "#B0E313"
-    },
-    {
-        "Color": [
-            "Inchworm"
-        ],
-        "Hexadecimal": "#B2EC5D"
-    },
-    {
-        "Color": [
-            "Independence"
-        ],
-        "Hexadecimal": "#4C516D"
-    },
-    {
-        "Color": [
-            "India Green"
-        ],
-        "Hexadecimal": "#138808"
-    },
-    {
-        "Color": [
-            "Indian Red",
-            "Chestnut Rose"
-        ],
-        "Hexadecimal": "#CD5C5C"
-    },
-    {
-        "Color": [
-            "Indian Tan"
-        ],
-        "Hexadecimal": "#4D1E01"
-    },
-    {
-        "Color": [
-            "Indian Yellow"
-        ],
-        "Hexadecimal": "#E3A857"
-    },
-    {
-        "Color": [
-            "Indigo"
-        ],
-        "Hexadecimal": "#4F69C6"
-    },
-    {
-        "Color": [
-            "Indigo Dye"
-        ],
-        "Hexadecimal": "#00416A"
-    },
-    {
-        "Color": [
-            "Indochine"
-        ],
-        "Hexadecimal": "#C26B03"
-    },
-    {
-        "Color": [
-            "International Klein Blue"
-        ],
-        "Hexadecimal": "#002FA7"
-    },
-    {
-        "Color": [
-            "International Klein Blue 2"
-        ],
-        "Hexadecimal": "#130a8f"
-    },
-    {
-        "Color": [
-            "International Orange (Aerospace)",
-            "International Orange"
-        ],
-        "Hexadecimal": "#FF4F00"
-    },
-    {
-        "Color": [
-            "International Orange (Engineering)"
-        ],
-        "Hexadecimal": "#BA160C"
-    },
-    {
-        "Color": [
-            "International Orange (Golden Gate Bridge)"
-        ],
-        "Hexadecimal": "#C0362C"
-    },
-    {
-        "Color": [
-            "Iris"
-        ],
-        "Hexadecimal": "#5A4FCF"
-    },
-    {
-        "Color": [
-            "Irish Coffee"
-        ],
-        "Hexadecimal": "#5F3D26"
-    },
-    {
-        "Color": [
-            "Iroko"
-        ],
-        "Hexadecimal": "#433120"
-    },
-    {
-        "Color": [
-            "Iron"
-        ],
-        "Hexadecimal": "#D4D7D9"
-    },
-    {
-        "Color": [
-            "Ironside Gray"
-        ],
-        "Hexadecimal": "#676662"
-    },
-    {
-        "Color": [
-            "Ironstone"
-        ],
-        "Hexadecimal": "#86483C"
-    },
-    {
-        "Color": [
-            "Irresistible",
-            "Raspberry Rose"
-        ],
-        "Hexadecimal": "#B3446C"
-    },
-    {
-        "Color": [
-            "Isabelline"
-        ],
-        "Hexadecimal": "#F4F0EC"
-    },
-    {
-        "Color": [
-            "Island Spice"
-        ],
-        "Hexadecimal": "#FFFCEE"
-    },
-    {
-        "Color": [
-            "Italian Sky Blue"
-        ],
-        "Hexadecimal": "#B2FFFF"
-    },
-    {
-        "Color": [
-            "Ivory"
-        ],
-        "Hexadecimal": "#FFFFF0"
-    },
-    {
-        "Color": [
-            "Jacaranda"
-        ],
-        "Hexadecimal": "#2E0329"
-    },
-    {
-        "Color": [
-            "Jacarta"
-        ],
-        "Hexadecimal": "#3A2A6A"
-    },
-    {
-        "Color": [
-            "Jacko Bean"
-        ],
-        "Hexadecimal": "#2E1905"
-    },
-    {
-        "Color": [
-            "Jacksons Purple"
-        ],
-        "Hexadecimal": "#20208D"
-    },
-    {
-        "Color": [
-            "Jade"
-        ],
-        "Hexadecimal": "#00A86B"
-    },
-    {
-        "Color": [
-            "Jaffa"
-        ],
-        "Hexadecimal": "#EF863F"
-    },
-    {
-        "Color": [
-            "Jagged Ice"
-        ],
-        "Hexadecimal": "#C2E8E5"
-    },
-    {
-        "Color": [
-            "Jagger"
-        ],
-        "Hexadecimal": "#350E57"
-    },
-    {
-        "Color": [
-            "Jaguar"
-        ],
-        "Hexadecimal": "#080110"
-    },
-    {
-        "Color": [
-            "Jambalaya"
-        ],
-        "Hexadecimal": "#5B3013"
-    },
-    {
-        "Color": [
-            "Janna"
-        ],
-        "Hexadecimal": "#F4EBD3"
-    },
-    {
-        "Color": [
-            "Japanese Carmine"
-        ],
-        "Hexadecimal": "#9D2933"
-    },
-    {
-        "Color": [
-            "Japanese Laurel"
-        ],
-        "Hexadecimal": "#0A6906"
-    },
-    {
-        "Color": [
-            "Japanese Maple"
-        ],
-        "Hexadecimal": "#780109"
-    },
-    {
-        "Color": [
-            "Japanese Violet"
-        ],
-        "Hexadecimal": "#5B3256"
-    },
-    {
-        "Color": [
-            "Japonica"
-        ],
-        "Hexadecimal": "#D87C63"
-    },
-    {
-        "Color": [
-            "Jasmine",
-            "Mellow Yellow"
-        ],
-        "Hexadecimal": "#F8DE7E"
-    },
-    {
-        "Color": [
-            "Java"
-        ],
-        "Hexadecimal": "#1FC2C2"
-    },
-    {
-        "Color": [
-            "Jazzberry Jam"
-        ],
-        "Hexadecimal": "#A50B5E"
-    },
-    {
-        "Color": [
-            "Jelly Bean"
-        ],
-        "Hexadecimal": "#297B9A"
-    },
-    {
-        "Color": [
-            "Jet"
-        ],
-        "Hexadecimal": "#343434"
-    },
-    {
-        "Color": [
-            "Jet Stream"
-        ],
-        "Hexadecimal": "#B5D2CE"
-    },
-    {
-        "Color": [
-            "Jewel"
-        ],
-        "Hexadecimal": "#126B40"
-    },
-    {
-        "Color": [
-            "Jon"
-        ],
-        "Hexadecimal": "#3B1F1F"
-    },
-    {
-        "Color": [
-            "Jonquil"
-        ],
-        "Hexadecimal": "#F4CA16"
-    },
-    {
-        "Color": [
-            "Jonquil 2"
-        ],
-        "Hexadecimal": "#EEFF9A"
-    },
-    {
-        "Color": [
-            "Jordy Blue"
-        ],
-        "Hexadecimal": "#8AB9F1"
-    },
-    {
-        "Color": [
-            "Judge Gray"
-        ],
-        "Hexadecimal": "#544333"
-    },
-    {
-        "Color": [
-            "Jumbo"
-        ],
-        "Hexadecimal": "#7C7B82"
-    },
-    {
-        "Color": [
-            "June Bud"
-        ],
-        "Hexadecimal": "#BDDA57"
-    },
-    {
-        "Color": [
-            "Jungle Green"
-        ],
-        "Hexadecimal": "#29AB87"
-    },
-    {
-        "Color": [
-            "Jungle Mist"
-        ],
-        "Hexadecimal": "#B4CFD3"
-    },
-    {
-        "Color": [
-            "Juniper"
-        ],
-        "Hexadecimal": "#6D9292"
-    },
-    {
-        "Color": [
-            "Just Right"
-        ],
-        "Hexadecimal": "#ECCDB9"
-    },
-    {
-        "Color": [
-            "Kabul"
-        ],
-        "Hexadecimal": "#5E483E"
-    },
-    {
-        "Color": [
-            "Kaitoke Green"
-        ],
-        "Hexadecimal": "#004620"
-    },
-    {
-        "Color": [
-            "Kangaroo"
-        ],
-        "Hexadecimal": "#C6C8BD"
-    },
-    {
-        "Color": [
-            "Karaka"
-        ],
-        "Hexadecimal": "#1E1609"
-    },
-    {
-        "Color": [
-            "Karry"
-        ],
-        "Hexadecimal": "#FFEAD4"
-    },
-    {
-        "Color": [
-            "Kashmir Blue"
-        ],
-        "Hexadecimal": "#507096"
-    },
-    {
-        "Color": [
-            "Kelly Green"
-        ],
-        "Hexadecimal": "#4CBB17"
-    },
-    {
-        "Color": [
-            "Kelp"
-        ],
-        "Hexadecimal": "#454936"
-    },
-    {
-        "Color": [
-            "Kenyan Copper"
-        ],
-        "Hexadecimal": "#7C1C05"
-    },
-    {
-        "Color": [
-            "Keppel"
-        ],
-        "Hexadecimal": "#3AB09E"
-    },
-    {
-        "Color": [
-            "Key Lime"
-        ],
-        "Hexadecimal": "#E8F48C"
-    },
-    {
-        "Color": [
-            "Key Lime Pie"
-        ],
-        "Hexadecimal": "#BFC921"
-    },
-    {
-        "Color": [
-            "Khaki (Web)",
-            "Indian Khaki"
-        ],
-        "Hexadecimal": "#C3B091"
-    },
-    {
-        "Color": [
-            "Khaki (X11) (Light Khaki)",
-            "Khaki"
-        ],
-        "Hexadecimal": "#F0E68C"
-    },
-    {
-        "Color": [
-            "Kidnapper"
-        ],
-        "Hexadecimal": "#E1EAD4"
-    },
-    {
-        "Color": [
-            "Kilamanjaro"
-        ],
-        "Hexadecimal": "#240C02"
-    },
-    {
-        "Color": [
-            "Killarney"
-        ],
-        "Hexadecimal": "#3A6A47"
-    },
-    {
-        "Color": [
-            "Kimberly"
-        ],
-        "Hexadecimal": "#736C9F"
-    },
-    {
-        "Color": [
-            "Kingfisher Daisy"
-        ],
-        "Hexadecimal": "#3E0480"
-    },
-    {
-        "Color": [
-            "Kobe",
-            "Sienna"
-        ],
-        "Hexadecimal": "#882D17"
-    },
-    {
-        "Color": [
-            "Kobi"
-        ],
-        "Hexadecimal": "#E79FC4"
-    },
-    {
-        "Color": [
-            "Kobicha"
-        ],
-        "Hexadecimal": "#6B4423"
-    },
-    {
-        "Color": [
-            "Kokoda"
-        ],
-        "Hexadecimal": "#6E6D57"
-    },
-    {
-        "Color": [
-            "Kombu Green"
-        ],
-        "Hexadecimal": "#354230"
-    },
-    {
-        "Color": [
-            "Korma"
-        ],
-        "Hexadecimal": "#8F4B0E"
-    },
-    {
-        "Color": [
-            "Koromiko"
-        ],
-        "Hexadecimal": "#FFBD5F"
-    },
-    {
-        "Color": [
-            "Kournikova"
-        ],
-        "Hexadecimal": "#FFE772"
-    },
-    {
-        "Color": [
-            "Ksu Purple"
-        ],
-        "Hexadecimal": "#512888"
-    },
-    {
-        "Color": [
-            "Kumera"
-        ],
-        "Hexadecimal": "#886221"
-    },
-    {
-        "Color": [
-            "La Palma"
-        ],
-        "Hexadecimal": "#368716"
-    },
-    {
-        "Color": [
-            "La Rioja"
-        ],
-        "Hexadecimal": "#B3C110"
-    },
-    {
-        "Color": [
-            "Languid Lavender"
-        ],
-        "Hexadecimal": "#D6CADD"
-    },
-    {
-        "Color": [
-            "Lapis Lazuli"
-        ],
-        "Hexadecimal": "#26619C"
-    },
-    {
-        "Color": [
-            "Las Palmas"
-        ],
-        "Hexadecimal": "#C6E610"
-    },
-    {
-        "Color": [
-            "Laser"
-        ],
-        "Hexadecimal": "#C8B568"
-    },
-    {
-        "Color": [
-            "Laser Lemon",
-            "Unmellow Yellow"
-        ],
-        "Hexadecimal": "#FFFF66"
-    },
-    {
-        "Color": [
-            "Laurel"
-        ],
-        "Hexadecimal": "#749378"
-    },
-    {
-        "Color": [
-            "Laurel Green"
-        ],
-        "Hexadecimal": "#A9BA9D"
-    },
-    {
-        "Color": [
-            "Lava"
-        ],
-        "Hexadecimal": "#CF1020"
-    },
-    {
-        "Color": [
-            "Lavender (Floral)",
-            "Lavender"
-        ],
-        "Hexadecimal": "#B57EDC"
-    },
-    {
-        "Color": [
-            "Lavender (Web)"
-        ],
-        "Hexadecimal": "#E6E6FA"
-    },
-    {
-        "Color": [
-            "Lavender Blue",
-            "Periwinkle"
-        ],
-        "Hexadecimal": "#CCCCFF"
-    },
-    {
-        "Color": [
-            "Lavender Blush"
-        ],
-        "Hexadecimal": "#FFF0F5"
-    },
-    {
-        "Color": [
-            "Lavender Gray"
-        ],
-        "Hexadecimal": "#BDBBD7"
-    },
-    {
-        "Color": [
-            "Lavender Gray 2"
-        ],
-        "Hexadecimal": "#C4C3D0"
-    },
-    {
-        "Color": [
-            "Lavender Magenta"
-        ],
-        "Hexadecimal": "#EE82EE"
-    },
-    {
-        "Color": [
-            "Lavender Pink"
-        ],
-        "Hexadecimal": "#FBAED2"
-    },
-    {
-        "Color": [
-            "Lavender Purple"
-        ],
-        "Hexadecimal": "#967BB6"
-    },
-    {
-        "Color": [
-            "Lavender Rose"
-        ],
-        "Hexadecimal": "#FBA0E3"
-    },
-    {
-        "Color": [
-            "Lawn Green"
-        ],
-        "Hexadecimal": "#7CFC00"
-    },
-    {
-        "Color": [
-            "Leather"
-        ],
-        "Hexadecimal": "#967059"
-    },
-    {
-        "Color": [
-            "Lemon"
-        ],
-        "Hexadecimal": "#FDE910"
-    },
-    {
-        "Color": [
-            "Lemon Chiffon"
-        ],
-        "Hexadecimal": "#FFFACD"
-    },
-    {
-        "Color": [
-            "Lemon Curry"
-        ],
-        "Hexadecimal": "#CCA01D"
-    },
-    {
-        "Color": [
-            "Lemon Ginger"
-        ],
-        "Hexadecimal": "#AC9E22"
-    },
-    {
-        "Color": [
-            "Lemon Glacier"
-        ],
-        "Hexadecimal": "#FDFF00"
-    },
-    {
-        "Color": [
-            "Lemon Grass"
-        ],
-        "Hexadecimal": "#9B9E8F"
-    },
-    {
-        "Color": [
-            "Lemon Meringue"
-        ],
-        "Hexadecimal": "#F6EABE"
-    },
-    {
-        "Color": [
-            "Lemon Yellow"
-        ],
-        "Hexadecimal": "#FFF44F"
-    },
-    {
-        "Color": [
-            "Lemon Yellow (Crayola)"
-        ],
-        "Hexadecimal": "#FFFF9F"
-    },
-    {
-        "Color": [
-            "Liberty"
-        ],
-        "Hexadecimal": "#545AA7"
-    },
-    {
-        "Color": [
-            "Light Apricot"
-        ],
-        "Hexadecimal": "#FDD5B1"
-    },
-    {
-        "Color": [
-            "Light Blue"
-        ],
-        "Hexadecimal": "#ADD8E6"
-    },
-    {
-        "Color": [
-            "Light Coral"
-        ],
-        "Hexadecimal": "#F08080"
-    },
-    {
-        "Color": [
-            "Light Cornflower Blue",
-            "Cornflower"
-        ],
-        "Hexadecimal": "#93CCEA"
-    },
-    {
-        "Color": [
-            "Light Cyan"
-        ],
-        "Hexadecimal": "#E0FFFF"
-    },
-    {
-        "Color": [
-            "Light French Beige"
-        ],
-        "Hexadecimal": "#C8AD7F"
-    },
-    {
-        "Color": [
-            "Light Goldenrod Yellow"
-        ],
-        "Hexadecimal": "#FAFAD2"
-    },
-    {
-        "Color": [
-            "Light Gray"
-        ],
-        "Hexadecimal": "#D3D3D3"
-    },
-    {
-        "Color": [
-            "Light Green"
-        ],
-        "Hexadecimal": "#90EE90"
-    },
-    {
-        "Color": [
-            "Light Orange"
-        ],
-        "Hexadecimal": "#FED8B1"
-    },
-    {
-        "Color": [
-            "Light Periwinkle"
-        ],
-        "Hexadecimal": "#C5CBE1"
-    },
-    {
-        "Color": [
-            "Light Pink"
-        ],
-        "Hexadecimal": "#FFB6C1"
-    },
-    {
-        "Color": [
-            "Light Salmon"
-        ],
-        "Hexadecimal": "#FFA07A"
-    },
-    {
-        "Color": [
-            "Light Sea Green"
-        ],
-        "Hexadecimal": "#20B2AA"
-    },
-    {
-        "Color": [
-            "Light Sky Blue"
-        ],
-        "Hexadecimal": "#87CEFA"
-    },
-    {
-        "Color": [
-            "Light Slate Gray"
-        ],
-        "Hexadecimal": "#778899"
-    },
-    {
-        "Color": [
-            "Light Steel Blue"
-        ],
-        "Hexadecimal": "#B0C4DE"
-    },
-    {
-        "Color": [
-            "Light Wisteria"
-        ],
-        "Hexadecimal": "#C9A0DC"
-    },
-    {
-        "Color": [
-            "Light Yellow"
-        ],
-        "Hexadecimal": "#FFFFE0"
-    },
-    {
-        "Color": [
-            "Lightning Yellow"
-        ],
-        "Hexadecimal": "#FCC01E"
-    },
-    {
-        "Color": [
-            "Lilac"
-        ],
-        "Hexadecimal": "#C8A2C8"
-    },
-    {
-        "Color": [
-            "Lilac Bush"
-        ],
-        "Hexadecimal": "#9874D3"
-    },
-    {
-        "Color": [
-            "Lilac Luster"
-        ],
-        "Hexadecimal": "#AE98AA"
-    },
-    {
-        "Color": [
-            "Lily"
-        ],
-        "Hexadecimal": "#C8AABF"
-    },
-    {
-        "Color": [
-            "Lily White"
-        ],
-        "Hexadecimal": "#E7F8FF"
-    },
-    {
-        "Color": [
-            "Lima"
-        ],
-        "Hexadecimal": "#76BD17"
-    },
-    {
-        "Color": [
-            "Lime Green"
-        ],
-        "Hexadecimal": "#32CD32"
-    },
-    {
-        "Color": [
-            "Limeade"
-        ],
-        "Hexadecimal": "#6F9D02"
-    },
-    {
-        "Color": [
-            "Limed Ash"
-        ],
-        "Hexadecimal": "#747D63"
-    },
-    {
-        "Color": [
-            "Limed Oak"
-        ],
-        "Hexadecimal": "#AC8A56"
-    },
-    {
-        "Color": [
-            "Limed Spruce"
-        ],
-        "Hexadecimal": "#394851"
-    },
-    {
-        "Color": [
-            "Lincoln Green"
-        ],
-        "Hexadecimal": "#195905"
-    },
-    {
-        "Color": [
-            "Linen"
-        ],
-        "Hexadecimal": "#FAF0E6"
-    },
-    {
-        "Color": [
-            "Link Water"
-        ],
-        "Hexadecimal": "#D9E4F5"
-    },
-    {
-        "Color": [
-            "Lipstick"
-        ],
-        "Hexadecimal": "#AB0563"
-    },
-    {
-        "Color": [
-            "Lisbon Brown"
-        ],
-        "Hexadecimal": "#423921"
-    },
-    {
-        "Color": [
-            "Little Boy Blue"
-        ],
-        "Hexadecimal": "#6CA0DC"
-    },
-    {
-        "Color": [
-            "Liver"
-        ],
-        "Hexadecimal": "#674C47"
-    },
-    {
-        "Color": [
-            "Liver (Dogs)"
-        ],
-        "Hexadecimal": "#B86D29"
-    },
-    {
-        "Color": [
-            "Liver (Organ)"
-        ],
-        "Hexadecimal": "#6C2E1F"
-    },
-    {
-        "Color": [
-            "Liver Chestnut"
-        ],
-        "Hexadecimal": "#987456"
-    },
-    {
-        "Color": [
-            "Livid Brown"
-        ],
-        "Hexadecimal": "#4D282E"
-    },
-    {
-        "Color": [
-            "Loafer"
-        ],
-        "Hexadecimal": "#EEF4DE"
-    },
-    {
-        "Color": [
-            "Loblolly"
-        ],
-        "Hexadecimal": "#BDC9CE"
-    },
-    {
-        "Color": [
-            "Lochinvar"
-        ],
-        "Hexadecimal": "#2C8C84"
-    },
-    {
-        "Color": [
-            "Lochmara"
-        ],
-        "Hexadecimal": "#007EC7"
-    },
-    {
-        "Color": [
-            "Locust"
-        ],
-        "Hexadecimal": "#A8AF8E"
-    },
-    {
-        "Color": [
-            "Log Cabin"
-        ],
-        "Hexadecimal": "#242A1D"
-    },
-    {
-        "Color": [
-            "Logan"
-        ],
-        "Hexadecimal": "#AAA9CD"
-    },
-    {
-        "Color": [
-            "Lola"
-        ],
-        "Hexadecimal": "#DFCFDB"
-    },
-    {
-        "Color": [
-            "London Hue"
-        ],
-        "Hexadecimal": "#BEA6C3"
-    },
-    {
-        "Color": [
-            "Lonestar"
-        ],
-        "Hexadecimal": "#6D0101"
-    },
-    {
-        "Color": [
-            "Lotus"
-        ],
-        "Hexadecimal": "#863C3C"
-    },
-    {
-        "Color": [
-            "Loulou"
-        ],
-        "Hexadecimal": "#460B41"
-    },
-    {
-        "Color": [
-            "Lucky"
-        ],
-        "Hexadecimal": "#AF9F1C"
-    },
-    {
-        "Color": [
-            "Lucky Point"
-        ],
-        "Hexadecimal": "#1A1A68"
-    },
-    {
-        "Color": [
-            "Lunar Green"
-        ],
-        "Hexadecimal": "#3C493A"
-    },
-    {
-        "Color": [
-            "Luxor Gold"
-        ],
-        "Hexadecimal": "#A7882C"
-    },
-    {
-        "Color": [
-            "Lynch"
-        ],
-        "Hexadecimal": "#697E9A"
-    },
-    {
-        "Color": [
-            "Mabel"
-        ],
-        "Hexadecimal": "#D9F7FF"
-    },
-    {
-        "Color": [
-            "Macaroni And Cheese"
-        ],
-        "Hexadecimal": "#FFB97B"
-    },
-    {
-        "Color": [
-            "Macaroni And Cheese 2"
-        ],
-        "Hexadecimal": "#FFBD88"
-    },
-    {
-        "Color": [
-            "Madang"
-        ],
-        "Hexadecimal": "#B7F0BE"
-    },
-    {
-        "Color": [
-            "Madder Lake"
-        ],
-        "Hexadecimal": "#CC3336"
-    },
-    {
-        "Color": [
-            "Madison"
-        ],
-        "Hexadecimal": "#09255D"
-    },
-    {
-        "Color": [
-            "Madras"
-        ],
-        "Hexadecimal": "#3F3002"
-    },
-    {
-        "Color": [
-            "Magenta (Crayola)"
-        ],
-        "Hexadecimal": "#F653A6"
-    },
-    {
-        "Color": [
-            "Magenta (Dye)"
-        ],
-        "Hexadecimal": "#CA1F7B"
-    },
-    {
-        "Color": [
-            "Magenta (PANTONE)"
-        ],
-        "Hexadecimal": "#D0417E"
-    },
-    {
-        "Color": [
-            "Magenta (Process)"
-        ],
-        "Hexadecimal": "#FF0090"
-    },
-    {
-        "Color": [
-            "Magenta Haze"
-        ],
-        "Hexadecimal": "#9F4576"
-    },
-    {
-        "Color": [
-            "Magic Mint"
-        ],
-        "Hexadecimal": "#AAF0D1"
-    },
-    {
-        "Color": [
-            "Magnolia"
-        ],
-        "Hexadecimal": "#F8F4FF"
-    },
-    {
-        "Color": [
-            "Magnolia 2"
-        ],
-        "Hexadecimal": "#F2E8D7"
-    },
-    {
-        "Color": [
-            "Mahogany"
-        ],
-        "Hexadecimal": "#C04000"
-    },
-    {
-        "Color": [
-            "Mahogany 2"
-        ],
-        "Hexadecimal": "#4E0606"
-    },
-    {
-        "Color": [
-            "Mai Tai"
-        ],
-        "Hexadecimal": "#B06608"
-    },
-    {
-        "Color": [
-            "Maize"
-        ],
-        "Hexadecimal": "#F5D5A0"
-    },
-    {
-        "Color": [
-            "Maize (Crayola)"
-        ],
-        "Hexadecimal": "#F2C649"
-    },
-    {
-        "Color": [
-            "Majorelle Blue"
-        ],
-        "Hexadecimal": "#6050DC"
-    },
-    {
-        "Color": [
-            "Makara"
-        ],
-        "Hexadecimal": "#897D6D"
-    },
-    {
-        "Color": [
-            "Mako"
-        ],
-        "Hexadecimal": "#444954"
-    },
-    {
-        "Color": [
-            "Malachite"
-        ],
-        "Hexadecimal": "#0BDA51"
-    },
-    {
-        "Color": [
-            "Malibu"
-        ],
-        "Hexadecimal": "#7DC8F7"
-    },
-    {
-        "Color": [
-            "Mallard"
-        ],
-        "Hexadecimal": "#233418"
-    },
-    {
-        "Color": [
-            "Malta"
-        ],
-        "Hexadecimal": "#BDB2A1"
-    },
-    {
-        "Color": [
-            "Mamba"
-        ],
-        "Hexadecimal": "#8E8190"
-    },
-    {
-        "Color": [
-            "Manatee"
-        ],
-        "Hexadecimal": "#979AAA"
-    },
-    {
-        "Color": [
-            "Manatee 2"
-        ],
-        "Hexadecimal": "#8D90A1"
-    },
-    {
-        "Color": [
-            "Mandalay"
-        ],
-        "Hexadecimal": "#AD781B"
-    },
-    {
-        "Color": [
-            "Mandarin"
-        ],
-        "Hexadecimal": "#F37A48"
-    },
-    {
-        "Color": [
-            "Mandy"
-        ],
-        "Hexadecimal": "#E25465"
-    },
-    {
-        "Color": [
-            "Mandys Pink"
-        ],
-        "Hexadecimal": "#F2C3B2"
-    },
-    {
-        "Color": [
-            "Mango"
-        ],
-        "Hexadecimal": "#FDBE02"
-    },
-    {
-        "Color": [
-            "Mango Tango"
-        ],
-        "Hexadecimal": "#FF8243"
-    },
-    {
-        "Color": [
-            "Mango Tango 2"
-        ],
-        "Hexadecimal": "#E77200"
-    },
-    {
-        "Color": [
-            "Manhattan"
-        ],
-        "Hexadecimal": "#F5C999"
-    },
-    {
-        "Color": [
-            "Mantis"
-        ],
-        "Hexadecimal": "#74C365"
-    },
-    {
-        "Color": [
-            "Mantle"
-        ],
-        "Hexadecimal": "#8B9C90"
-    },
-    {
-        "Color": [
-            "Manz"
-        ],
-        "Hexadecimal": "#EEEF78"
-    },
-    {
-        "Color": [
-            "Mardi Gras"
-        ],
-        "Hexadecimal": "#880085"
-    },
-    {
-        "Color": [
-            "Mardi Gras 2"
-        ],
-        "Hexadecimal": "#350036"
-    },
-    {
-        "Color": [
-            "Marigold"
-        ],
-        "Hexadecimal": "#EAA221"
-    },
-    {
-        "Color": [
-            "Marigold 2"
-        ],
-        "Hexadecimal": "#B98D28"
-    },
-    {
-        "Color": [
-            "Marigold Yellow"
-        ],
-        "Hexadecimal": "#FBE870"
-    },
-    {
-        "Color": [
-            "Mariner"
-        ],
-        "Hexadecimal": "#286ACD"
-    },
-    {
-        "Color": [
-            "Maroon (Web)",
-            "Maroon"
-        ],
-        "Hexadecimal": "#800000"
-    },
-    {
-        "Color": [
-            "Maroon (X11)"
-        ],
-        "Hexadecimal": "#B03060"
-    },
-    {
-        "Color": [
-            "Maroon Oak"
-        ],
-        "Hexadecimal": "#520C17"
-    },
-    {
-        "Color": [
-            "Marshland"
-        ],
-        "Hexadecimal": "#0B0F08"
-    },
-    {
-        "Color": [
-            "Martini"
-        ],
-        "Hexadecimal": "#AFA09E"
-    },
-    {
-        "Color": [
-            "Martinique"
-        ],
-        "Hexadecimal": "#363050"
-    },
-    {
-        "Color": [
-            "Marzipan"
-        ],
-        "Hexadecimal": "#F8DB9D"
-    },
-    {
-        "Color": [
-            "Masala"
-        ],
-        "Hexadecimal": "#403B38"
-    },
-    {
-        "Color": [
-            "Matisse"
-        ],
-        "Hexadecimal": "#1B659D"
-    },
-    {
-        "Color": [
-            "Matrix"
-        ],
-        "Hexadecimal": "#B05D54"
-    },
-    {
-        "Color": [
-            "Matterhorn"
-        ],
-        "Hexadecimal": "#4E3B41"
-    },
-    {
-        "Color": [
-            "Mauve"
-        ],
-        "Hexadecimal": "#E0B0FF"
-    },
-    {
-        "Color": [
-            "Mauve Taupe",
-            "Raspberry Glace"
-        ],
-        "Hexadecimal": "#915F6D"
-    },
-    {
-        "Color": [
-            "Mauvelous"
-        ],
-        "Hexadecimal": "#EF98AA"
-    },
-    {
-        "Color": [
-            "Mauvelous 2"
-        ],
-        "Hexadecimal": "#F091A9"
-    },
-    {
-        "Color": [
-            "Maverick"
-        ],
-        "Hexadecimal": "#D8C2D5"
-    },
-    {
-        "Color": [
-            "Maximum Blue"
-        ],
-        "Hexadecimal": "#47ABCC"
-    },
-    {
-        "Color": [
-            "Maximum Blue Green"
-        ],
-        "Hexadecimal": "#30BFBF"
-    },
-    {
-        "Color": [
-            "Maximum Blue Purple"
-        ],
-        "Hexadecimal": "#ACACE6"
-    },
-    {
-        "Color": [
-            "Maximum Green"
-        ],
-        "Hexadecimal": "#5E8C31"
-    },
-    {
-        "Color": [
-            "Maximum Green Yellow"
-        ],
-        "Hexadecimal": "#D9E650"
-    },
-    {
-        "Color": [
-            "Maximum Purple"
-        ],
-        "Hexadecimal": "#733380"
-    },
-    {
-        "Color": [
-            "Maximum Red"
-        ],
-        "Hexadecimal": "#D92121"
-    },
-    {
-        "Color": [
-            "Maximum Red Purple"
-        ],
-        "Hexadecimal": "#A63A79"
-    },
-    {
-        "Color": [
-            "Maximum Yellow"
-        ],
-        "Hexadecimal": "#FAFA37"
-    },
-    {
-        "Color": [
-            "Maximum Yellow Red"
-        ],
-        "Hexadecimal": "#F2BA49"
-    },
-    {
-        "Color": [
-            "May Green"
-        ],
-        "Hexadecimal": "#4C9141"
-    },
-    {
-        "Color": [
-            "Maya Blue"
-        ],
-        "Hexadecimal": "#73C2FB"
-    },
-    {
-        "Color": [
-            "Medium Aquamarine"
-        ],
-        "Hexadecimal": "#66DDAA"
-    },
-    {
-        "Color": [
-            "Medium Blue"
-        ],
-        "Hexadecimal": "#0000CD"
-    },
-    {
-        "Color": [
-            "Medium Candy Apple Red"
-        ],
-        "Hexadecimal": "#E2062C"
-    },
-    {
-        "Color": [
-            "Medium Carmine"
-        ],
-        "Hexadecimal": "#AF4035"
-    },
-    {
-        "Color": [
-            "Medium Champagne"
-        ],
-        "Hexadecimal": "#F3E5AB"
-    },
-    {
-        "Color": [
-            "Medium Orchid"
-        ],
-        "Hexadecimal": "#BA55D3"
-    },
-    {
-        "Color": [
-            "Medium Purple"
-        ],
-        "Hexadecimal": "#9370DB"
-    },
-    {
-        "Color": [
-            "Medium Red Violet"
-        ],
-        "Hexadecimal": "#BB3385"
-    },
-    {
-        "Color": [
-            "Medium Sea Green"
-        ],
-        "Hexadecimal": "#3CB371"
-    },
-    {
-        "Color": [
-            "Medium Slate Blue"
-        ],
-        "Hexadecimal": "#7B68EE"
-    },
-    {
-        "Color": [
-            "Medium Spring Green"
-        ],
-        "Hexadecimal": "#00FA9A"
-    },
-    {
-        "Color": [
-            "Medium Turquoise"
-        ],
-        "Hexadecimal": "#48D1CC"
-    },
-    {
-        "Color": [
-            "Medium Violet-Red",
-            "Red-Violet",
-            "Red Violet"
-        ],
-        "Hexadecimal": "#C71585"
-    },
-    {
-        "Color": [
-            "Melanie"
-        ],
-        "Hexadecimal": "#E4C2D5"
-    },
-    {
-        "Color": [
-            "Melanzane"
-        ],
-        "Hexadecimal": "#300529"
-    },
-    {
-        "Color": [
-            "Mellow Apricot"
-        ],
-        "Hexadecimal": "#F8B878"
-    },
-    {
-        "Color": [
-            "Melon"
-        ],
-        "Hexadecimal": "#FEBAAD"
-    },
-    {
-        "Color": [
-            "Melrose"
-        ],
-        "Hexadecimal": "#C7C1FF"
-    },
-    {
-        "Color": [
-            "Mercury"
-        ],
-        "Hexadecimal": "#E5E5E5"
-    },
-    {
-        "Color": [
-            "Merino"
-        ],
-        "Hexadecimal": "#F6F0E6"
-    },
-    {
-        "Color": [
-            "Merlin"
-        ],
-        "Hexadecimal": "#413C37"
-    },
-    {
-        "Color": [
-            "Merlot"
-        ],
-        "Hexadecimal": "#831923"
-    },
-    {
-        "Color": [
-            "Metallic Bronze"
-        ],
-        "Hexadecimal": "#49371B"
-    },
-    {
-        "Color": [
-            "Metallic Copper"
-        ],
-        "Hexadecimal": "#71291D"
-    },
-    {
-        "Color": [
-            "Metallic Gold"
-        ],
-        "Hexadecimal": "#D3AF37"
-    },
-    {
-        "Color": [
-            "Metallic Seaweed"
-        ],
-        "Hexadecimal": "#0A7E8C"
-    },
-    {
-        "Color": [
-            "Metallic Sunburst"
-        ],
-        "Hexadecimal": "#9C7C38"
-    },
-    {
-        "Color": [
-            "Meteor"
-        ],
-        "Hexadecimal": "#D07D12"
-    },
-    {
-        "Color": [
-            "Meteorite"
-        ],
-        "Hexadecimal": "#3C1F76"
-    },
-    {
-        "Color": [
-            "Mexican Pink"
-        ],
-        "Hexadecimal": "#E4007C"
-    },
-    {
-        "Color": [
-            "Mexican Red"
-        ],
-        "Hexadecimal": "#A72525"
-    },
-    {
-        "Color": [
-            "Mid Gray"
-        ],
-        "Hexadecimal": "#5F5F6E"
-    },
-    {
-        "Color": [
-            "Middle Blue"
-        ],
-        "Hexadecimal": "#7ED4E6"
-    },
-    {
-        "Color": [
-            "Middle Blue Green"
-        ],
-        "Hexadecimal": "#8DD9CC"
-    },
-    {
-        "Color": [
-            "Middle Blue Purple"
-        ],
-        "Hexadecimal": "#8B72BE"
-    },
-    {
-        "Color": [
-            "Middle Green"
-        ],
-        "Hexadecimal": "#4D8C57"
-    },
-    {
-        "Color": [
-            "Middle Green Yellow"
-        ],
-        "Hexadecimal": "#ACBF60"
-    },
-    {
-        "Color": [
-            "Middle Grey",
-            "Natural Gray"
-        ],
-        "Hexadecimal": "#8B8680"
-    },
-    {
-        "Color": [
-            "Middle Purple"
-        ],
-        "Hexadecimal": "#D982B5"
-    },
-    {
-        "Color": [
-            "Middle Red"
-        ],
-        "Hexadecimal": "#E58E73"
-    },
-    {
-        "Color": [
-            "Middle Red Purple"
-        ],
-        "Hexadecimal": "#A55353"
-    },
-    {
-        "Color": [
-            "Middle Yellow"
-        ],
-        "Hexadecimal": "#FFEB00"
-    },
-    {
-        "Color": [
-            "Middle Yellow Red"
-        ],
-        "Hexadecimal": "#ECB176"
-    },
-    {
-        "Color": [
-            "Midnight"
-        ],
-        "Hexadecimal": "#011635"
-    },
-    {
-        "Color": [
-            "Midnight 2"
-        ],
-        "Hexadecimal": "#702670"
-    },
-    {
-        "Color": [
-            "Midnight Blue"
-        ],
-        "Hexadecimal": "#191970"
-    },
-    {
-        "Color": [
-            "Midnight Blue 2"
-        ],
-        "Hexadecimal": "#003366"
-    },
-    {
-        "Color": [
-            "Midnight Green (Eagle Green)"
-        ],
-        "Hexadecimal": "#004953"
-    },
-    {
-        "Color": [
-            "Midnight Moss"
-        ],
-        "Hexadecimal": "#041004"
-    },
-    {
-        "Color": [
-            "Mikado"
-        ],
-        "Hexadecimal": "#2D2510"
-    },
-    {
-        "Color": [
-            "Mikado Yellow"
-        ],
-        "Hexadecimal": "#FFC40C"
-    },
-    {
-        "Color": [
-            "Milan"
-        ],
-        "Hexadecimal": "#FAFFA4"
-    },
-    {
-        "Color": [
-            "Milano Red"
-        ],
-        "Hexadecimal": "#B81104"
-    },
-    {
-        "Color": [
-            "Milk Punch"
-        ],
-        "Hexadecimal": "#FFF6D4"
-    },
-    {
-        "Color": [
-            "Millbrook"
-        ],
-        "Hexadecimal": "#594433"
-    },
-    {
-        "Color": [
-            "Mimi Pink"
-        ],
-        "Hexadecimal": "#FFDAE9"
-    },
-    {
-        "Color": [
-            "Mimosa"
-        ],
-        "Hexadecimal": "#F8FDD3"
-    },
-    {
-        "Color": [
-            "Mindaro"
-        ],
-        "Hexadecimal": "#E3F988"
-    },
-    {
-        "Color": [
-            "Mine Shaft"
-        ],
-        "Hexadecimal": "#323232"
-    },
-    {
-        "Color": [
-            "Mineral Green"
-        ],
-        "Hexadecimal": "#3F5D53"
-    },
-    {
-        "Color": [
-            "Ming"
-        ],
-        "Hexadecimal": "#36747D"
-    },
-    {
-        "Color": [
-            "Minion Yellow"
-        ],
-        "Hexadecimal": "#F5E050"
-    },
-    {
-        "Color": [
-            "Minsk"
-        ],
-        "Hexadecimal": "#3F307F"
-    },
-    {
-        "Color": [
-            "Mint"
-        ],
-        "Hexadecimal": "#3EB489"
-    },
-    {
-        "Color": [
-            "Mint Cream"
-        ],
-        "Hexadecimal": "#F5FFFA"
-    },
-    {
-        "Color": [
-            "Mint Green"
-        ],
-        "Hexadecimal": "#98FF98"
-    },
-    {
-        "Color": [
-            "Mint Julep"
-        ],
-        "Hexadecimal": "#F1EEC1"
-    },
-    {
-        "Color": [
-            "Mint Tulip"
-        ],
-        "Hexadecimal": "#C4F4EB"
-    },
-    {
-        "Color": [
-            "Mirage"
-        ],
-        "Hexadecimal": "#161928"
-    },
-    {
-        "Color": [
-            "Mischka"
-        ],
-        "Hexadecimal": "#D1D2DD"
-    },
-    {
-        "Color": [
-            "Mist Gray"
-        ],
-        "Hexadecimal": "#C4C4BC"
-    },
-    {
-        "Color": [
-            "Misty Moss"
-        ],
-        "Hexadecimal": "#BBB477"
-    },
-    {
-        "Color": [
-            "Misty Rose"
-        ],
-        "Hexadecimal": "#FFE4E1"
-    },
-    {
-        "Color": [
-            "Mobster"
-        ],
-        "Hexadecimal": "#7F7589"
-    },
-    {
-        "Color": [
-            "Moccaccino"
-        ],
-        "Hexadecimal": "#6E1D14"
-    },
-    {
-        "Color": [
-            "Mocha"
-        ],
-        "Hexadecimal": "#782D19"
-    },
-    {
-        "Color": [
-            "Mojo"
-        ],
-        "Hexadecimal": "#C04737"
-    },
-    {
-        "Color": [
-            "Mona Lisa"
-        ],
-        "Hexadecimal": "#FFA194"
-    },
-    {
-        "Color": [
-            "Monarch"
-        ],
-        "Hexadecimal": "#8B0723"
-    },
-    {
-        "Color": [
-            "Mondo"
-        ],
-        "Hexadecimal": "#4A3C30"
-    },
-    {
-        "Color": [
-            "Mongoose"
-        ],
-        "Hexadecimal": "#B5A27F"
-    },
-    {
-        "Color": [
-            "Monsoon"
-        ],
-        "Hexadecimal": "#8A8389"
-    },
-    {
-        "Color": [
-            "Monte Carlo"
-        ],
-        "Hexadecimal": "#83D0C6"
-    },
-    {
-        "Color": [
-            "Monza"
-        ],
-        "Hexadecimal": "#C7031E"
-    },
-    {
-        "Color": [
-            "Moody Blue"
-        ],
-        "Hexadecimal": "#7F76D3"
-    },
-    {
-        "Color": [
-            "Moon Glow"
-        ],
-        "Hexadecimal": "#FCFEDA"
-    },
-    {
-        "Color": [
-            "Moon Mist"
-        ],
-        "Hexadecimal": "#DCDDCC"
-    },
-    {
-        "Color": [
-            "Moon Raker"
-        ],
-        "Hexadecimal": "#D6CEF6"
-    },
-    {
-        "Color": [
-            "Morning Blue"
-        ],
-        "Hexadecimal": "#8DA399"
-    },
-    {
-        "Color": [
-            "Morning Glory"
-        ],
-        "Hexadecimal": "#9EDEE0"
-    },
-    {
-        "Color": [
-            "Morocco Brown"
-        ],
-        "Hexadecimal": "#441D00"
-    },
-    {
-        "Color": [
-            "Mortar"
-        ],
-        "Hexadecimal": "#504351"
-    },
-    {
-        "Color": [
-            "Mosque"
-        ],
-        "Hexadecimal": "#036A6E"
-    },
-    {
-        "Color": [
-            "Moss Green"
-        ],
-        "Hexadecimal": "#ADDFAD"
-    },
-    {
-        "Color": [
-            "Moss Green",
-            "Turtle Green"
-        ],
-        "Hexadecimal": "#8A9A5B"
-    },
-    {
-        "Color": [
-            "Mountain Meadow"
-        ],
-        "Hexadecimal": "#30BA8F"
-    },
-    {
-        "Color": [
-            "Mountain Meadow 2"
-        ],
-        "Hexadecimal": "#1AB385"
-    },
-    {
-        "Color": [
-            "Mountain Mist"
-        ],
-        "Hexadecimal": "#959396"
-    },
-    {
-        "Color": [
-            "Mountbatten Pink"
-        ],
-        "Hexadecimal": "#997A8D"
-    },
-    {
-        "Color": [
-            "Msu Green"
-        ],
-        "Hexadecimal": "#18453B"
-    },
-    {
-        "Color": [
-            "Muddy Waters"
-        ],
-        "Hexadecimal": "#B78E5C"
-    },
-    {
-        "Color": [
-            "Muesli"
-        ],
-        "Hexadecimal": "#AA8B5B"
-    },
-    {
-        "Color": [
-            "Mulberry"
-        ],
-        "Hexadecimal": "#C54B8C"
-    },
-    {
-        "Color": [
-            "Mulberry (Crayola)"
-        ],
-        "Hexadecimal": "#C8509B"
-    },
-    {
-        "Color": [
-            "Mulberry Wood"
-        ],
-        "Hexadecimal": "#5C0536"
-    },
-    {
-        "Color": [
-            "Mule Fawn"
-        ],
-        "Hexadecimal": "#8C472F"
-    },
-    {
-        "Color": [
-            "Mulled Wine"
-        ],
-        "Hexadecimal": "#4E4562"
-    },
-    {
-        "Color": [
-            "Mustard"
-        ],
-        "Hexadecimal": "#FFDB58"
-    },
-    {
-        "Color": [
-            "My Pink"
-        ],
-        "Hexadecimal": "#D69188"
-    },
-    {
-        "Color": [
-            "My Sin"
-        ],
-        "Hexadecimal": "#FFB31F"
-    },
-    {
-        "Color": [
-            "Myrtle Green"
-        ],
-        "Hexadecimal": "#317873"
-    },
-    {
-        "Color": [
-            "Mystic"
-        ],
-        "Hexadecimal": "#D65282"
-    },
-    {
-        "Color": [
-            "Mystic 2"
-        ],
-        "Hexadecimal": "#E2EBED"
-    },
-    {
-        "Color": [
-            "Mystic Maroon"
-        ],
-        "Hexadecimal": "#AD4379"
-    },
-    {
-        "Color": [
-            "Nadeshiko Pink"
-        ],
-        "Hexadecimal": "#F6ADC6"
-    },
-    {
-        "Color": [
-            "Nandor"
-        ],
-        "Hexadecimal": "#4B5D52"
-    },
-    {
-        "Color": [
-            "Napa"
-        ],
-        "Hexadecimal": "#ACA494"
-    },
-    {
-        "Color": [
-            "Naples Yellow",
-            "Royal Yellow",
-            "Stil De Grain Yellow"
-        ],
-        "Hexadecimal": "#FADA5E"
-    },
-    {
-        "Color": [
-            "Narvik"
-        ],
-        "Hexadecimal": "#EDF9F1"
-    },
-    {
-        "Color": [
-            "Navajo White"
-        ],
-        "Hexadecimal": "#FFDEAD"
-    },
-    {
-        "Color": [
-            "Navy Blue"
-        ],
-        "Hexadecimal": "#000080"
-    },
-    {
-        "Color": [
-            "Nebula"
-        ],
-        "Hexadecimal": "#CBDBD6"
-    },
-    {
-        "Color": [
-            "Negroni"
-        ],
-        "Hexadecimal": "#FFE2C5"
-    },
-    {
-        "Color": [
-            "Neon Blue"
-        ],
-        "Hexadecimal": "#4666FF"
-    },
-    {
-        "Color": [
-            "Neon Carrot"
-        ],
-        "Hexadecimal": "#FFA343"
-    },
-    {
-        "Color": [
-            "Neon Fuchsia"
-        ],
-        "Hexadecimal": "#FE4164"
-    },
-    {
-        "Color": [
-            "Neon Green"
-        ],
-        "Hexadecimal": "#39FF14"
-    },
-    {
-        "Color": [
-            "Nepal"
-        ],
-        "Hexadecimal": "#8EABC1"
-    },
-    {
-        "Color": [
-            "Neptune"
-        ],
-        "Hexadecimal": "#7CB7BB"
-    },
-    {
-        "Color": [
-            "Nero"
-        ],
-        "Hexadecimal": "#140600"
-    },
-    {
-        "Color": [
-            "Nevada"
-        ],
-        "Hexadecimal": "#646E75"
-    },
-    {
-        "Color": [
-            "New Orleans"
-        ],
-        "Hexadecimal": "#F3D69D"
-    },
-    {
-        "Color": [
-            "New York Pink"
-        ],
-        "Hexadecimal": "#D7837F"
-    },
-    {
-        "Color": [
-            "Niagara"
-        ],
-        "Hexadecimal": "#06A189"
-    },
-    {
-        "Color": [
-            "Nickel"
-        ],
-        "Hexadecimal": "#727472"
-    },
-    {
-        "Color": [
-            "Night Rider"
-        ],
-        "Hexadecimal": "#1F120F"
-    },
-    {
-        "Color": [
-            "Night Shadz"
-        ],
-        "Hexadecimal": "#AA375A"
-    },
-    {
-        "Color": [
-            "Nile Blue"
-        ],
-        "Hexadecimal": "#193751"
-    },
-    {
-        "Color": [
-            "Nobel"
-        ],
-        "Hexadecimal": "#B7B1B1"
-    },
-    {
-        "Color": [
-            "Nomad"
-        ],
-        "Hexadecimal": "#BAB1A2"
-    },
-    {
-        "Color": [
-            "Non-Photo Blue"
-        ],
-        "Hexadecimal": "#A4DDED"
-    },
-    {
-        "Color": [
-            "Norway"
-        ],
-        "Hexadecimal": "#A8BD9F"
-    },
-    {
-        "Color": [
-            "Nugget"
-        ],
-        "Hexadecimal": "#C59922"
-    },
-    {
-        "Color": [
-            "Nutmeg"
-        ],
-        "Hexadecimal": "#81422C"
-    },
-    {
-        "Color": [
-            "Nutmeg Wood Finish"
-        ],
-        "Hexadecimal": "#683600"
-    },
-    {
-        "Color": [
-            "Nyanza"
-        ],
-        "Hexadecimal": "#E9FFDB"
-    },
-    {
-        "Color": [
-            "Oasis"
-        ],
-        "Hexadecimal": "#FEEFCE"
-    },
-    {
-        "Color": [
-            "Observatory"
-        ],
-        "Hexadecimal": "#02866F"
-    },
-    {
-        "Color": [
-            "Ocean Blue"
-        ],
-        "Hexadecimal": "#4F42B5"
-    },
-    {
-        "Color": [
-            "Ocean Green"
-        ],
-        "Hexadecimal": "#41AA78"
-    },
-    {
-        "Color": [
-            "Ocean Green 2"
-        ],
-        "Hexadecimal": "#48BF91"
-    },
-    {
-        "Color": [
-            "Ochre"
-        ],
-        "Hexadecimal": "#CC7722"
-    },
-    {
-        "Color": [
-            "Off Green"
-        ],
-        "Hexadecimal": "#E6F8F3"
-    },
-    {
-        "Color": [
-            "Off Yellow"
-        ],
-        "Hexadecimal": "#FEF9E3"
-    },
-    {
-        "Color": [
-            "Oil"
-        ],
-        "Hexadecimal": "#281E15"
-    },
-    {
-        "Color": [
-            "Old Brick"
-        ],
-        "Hexadecimal": "#901E1E"
-    },
-    {
-        "Color": [
-            "Old Burgundy"
-        ],
-        "Hexadecimal": "#43302E"
-    },
-    {
-        "Color": [
-            "Old Copper"
-        ],
-        "Hexadecimal": "#724A2F"
-    },
-    {
-        "Color": [
-            "Old Gold"
-        ],
-        "Hexadecimal": "#CFB53B"
-    },
-    {
-        "Color": [
-            "Old Lace"
-        ],
-        "Hexadecimal": "#FDF5E6"
-    },
-    {
-        "Color": [
-            "Old Lavender"
-        ],
-        "Hexadecimal": "#796878"
-    },
-    {
-        "Color": [
-            "Old Mauve",
-            "Wine Dregs"
-        ],
-        "Hexadecimal": "#673147"
-    },
-    {
-        "Color": [
-            "Old Rose"
-        ],
-        "Hexadecimal": "#C08081"
-    },
-    {
-        "Color": [
-            "Olive"
-        ],
-        "Hexadecimal": "#808000"
-    },
-    {
-        "Color": [
-            "Olive Drab (#3)",
-            "Olive Drab"
-        ],
-        "Hexadecimal": "#6B8E23"
-    },
-    {
-        "Color": [
-            "Olive Drab #7"
-        ],
-        "Hexadecimal": "#3C341F"
-    },
-    {
-        "Color": [
-            "Olive Green"
-        ],
-        "Hexadecimal": "#B5B35C"
-    },
-    {
-        "Color": [
-            "Olive Haze"
-        ],
-        "Hexadecimal": "#8B8470"
-    },
-    {
-        "Color": [
-            "Olivetone"
-        ],
-        "Hexadecimal": "#716E10"
-    },
-    {
-        "Color": [
-            "Olivine"
-        ],
-        "Hexadecimal": "#9AB973"
-    },
-    {
-        "Color": [
-            "Onahau"
-        ],
-        "Hexadecimal": "#CDF4FF"
-    },
-    {
-        "Color": [
-            "Onion"
-        ],
-        "Hexadecimal": "#2F270E"
-    },
-    {
-        "Color": [
-            "Onyx"
-        ],
-        "Hexadecimal": "#353839"
-    },
-    {
-        "Color": [
-            "Opal"
-        ],
-        "Hexadecimal": "#A8C3BC"
-    },
-    {
-        "Color": [
-            "Opal 2"
-        ],
-        "Hexadecimal": "#A9C6C2"
-    },
-    {
-        "Color": [
-            "Opera Mauve"
-        ],
-        "Hexadecimal": "#B784A7"
-    },
-    {
-        "Color": [
-            "Opium"
-        ],
-        "Hexadecimal": "#8E6F70"
-    },
-    {
-        "Color": [
-            "Oracle"
-        ],
-        "Hexadecimal": "#377475"
-    },
-    {
-        "Color": [
-            "Orange (Crayola)"
-        ],
-        "Hexadecimal": "#FF7538"
-    },
-    {
-        "Color": [
-            "Orange (PANTONE)"
-        ],
-        "Hexadecimal": "#FF5800"
-    },
-    {
-        "Color": [
-            "Orange (Web)",
-            "Web Orange"
-        ],
-        "Hexadecimal": "#FFA500"
-    },
-    {
-        "Color": [
-            "Orange",
-            "Flush Orange"
-        ],
-        "Hexadecimal": "#FF7F00"
-    },
-    {
-        "Color": [
-            "Orange Peel"
-        ],
-        "Hexadecimal": "#FF9F00"
-    },
-    {
-        "Color": [
-            "Orange Peel 2"
-        ],
-        "Hexadecimal": "#FFA000"
-    },
-    {
-        "Color": [
-            "Orange Roughy"
-        ],
-        "Hexadecimal": "#C45719"
-    },
-    {
-        "Color": [
-            "Orange Soda"
-        ],
-        "Hexadecimal": "#FA5B3D"
-    },
-    {
-        "Color": [
-            "Orange White"
-        ],
-        "Hexadecimal": "#FEFCED"
-    },
-    {
-        "Color": [
-            "Orange-Red (Crayola)",
-            "Red-Orange"
-        ],
-        "Hexadecimal": "#FF5349"
-    },
-    {
-        "Color": [
-            "Orange-Red",
-            "Red-Orange (Crayola)",
-            "Orange"
-        ],
-        "Hexadecimal": "#FF681F"
-    },
-    {
-        "Color": [
-            "Orange-Yellow"
-        ],
-        "Hexadecimal": "#F5BD1F"
-    },
-    {
-        "Color": [
-            "Orange-Yellow (Crayola)"
-        ],
-        "Hexadecimal": "#F8D568"
-    },
-    {
-        "Color": [
-            "Orchid"
-        ],
-        "Hexadecimal": "#DA70D6"
-    },
-    {
-        "Color": [
-            "Orchid (Crayola)",
-            "Light Orchid"
-        ],
-        "Hexadecimal": "#E29CD2"
-    },
-    {
-        "Color": [
-            "Orchid Pink"
-        ],
-        "Hexadecimal": "#F2BDCD"
-    },
-    {
-        "Color": [
-            "Orchid White"
-        ],
-        "Hexadecimal": "#FFFDF3"
-    },
-    {
-        "Color": [
-            "Oregon"
-        ],
-        "Hexadecimal": "#9B4703"
-    },
-    {
-        "Color": [
-            "Orient"
-        ],
-        "Hexadecimal": "#015E85"
-    },
-    {
-        "Color": [
-            "Oriental Pink"
-        ],
-        "Hexadecimal": "#C69191"
-    },
-    {
-        "Color": [
-            "Orinoco"
-        ],
-        "Hexadecimal": "#F3FBD4"
-    },
-    {
-        "Color": [
-            "Oslo Gray"
-        ],
-        "Hexadecimal": "#878D91"
-    },
-    {
-        "Color": [
-            "Ottoman"
-        ],
-        "Hexadecimal": "#E9F8ED"
-    },
-    {
-        "Color": [
-            "Ou Crimson Red"
-        ],
-        "Hexadecimal": "#841617"
-    },
-    {
-        "Color": [
-            "Outer Space (Crayola)",
-            "Outer Space"
-        ],
-        "Hexadecimal": "#2D383A"
-    },
-    {
-        "Color": [
-            "Outrageous Orange"
-        ],
-        "Hexadecimal": "#FF6037"
-    },
-    {
-        "Color": [
-            "Outrageous Orange 2"
-        ],
-        "Hexadecimal": "#FF6E4A"
-    },
-    {
-        "Color": [
-            "Oxblood"
-        ],
-        "Hexadecimal": "#4A0000"
-    },
-    {
-        "Color": [
-            "Oxford Blue"
-        ],
-        "Hexadecimal": "#002147"
-    },
-    {
-        "Color": [
-            "Oxford Blue 2"
-        ],
-        "Hexadecimal": "#384555"
-    },
-    {
-        "Color": [
-            "Oxley"
-        ],
-        "Hexadecimal": "#779E86"
-    },
-    {
-        "Color": [
-            "Oyster Bay"
-        ],
-        "Hexadecimal": "#DAFAFF"
-    },
-    {
-        "Color": [
-            "Oyster Pink"
-        ],
-        "Hexadecimal": "#E9CECD"
-    },
-    {
-        "Color": [
-            "Paarl"
-        ],
-        "Hexadecimal": "#A65529"
-    },
-    {
-        "Color": [
-            "Pablo"
-        ],
-        "Hexadecimal": "#776F61"
-    },
-    {
-        "Color": [
-            "Pacific Blue"
-        ],
-        "Hexadecimal": "#1CA9C9"
-    },
-    {
-        "Color": [
-            "Pacific Blue 2"
-        ],
-        "Hexadecimal": "#009DC4"
-    },
-    {
-        "Color": [
-            "Pacifika"
-        ],
-        "Hexadecimal": "#778120"
-    },
-    {
-        "Color": [
-            "Paco"
-        ],
-        "Hexadecimal": "#411F10"
-    },
-    {
-        "Color": [
-            "Padua"
-        ],
-        "Hexadecimal": "#ADE6C4"
-    },
-    {
-        "Color": [
-            "Pakistan Green"
-        ],
-        "Hexadecimal": "#006600"
-    },
-    {
-        "Color": [
-            "Palatinate Purple"
-        ],
-        "Hexadecimal": "#682860"
-    },
-    {
-        "Color": [
-            "Pale Canary"
-        ],
-        "Hexadecimal": "#FFFF99"
-    },
-    {
-        "Color": [
-            "Pale Cerulean"
-        ],
-        "Hexadecimal": "#9BC4E2"
-    },
-    {
-        "Color": [
-            "Pale Dogwood",
-            "Rose Pompadour"
-        ],
-        "Hexadecimal": "#ED7A9B"
-    },
-    {
-        "Color": [
-            "Pale Leaf"
-        ],
-        "Hexadecimal": "#C0D3B9"
-    },
-    {
-        "Color": [
-            "Pale Oyster"
-        ],
-        "Hexadecimal": "#988D77"
-    },
-    {
-        "Color": [
-            "Pale Pink"
-        ],
-        "Hexadecimal": "#FADADD"
-    },
-    {
-        "Color": [
-            "Pale Prim"
-        ],
-        "Hexadecimal": "#FDFEB8"
-    },
-    {
-        "Color": [
-            "Pale Purple (PANTONE)"
-        ],
-        "Hexadecimal": "#FAE6FA"
-    },
-    {
-        "Color": [
-            "Pale Rose"
-        ],
-        "Hexadecimal": "#FFE1F2"
-    },
-    {
-        "Color": [
-            "Pale Silver",
-            "Silver (Crayola)",
-            "Silver Rust"
-        ],
-        "Hexadecimal": "#C9C0BB"
-    },
-    {
-        "Color": [
-            "Pale Sky"
-        ],
-        "Hexadecimal": "#6E7783"
-    },
-    {
-        "Color": [
-            "Pale Slate"
-        ],
-        "Hexadecimal": "#C3BFC1"
-    },
-    {
-        "Color": [
-            "Pale Spring Bud",
-            "Spring Green (Crayola)",
-            "Fall Green"
-        ],
-        "Hexadecimal": "#ECEBBD"
-    },
-    {
-        "Color": [
-            "Palm Green"
-        ],
-        "Hexadecimal": "#09230F"
-    },
-    {
-        "Color": [
-            "Palm Leaf"
-        ],
-        "Hexadecimal": "#19330E"
-    },
-    {
-        "Color": [
-            "Pampas"
-        ],
-        "Hexadecimal": "#F4F2EE"
-    },
-    {
-        "Color": [
-            "Panache"
-        ],
-        "Hexadecimal": "#EAF6EE"
-    },
-    {
-        "Color": [
-            "Pancho"
-        ],
-        "Hexadecimal": "#EDCDAB"
-    },
-    {
-        "Color": [
-            "Pansy Purple"
-        ],
-        "Hexadecimal": "#78184A"
-    },
-    {
-        "Color": [
-            "Paolo Veronese Green"
-        ],
-        "Hexadecimal": "#009B7D"
-    },
-    {
-        "Color": [
-            "Papaya Whip"
-        ],
-        "Hexadecimal": "#FFEFD5"
-    },
-    {
-        "Color": [
-            "Paprika"
-        ],
-        "Hexadecimal": "#8D0226"
-    },
-    {
-        "Color": [
-            "Paradise Pink"
-        ],
-        "Hexadecimal": "#E63E62"
-    },
-    {
-        "Color": [
-            "Paradiso"
-        ],
-        "Hexadecimal": "#317D82"
-    },
-    {
-        "Color": [
-            "Parchment"
-        ],
-        "Hexadecimal": "#F1E9D2"
-    },
-    {
-        "Color": [
-            "Paris Daisy"
-        ],
-        "Hexadecimal": "#FFF46E"
-    },
-    {
-        "Color": [
-            "Paris M"
-        ],
-        "Hexadecimal": "#26056A"
-    },
-    {
-        "Color": [
-            "Paris White"
-        ],
-        "Hexadecimal": "#CADCD4"
-    },
-    {
-        "Color": [
-            "Parsley"
-        ],
-        "Hexadecimal": "#134F19"
-    },
-    {
-        "Color": [
-            "Pastel Green"
-        ],
-        "Hexadecimal": "#77DD77"
-    },
-    {
-        "Color": [
-            "Pastel Pink"
-        ],
-        "Hexadecimal": "#FFD1DC"
-    },
-    {
-        "Color": [
-            "Pastel Pink 2"
-        ],
-        "Hexadecimal": "#DEA5A4"
-    },
-    {
-        "Color": [
-            "Patina"
-        ],
-        "Hexadecimal": "#639A8F"
-    },
-    {
-        "Color": [
-            "Patriarch",
-            "Purple (Web)"
-        ],
-        "Hexadecimal": "#800080"
-    },
-    {
-        "Color": [
-            "Pattens Blue"
-        ],
-        "Hexadecimal": "#DEF5FF"
-    },
-    {
-        "Color": [
-            "Paua"
-        ],
-        "Hexadecimal": "#260368"
-    },
-    {
-        "Color": [
-            "Pavlova"
-        ],
-        "Hexadecimal": "#D7C498"
-    },
-    {
-        "Color": [
-            "Peach"
-        ],
-        "Hexadecimal": "#FFE5B4"
-    },
-    {
-        "Color": [
-            "Peach (Crayola)",
-            "Flesh"
-        ],
-        "Hexadecimal": "#FFCBA4"
-    },
-    {
-        "Color": [
-            "Peach Cream"
-        ],
-        "Hexadecimal": "#FFF0DB"
-    },
-    {
-        "Color": [
-            "Peach Orange"
-        ],
-        "Hexadecimal": "#FFCC99"
-    },
-    {
-        "Color": [
-            "Peach Puff"
-        ],
-        "Hexadecimal": "#FFDAB9"
-    },
-    {
-        "Color": [
-            "Peach Schnapps"
-        ],
-        "Hexadecimal": "#FFDCD6"
-    },
-    {
-        "Color": [
-            "Peach Yellow"
-        ],
-        "Hexadecimal": "#FADFAD"
-    },
-    {
-        "Color": [
-            "Peanut"
-        ],
-        "Hexadecimal": "#782F16"
-    },
-    {
-        "Color": [
-            "Pear"
-        ],
-        "Hexadecimal": "#D1E231"
-    },
-    {
-        "Color": [
-            "Pearl Bush"
-        ],
-        "Hexadecimal": "#E8E0D5"
-    },
-    {
-        "Color": [
-            "Pearl Lusta"
-        ],
-        "Hexadecimal": "#FCF4DC"
-    },
-    {
-        "Color": [
-            "Pearly Purple"
-        ],
-        "Hexadecimal": "#B768A2"
-    },
-    {
-        "Color": [
-            "Peat"
-        ],
-        "Hexadecimal": "#716B56"
-    },
-    {
-        "Color": [
-            "Pelorous"
-        ],
-        "Hexadecimal": "#3EABBF"
-    },
-    {
-        "Color": [
-            "Peppermint"
-        ],
-        "Hexadecimal": "#E3F5E1"
-    },
-    {
-        "Color": [
-            "Perano"
-        ],
-        "Hexadecimal": "#A9BEF2"
-    },
-    {
-        "Color": [
-            "Perfume"
-        ],
-        "Hexadecimal": "#D0BEF8"
-    },
-    {
-        "Color": [
-            "Periglacial Blue"
-        ],
-        "Hexadecimal": "#E1E6D6"
-    },
-    {
-        "Color": [
-            "Periwinkle (Crayola)",
-            "Periwinkle Gray"
-        ],
-        "Hexadecimal": "#C3CDE6"
-    },
-    {
-        "Color": [
-            "Permanent Geranium Lake"
-        ],
-        "Hexadecimal": "#E12C2C"
-    },
-    {
-        "Color": [
-            "Persian Blue"
-        ],
-        "Hexadecimal": "#1C39BB"
-    },
-    {
-        "Color": [
-            "Persian Green"
-        ],
-        "Hexadecimal": "#00A693"
-    },
-    {
-        "Color": [
-            "Persian Indigo"
-        ],
-        "Hexadecimal": "#32127A"
-    },
-    {
-        "Color": [
-            "Persian Orange"
-        ],
-        "Hexadecimal": "#D99058"
-    },
-    {
-        "Color": [
-            "Persian Pink"
-        ],
-        "Hexadecimal": "#F77FBE"
-    },
-    {
-        "Color": [
-            "Persian Plum",
-            "Prune"
-        ],
-        "Hexadecimal": "#701C1C"
-    },
-    {
-        "Color": [
-            "Persian Red"
-        ],
-        "Hexadecimal": "#CC3333"
-    },
-    {
-        "Color": [
-            "Persian Rose"
-        ],
-        "Hexadecimal": "#FE28A2"
-    },
-    {
-        "Color": [
-            "Persimmon"
-        ],
-        "Hexadecimal": "#FF6B53"
-    },
-    {
-        "Color": [
-            "Persimmon 2"
-        ],
-        "Hexadecimal": "#EC5800"
-    },
-    {
-        "Color": [
-            "Peru Tan"
-        ],
-        "Hexadecimal": "#7F3A02"
-    },
-    {
-        "Color": [
-            "Pesto"
-        ],
-        "Hexadecimal": "#7C7631"
-    },
-    {
-        "Color": [
-            "Petite Orchid"
-        ],
-        "Hexadecimal": "#DB9690"
-    },
-    {
-        "Color": [
-            "Pewter"
-        ],
-        "Hexadecimal": "#96A8A1"
-    },
-    {
-        "Color": [
-            "Pewter Blue"
-        ],
-        "Hexadecimal": "#8BA8B7"
-    },
-    {
-        "Color": [
-            "Pharlap"
-        ],
-        "Hexadecimal": "#A3807B"
-    },
-    {
-        "Color": [
-            "Phlox",
-            "Psychedelic Purple"
-        ],
-        "Hexadecimal": "#DF00FF"
-    },
-    {
-        "Color": [
-            "Phthalo Blue"
-        ],
-        "Hexadecimal": "#000F89"
-    },
-    {
-        "Color": [
-            "Phthalo Green"
-        ],
-        "Hexadecimal": "#123524"
-    },
-    {
-        "Color": [
-            "Picasso"
-        ],
-        "Hexadecimal": "#FFF39D"
-    },
-    {
-        "Color": [
-            "Pickled Bean"
-        ],
-        "Hexadecimal": "#6E4826"
-    },
-    {
-        "Color": [
-            "Pickled Bluewood"
-        ],
-        "Hexadecimal": "#314459"
-    },
-    {
-        "Color": [
-            "Picotee Blue"
-        ],
-        "Hexadecimal": "#2E2787"
-    },
-    {
-        "Color": [
-            "Picton Blue"
-        ],
-        "Hexadecimal": "#45B1E8"
-    },
-    {
-        "Color": [
-            "Pictorial Carmine"
-        ],
-        "Hexadecimal": "#C30B4E"
-    },
-    {
-        "Color": [
-            "Pig Pink"
-        ],
-        "Hexadecimal": "#FDD7E4"
-    },
-    {
-        "Color": [
-            "Pigeon Post"
-        ],
-        "Hexadecimal": "#AFBDD9"
-    },
-    {
-        "Color": [
-            "Piggy Pink"
-        ],
-        "Hexadecimal": "#FDDDE6"
-    },
-    {
-        "Color": [
-            "Pigment Indigo"
-        ],
-        "Hexadecimal": "#4B0082"
-    },
-    {
-        "Color": [
-            "Pine Cone"
-        ],
-        "Hexadecimal": "#6D5E54"
-    },
-    {
-        "Color": [
-            "Pine Glade"
-        ],
-        "Hexadecimal": "#C7CD90"
-    },
-    {
-        "Color": [
-            "Pine Green"
-        ],
-        "Hexadecimal": "#01796F"
-    },
-    {
-        "Color": [
-            "Pine Tree"
-        ],
-        "Hexadecimal": "#2A2F23"
-    },
-    {
-        "Color": [
-            "Pine Tree 2"
-        ],
-        "Hexadecimal": "#171F04"
-    },
-    {
-        "Color": [
-            "Pink"
-        ],
-        "Hexadecimal": "#FFC0CB"
-    },
-    {
-        "Color": [
-            "Pink (PANTONE)"
-        ],
-        "Hexadecimal": "#D74894"
-    },
-    {
-        "Color": [
-            "Pink Flamingo"
-        ],
-        "Hexadecimal": "#FF66FF"
-    },
-    {
-        "Color": [
-            "Pink Flamingo 2"
-        ],
-        "Hexadecimal": "#FC74FD"
-    },
-    {
-        "Color": [
-            "Pink Flare"
-        ],
-        "Hexadecimal": "#E1C0C8"
-    },
-    {
-        "Color": [
-            "Pink Lace"
-        ],
-        "Hexadecimal": "#FFDDF4"
-    },
-    {
-        "Color": [
-            "Pink Lady"
-        ],
-        "Hexadecimal": "#FFF1D8"
-    },
-    {
-        "Color": [
-            "Pink Lavender"
-        ],
-        "Hexadecimal": "#D8B2D1"
-    },
-    {
-        "Color": [
-            "Pink Sherbet"
-        ],
-        "Hexadecimal": "#F78FA7"
-    },
-    {
-        "Color": [
-            "Pink Swan"
-        ],
-        "Hexadecimal": "#BEB5B7"
-    },
-    {
-        "Color": [
-            "Piper"
-        ],
-        "Hexadecimal": "#C96323"
-    },
-    {
-        "Color": [
-            "Pipi"
-        ],
-        "Hexadecimal": "#FEF4CC"
-    },
-    {
-        "Color": [
-            "Pippin"
-        ],
-        "Hexadecimal": "#FFE1DF"
-    },
-    {
-        "Color": [
-            "Pirate Gold"
-        ],
-        "Hexadecimal": "#BA7F03"
-    },
-    {
-        "Color": [
-            "Pistachio"
-        ],
-        "Hexadecimal": "#9DC209"
-    },
-    {
-        "Color": [
-            "Pistachio 2"
-        ],
-        "Hexadecimal": "#93C572"
-    },
-    {
-        "Color": [
-            "Pixie Green"
-        ],
-        "Hexadecimal": "#C0D8B6"
-    },
-    {
-        "Color": [
-            "Pizazz"
-        ],
-        "Hexadecimal": "#FF9000"
-    },
-    {
-        "Color": [
-            "Pizza"
-        ],
-        "Hexadecimal": "#C99415"
-    },
-    {
-        "Color": [
-            "Plantation"
-        ],
-        "Hexadecimal": "#27504B"
-    },
-    {
-        "Color": [
-            "Platinum"
-        ],
-        "Hexadecimal": "#E5E4E2"
-    },
-    {
-        "Color": [
-            "Plum"
-        ],
-        "Hexadecimal": "#843179"
-    },
-    {
-        "Color": [
-            "Plum (Web)"
-        ],
-        "Hexadecimal": "#DDA0DD"
-    },
-    {
-        "Color": [
-            "Plum 2"
-        ],
-        "Hexadecimal": "#8E4585"
-    },
-    {
-        "Color": [
-            "Plump Purple"
-        ],
-        "Hexadecimal": "#5946B2"
-    },
-    {
-        "Color": [
-            "Pohutukawa"
-        ],
-        "Hexadecimal": "#8F021C"
-    },
-    {
-        "Color": [
-            "Polar"
-        ],
-        "Hexadecimal": "#E5F9F6"
-    },
-    {
-        "Color": [
-            "Polished Pine"
-        ],
-        "Hexadecimal": "#5DA493"
-    },
-    {
-        "Color": [
-            "Polo Blue"
-        ],
-        "Hexadecimal": "#8DA8CC"
-    },
-    {
-        "Color": [
-            "Pomegranate"
-        ],
-        "Hexadecimal": "#F34723"
-    },
-    {
-        "Color": [
-            "Pomp And Power"
-        ],
-        "Hexadecimal": "#86608E"
-    },
-    {
-        "Color": [
-            "Pompadour"
-        ],
-        "Hexadecimal": "#660045"
-    },
-    {
-        "Color": [
-            "Popstar"
-        ],
-        "Hexadecimal": "#BE4F62"
-    },
-    {
-        "Color": [
-            "Porcelain"
-        ],
-        "Hexadecimal": "#EFF2F3"
-    },
-    {
-        "Color": [
-            "Porsche"
-        ],
-        "Hexadecimal": "#EAAE69"
-    },
-    {
-        "Color": [
-            "Port Gore"
-        ],
-        "Hexadecimal": "#251F4F"
-    },
-    {
-        "Color": [
-            "Portafino"
-        ],
-        "Hexadecimal": "#FFFFB4"
-    },
-    {
-        "Color": [
-            "Portage"
-        ],
-        "Hexadecimal": "#8B9FEE"
-    },
-    {
-        "Color": [
-            "Portica"
-        ],
-        "Hexadecimal": "#F9E663"
-    },
-    {
-        "Color": [
-            "Portland Orange"
-        ],
-        "Hexadecimal": "#FF5A36"
-    },
-    {
-        "Color": [
-            "Pot Pourri"
-        ],
-        "Hexadecimal": "#F5E7E2"
-    },
-    {
-        "Color": [
-            "Potters Clay"
-        ],
-        "Hexadecimal": "#8C5738"
-    },
-    {
-        "Color": [
-            "Powder Ash"
-        ],
-        "Hexadecimal": "#BCC9C2"
-    },
-    {
-        "Color": [
-            "Powder Blue"
-        ],
-        "Hexadecimal": "#B0E0E6"
-    },
-    {
-        "Color": [
-            "Prairie Sand"
-        ],
-        "Hexadecimal": "#9A3820"
-    },
-    {
-        "Color": [
-            "Prelude"
-        ],
-        "Hexadecimal": "#D0C0E5"
-    },
-    {
-        "Color": [
-            "Prim"
-        ],
-        "Hexadecimal": "#F0E2EC"
-    },
-    {
-        "Color": [
-            "Primrose"
-        ],
-        "Hexadecimal": "#EDEA99"
-    },
-    {
-        "Color": [
-            "Princeton Orange"
-        ],
-        "Hexadecimal": "#F58025"
-    },
-    {
-        "Color": [
-            "Provincial Pink"
-        ],
-        "Hexadecimal": "#FEF5F1"
-    },
-    {
-        "Color": [
-            "Prussian Blue"
-        ],
-        "Hexadecimal": "#003153"
-    },
-    {
-        "Color": [
-            "Puce"
-        ],
-        "Hexadecimal": "#CC8899"
-    },
-    {
-        "Color": [
-            "Pueblo"
-        ],
-        "Hexadecimal": "#7D2C14"
-    },
-    {
-        "Color": [
-            "Puerto Rico"
-        ],
-        "Hexadecimal": "#3FC1AA"
-    },
-    {
-        "Color": [
-            "Pullman Brown (Ups Brown)"
-        ],
-        "Hexadecimal": "#644117"
-    },
-    {
-        "Color": [
-            "Pumice"
-        ],
-        "Hexadecimal": "#C2CAC4"
-    },
-    {
-        "Color": [
-            "Pumpkin"
-        ],
-        "Hexadecimal": "#FF7518"
-    },
-    {
-        "Color": [
-            "Pumpkin Skin"
-        ],
-        "Hexadecimal": "#B1610B"
-    },
-    {
-        "Color": [
-            "Punch"
-        ],
-        "Hexadecimal": "#DC4333"
-    },
-    {
-        "Color": [
-            "Punga"
-        ],
-        "Hexadecimal": "#4D3D14"
-    },
-    {
-        "Color": [
-            "Purple"
-        ],
-        "Hexadecimal": "#6A0DAD"
-    },
-    {
-        "Color": [
-            "Purple (MUNSELL)"
-        ],
-        "Hexadecimal": "#9F00C5"
-    },
-    {
-        "Color": [
-            "Purple (X11)",
-            "Veronica"
-        ],
-        "Hexadecimal": "#A020F0"
-    },
-    {
-        "Color": [
-            "Purple 2"
-        ],
-        "Hexadecimal": "#660099"
-    },
-    {
-        "Color": [
-            "Purple Heart"
-        ],
-        "Hexadecimal": "#652DC1"
-    },
-    {
-        "Color": [
-            "Purple Mountain Majesty",
-            "Purple Mountain's Majesty"
-        ],
-        "Hexadecimal": "#9678B6"
-    },
-    {
-        "Color": [
-            "Purple Navy"
-        ],
-        "Hexadecimal": "#4E5180"
-    },
-    {
-        "Color": [
-            "Purple Pizzazz"
-        ],
-        "Hexadecimal": "#FE4EDA"
-    },
-    {
-        "Color": [
-            "Purple Pizzazz 2"
-        ],
-        "Hexadecimal": "#FF00CC"
-    },
-    {
-        "Color": [
-            "Purple Plum"
-        ],
-        "Hexadecimal": "#9C51B6"
-    },
-    {
-        "Color": [
-            "Purpureus"
-        ],
-        "Hexadecimal": "#9A4EAE"
-    },
-    {
-        "Color": [
-            "Putty"
-        ],
-        "Hexadecimal": "#E7CD8C"
-    },
-    {
-        "Color": [
-            "Quarter Pearl Lusta"
-        ],
-        "Hexadecimal": "#FFFDF4"
-    },
-    {
-        "Color": [
-            "Quarter Spanish White"
-        ],
-        "Hexadecimal": "#F7F2E1"
-    },
-    {
-        "Color": [
-            "Queen Blue"
-        ],
-        "Hexadecimal": "#436B95"
-    },
-    {
-        "Color": [
-            "Queen Pink"
-        ],
-        "Hexadecimal": "#E8CCD7"
-    },
-    {
-        "Color": [
-            "Quick Silver"
-        ],
-        "Hexadecimal": "#A6A6A6"
-    },
-    {
-        "Color": [
-            "Quicksand"
-        ],
-        "Hexadecimal": "#BD978E"
-    },
-    {
-        "Color": [
-            "Quill Gray"
-        ],
-        "Hexadecimal": "#D6D6D1"
-    },
-    {
-        "Color": [
-            "Quinacridone Magenta"
-        ],
-        "Hexadecimal": "#8E3A59"
-    },
-    {
-        "Color": [
-            "Quincy"
-        ],
-        "Hexadecimal": "#623F2D"
-    },
-    {
-        "Color": [
-            "Racing Green"
-        ],
-        "Hexadecimal": "#0C1911"
-    },
-    {
-        "Color": [
-            "Radical Red"
-        ],
-        "Hexadecimal": "#FF355E"
-    },
-    {
-        "Color": [
-            "Raffia"
-        ],
-        "Hexadecimal": "#EADAB8"
-    },
-    {
-        "Color": [
-            "Rainee"
-        ],
-        "Hexadecimal": "#B9C8AC"
-    },
-    {
-        "Color": [
-            "Raisin Black"
-        ],
-        "Hexadecimal": "#242124"
-    },
-    {
-        "Color": [
-            "Rajah"
-        ],
-        "Hexadecimal": "#FBAB60"
-    },
-    {
-        "Color": [
-            "Rajah 2"
-        ],
-        "Hexadecimal": "#F7B668"
-    },
-    {
-        "Color": [
-            "Rangitoto"
-        ],
-        "Hexadecimal": "#2E3222"
-    },
-    {
-        "Color": [
-            "Rangoon Green"
-        ],
-        "Hexadecimal": "#1C1E13"
-    },
-    {
-        "Color": [
-            "Raspberry"
-        ],
-        "Hexadecimal": "#E30B5D"
-    },
-    {
-        "Color": [
-            "Raven"
-        ],
-        "Hexadecimal": "#727B89"
-    },
-    {
-        "Color": [
-            "Raw Sienna"
-        ],
-        "Hexadecimal": "#D27D46"
-    },
-    {
-        "Color": [
-            "Raw Sienna 2"
-        ],
-        "Hexadecimal": "#D68A59"
-    },
-    {
-        "Color": [
-            "Raw Umber"
-        ],
-        "Hexadecimal": "#734A12"
-    },
-    {
-        "Color": [
-            "Raw Umber 2"
-        ],
-        "Hexadecimal": "#826644"
-    },
-    {
-        "Color": [
-            "Razzle Dazzle Rose"
-        ],
-        "Hexadecimal": "#FF33CC"
-    },
-    {
-        "Color": [
-            "Razzmatazz"
-        ],
-        "Hexadecimal": "#E30B5C"
-    },
-    {
-        "Color": [
-            "Razzmatazz 2"
-        ],
-        "Hexadecimal": "#E3256B"
-    },
-    {
-        "Color": [
-            "Razzmic Berry"
-        ],
-        "Hexadecimal": "#8D4E85"
-    },
-    {
-        "Color": [
-            "Rebecca Purple"
-        ],
-        "Hexadecimal": "#663399"
-    },
-    {
-        "Color": [
-            "Rebel"
-        ],
-        "Hexadecimal": "#3C1206"
-    },
-    {
-        "Color": [
-            "Red"
-        ],
-        "Hexadecimal": "#FF0000"
-    },
-    {
-        "Color": [
-            "Red (Crayola)"
-        ],
-        "Hexadecimal": "#EE204D"
-    },
-    {
-        "Color": [
-            "Red (MUNSELL)"
-        ],
-        "Hexadecimal": "#F2003C"
-    },
-    {
-        "Color": [
-            "Red (NCS)"
-        ],
-        "Hexadecimal": "#C40233"
-    },
-    {
-        "Color": [
-            "Red (Pigment)"
-        ],
-        "Hexadecimal": "#ED1C24"
-    },
-    {
-        "Color": [
-            "Red (RYB)"
-        ],
-        "Hexadecimal": "#FE2712"
-    },
-    {
-        "Color": [
-            "Red Beech"
-        ],
-        "Hexadecimal": "#7B3801"
-    },
-    {
-        "Color": [
-            "Red Berry"
-        ],
-        "Hexadecimal": "#8E0000"
-    },
-    {
-        "Color": [
-            "Red Damask"
-        ],
-        "Hexadecimal": "#DA6A41"
-    },
-    {
-        "Color": [
-            "Red Devil"
-        ],
-        "Hexadecimal": "#860111"
-    },
-    {
-        "Color": [
-            "Red Orange"
-        ],
-        "Hexadecimal": "#FF3F34"
-    },
-    {
-        "Color": [
-            "Red Oxide"
-        ],
-        "Hexadecimal": "#6E0902"
-    },
-    {
-        "Color": [
-            "Red Ribbon"
-        ],
-        "Hexadecimal": "#ED0A3F"
-    },
-    {
-        "Color": [
-            "Red Robin"
-        ],
-        "Hexadecimal": "#80341F"
-    },
-    {
-        "Color": [
-            "Red Salsa"
-        ],
-        "Hexadecimal": "#FD3A4A"
-    },
-    {
-        "Color": [
-            "Red Stage"
-        ],
-        "Hexadecimal": "#D05F04"
-    },
-    {
-        "Color": [
-            "Red-Orange (Color Wheel)"
-        ],
-        "Hexadecimal": "#FF4500"
-    },
-    {
-        "Color": [
-            "Red-Purple"
-        ],
-        "Hexadecimal": "#E40078"
-    },
-    {
-        "Color": [
-            "Red-Violet (Color Wheel)"
-        ],
-        "Hexadecimal": "#922B3E"
-    },
-    {
-        "Color": [
-            "Red-Violet (Crayola)"
-        ],
-        "Hexadecimal": "#C0448F"
-    },
-    {
-        "Color": [
-            "Redwood"
-        ],
-        "Hexadecimal": "#5D1E0F"
-    },
-    {
-        "Color": [
-            "Redwood 2"
-        ],
-        "Hexadecimal": "#A45A52"
-    },
-    {
-        "Color": [
-            "Reef"
-        ],
-        "Hexadecimal": "#C9FFA2"
-    },
-    {
-        "Color": [
-            "Reef Gold"
-        ],
-        "Hexadecimal": "#9F821C"
-    },
-    {
-        "Color": [
-            "Regal Blue"
-        ],
-        "Hexadecimal": "#013F6A"
-    },
-    {
-        "Color": [
-            "Regent Gray"
-        ],
-        "Hexadecimal": "#86949F"
-    },
-    {
-        "Color": [
-            "Regent St Blue"
-        ],
-        "Hexadecimal": "#AAD6E6"
-    },
-    {
-        "Color": [
-            "Remy"
-        ],
-        "Hexadecimal": "#FEEBF3"
-    },
-    {
-        "Color": [
-            "Reno Sand"
-        ],
-        "Hexadecimal": "#A86515"
-    },
-    {
-        "Color": [
-            "Resolution Blue"
-        ],
-        "Hexadecimal": "#002387"
-    },
-    {
-        "Color": [
-            "Revolver"
-        ],
-        "Hexadecimal": "#2C1632"
-    },
-    {
-        "Color": [
-            "Rhino"
-        ],
-        "Hexadecimal": "#2E3F62"
-    },
-    {
-        "Color": [
-            "Rhythm"
-        ],
-        "Hexadecimal": "#777696"
-    },
-    {
-        "Color": [
-            "Rice Cake"
-        ],
-        "Hexadecimal": "#FFFEF0"
-    },
-    {
-        "Color": [
-            "Rice Flower"
-        ],
-        "Hexadecimal": "#EEFFE2"
-    },
-    {
-        "Color": [
-            "Rich Black"
-        ],
-        "Hexadecimal": "#004040"
-    },
-    {
-        "Color": [
-            "Rich Black (Fogra29)"
-        ],
-        "Hexadecimal": "#010B13"
-    },
-    {
-        "Color": [
-            "Rich Black (Fogra39)"
-        ],
-        "Hexadecimal": "#010203"
-    },
-    {
-        "Color": [
-            "Rich Gold"
-        ],
-        "Hexadecimal": "#A85307"
-    },
-    {
-        "Color": [
-            "Rifle Green"
-        ],
-        "Hexadecimal": "#444C38"
-    },
-    {
-        "Color": [
-            "Rio Grande"
-        ],
-        "Hexadecimal": "#BBD009"
-    },
-    {
-        "Color": [
-            "Ripe Lemon"
-        ],
-        "Hexadecimal": "#F4D81C"
-    },
-    {
-        "Color": [
-            "Ripe Plum"
-        ],
-        "Hexadecimal": "#410056"
-    },
-    {
-        "Color": [
-            "Riptide"
-        ],
-        "Hexadecimal": "#8BE6D8"
-    },
-    {
-        "Color": [
-            "River Bed"
-        ],
-        "Hexadecimal": "#434C59"
-    },
-    {
-        "Color": [
-            "Rob Roy"
-        ],
-        "Hexadecimal": "#EAC674"
-    },
-    {
-        "Color": [
-            "Robin Egg Blue",
-            "Robin's Egg Blue"
-        ],
-        "Hexadecimal": "#00CCCC"
-    },
-    {
-        "Color": [
-            "Rock"
-        ],
-        "Hexadecimal": "#4D3833"
-    },
-    {
-        "Color": [
-            "Rock Blue"
-        ],
-        "Hexadecimal": "#9EB1CD"
-    },
-    {
-        "Color": [
-            "Rock Spray"
-        ],
-        "Hexadecimal": "#BA450C"
-    },
-    {
-        "Color": [
-            "Rocket Metallic"
-        ],
-        "Hexadecimal": "#8A7F80"
-    },
-    {
-        "Color": [
-            "Rodeo Dust"
-        ],
-        "Hexadecimal": "#C9B29B"
-    },
-    {
-        "Color": [
-            "Rojo Spanish Red"
-        ],
-        "Hexadecimal": "#A91101"
-    },
-    {
-        "Color": [
-            "Rolling Stone"
-        ],
-        "Hexadecimal": "#747D83"
-    },
-    {
-        "Color": [
-            "Roman"
-        ],
-        "Hexadecimal": "#DE6360"
-    },
-    {
-        "Color": [
-            "Roman Coffee"
-        ],
-        "Hexadecimal": "#795D4C"
-    },
-    {
-        "Color": [
-            "Roman Silver"
-        ],
-        "Hexadecimal": "#838996"
-    },
-    {
-        "Color": [
-            "Romance"
-        ],
-        "Hexadecimal": "#FFFEFD"
-    },
-    {
-        "Color": [
-            "Romantic"
-        ],
-        "Hexadecimal": "#FFD2B7"
-    },
-    {
-        "Color": [
-            "Ronchi"
-        ],
-        "Hexadecimal": "#ECC54E"
-    },
-    {
-        "Color": [
-            "Roof Terracotta"
-        ],
-        "Hexadecimal": "#A62F20"
-    },
-    {
-        "Color": [
-            "Rope"
-        ],
-        "Hexadecimal": "#8E4D1E"
-    },
-    {
-        "Color": [
-            "Rose"
-        ],
-        "Hexadecimal": "#FF007F"
-    },
-    {
-        "Color": [
-            "Rose Bonbon"
-        ],
-        "Hexadecimal": "#F9429E"
-    },
-    {
-        "Color": [
-            "Rose Bud"
-        ],
-        "Hexadecimal": "#FBB2A3"
-    },
-    {
-        "Color": [
-            "Rose Bud Cherry"
-        ],
-        "Hexadecimal": "#800B47"
-    },
-    {
-        "Color": [
-            "Rose Dust"
-        ],
-        "Hexadecimal": "#9E5E6F"
-    },
-    {
-        "Color": [
-            "Rose Ebony"
-        ],
-        "Hexadecimal": "#674846"
-    },
-    {
-        "Color": [
-            "Rose Fog"
-        ],
-        "Hexadecimal": "#E7BCB4"
-    },
-    {
-        "Color": [
-            "Rose Madder",
-            "Alizarin Crimson"
-        ],
-        "Hexadecimal": "#E32636"
-    },
-    {
-        "Color": [
-            "Rose Of Sharon"
-        ],
-        "Hexadecimal": "#BF5500"
-    },
-    {
-        "Color": [
-            "Rose Pink"
-        ],
-        "Hexadecimal": "#FF66CC"
-    },
-    {
-        "Color": [
-            "Rose Red"
-        ],
-        "Hexadecimal": "#C21E56"
-    },
-    {
-        "Color": [
-            "Rose Taupe"
-        ],
-        "Hexadecimal": "#905D5D"
-    },
-    {
-        "Color": [
-            "Rose Vale"
-        ],
-        "Hexadecimal": "#AB4E52"
-    },
-    {
-        "Color": [
-            "Rose White"
-        ],
-        "Hexadecimal": "#FFF6F5"
-    },
-    {
-        "Color": [
-            "Rosewood"
-        ],
-        "Hexadecimal": "#65000B"
-    },
-    {
-        "Color": [
-            "Rosso Corsa"
-        ],
-        "Hexadecimal": "#D40000"
-    },
-    {
-        "Color": [
-            "Rosy Brown"
-        ],
-        "Hexadecimal": "#BC8F8F"
-    },
-    {
-        "Color": [
-            "Roti"
-        ],
-        "Hexadecimal": "#C6A84B"
-    },
-    {
-        "Color": [
-            "Rouge"
-        ],
-        "Hexadecimal": "#A23B6C"
-    },
-    {
-        "Color": [
-            "Royal Blue (Dark)"
-        ],
-        "Hexadecimal": "#002366"
-    },
-    {
-        "Color": [
-            "Royal Blue (Light)",
-            "Royal Blue"
-        ],
-        "Hexadecimal": "#4169E1"
-    },
-    {
-        "Color": [
-            "Royal Heath"
-        ],
-        "Hexadecimal": "#AB3472"
-    },
-    {
-        "Color": [
-            "Royal Purple"
-        ],
-        "Hexadecimal": "#6B3FA0"
-    },
-    {
-        "Color": [
-            "Royal Purple 2"
-        ],
-        "Hexadecimal": "#7851A9"
-    },
-    {
-        "Color": [
-            "Ruber"
-        ],
-        "Hexadecimal": "#CE4676"
-    },
-    {
-        "Color": [
-            "Rubine Red"
-        ],
-        "Hexadecimal": "#D10056"
-    },
-    {
-        "Color": [
-            "Ruby"
-        ],
-        "Hexadecimal": "#E0115F"
-    },
-    {
-        "Color": [
-            "Ruby Red"
-        ],
-        "Hexadecimal": "#9B111E"
-    },
-    {
-        "Color": [
-            "Rufous"
-        ],
-        "Hexadecimal": "#A81C07"
-    },
-    {
-        "Color": [
-            "Rum"
-        ],
-        "Hexadecimal": "#796989"
-    },
-    {
-        "Color": [
-            "Rum Swizzle"
-        ],
-        "Hexadecimal": "#F9F8E4"
-    },
-    {
-        "Color": [
-            "Russet"
-        ],
-        "Hexadecimal": "#80461B"
-    },
-    {
-        "Color": [
-            "Russett"
-        ],
-        "Hexadecimal": "#755A57"
-    },
-    {
-        "Color": [
-            "Russian Green"
-        ],
-        "Hexadecimal": "#679267"
-    },
-    {
-        "Color": [
-            "Russian Violet"
-        ],
-        "Hexadecimal": "#32174D"
-    },
-    {
-        "Color": [
-            "Rust"
-        ],
-        "Hexadecimal": "#B7410E"
-    },
-    {
-        "Color": [
-            "Rustic Red"
-        ],
-        "Hexadecimal": "#480404"
-    },
-    {
-        "Color": [
-            "Rusty Nail"
-        ],
-        "Hexadecimal": "#86560A"
-    },
-    {
-        "Color": [
-            "Rusty Red"
-        ],
-        "Hexadecimal": "#DA2C43"
-    },
-    {
-        "Color": [
-            "Sacramento State Green"
-        ],
-        "Hexadecimal": "#043927"
-    },
-    {
-        "Color": [
-            "Saddle"
-        ],
-        "Hexadecimal": "#4C3024"
-    },
-    {
-        "Color": [
-            "Saddle Brown"
-        ],
-        "Hexadecimal": "#8B4513"
-    },
-    {
-        "Color": [
-            "Saddle Brown 2"
-        ],
-        "Hexadecimal": "#583401"
-    },
-    {
-        "Color": [
-            "Safety Orange"
-        ],
-        "Hexadecimal": "#FF7800"
-    },
-    {
-        "Color": [
-            "Safety Orange (Blaze Orange)"
-        ],
-        "Hexadecimal": "#FF6700"
-    },
-    {
-        "Color": [
-            "Safety Yellow"
-        ],
-        "Hexadecimal": "#EED202"
-    },
-    {
-        "Color": [
-            "Saffron"
-        ],
-        "Hexadecimal": "#F4C430"
-    },
-    {
-        "Color": [
-            "Saffron Mango"
-        ],
-        "Hexadecimal": "#F9BF58"
-    },
-    {
-        "Color": [
-            "Sage"
-        ],
-        "Hexadecimal": "#9EA587"
-    },
-    {
-        "Color": [
-            "Sage 2"
-        ],
-        "Hexadecimal": "#BCB88A"
-    },
-    {
-        "Color": [
-            "Sahara"
-        ],
-        "Hexadecimal": "#B7A214"
-    },
-    {
-        "Color": [
-            "Sahara Sand"
-        ],
-        "Hexadecimal": "#F1E788"
-    },
-    {
-        "Color": [
-            "Sail"
-        ],
-        "Hexadecimal": "#B8E0F9"
-    },
-    {
-        "Color": [
-            "Salem"
-        ],
-        "Hexadecimal": "#097F4B"
-    },
-    {
-        "Color": [
-            "Salmon"
-        ],
-        "Hexadecimal": "#FF8C69"
-    },
-    {
-        "Color": [
-            "Salmon 2"
-        ],
-        "Hexadecimal": "#FA8072"
-    },
-    {
-        "Color": [
-            "Salmon Pink",
-            "Pink Salmon"
-        ],
-        "Hexadecimal": "#FF91A4"
-    },
-    {
-        "Color": [
-            "Salomie"
-        ],
-        "Hexadecimal": "#FEDB8D"
-    },
-    {
-        "Color": [
-            "Salt Box"
-        ],
-        "Hexadecimal": "#685E6E"
-    },
-    {
-        "Color": [
-            "Saltpan"
-        ],
-        "Hexadecimal": "#F1F7F2"
-    },
-    {
-        "Color": [
-            "Sambuca"
-        ],
-        "Hexadecimal": "#3A2010"
-    },
-    {
-        "Color": [
-            "San Felix"
-        ],
-        "Hexadecimal": "#0B6207"
-    },
-    {
-        "Color": [
-            "San Juan"
-        ],
-        "Hexadecimal": "#304B6A"
-    },
-    {
-        "Color": [
-            "San Marino"
-        ],
-        "Hexadecimal": "#456CAC"
-    },
-    {
-        "Color": [
-            "Sand Dune"
-        ],
-        "Hexadecimal": "#826F65"
-    },
-    {
-        "Color": [
-            "Sandal"
-        ],
-        "Hexadecimal": "#AA8D6F"
-    },
-    {
-        "Color": [
-            "Sandrift"
-        ],
-        "Hexadecimal": "#AB917A"
-    },
-    {
-        "Color": [
-            "Sandstone"
-        ],
-        "Hexadecimal": "#796D62"
-    },
-    {
-        "Color": [
-            "Sandwisp"
-        ],
-        "Hexadecimal": "#F5E7A2"
-    },
-    {
-        "Color": [
-            "Sandy Beach"
-        ],
-        "Hexadecimal": "#FFEAC8"
-    },
-    {
-        "Color": [
-            "Sandy Brown"
-        ],
-        "Hexadecimal": "#F4A460"
-    },
-    {
-        "Color": [
-            "Sangria"
-        ],
-        "Hexadecimal": "#92000A"
-    },
-    {
-        "Color": [
-            "Sanguine Brown"
-        ],
-        "Hexadecimal": "#8D3D38"
-    },
-    {
-        "Color": [
-            "Santa Fe"
-        ],
-        "Hexadecimal": "#B16D52"
-    },
-    {
-        "Color": [
-            "Santas Gray"
-        ],
-        "Hexadecimal": "#9FA0B1"
-    },
-    {
-        "Color": [
-            "Sap Green"
-        ],
-        "Hexadecimal": "#507D2A"
-    },
-    {
-        "Color": [
-            "Sapling"
-        ],
-        "Hexadecimal": "#DED4A4"
-    },
-    {
-        "Color": [
-            "Sapphire"
-        ],
-        "Hexadecimal": "#0F52BA"
-    },
-    {
-        "Color": [
-            "Sapphire 2"
-        ],
-        "Hexadecimal": "#2F519E"
-    },
-    {
-        "Color": [
-            "Sapphire Blue",
-            "Sapphire (Crayola)"
-        ],
-        "Hexadecimal": "#0067A5"
-    },
-    {
-        "Color": [
-            "Saratoga"
-        ],
-        "Hexadecimal": "#555B10"
-    },
-    {
-        "Color": [
-            "Satin Linen"
-        ],
-        "Hexadecimal": "#E6E4D4"
-    },
-    {
-        "Color": [
-            "Satin Sheen Gold"
-        ],
-        "Hexadecimal": "#CBA135"
-    },
-    {
-        "Color": [
-            "Sauvignon"
-        ],
-        "Hexadecimal": "#FFF5F3"
-    },
-    {
-        "Color": [
-            "Sazerac"
-        ],
-        "Hexadecimal": "#FFF4E0"
-    },
-    {
-        "Color": [
-            "Scampi"
-        ],
-        "Hexadecimal": "#675FA6"
-    },
-    {
-        "Color": [
-            "Scandal"
-        ],
-        "Hexadecimal": "#CFFAF4"
-    },
-    {
-        "Color": [
-            "Scarlet"
-        ],
-        "Hexadecimal": "#FF2400"
-    },
-    {
-        "Color": [
-            "Scarlet Gum"
-        ],
-        "Hexadecimal": "#431560"
-    },
-    {
-        "Color": [
-            "Scarlett"
-        ],
-        "Hexadecimal": "#950015"
-    },
-    {
-        "Color": [
-            "Scarpa Flow"
-        ],
-        "Hexadecimal": "#585562"
-    },
-    {
-        "Color": [
-            "Schist"
-        ],
-        "Hexadecimal": "#A9B497"
-    },
-    {
-        "Color": [
-            "School Bus Yellow"
-        ],
-        "Hexadecimal": "#FFD800"
-    },
-    {
-        "Color": [
-            "Schooner"
-        ],
-        "Hexadecimal": "#8B847E"
-    },
-    {
-        "Color": [
-            "Science Blue"
-        ],
-        "Hexadecimal": "#0066CC"
-    },
-    {
-        "Color": [
-            "Scooter"
-        ],
-        "Hexadecimal": "#2EBFD4"
-    },
-    {
-        "Color": [
-            "Scorpion"
-        ],
-        "Hexadecimal": "#695F62"
-    },
-    {
-        "Color": [
-            "Scotch Mist"
-        ],
-        "Hexadecimal": "#FFFBDC"
-    },
-    {
-        "Color": [
-            "Screamin' Green"
-        ],
-        "Hexadecimal": "#66FF66"
-    },
-    {
-        "Color": [
-            "Sea Buckthorn"
-        ],
-        "Hexadecimal": "#FBA129"
-    },
-    {
-        "Color": [
-            "Sea Green"
-        ],
-        "Hexadecimal": "#2E8B57"
-    },
-    {
-        "Color": [
-            "Sea Green (Crayola)"
-        ],
-        "Hexadecimal": "#00FFCD"
-    },
-    {
-        "Color": [
-            "Sea Mist"
-        ],
-        "Hexadecimal": "#C5DBCA"
-    },
-    {
-        "Color": [
-            "Sea Nymph"
-        ],
-        "Hexadecimal": "#78A39C"
-    },
-    {
-        "Color": [
-            "Sea Pink"
-        ],
-        "Hexadecimal": "#ED989E"
-    },
-    {
-        "Color": [
-            "Seagull"
-        ],
-        "Hexadecimal": "#80CCEA"
-    },
-    {
-        "Color": [
-            "Seal Brown"
-        ],
-        "Hexadecimal": "#59260B"
-    },
-    {
-        "Color": [
-            "Seance"
-        ],
-        "Hexadecimal": "#731E8F"
-    },
-    {
-        "Color": [
-            "Seashell"
-        ],
-        "Hexadecimal": "#F1F1F1"
-    },
-    {
-        "Color": [
-            "Seashell Peach"
-        ],
-        "Hexadecimal": "#FFF5EE"
-    },
-    {
-        "Color": [
-            "Seaweed"
-        ],
-        "Hexadecimal": "#1B2F11"
-    },
-    {
-        "Color": [
-            "Selago"
-        ],
-        "Hexadecimal": "#F0EEFD"
-    },
-    {
-        "Color": [
-            "Selective Yellow"
-        ],
-        "Hexadecimal": "#FFBA00"
-    },
-    {
-        "Color": [
-            "Sepia"
-        ],
-        "Hexadecimal": "#704214"
-    },
-    {
-        "Color": [
-            "Sepia Black"
-        ],
-        "Hexadecimal": "#2B0202"
-    },
-    {
-        "Color": [
-            "Sepia Skin"
-        ],
-        "Hexadecimal": "#9E5B40"
-    },
-    {
-        "Color": [
-            "Serenade"
-        ],
-        "Hexadecimal": "#FFF4E8"
-    },
-    {
-        "Color": [
-            "Shadow"
-        ],
-        "Hexadecimal": "#837050"
-    },
-    {
-        "Color": [
-            "Shadow 2"
-        ],
-        "Hexadecimal": "#8A795D"
-    },
-    {
-        "Color": [
-            "Shadow Blue"
-        ],
-        "Hexadecimal": "#778BA5"
-    },
-    {
-        "Color": [
-            "Shadow Green"
-        ],
-        "Hexadecimal": "#9AC2B8"
-    },
-    {
-        "Color": [
-            "Shady Lady"
-        ],
-        "Hexadecimal": "#AAA5A9"
-    },
-    {
-        "Color": [
-            "Shakespeare"
-        ],
-        "Hexadecimal": "#4EABD1"
-    },
-    {
-        "Color": [
-            "Shalimar"
-        ],
-        "Hexadecimal": "#FBFFBA"
-    },
-    {
-        "Color": [
-            "Shamrock"
-        ],
-        "Hexadecimal": "#33CC99"
-    },
-    {
-        "Color": [
-            "Shamrock Green"
-        ],
-        "Hexadecimal": "#009E60"
-    },
-    {
-        "Color": [
-            "Shark"
-        ],
-        "Hexadecimal": "#25272C"
-    },
-    {
-        "Color": [
-            "Sheen Green"
-        ],
-        "Hexadecimal": "#8FD400"
-    },
-    {
-        "Color": [
-            "Sherpa Blue"
-        ],
-        "Hexadecimal": "#004950"
-    },
-    {
-        "Color": [
-            "Sherwood Green"
-        ],
-        "Hexadecimal": "#02402C"
-    },
-    {
-        "Color": [
-            "Shilo"
-        ],
-        "Hexadecimal": "#E8B9B3"
-    },
-    {
-        "Color": [
-            "Shimmering Blush"
-        ],
-        "Hexadecimal": "#D98695"
-    },
-    {
-        "Color": [
-            "Shingle Fawn"
-        ],
-        "Hexadecimal": "#6B4E31"
-    },
-    {
-        "Color": [
-            "Shiny Shamrock"
-        ],
-        "Hexadecimal": "#5FA778"
-    },
-    {
-        "Color": [
-            "Ship Cove"
-        ],
-        "Hexadecimal": "#788BBA"
-    },
-    {
-        "Color": [
-            "Ship Gray"
-        ],
-        "Hexadecimal": "#3E3A44"
-    },
-    {
-        "Color": [
-            "Shiraz"
-        ],
-        "Hexadecimal": "#B20931"
-    },
-    {
-        "Color": [
-            "Shocking"
-        ],
-        "Hexadecimal": "#E292C0"
-    },
-    {
-        "Color": [
-            "Shocking Pink"
-        ],
-        "Hexadecimal": "#FC0FC0"
-    },
-    {
-        "Color": [
-            "Shocking Pink (Crayola)",
-            "Ultra Pink",
-            "Blush Pink"
-        ],
-        "Hexadecimal": "#FF6FFF"
-    },
-    {
-        "Color": [
-            "Shuttle Gray"
-        ],
-        "Hexadecimal": "#5F6672"
-    },
-    {
-        "Color": [
-            "Siam"
-        ],
-        "Hexadecimal": "#646A54"
-    },
-    {
-        "Color": [
-            "Sidecar"
-        ],
-        "Hexadecimal": "#F3E7BB"
-    },
-    {
-        "Color": [
-            "Silk"
-        ],
-        "Hexadecimal": "#BDB1A8"
-    },
-    {
-        "Color": [
-            "Silver"
-        ],
-        "Hexadecimal": "#C0C0C0"
-    },
-    {
-        "Color": [
-            "Silver (Metallic)"
-        ],
-        "Hexadecimal": "#AAA9AD"
-    },
-    {
-        "Color": [
-            "Silver Chalice"
-        ],
-        "Hexadecimal": "#ACACAC"
-    },
-    {
-        "Color": [
-            "Silver Pink"
-        ],
-        "Hexadecimal": "#C4AEAD"
-    },
-    {
-        "Color": [
-            "Silver Sand"
-        ],
-        "Hexadecimal": "#BFC1C2"
-    },
-    {
-        "Color": [
-            "Silver Tree"
-        ],
-        "Hexadecimal": "#66B58F"
-    },
-    {
-        "Color": [
-            "Sinbad"
-        ],
-        "Hexadecimal": "#9FD7D3"
-    },
-    {
-        "Color": [
-            "Sinopia"
-        ],
-        "Hexadecimal": "#CB410B"
-    },
-    {
-        "Color": [
-            "Siren"
-        ],
-        "Hexadecimal": "#7A013A"
-    },
-    {
-        "Color": [
-            "Sirocco"
-        ],
-        "Hexadecimal": "#718080"
-    },
-    {
-        "Color": [
-            "Sisal"
-        ],
-        "Hexadecimal": "#D3CBBA"
-    },
-    {
-        "Color": [
-            "Sizzling Red"
-        ],
-        "Hexadecimal": "#FF3855"
-    },
-    {
-        "Color": [
-            "Sizzling Sunrise"
-        ],
-        "Hexadecimal": "#FFDB00"
-    },
-    {
-        "Color": [
-            "Skeptic"
-        ],
-        "Hexadecimal": "#CAE6DA"
-    },
-    {
-        "Color": [
-            "Skobeloff"
-        ],
-        "Hexadecimal": "#007474"
-    },
-    {
-        "Color": [
-            "Sky Blue"
-        ],
-        "Hexadecimal": "#87CEEB"
-    },
-    {
-        "Color": [
-            "Sky Blue (Crayola)"
-        ],
-        "Hexadecimal": "#76D7EA"
-    },
-    {
-        "Color": [
-            "Sky Magenta"
-        ],
-        "Hexadecimal": "#CF71AF"
-    },
-    {
-        "Color": [
-            "Slate Blue"
-        ],
-        "Hexadecimal": "#6A5ACD"
-    },
-    {
-        "Color": [
-            "Slate Gray"
-        ],
-        "Hexadecimal": "#708090"
-    },
-    {
-        "Color": [
-            "Slimy Green"
-        ],
-        "Hexadecimal": "#299617"
-    },
-    {
-        "Color": [
-            "Smalt"
-        ],
-        "Hexadecimal": "#003399"
-    },
-    {
-        "Color": [
-            "Smalt Blue"
-        ],
-        "Hexadecimal": "#51808F"
-    },
-    {
-        "Color": [
-            "Smitten"
-        ],
-        "Hexadecimal": "#C84186"
-    },
-    {
-        "Color": [
-            "Smoky"
-        ],
-        "Hexadecimal": "#605B73"
-    },
-    {
-        "Color": [
-            "Smoky Black"
-        ],
-        "Hexadecimal": "#100C08"
-    },
-    {
-        "Color": [
-            "Snow"
-        ],
-        "Hexadecimal": "#FFFAFA"
-    },
-    {
-        "Color": [
-            "Snow Drift"
-        ],
-        "Hexadecimal": "#F7FAF7"
-    },
-    {
-        "Color": [
-            "Snow Flurry"
-        ],
-        "Hexadecimal": "#E4FFD1"
-    },
-    {
-        "Color": [
-            "Snowy Mint"
-        ],
-        "Hexadecimal": "#D6FFDB"
-    },
-    {
-        "Color": [
-            "Snuff"
-        ],
-        "Hexadecimal": "#E2D8ED"
-    },
-    {
-        "Color": [
-            "Soapstone"
-        ],
-        "Hexadecimal": "#FFFBF9"
-    },
-    {
-        "Color": [
-            "Soft Amber"
-        ],
-        "Hexadecimal": "#D1C6B4"
-    },
-    {
-        "Color": [
-            "Soft Peach"
-        ],
-        "Hexadecimal": "#F5EDEF"
-    },
-    {
-        "Color": [
-            "Solid Pink"
-        ],
-        "Hexadecimal": "#893843"
-    },
-    {
-        "Color": [
-            "Solitaire"
-        ],
-        "Hexadecimal": "#FEF8E2"
-    },
-    {
-        "Color": [
-            "Solitude"
-        ],
-        "Hexadecimal": "#EAF6FF"
-    },
-    {
-        "Color": [
-            "Sonic Silver"
-        ],
-        "Hexadecimal": "#757575"
-    },
-    {
-        "Color": [
-            "Sorbus"
-        ],
-        "Hexadecimal": "#FD7C07"
-    },
-    {
-        "Color": [
-            "Sorrell Brown"
-        ],
-        "Hexadecimal": "#CEB98F"
-    },
-    {
-        "Color": [
-            "Soya Bean"
-        ],
-        "Hexadecimal": "#6A6051"
-    },
-    {
-        "Color": [
-            "Space Cadet"
-        ],
-        "Hexadecimal": "#1D2951"
-    },
-    {
-        "Color": [
-            "Spanish Bistre"
-        ],
-        "Hexadecimal": "#807532"
-    },
-    {
-        "Color": [
-            "Spanish Blue"
-        ],
-        "Hexadecimal": "#0070B8"
-    },
-    {
-        "Color": [
-            "Spanish Carmine"
-        ],
-        "Hexadecimal": "#D10047"
-    },
-    {
-        "Color": [
-            "Spanish Gray"
-        ],
-        "Hexadecimal": "#989898"
-    },
-    {
-        "Color": [
-            "Spanish Green"
-        ],
-        "Hexadecimal": "#819885"
-    },
-    {
-        "Color": [
-            "Spanish Green 2"
-        ],
-        "Hexadecimal": "#009150"
-    },
-    {
-        "Color": [
-            "Spanish Orange"
-        ],
-        "Hexadecimal": "#E86100"
-    },
-    {
-        "Color": [
-            "Spanish Pink"
-        ],
-        "Hexadecimal": "#F7BFBE"
-    },
-    {
-        "Color": [
-            "Spanish Red"
-        ],
-        "Hexadecimal": "#E60026"
-    },
-    {
-        "Color": [
-            "Spanish Violet"
-        ],
-        "Hexadecimal": "#4C2882"
-    },
-    {
-        "Color": [
-            "Spanish Viridian"
-        ],
-        "Hexadecimal": "#007F5C"
-    },
-    {
-        "Color": [
-            "Spectra"
-        ],
-        "Hexadecimal": "#2F5A57"
-    },
-    {
-        "Color": [
-            "Spice"
-        ],
-        "Hexadecimal": "#6A442E"
-    },
-    {
-        "Color": [
-            "Spicy Mix"
-        ],
-        "Hexadecimal": "#885342"
-    },
-    {
-        "Color": [
-            "Spicy Mustard"
-        ],
-        "Hexadecimal": "#74640D"
-    },
-    {
-        "Color": [
-            "Spicy Pink"
-        ],
-        "Hexadecimal": "#816E71"
-    },
-    {
-        "Color": [
-            "Spindle"
-        ],
-        "Hexadecimal": "#B6D1EA"
-    },
-    {
-        "Color": [
-            "Spray"
-        ],
-        "Hexadecimal": "#79DEEC"
-    },
-    {
-        "Color": [
-            "Spring Bud"
-        ],
-        "Hexadecimal": "#A7FC00"
-    },
-    {
-        "Color": [
-            "Spring Frost"
-        ],
-        "Hexadecimal": "#87FF2A"
-    },
-    {
-        "Color": [
-            "Spring Green"
-        ],
-        "Hexadecimal": "#00FF7F"
-    },
-    {
-        "Color": [
-            "Spring Leaves"
-        ],
-        "Hexadecimal": "#578363"
-    },
-    {
-        "Color": [
-            "Spring Rain"
-        ],
-        "Hexadecimal": "#ACCBB1"
-    },
-    {
-        "Color": [
-            "Spring Sun"
-        ],
-        "Hexadecimal": "#F6FFDC"
-    },
-    {
-        "Color": [
-            "Spring Wood"
-        ],
-        "Hexadecimal": "#F8F6F1"
-    },
-    {
-        "Color": [
-            "Sprout"
-        ],
-        "Hexadecimal": "#C1D7B0"
-    },
-    {
-        "Color": [
-            "Spun Pearl"
-        ],
-        "Hexadecimal": "#AAABB7"
-    },
-    {
-        "Color": [
-            "Squirrel"
-        ],
-        "Hexadecimal": "#8F8176"
-    },
-    {
-        "Color": [
-            "St Tropaz"
-        ],
-        "Hexadecimal": "#2D569B"
-    },
-    {
-        "Color": [
-            "St. Patrick's Blue"
-        ],
-        "Hexadecimal": "#23297A"
-    },
-    {
-        "Color": [
-            "Stack"
-        ],
-        "Hexadecimal": "#8A8F8A"
-    },
-    {
-        "Color": [
-            "Star Command Blue"
-        ],
-        "Hexadecimal": "#007BB8"
-    },
-    {
-        "Color": [
-            "Star Dust"
-        ],
-        "Hexadecimal": "#9F9F9C"
-    },
-    {
-        "Color": [
-            "Stark White"
-        ],
-        "Hexadecimal": "#E5D7BD"
-    },
-    {
-        "Color": [
-            "Starship"
-        ],
-        "Hexadecimal": "#ECF245"
-    },
-    {
-        "Color": [
-            "Steel Blue"
-        ],
-        "Hexadecimal": "#4682B4"
-    },
-    {
-        "Color": [
-            "Steel Gray"
-        ],
-        "Hexadecimal": "#262335"
-    },
-    {
-        "Color": [
-            "Steel Pink"
-        ],
-        "Hexadecimal": "#CC33CC"
-    },
-    {
-        "Color": [
-            "Steel Teal"
-        ],
-        "Hexadecimal": "#5F8A8B"
-    },
-    {
-        "Color": [
-            "Stiletto"
-        ],
-        "Hexadecimal": "#9C3336"
-    },
-    {
-        "Color": [
-            "Stonewall"
-        ],
-        "Hexadecimal": "#928573"
-    },
-    {
-        "Color": [
-            "Storm Dust"
-        ],
-        "Hexadecimal": "#646463"
-    },
-    {
-        "Color": [
-            "Storm Gray"
-        ],
-        "Hexadecimal": "#717486"
-    },
-    {
-        "Color": [
-            "Stratos"
-        ],
-        "Hexadecimal": "#000741"
-    },
-    {
-        "Color": [
-            "Straw"
-        ],
-        "Hexadecimal": "#D4BF8D"
-    },
-    {
-        "Color": [
-            "Straw 2"
-        ],
-        "Hexadecimal": "#E4D96F"
-    },
-    {
-        "Color": [
-            "Strawberry"
-        ],
-        "Hexadecimal": "#FA5053"
-    },
-    {
-        "Color": [
-            "Strawberry Blonde"
-        ],
-        "Hexadecimal": "#FF9361"
-    },
-    {
-        "Color": [
-            "Strikemaster"
-        ],
-        "Hexadecimal": "#956387"
-    },
-    {
-        "Color": [
-            "Stromboli"
-        ],
-        "Hexadecimal": "#325D52"
-    },
-    {
-        "Color": [
-            "Studio"
-        ],
-        "Hexadecimal": "#714AB2"
-    },
-    {
-        "Color": [
-            "Submarine"
-        ],
-        "Hexadecimal": "#BAC7C9"
-    },
-    {
-        "Color": [
-            "Sugar Cane"
-        ],
-        "Hexadecimal": "#F9FFF6"
-    },
-    {
-        "Color": [
-            "Sugar Plum"
-        ],
-        "Hexadecimal": "#914E75"
-    },
-    {
-        "Color": [
-            "Sulu"
-        ],
-        "Hexadecimal": "#C1F07C"
-    },
-    {
-        "Color": [
-            "Summer Green"
-        ],
-        "Hexadecimal": "#96BBAB"
-    },
-    {
-        "Color": [
-            "Sun"
-        ],
-        "Hexadecimal": "#FBAC13"
-    },
-    {
-        "Color": [
-            "Sundance"
-        ],
-        "Hexadecimal": "#C9B35B"
-    },
-    {
-        "Color": [
-            "Sundown"
-        ],
-        "Hexadecimal": "#FFB1B3"
-    },
-    {
-        "Color": [
-            "Sunflower"
-        ],
-        "Hexadecimal": "#E4D422"
-    },
-    {
-        "Color": [
-            "Sunglo"
-        ],
-        "Hexadecimal": "#E16865"
-    },
-    {
-        "Color": [
-            "Sunglow"
-        ],
-        "Hexadecimal": "#FFCC33"
-    },
-    {
-        "Color": [
-            "Sunray"
-        ],
-        "Hexadecimal": "#E3AB57"
-    },
-    {
-        "Color": [
-            "Sunset Orange"
-        ],
-        "Hexadecimal": "#FE4C40"
-    },
-    {
-        "Color": [
-            "Sunshade"
-        ],
-        "Hexadecimal": "#FF9E2C"
-    },
-    {
-        "Color": [
-            "Super Pink"
-        ],
-        "Hexadecimal": "#CF6BA9"
-    },
-    {
-        "Color": [
-            "Supernova"
-        ],
-        "Hexadecimal": "#FFC901"
-    },
-    {
-        "Color": [
-            "Surf"
-        ],
-        "Hexadecimal": "#BBD7C1"
-    },
-    {
-        "Color": [
-            "Surf Crest"
-        ],
-        "Hexadecimal": "#CFE5D2"
-    },
-    {
-        "Color": [
-            "Surfie Green"
-        ],
-        "Hexadecimal": "#0C7A79"
-    },
-    {
-        "Color": [
-            "Sushi"
-        ],
-        "Hexadecimal": "#87AB39"
-    },
-    {
-        "Color": [
-            "Suva Gray"
-        ],
-        "Hexadecimal": "#888387"
-    },
-    {
-        "Color": [
-            "Swamp"
-        ],
-        "Hexadecimal": "#001B1C"
-    },
-    {
-        "Color": [
-            "Swamp Green"
-        ],
-        "Hexadecimal": "#ACB78E"
-    },
-    {
-        "Color": [
-            "Swans Down"
-        ],
-        "Hexadecimal": "#DCF0EA"
-    },
-    {
-        "Color": [
-            "Sweet Brown"
-        ],
-        "Hexadecimal": "#A83731"
-    },
-    {
-        "Color": [
-            "Sweet Corn"
-        ],
-        "Hexadecimal": "#FBEA8C"
-    },
-    {
-        "Color": [
-            "Sweet Pink"
-        ],
-        "Hexadecimal": "#FD9FA2"
-    },
-    {
-        "Color": [
-            "Swirl"
-        ],
-        "Hexadecimal": "#D3CDC5"
-    },
-    {
-        "Color": [
-            "Swiss Coffee"
-        ],
-        "Hexadecimal": "#DDD6D5"
-    },
-    {
-        "Color": [
-            "Sycamore"
-        ],
-        "Hexadecimal": "#908D39"
-    },
-    {
-        "Color": [
-            "Syracuse Orange"
-        ],
-        "Hexadecimal": "#D44500"
-    },
-    {
-        "Color": [
-            "Tabasco"
-        ],
-        "Hexadecimal": "#A02712"
-    },
-    {
-        "Color": [
-            "Tacao"
-        ],
-        "Hexadecimal": "#EDB381"
-    },
-    {
-        "Color": [
-            "Tacha"
-        ],
-        "Hexadecimal": "#D6C562"
-    },
-    {
-        "Color": [
-            "Tahiti Gold"
-        ],
-        "Hexadecimal": "#E97C07"
-    },
-    {
-        "Color": [
-            "Tahuna Sands"
-        ],
-        "Hexadecimal": "#EEF0C8"
-    },
-    {
-        "Color": [
-            "Tall Poppy"
-        ],
-        "Hexadecimal": "#B32D29"
-    },
-    {
-        "Color": [
-            "Tallow"
-        ],
-        "Hexadecimal": "#A8A589"
-    },
-    {
-        "Color": [
-            "Tamarillo"
-        ],
-        "Hexadecimal": "#991613"
-    },
-    {
-        "Color": [
-            "Tamarind"
-        ],
-        "Hexadecimal": "#341515"
-    },
-    {
-        "Color": [
-            "Tan"
-        ],
-        "Hexadecimal": "#D2B48C"
-    },
-    {
-        "Color": [
-            "Tan (Crayola)"
-        ],
-        "Hexadecimal": "#D99A6C"
-    },
-    {
-        "Color": [
-            "Tan Hide"
-        ],
-        "Hexadecimal": "#FA9D5A"
-    },
-    {
-        "Color": [
-            "Tana"
-        ],
-        "Hexadecimal": "#D9DCC1"
-    },
-    {
-        "Color": [
-            "Tangaroa"
-        ],
-        "Hexadecimal": "#03163C"
-    },
-    {
-        "Color": [
-            "Tangerine"
-        ],
-        "Hexadecimal": "#F28500"
-    },
-    {
-        "Color": [
-            "Tango"
-        ],
-        "Hexadecimal": "#ED7A1C"
-    },
-    {
-        "Color": [
-            "Tapa"
-        ],
-        "Hexadecimal": "#7B7874"
-    },
-    {
-        "Color": [
-            "Tapestry"
-        ],
-        "Hexadecimal": "#B05E81"
-    },
-    {
-        "Color": [
-            "Tara"
-        ],
-        "Hexadecimal": "#E1F6E8"
-    },
-    {
-        "Color": [
-            "Tarawera"
-        ],
-        "Hexadecimal": "#073A50"
-    },
-    {
-        "Color": [
-            "Tart Orange"
-        ],
-        "Hexadecimal": "#FB4D46"
-    },
-    {
-        "Color": [
-            "Tasman"
-        ],
-        "Hexadecimal": "#CFDCCF"
-    },
-    {
-        "Color": [
-            "Taupe Gray"
-        ],
-        "Hexadecimal": "#8B8589"
-    },
-    {
-        "Color": [
-            "Taupe Gray 2"
-        ],
-        "Hexadecimal": "#B3AF95"
-    },
-    {
-        "Color": [
-            "Tawny Port"
-        ],
-        "Hexadecimal": "#692545"
-    },
-    {
-        "Color": [
-            "Te Papa Green"
-        ],
-        "Hexadecimal": "#1E433C"
-    },
-    {
-        "Color": [
-            "Tea"
-        ],
-        "Hexadecimal": "#C1BAB0"
-    },
-    {
-        "Color": [
-            "Tea Green"
-        ],
-        "Hexadecimal": "#D0F0C0"
-    },
-    {
-        "Color": [
-            "Teak"
-        ],
-        "Hexadecimal": "#B19461"
-    },
-    {
-        "Color": [
-            "Teal"
-        ],
-        "Hexadecimal": "#008080"
-    },
-    {
-        "Color": [
-            "Teal Blue"
-        ],
-        "Hexadecimal": "#367588"
-    },
-    {
-        "Color": [
-            "Teal Blue 2"
-        ],
-        "Hexadecimal": "#044259"
-    },
-    {
-        "Color": [
-            "Telemagenta"
-        ],
-        "Hexadecimal": "#CF3476"
-    },
-    {
-        "Color": [
-            "Temptress"
-        ],
-        "Hexadecimal": "#3B000B"
-    },
-    {
-        "Color": [
-            "Tenné (Tawny)",
-            "Tenn"
-        ],
-        "Hexadecimal": "#CD5700"
-    },
-    {
-        "Color": [
-            "Tequila"
-        ],
-        "Hexadecimal": "#FFE6C7"
-    },
-    {
-        "Color": [
-            "Terracotta"
-        ],
-        "Hexadecimal": "#E2725B"
-    },
-    {
-        "Color": [
-            "Texas"
-        ],
-        "Hexadecimal": "#F8F99C"
-    },
-    {
-        "Color": [
-            "Texas Rose"
-        ],
-        "Hexadecimal": "#FFB555"
-    },
-    {
-        "Color": [
-            "Thatch"
-        ],
-        "Hexadecimal": "#B69D98"
-    },
-    {
-        "Color": [
-            "Thatch Green"
-        ],
-        "Hexadecimal": "#403D19"
-    },
-    {
-        "Color": [
-            "Thistle"
-        ],
-        "Hexadecimal": "#D8BFD8"
-    },
-    {
-        "Color": [
-            "Thistle Green"
-        ],
-        "Hexadecimal": "#CCCAA8"
-    },
-    {
-        "Color": [
-            "Thunder"
-        ],
-        "Hexadecimal": "#33292F"
-    },
-    {
-        "Color": [
-            "Thunderbird"
-        ],
-        "Hexadecimal": "#C02B18"
-    },
-    {
-        "Color": [
-            "Tia Maria"
-        ],
-        "Hexadecimal": "#C1440E"
-    },
-    {
-        "Color": [
-            "Tiara"
-        ],
-        "Hexadecimal": "#C3D1D1"
-    },
-    {
-        "Color": [
-            "Tiber"
-        ],
-        "Hexadecimal": "#063537"
-    },
-    {
-        "Color": [
-            "Tickle Me Pink"
-        ],
-        "Hexadecimal": "#FC80A5"
-    },
-    {
-        "Color": [
-            "Tickle Me Pink 2"
-        ],
-        "Hexadecimal": "#FC89AC"
-    },
-    {
-        "Color": [
-            "Tidal"
-        ],
-        "Hexadecimal": "#F1FFAD"
-    },
-    {
-        "Color": [
-            "Tide"
-        ],
-        "Hexadecimal": "#BFB8B0"
-    },
-    {
-        "Color": [
-            "Tiffany Blue"
-        ],
-        "Hexadecimal": "#81D8D0"
-    },
-    {
-        "Color": [
-            "Timber Green"
-        ],
-        "Hexadecimal": "#16322C"
-    },
-    {
-        "Color": [
-            "Timberwolf"
-        ],
-        "Hexadecimal": "#D9D6CF"
-    },
-    {
-        "Color": [
-            "Timberwolf 2"
-        ],
-        "Hexadecimal": "#DBD7D2"
-    },
-    {
-        "Color": [
-            "Titan White"
-        ],
-        "Hexadecimal": "#F0EEFF"
-    },
-    {
-        "Color": [
-            "Titanium Yellow"
-        ],
-        "Hexadecimal": "#EEE600"
-    },
-    {
-        "Color": [
-            "Toast"
-        ],
-        "Hexadecimal": "#9A6E61"
-    },
-    {
-        "Color": [
-            "Tobacco Brown"
-        ],
-        "Hexadecimal": "#715D47"
-    },
-    {
-        "Color": [
-            "Toledo"
-        ],
-        "Hexadecimal": "#3A0020"
-    },
-    {
-        "Color": [
-            "Tolopea"
-        ],
-        "Hexadecimal": "#1B0245"
-    },
-    {
-        "Color": [
-            "Tom Thumb"
-        ],
-        "Hexadecimal": "#3F583B"
-    },
-    {
-        "Color": [
-            "Tomato"
-        ],
-        "Hexadecimal": "#FF6347"
-    },
-    {
-        "Color": [
-            "Tonys Pink"
-        ],
-        "Hexadecimal": "#E79F8C"
-    },
-    {
-        "Color": [
-            "Topaz"
-        ],
-        "Hexadecimal": "#7C778A"
-    },
-    {
-        "Color": [
-            "Torch Red"
-        ],
-        "Hexadecimal": "#FD0E35"
-    },
-    {
-        "Color": [
-            "Torea Bay"
-        ],
-        "Hexadecimal": "#0F2D9E"
-    },
-    {
-        "Color": [
-            "Tory Blue"
-        ],
-        "Hexadecimal": "#1450AA"
-    },
-    {
-        "Color": [
-            "Tosca"
-        ],
-        "Hexadecimal": "#8D3F3F"
-    },
-    {
-        "Color": [
-            "Totem Pole"
-        ],
-        "Hexadecimal": "#991B07"
-    },
-    {
-        "Color": [
-            "Tower Gray"
-        ],
-        "Hexadecimal": "#A9BDBF"
-    },
-    {
-        "Color": [
-            "Tradewind"
-        ],
-        "Hexadecimal": "#5FB3AC"
-    },
-    {
-        "Color": [
-            "Tranquil"
-        ],
-        "Hexadecimal": "#E6FFFF"
-    },
-    {
-        "Color": [
-            "Travertine"
-        ],
-        "Hexadecimal": "#FFFDE8"
-    },
-    {
-        "Color": [
-            "Tree Poppy"
-        ],
-        "Hexadecimal": "#FC9C1D"
-    },
-    {
-        "Color": [
-            "Treehouse"
-        ],
-        "Hexadecimal": "#3B2820"
-    },
-    {
-        "Color": [
-            "Trendy Green"
-        ],
-        "Hexadecimal": "#7C881A"
-    },
-    {
-        "Color": [
-            "Trendy Pink"
-        ],
-        "Hexadecimal": "#8C6495"
-    },
-    {
-        "Color": [
-            "Trinidad"
-        ],
-        "Hexadecimal": "#E64E03"
-    },
-    {
-        "Color": [
-            "Tropical Blue"
-        ],
-        "Hexadecimal": "#C3DDF9"
-    },
-    {
-        "Color": [
-            "Tropical Rainforest",
-            "Tropical Rain Forest"
-        ],
-        "Hexadecimal": "#00755E"
-    },
-    {
-        "Color": [
-            "Trout"
-        ],
-        "Hexadecimal": "#4A4E5A"
-    },
-    {
-        "Color": [
-            "True Blue"
-        ],
-        "Hexadecimal": "#2D68C4"
-    },
-    {
-        "Color": [
-            "True V"
-        ],
-        "Hexadecimal": "#8A73D6"
-    },
-    {
-        "Color": [
-            "Trypan Blue"
-        ],
-        "Hexadecimal": "#1C05B3"
-    },
-    {
-        "Color": [
-            "Tuatara"
-        ],
-        "Hexadecimal": "#363534"
-    },
-    {
-        "Color": [
-            "Tuft Bush"
-        ],
-        "Hexadecimal": "#FFDDCD"
-    },
-    {
-        "Color": [
-            "Tufts Blue"
-        ],
-        "Hexadecimal": "#3E8EDE"
-    },
-    {
-        "Color": [
-            "Tulip Tree"
-        ],
-        "Hexadecimal": "#EAB33B"
-    },
-    {
-        "Color": [
-            "Tumbleweed"
-        ],
-        "Hexadecimal": "#DEA681"
-    },
-    {
-        "Color": [
-            "Tumbleweed 2"
-        ],
-        "Hexadecimal": "#DEAA88"
-    },
-    {
-        "Color": [
-            "Tuna"
-        ],
-        "Hexadecimal": "#353542"
-    },
-    {
-        "Color": [
-            "Tundora"
-        ],
-        "Hexadecimal": "#4A4244"
-    },
-    {
-        "Color": [
-            "Turbo"
-        ],
-        "Hexadecimal": "#FAE600"
-    },
-    {
-        "Color": [
-            "Turkish Rose"
-        ],
-        "Hexadecimal": "#B57281"
-    },
-    {
-        "Color": [
-            "Turmeric"
-        ],
-        "Hexadecimal": "#CABB48"
-    },
-    {
-        "Color": [
-            "Turquoise"
-        ],
-        "Hexadecimal": "#40E0D0"
-    },
-    {
-        "Color": [
-            "Turquoise 2"
-        ],
-        "Hexadecimal": "#30D5C8"
-    },
-    {
-        "Color": [
-            "Turquoise Blue"
-        ],
-        "Hexadecimal": "#6CDAE7"
-    },
-    {
-        "Color": [
-            "Turquoise Blue 2"
-        ],
-        "Hexadecimal": "#00FFEF"
-    },
-    {
-        "Color": [
-            "Turquoise Green"
-        ],
-        "Hexadecimal": "#A0D6B4"
-    },
-    {
-        "Color": [
-            "Turtle Green"
-        ],
-        "Hexadecimal": "#2A380B"
-    },
-    {
-        "Color": [
-            "Tuscan Brown"
-        ],
-        "Hexadecimal": "#6F4E37"
-    },
-    {
-        "Color": [
-            "Tuscan Red"
-        ],
-        "Hexadecimal": "#7C4848"
-    },
-    {
-        "Color": [
-            "Tuscany"
-        ],
-        "Hexadecimal": "#C09999"
-    },
-    {
-        "Color": [
-            "Tuscany 2"
-        ],
-        "Hexadecimal": "#BD5E2E"
-    },
-    {
-        "Color": [
-            "Tusk"
-        ],
-        "Hexadecimal": "#EEF3C3"
-    },
-    {
-        "Color": [
-            "Tussock"
-        ],
-        "Hexadecimal": "#C5994B"
-    },
-    {
-        "Color": [
-            "Tutu"
-        ],
-        "Hexadecimal": "#FFF1F9"
-    },
-    {
-        "Color": [
-            "Twilight"
-        ],
-        "Hexadecimal": "#E4CFDE"
-    },
-    {
-        "Color": [
-            "Twilight Blue"
-        ],
-        "Hexadecimal": "#EEFDFF"
-    },
-    {
-        "Color": [
-            "Twilight Lavender"
-        ],
-        "Hexadecimal": "#8A496B"
-    },
-    {
-        "Color": [
-            "Twine"
-        ],
-        "Hexadecimal": "#C2955D"
-    },
-    {
-        "Color": [
-            "Tyrian Purple"
-        ],
-        "Hexadecimal": "#66023C"
-    },
-    {
-        "Color": [
-            "UA Blue"
-        ],
-        "Hexadecimal": "#0033AA"
-    },
-    {
-        "Color": [
-            "UA Red"
-        ],
-        "Hexadecimal": "#D9004C"
-    },
-    {
-        "Color": [
-            "Ultra Red"
-        ],
-        "Hexadecimal": "#FC6C85"
-    },
-    {
-        "Color": [
-            "Ultramarine"
-        ],
-        "Hexadecimal": "#120A8F"
-    },
-    {
-        "Color": [
-            "Ultramarine 2"
-        ],
-        "Hexadecimal": "#3F00FF"
-    },
-    {
-        "Color": [
-            "Ultramarine Blue"
-        ],
-        "Hexadecimal": "#4166F5"
-    },
-    {
-        "Color": [
-            "Umber"
-        ],
-        "Hexadecimal": "#635147"
-    },
-    {
-        "Color": [
-            "Unbleached Silk"
-        ],
-        "Hexadecimal": "#FFDDCA"
-    },
-    {
-        "Color": [
-            "United Nations Blue"
-        ],
-        "Hexadecimal": "#5B92E5"
-    },
-    {
-        "Color": [
-            "University Of Pennsylvania Red"
-        ],
-        "Hexadecimal": "#A50021"
-    },
-    {
-        "Color": [
-            "UP Maroon"
-        ],
-        "Hexadecimal": "#7B1113"
-    },
-    {
-        "Color": [
-            "Upsdell Red"
-        ],
-        "Hexadecimal": "#AE2029"
-    },
-    {
-        "Color": [
-            "Uranian Blue"
-        ],
-        "Hexadecimal": "#AFDBF5"
-    },
-    {
-        "Color": [
-            "USAFA Blue"
-        ],
-        "Hexadecimal": "#004F98"
-    },
-    {
-        "Color": [
-            "Valencia"
-        ],
-        "Hexadecimal": "#D84437"
-    },
-    {
-        "Color": [
-            "Valentino"
-        ],
-        "Hexadecimal": "#350E42"
-    },
-    {
-        "Color": [
-            "Valhalla"
-        ],
-        "Hexadecimal": "#2B194F"
-    },
-    {
-        "Color": [
-            "Van Cleef"
-        ],
-        "Hexadecimal": "#49170C"
-    },
-    {
-        "Color": [
-            "Van Dyke Brown"
-        ],
-        "Hexadecimal": "#664228"
-    },
-    {
-        "Color": [
-            "Vanilla"
-        ],
-        "Hexadecimal": "#D1BEA8"
-    },
-    {
-        "Color": [
-            "Vanilla Ice"
-        ],
-        "Hexadecimal": "#F38FA9"
-    },
-    {
-        "Color": [
-            "Vanilla Ice 2"
-        ],
-        "Hexadecimal": "#F3D9DF"
-    },
-    {
-        "Color": [
-            "Varden"
-        ],
-        "Hexadecimal": "#FFF6DF"
-    },
-    {
-        "Color": [
-            "Vegas Gold"
-        ],
-        "Hexadecimal": "#C5B358"
-    },
-    {
-        "Color": [
-            "Venetian Red"
-        ],
-        "Hexadecimal": "#C80815"
-    },
-    {
-        "Color": [
-            "Venetian Red 2"
-        ],
-        "Hexadecimal": "#72010F"
-    },
-    {
-        "Color": [
-            "Venice Blue"
-        ],
-        "Hexadecimal": "#055989"
-    },
-    {
-        "Color": [
-            "Venus"
-        ],
-        "Hexadecimal": "#928590"
-    },
-    {
-        "Color": [
-            "Verdigris"
-        ],
-        "Hexadecimal": "#43B3AE"
-    },
-    {
-        "Color": [
-            "Verdigris 2"
-        ],
-        "Hexadecimal": "#5D5E37"
-    },
-    {
-        "Color": [
-            "Verdun Green"
-        ],
-        "Hexadecimal": "#495400"
-    },
-    {
-        "Color": [
-            "Vermilion"
-        ],
-        "Hexadecimal": "#FF4D00"
-    },
-    {
-        "Color": [
-            "Vermilion 2"
-        ],
-        "Hexadecimal": "#D9381E"
-    },
-    {
-        "Color": [
-            "Vesuvius"
-        ],
-        "Hexadecimal": "#B14A0B"
-    },
-    {
-        "Color": [
-            "Victoria"
-        ],
-        "Hexadecimal": "#534491"
-    },
-    {
-        "Color": [
-            "Vida Loca"
-        ],
-        "Hexadecimal": "#549019"
-    },
-    {
-        "Color": [
-            "Viking"
-        ],
-        "Hexadecimal": "#64CCDB"
-    },
-    {
-        "Color": [
-            "Vin Rouge"
-        ],
-        "Hexadecimal": "#983D61"
-    },
-    {
-        "Color": [
-            "Viola"
-        ],
-        "Hexadecimal": "#CB8FA9"
-    },
-    {
-        "Color": [
-            "Violent Violet"
-        ],
-        "Hexadecimal": "#290C5E"
-    },
-    {
-        "Color": [
-            "Violet"
-        ],
-        "Hexadecimal": "#240A40"
-    },
-    {
-        "Color": [
-            "Violet (Color Wheel)"
-        ],
-        "Hexadecimal": "#7F00FF"
-    },
-    {
-        "Color": [
-            "Violet (Crayola)"
-        ],
-        "Hexadecimal": "#963D7F"
-    },
-    {
-        "Color": [
-            "Violet (RYB)"
-        ],
-        "Hexadecimal": "#8601AF"
-    },
-    {
-        "Color": [
-            "Violet Eggplant"
-        ],
-        "Hexadecimal": "#991199"
-    },
-    {
-        "Color": [
-            "Violet Red"
-        ],
-        "Hexadecimal": "#F75394"
-    },
-    {
-        "Color": [
-            "Violet Red 2"
-        ],
-        "Hexadecimal": "#F7468A"
-    },
-    {
-        "Color": [
-            "Violet-Blue"
-        ],
-        "Hexadecimal": "#324AB2"
-    },
-    {
-        "Color": [
-            "Violet-Blue (Crayola)"
-        ],
-        "Hexadecimal": "#766EC8"
-    },
-    {
-        "Color": [
-            "Viridian"
-        ],
-        "Hexadecimal": "#40826D"
-    },
-    {
-        "Color": [
-            "Viridian Green"
-        ],
-        "Hexadecimal": "#678975"
-    },
-    {
-        "Color": [
-            "Viridian Green 2"
-        ],
-        "Hexadecimal": "#009698"
-    },
-    {
-        "Color": [
-            "Vis Vis"
-        ],
-        "Hexadecimal": "#FFEFA1"
-    },
-    {
-        "Color": [
-            "Vista Blue"
-        ],
-        "Hexadecimal": "#8FD6B4"
-    },
-    {
-        "Color": [
-            "Vista White"
-        ],
-        "Hexadecimal": "#FCF8F7"
-    },
-    {
-        "Color": [
-            "Vivid Burgundy"
-        ],
-        "Hexadecimal": "#9F1D35"
-    },
-    {
-        "Color": [
-            "Vivid Sky Blue"
-        ],
-        "Hexadecimal": "#00CCFF"
-    },
-    {
-        "Color": [
-            "Vivid Tangerine"
-        ],
-        "Hexadecimal": "#FF9980"
-    },
-    {
-        "Color": [
-            "Vivid Tangerine 2"
-        ],
-        "Hexadecimal": "#FFA089"
-    },
-    {
-        "Color": [
-            "Vivid Violet"
-        ],
-        "Hexadecimal": "#803790"
-    },
-    {
-        "Color": [
-            "Vivid Violet 2"
-        ],
-        "Hexadecimal": "#9F00FF"
-    },
-    {
-        "Color": [
-            "Volt"
-        ],
-        "Hexadecimal": "#CEFF00"
-    },
-    {
-        "Color": [
-            "Voodoo"
-        ],
-        "Hexadecimal": "#533455"
-    },
-    {
-        "Color": [
-            "Vulcan"
-        ],
-        "Hexadecimal": "#10121D"
-    },
-    {
-        "Color": [
-            "Wafer"
-        ],
-        "Hexadecimal": "#DECBC6"
-    },
-    {
-        "Color": [
-            "Waikawa Gray"
-        ],
-        "Hexadecimal": "#5A6E9C"
-    },
-    {
-        "Color": [
-            "Waiouru"
-        ],
-        "Hexadecimal": "#363C0D"
-    },
-    {
-        "Color": [
-            "Walnut"
-        ],
-        "Hexadecimal": "#773F1A"
-    },
-    {
-        "Color": [
-            "Warm Black"
-        ],
-        "Hexadecimal": "#004242"
-    },
-    {
-        "Color": [
-            "Wasabi"
-        ],
-        "Hexadecimal": "#788A25"
-    },
-    {
-        "Color": [
-            "Water Leaf"
-        ],
-        "Hexadecimal": "#A1E9DE"
-    },
-    {
-        "Color": [
-            "Watercourse"
-        ],
-        "Hexadecimal": "#056F57"
-    },
-    {
-        "Color": [
-            "Waterloo"
-        ],
-        "Hexadecimal": "#7B7C94"
-    },
-    {
-        "Color": [
-            "Wattle"
-        ],
-        "Hexadecimal": "#DCD747"
-    },
-    {
-        "Color": [
-            "Watusi"
-        ],
-        "Hexadecimal": "#FFDDCF"
-    },
-    {
-        "Color": [
-            "Wax Flower"
-        ],
-        "Hexadecimal": "#FFC0A8"
-    },
-    {
-        "Color": [
-            "We Peep"
-        ],
-        "Hexadecimal": "#F7DBE6"
-    },
-    {
-        "Color": [
-            "Wedgewood"
-        ],
-        "Hexadecimal": "#4E7F9E"
-    },
-    {
-        "Color": [
-            "Weezy Blue"
-        ],
-        "Hexadecimal": "#189BCC"
-    },
-    {
-        "Color": [
-            "Well Read"
-        ],
-        "Hexadecimal": "#B43332"
-    },
-    {
-        "Color": [
-            "West Coast"
-        ],
-        "Hexadecimal": "#625119"
-    },
-    {
-        "Color": [
-            "West Side"
-        ],
-        "Hexadecimal": "#FF910F"
-    },
-    {
-        "Color": [
-            "Westar"
-        ],
-        "Hexadecimal": "#DCD9D2"
-    },
-    {
-        "Color": [
-            "Wewak"
-        ],
-        "Hexadecimal": "#F19BAB"
-    },
-    {
-        "Color": [
-            "Wheat"
-        ],
-        "Hexadecimal": "#F5DEB3"
-    },
-    {
-        "Color": [
-            "Wheatfield"
-        ],
-        "Hexadecimal": "#F3EDCF"
-    },
-    {
-        "Color": [
-            "Whiskey"
-        ],
-        "Hexadecimal": "#D59A6F"
-    },
-    {
-        "Color": [
-            "Whisper"
-        ],
-        "Hexadecimal": "#F7F5FA"
-    },
-    {
-        "Color": [
-            "White"
-        ],
-        "Hexadecimal": "#FFFFFF"
-    },
-    {
-        "Color": [
-            "White Ice"
-        ],
-        "Hexadecimal": "#DDF9F1"
-    },
-    {
-        "Color": [
-            "White Lilac"
-        ],
-        "Hexadecimal": "#F8F7FC"
-    },
-    {
-        "Color": [
-            "White Linen"
-        ],
-        "Hexadecimal": "#F8F0E8"
-    },
-    {
-        "Color": [
-            "White Pointer"
-        ],
-        "Hexadecimal": "#FEF8FF"
-    },
-    {
-        "Color": [
-            "White Rock"
-        ],
-        "Hexadecimal": "#EAE8D4"
-    },
-    {
-        "Color": [
-            "Wild Blue Yonder"
-        ],
-        "Hexadecimal": "#7A89B8"
-    },
-    {
-        "Color": [
-            "Wild Blue Yonder 2"
-        ],
-        "Hexadecimal": "#A2ADD0"
-    },
-    {
-        "Color": [
-            "Wild Orchid"
-        ],
-        "Hexadecimal": "#D470A2"
-    },
-    {
-        "Color": [
-            "Wild Rice"
-        ],
-        "Hexadecimal": "#ECE090"
-    },
-    {
-        "Color": [
-            "Wild Sand"
-        ],
-        "Hexadecimal": "#F4F4F4"
-    },
-    {
-        "Color": [
-            "Wild Strawberry"
-        ],
-        "Hexadecimal": "#FF43A4"
-    },
-    {
-        "Color": [
-            "Wild Strawberry 2"
-        ],
-        "Hexadecimal": "#FF3399"
-    },
-    {
-        "Color": [
-            "Wild Watermelon"
-        ],
-        "Hexadecimal": "#FD5B78"
-    },
-    {
-        "Color": [
-            "Wild Willow"
-        ],
-        "Hexadecimal": "#B9C46A"
-    },
-    {
-        "Color": [
-            "William"
-        ],
-        "Hexadecimal": "#3A686C"
-    },
-    {
-        "Color": [
-            "Willow Brook"
-        ],
-        "Hexadecimal": "#DFECDA"
-    },
-    {
-        "Color": [
-            "Willow Grove"
-        ],
-        "Hexadecimal": "#65745D"
-    },
-    {
-        "Color": [
-            "Windsor"
-        ],
-        "Hexadecimal": "#3C0878"
-    },
-    {
-        "Color": [
-            "Windsor Tan"
-        ],
-        "Hexadecimal": "#A75502"
-    },
-    {
-        "Color": [
-            "Wine"
-        ],
-        "Hexadecimal": "#722F37"
-    },
-    {
-        "Color": [
-            "Wine Berry"
-        ],
-        "Hexadecimal": "#591D35"
-    },
-    {
-        "Color": [
-            "Winter Hazel"
-        ],
-        "Hexadecimal": "#D5D195"
-    },
-    {
-        "Color": [
-            "Winter Sky"
-        ],
-        "Hexadecimal": "#FF007C"
-    },
-    {
-        "Color": [
-            "Wintergreen Dream"
-        ],
-        "Hexadecimal": "#56887D"
-    },
-    {
-        "Color": [
-            "Wisp Pink"
-        ],
-        "Hexadecimal": "#FEF4F8"
-    },
-    {
-        "Color": [
-            "Wisteria"
-        ],
-        "Hexadecimal": "#9771B5"
-    },
-    {
-        "Color": [
-            "Wistful"
-        ],
-        "Hexadecimal": "#A4A6D3"
-    },
-    {
-        "Color": [
-            "Witch Haze"
-        ],
-        "Hexadecimal": "#FFFC99"
-    },
-    {
-        "Color": [
-            "Wood Bark"
-        ],
-        "Hexadecimal": "#261105"
-    },
-    {
-        "Color": [
-            "Woodland"
-        ],
-        "Hexadecimal": "#4D5328"
-    },
-    {
-        "Color": [
-            "Woodrush"
-        ],
-        "Hexadecimal": "#302A0F"
-    },
-    {
-        "Color": [
-            "Woodsmoke"
-        ],
-        "Hexadecimal": "#0C0D0F"
-    },
-    {
-        "Color": [
-            "Woody Brown"
-        ],
-        "Hexadecimal": "#483131"
-    },
-    {
-        "Color": [
-            "Xanadu"
-        ],
-        "Hexadecimal": "#738678"
-    },
-    {
-        "Color": [
-            "Xanthic"
-        ],
-        "Hexadecimal": "#EEED09"
-    },
-    {
-        "Color": [
-            "Xanthous"
-        ],
-        "Hexadecimal": "#F1B42F"
-    },
-    {
-        "Color": [
-            "Yale Blue"
-        ],
-        "Hexadecimal": "#00356B"
-    },
-    {
-        "Color": [
-            "Yellow"
-        ],
-        "Hexadecimal": "#FFFF00"
-    },
-    {
-        "Color": [
-            "Yellow (Crayola)"
-        ],
-        "Hexadecimal": "#FCE883"
-    },
-    {
-        "Color": [
-            "Yellow (MUNSELL)"
-        ],
-        "Hexadecimal": "#EFCC00"
-    },
-    {
-        "Color": [
-            "Yellow (PANTONE)"
-        ],
-        "Hexadecimal": "#FEDF00"
-    },
-    {
-        "Color": [
-            "Yellow (RYB)"
-        ],
-        "Hexadecimal": "#FEFE33"
-    },
-    {
-        "Color": [
-            "Yellow Green"
-        ],
-        "Hexadecimal": "#9ACD32"
-    },
-    {
-        "Color": [
-            "Yellow Green 2"
-        ],
-        "Hexadecimal": "#C5E17A"
-    },
-    {
-        "Color": [
-            "Yellow Metal"
-        ],
-        "Hexadecimal": "#716338"
-    },
-    {
-        "Color": [
-            "Yellow Orange"
-        ],
-        "Hexadecimal": "#FFAE42"
-    },
-    {
-        "Color": [
-            "Yellow Orange (Color Wheel)"
-        ],
-        "Hexadecimal": "#FF9505"
-    },
-    {
-        "Color": [
-            "Yellow Sea"
-        ],
-        "Hexadecimal": "#FEA904"
-    },
-    {
-        "Color": [
-            "Yellow Sunshine"
-        ],
-        "Hexadecimal": "#FFF700"
-    },
-    {
-        "Color": [
-            "Yellow-Green (Color Wheel)"
-        ],
-        "Hexadecimal": "#30B21A"
-    },
-    {
-        "Color": [
-            "Yellow-Green (Crayola)"
-        ],
-        "Hexadecimal": "#C5E384"
-    },
-    {
-        "Color": [
-            "YInMn Blue"
-        ],
-        "Hexadecimal": "#2E5090"
-    },
-    {
-        "Color": [
-            "Your Pink"
-        ],
-        "Hexadecimal": "#FFC3C0"
-    },
-    {
-        "Color": [
-            "Yukon Gold"
-        ],
-        "Hexadecimal": "#7B6608"
-    },
-    {
-        "Color": [
-            "Yuma"
-        ],
-        "Hexadecimal": "#CEC291"
-    },
-    {
-        "Color": [
-            "Zaffre"
-        ],
-        "Hexadecimal": "#0014A8"
-    },
-    {
-        "Color": [
-            "Zambezi"
-        ],
-        "Hexadecimal": "#685558"
-    },
-    {
-        "Color": [
-            "Zanah"
-        ],
-        "Hexadecimal": "#DAECD6"
-    },
-    {
-        "Color": [
-            "Zest"
-        ],
-        "Hexadecimal": "#E5841B"
-    },
-    {
-        "Color": [
-            "Zeus"
-        ],
-        "Hexadecimal": "#292319"
-    },
-    {
-        "Color": [
-            "Ziggurat"
-        ],
-        "Hexadecimal": "#BFDBE2"
-    },
-    {
-        "Color": [
-            "Zinnwaldite"
-        ],
-        "Hexadecimal": "#EBC2AF"
-    },
-    {
-        "Color": [
-            "Zircon"
-        ],
-        "Hexadecimal": "#F4F8FF"
-    },
-    {
-        "Color": [
-            "Zombie"
-        ],
-        "Hexadecimal": "#E4D69B"
-    },
-    {
-        "Color": [
-            "Zomp"
-        ],
-        "Hexadecimal": "#39A78E"
-    },
-    {
-        "Color": [
-            "Zorba"
-        ],
-        "Hexadecimal": "#A59B91"
-    },
-    {
-        "Color": [
-            "Zuccini"
-        ],
-        "Hexadecimal": "#044022"
-    },
-    {
-        "Color": [
-            "Zumthor"
-        ],
-        "Hexadecimal": "#EDF6FF"
+/**
+ * Hexadecimal keys in their declaration order. This preserves numeric-index
+ * lookup while keeping colorDatabase itself as simple hex-to-names pairs.
+ * @type {string[]}
+ * @private
+ */
+var colorDatabaseKeys = [
+    "4C4F56", "0048BA", "1B1404", "7CB0A1", "B0BF1A", "7CB9E8", "C9FFE5", "C0E8D5",
+    "714693", "B284BE", "72A0C1", "D4C4A8", "FAFAFA", "EDEAE0", "F5E9D3", "93DFB8",
+    "F0F8FF", "C46210", "0076A3", "EED9C4", "EFDECD", "907B71", "AF8F2C", "DBDBDB",
+    "A9ACB6", "E52B50", "9F2B68", "F19CBB", "AB274F", "D3212D", "3B7A57", "FFBF00",
+    "FF7E00", "87756E", "9966CC", "A397B4", "F9EAF3", "7B9F80", "9DE5FF", "3DDC84",
+    "CD9575", "C88A65", "704A07", "665D1E", "915C83", "841B2D", "FAEBD7", "E0B646",
+    "008000", "DFBE6F", "4FA83D", "AF4D43", "8DB600", "E2F3EC", "EB9373", "FBCEB1",
+    "FFFEEC", "00FFFF", "014B43", "EDF5F5", "A1DAD7", "EAF9F5", "E8F5F2", "7FFFD4",
+    "71D9E2", "110C6C", "D0FF14", "433E37", "4B5320", "948771", "8F9779", "E9D66B",
+    "C6C3B5", "B2BEB5", "87A96B", "7BA05B", "130A06", "FAEAB9", "327DA0", "283A77",
+    "013E62", "EEF0F3", "ECEBCE", "97CD2D", "0A6F75", "FF9966", "97605D", "3B0910",
+    "A52A2A", "FDEE00", "F5FFBE", "568203", "888D65", "4E6649", "F7C8DA", "0D1C19",
+    "315BA1", "F0FFFF", "007FFF", "2E5894", "89CFF0", "A1CAF1", "F4C2C2", "FEFEFA",
+    "026395", "A5CB0C", "FFF8D1", "FF91AF", "859FAF", "2A2630", "DA6304", "FAE7B5",
+    "FBE7B2", "858470", "DED717", "DA1884", "A68B5B", "FFF4CE", "7C0A02", "44012D",
+    "292130", "828F72", "848482", "7DA98D", "273A81", "98777B", "3D0C02", "BCD4E6",
+    "EEC1BE", "9F8170", "926F5B", "FEF2C7", "F5F5DC", "7DD8C6", "6B8BA2", "DEE5C0",
+    "FCFBF3", "9C2542", "162A40", "327C14", "B2A1EA", "373021", "D4CD16", "1B3162",
+    "497183", "C1B7A4", "FFE4C4", "3D2B1F", "967117", "868974", "CAE00D", "BFFF00",
+    "FE6F5E", "BF4F51", "EEDEDA", "000000", "081910", "1B1811", "3B2F2F", "54626F",
+    "0B1304", "F6F7F7", "3E2C1C", "242E16", "3B3C36", "041322", "0D0332", "67032D",
+    "0A001C", "BFAFB2", "F2FAFA", "FFFEF6", "4D0135", "32293A", "FFEBCD", "A57164",
+    "FF6600", "FEF3D8", "2C2133", "318CE7", "A3E3ED", "ACE5EE", "FAF0BE", "660000",
+    "DCB4BC", "0000FF", "1F75FE", "0093AF", "0087BD", "0018A8", "333399", "0247FE",
+    "496679", "A2A2D0", "9999CC", "F1E9FF", "010D1A", "0C8990", "380474", "204852",
+    "2C0E8C", "BFBED8", "5DADEC", "017987", "7666C6", "0066FF", "D2F6DE", "126180",
+    "748881", "016162", "8A2BE2", "6456B7", "042E4C", "5072A7", "13264D", "6699CC",
+    "0D98BA", "064E40", "4D1A7F", "7366BD", "3C69E7", "18587A", "DE5D83", "B44668",
+    "79443B", "AFB1B8", "E5E0E1", "0095B6", "E3DAC9", "E4D1C0", "5C0120", "4E2A5A",
+    "3B91B4", "C7DDE5", "006A4E", "093624", "7A7A7A", "AE809E", "BA6F1E", "4A2A04",
+    "DEC196", "87413F", "CD8429", "BB8983", "5DA19F", "C62D42", "CB4154", "FFFAF4",
+    "FEF0EC", "3C4151", "66FF00", "D891EF", "C32148", "1974D2", "B10000", "FED33C",
+    "08E8DE", "FFAA1D", "FF55A3", "FB607F", "004225", "ABA196", "CD7F32", "3F2109",
+    "4E420C", "4D400F", "FFEC13", "964B00", "88540B", "592804", "492615", "401801",
+    "AF593E", "AF6E4D", "37290E", "1B4D3E", "E7FEFF", "622F30", "A8AE9C", "7BB661",
+    "C1A004", "FFC680", "F0DC82", "480607", "864D1E", "0D1117", "151F4C", "900020",
+    "800020", "DEB887", "002E20", "FF7034", "D99376", "A17A74", "420303", "CC5500",
+    "E97451", "8A3324", "0D2E1C", "F3AD16", "A1750D", "624E9A", "FFF1B5", "FFFCEA",
+    "BD33A4", "702963", "4D0A18", "D94972", "3F4C3A", "587156", "536872", "5F9EA0",
+    "A9B2C3", "91A3B0", "B04C6A", "006B3C", "ED872D", "E30022", "FFF600", "A67B5B",
+    "4B3621", "6F440C", "E0C095", "FE9D04", "31728D", "00581A", "A3C1AD", "C19A6B",
+    "893456", "D9B99B", "EFBBCC", "3C3910", "78866B", "D591A4", "F3FB62", "FFEF00",
+    "FCD917", "FF0800", "FBEC5D", "E4717A", "251706", "894367", "3C4443", "FEE5AC",
+    "A26645", "DCEDB4", "00BFFF", "592720", "FFDDAF", "EEEEE8", "01361C", "C41E3A",
+    "8C055E", "D29EAA", "00CC99", "EA88A8", "F3FFD8", "960018", "D70040", "5C2E01",
+    "F95A61", "FFA6C9", "B31B1B", "56A0D3", "F9E0ED", "ED9121", "F8B853", "2F6168",
+    "8BA9A5", "E6BEA5", "ADBED1", "00563F", "52001F", "062A78", "703642", "EEF6F7",
+    "E3BEBE", "3E1C14", "C95A49", "711A00", "ACE1AF", "007BA7", "2F847C", "B8C25D",
+    "D1D2CA", "1E385B", "163222", "246BCE", "8D7662", "FCFFF9", "DE3163", "02A4D3",
+    "1DACD6", "2A52BE", "6D9BC3", "007AA5", "E03C31", "FFF4F3", "516E3D", "EED794",
+    "354E8C", "EDDCB1", "F7E7CE", "FAECCC", "F1DDCF", "F8C3DF", "292937", "36454F",
+    "FFF3F1", "FFCD8C", "232B2B", "BAEEF9", "D47494", "E68FAC", "DFFF00", "7FFF00",
+    "40A860", "BDB3C7", "175579", "83AA5D", "9E5302", "DFCD6F", "FCDA98", "FFB7C5",
+    "2A0359", "651A14", "F8D9E9", "954535", "8581D9", "5D5C58", "F1FFC8", "F77703",
+    "FFFDE6", "E23D28", "FCFFE7", "DE6FA1", "A8516E", "AA381E", "856088", "FFB200",
+    "CEC7A7", "A8E3BD", "370202", "7B3F00", "D2691E", "58111A", "33036B", "67A712",
+    "E7730A", "E8F1D4", "FFA700", "0E0E18", "FDE1DC", "98817B", "E34234", "CD607E",
+    "55280C", "E4D00A", "FAF7D6", "9FA91F", "9EA91F", "A1C50A", "480656", "D4B6AF",
+    "7F1734", "FBCCE7", "BDC8B3", "8A8360", "E9FFFD", "E96E00", "371D09", "C7C4BF",
+    "202E54", "ACA59F", "384910", "0047AB", "481C1C", "301F1E", "F8F7DC", "0B0B0B",
+    "706555", "2A140E", "9F381D", "3F2500", "ABA0D9", "CEBABA", "FFEDBC", "B9D9EB",
+    "5C5D75", "517C66", "C9D9D2", "7C7B7A", "F2F2F2", "E9D75A", "593737", "F88379",
+    "02478E", "ACDD4D", "C6726B", "8C92AC", "B87333", "DA8A67", "7E3A15", "AD6F69",
+    "CB6D51", "996666", "944747", "FF3800", "FF7F50", "FF4040", "C7BCA2", "A86B6B",
+    "893F45", "606E68", "C4D0B0", "40291D", "E7BF05", "F8FACD", "8B6B0B", "6495ED",
+    "FFB0AC", "FFF8DC", "FAD3A2", "76395D", "2E2D88", "FFF8E7", "FFD8D9", "615D30",
+    "FFBCD9", "FFB7D5", "C2BDB6", "01371A", "4D282D", "81613C", "B95140", "DB5079",
+    "462425", "FFFDD0", "FFE5A0", "F5C85C", "1E0F04", "737829", "DC143C", "9E1B32",
+    "736D58", "771F1F", "1C1208", "B5ECDF", "004816", "FD7B33", "A7D8DE", "F5F5F5",
+    "924321", "FDFFD5", "FBBEDA", "2596D1", "507672", "00B7EB", "58427C", "FFD300",
+    "F56FA1", "003E40", "012731", "F9E4BC", "4F2398", "6E4B26", "FED85D", "6093D1",
+    "0000C8", "666699", "654321", "770F05", "5D3954", "26428B", "008B8B", "3C2005",
+    "536878", "0A480D", "B8860B", "013220", "006400", "1A2421", "BDB76B", "483C32",
+    "534B4F", "543D37", "8B008B", "4A5D23", "556B2F", "FF8C00", "9932CC", "03C03C",
+    "301934", "8B0000", "E9967A", "8FBC8F", "3C1414", "8CBED6", "483D8B", "2F4F4F",
+    "177245", "661010", "00CED1", "9400D3", "00703C", "555555", "A6A29A", "F3E9E5",
+    "7AC488", "D2DA97", "220878", "E47698", "4A3004", "DA3287", "FAD6A5", "B94E48",
+    "051040", "002900", "182D09", "004B49", "1B127B", "412010", "FF1493", "FF9933",
+    "082567", "01826B", "095859", "4A646C", "7E5E60", "003532", "B09A95", "396413",
+    "A4A49D", "7563A8", "1560BD", "2243B6", "FFEED8", "AE6020", "EDC9AF", "F8F8F7",
+    "EAFFFE", "DB995E", "130000", "696969", "5D7747", "871550", "E29418", "1E90FF",
+    "D71868", "F9FF8B", "646077", "8E775E", "5D4C51", "A69279", "6B5755", "EEE3AD",
+    "FCF4D0", "E6D7B9", "6D6C6C", "092256", "6FD0C5", "AF8751", "FDF7AD", "00009C",
+    "A899E6", "383533", "E5CCC9", "A8989B", "EFDFBB", "B6BAA4", "C9B93B", "FFF9E6",
+    "E1A95F", "414C7D", "AC91CE", "1E9AB0", "E9E3E3", "555D50", "0C0B1D", "26283B",
+    "311C17", "C2B280", "F5F3E5", "FA7814", "105852", "C8E3D7", "A2AEAB", "1B1B1B",
+    "FFF4DD", "FFEFC1", "614051", "F0EAD6", "1034A6", "16161D", "1E1708", "8F3E33",
+    "7DF9FF", "00FF00", "6F00FF", "CCFF00", "BF00FF", "8B00FF", "8F00FF", "123447",
+    "088370", "1C7C7D", "50C878", "6C3082", "514649", "817377", "0056A7", "F8DD5C",
+    "022D15", "B48395", "AB4B52", "CC474B", "563C5C", "3E2B23", "8BA690", "E1BC64",
+    "00FF40", "612718", "211A0E", "96C8A2", "278A5B", "CFA39D", "024E46", "1C402E",
+    "427977", "FFEFEC", "7F626D", "801818", "B53389", "DE5285", "FAF3F0", "F400A1",
+    "E5AA70", "796A78", "9FDD8C", "4D5D53", "63B76C", "657220", "4F7942", "704F50",
+    "FBE96C", "F0FCEA", "6C541E", "B35213", "FF5470", "626649", "556D56", "692D54",
+    "405169", "AA4203", "E89928", "CE2029", "E95C4B", "B22222", "0E2A30", "E25822",
+    "DA5B38", "FF7D07", "F2552A", "EEDC82", "7B8265", "6F6A61", "A2006D", "FFFAF0",
+    "15F4EE", "CA3435", "D8FCFA", "D7D0FF", "CBCAB6", "5FA777", "014421", "228B22",
+    "FFF1EE", "56B4BE", "FFDEB3", "856D4D", "0072BB", "FD3F92", "BDBDC6", "ECC7EE",
+    "9EFD38", "D473D4", "BDEDFD", "FD6C9E", "C72C48", "F64A8A", "77B5FE", "8806CE",
+    "990066", "807E79", "B1E2C1", "F57584", "EDF5DD", "E936A7", "DBFFF8", "E4F6E7",
+    "4F9D5D", "C154C1", "FF00FF", "7A58C1", "CC397B", "C74375", "BEDE0D", "ECA927",
+    "E48400", "1959A8", "016D39", "54534D", "87421F", "C45655", "163531", "DCDCDC",
+    "EFEFEF", "DCB20C", "E49B0F", "D18F1B", "007F66", "15736B", "FB8989", "D4DFE2",
+    "C7C9D5", "F8F8FF", "523C94", "B8B56A", "E8F2EB", "FFF9E2", "F8E4BF", "80B3C4",
+    "61845F", "6082B6", "AB92B3", "726D4E", "00AB66", "3D7D52", "A57C00", "E6BE8A",
+    "D4AF37", "FFD700", "F18200", "85754E", "DEBA13", "E28913", "996515", "F0D52D",
+    "F5FB3D", "FDE295", "DAA520", "FCC200", "F0DB7D", "FFCC5C", "FFDF00", "FCD667",
+    "261414", "0B1107", "FFF14F", "069B81", "D2F8B0", "00573F", "6D92A1", "2F3CB3",
+    "E4D5B7", "FFD38C", "676767", "8D8974", "D5F6E3", "84A0A0", "A8E4A0", "9DE093",
+    "381A51", "251607", "4A444B", "808080", "BEBEBE", "465945", "A2AAB3", "C3C3BD",
+    "E7ECE6", "A9A491", "C1BECD", "1CAC78", "00A877", "009F6B", "00AD43", "00A550",
+    "66B032", "01A368", "24500F", "25311C", "436A0D", "A7F432", "CBD3B0", "1D6142",
+    "6EAEA1", "A4AF6E", "B8C1B1", "032B52", "101405", "E8EBE0", "1164B4", "2887C8",
+    "009966", "F0E891", "ADFF2F", "D54600", "A99A86", "BA0101", "051657", "80B3AE",
+    "9DACB7", "B6D3BF", "7CA1A6", "414257", "2A3439", "828685", "9A9577", "98811B",
+    "6B2A14", "1B1035", "FFFEE1", "85C4CC", "FDF6D3", "FEF7DE", "FEF4DB", "E5D8AF",
+    "446CCF", "5218FA", "3FFF00", "E6F2EA", "E0B974", "DA9100", "5590D9", "9D5616",
+    "D4E2FC", "FF7A00", "541012", "B7C3D0", "B6B095", "2B3228", "DF73FF", "AA98A9",
+    "5E5D3B", "907874", "B6316C", "6F8E63", "ACA586", "6A5D1B", "E6FFE9", "FBF9F9",
+    "FAFDE4", "589AAF", "53824B", "AE4560", "A1ADB5", "FFAB81", "C8A528", "65869F",
+    "011D13", "4F1C70", "F0FFF0", "EDFC84", "006DB0", "49796B", "D06DA1", "5A87A0",
+    "604913", "FF1DCE", "FF69B4", "B38007", "CFF9F3", "355E3B", "161D10", "877C7B",
+    "B7A458", "B1F4E7", "DAF4F0", "71A6D2", "FCF75E", "319177", "F6A4C9", "ED2939",
+    "B0E313", "B2EC5D", "4C516D", "138808", "CD5C5C", "4D1E01", "E3A857", "4F69C6",
+    "00416A", "C26B03", "002FA7", "130A8F", "FF4F00", "BA160C", "C0362C", "5A4FCF",
+    "5F3D26", "433120", "D4D7D9", "676662", "86483C", "B3446C", "F4F0EC", "FFFCEE",
+    "B2FFFF", "FFFFF0", "2E0329", "3A2A6A", "2E1905", "20208D", "00A86B", "EF863F",
+    "C2E8E5", "350E57", "080110", "5B3013", "F4EBD3", "9D2933", "0A6906", "780109",
+    "5B3256", "D87C63", "F8DE7E", "1FC2C2", "A50B5E", "297B9A", "343434", "B5D2CE",
+    "126B40", "3B1F1F", "F4CA16", "EEFF9A", "8AB9F1", "544333", "7C7B82", "BDDA57",
+    "29AB87", "B4CFD3", "6D9292", "ECCDB9", "5E483E", "004620", "C6C8BD", "1E1609",
+    "FFEAD4", "507096", "4CBB17", "454936", "7C1C05", "3AB09E", "E8F48C", "BFC921",
+    "C3B091", "F0E68C", "E1EAD4", "240C02", "3A6A47", "736C9F", "3E0480", "882D17",
+    "E79FC4", "6B4423", "6E6D57", "354230", "8F4B0E", "FFBD5F", "FFE772", "512888",
+    "886221", "368716", "B3C110", "D6CADD", "26619C", "C6E610", "C8B568", "FFFF66",
+    "749378", "A9BA9D", "CF1020", "B57EDC", "E6E6FA", "CCCCFF", "FFF0F5", "BDBBD7",
+    "C4C3D0", "EE82EE", "FBAED2", "967BB6", "FBA0E3", "7CFC00", "967059", "FDE910",
+    "FFFACD", "CCA01D", "AC9E22", "FDFF00", "9B9E8F", "F6EABE", "FFF44F", "FFFF9F",
+    "545AA7", "FDD5B1", "ADD8E6", "F08080", "93CCEA", "E0FFFF", "C8AD7F", "FAFAD2",
+    "D3D3D3", "90EE90", "FED8B1", "C5CBE1", "FFB6C1", "FFA07A", "20B2AA", "87CEFA",
+    "778899", "B0C4DE", "C9A0DC", "FFFFE0", "FCC01E", "C8A2C8", "9874D3", "AE98AA",
+    "C8AABF", "E7F8FF", "76BD17", "32CD32", "6F9D02", "747D63", "AC8A56", "394851",
+    "195905", "FAF0E6", "D9E4F5", "AB0563", "423921", "6CA0DC", "674C47", "B86D29",
+    "6C2E1F", "987456", "4D282E", "EEF4DE", "BDC9CE", "2C8C84", "007EC7", "A8AF8E",
+    "242A1D", "AAA9CD", "DFCFDB", "BEA6C3", "6D0101", "863C3C", "460B41", "AF9F1C",
+    "1A1A68", "3C493A", "A7882C", "697E9A", "D9F7FF", "FFB97B", "FFBD88", "B7F0BE",
+    "CC3336", "09255D", "3F3002", "F653A6", "CA1F7B", "D0417E", "FF0090", "9F4576",
+    "AAF0D1", "F8F4FF", "F2E8D7", "C04000", "4E0606", "B06608", "F5D5A0", "F2C649",
+    "6050DC", "897D6D", "444954", "0BDA51", "7DC8F7", "233418", "BDB2A1", "8E8190",
+    "979AAA", "8D90A1", "AD781B", "F37A48", "E25465", "F2C3B2", "FDBE02", "FF8243",
+    "E77200", "F5C999", "74C365", "8B9C90", "EEEF78", "880085", "350036", "EAA221",
+    "B98D28", "FBE870", "286ACD", "800000", "B03060", "520C17", "0B0F08", "AFA09E",
+    "363050", "F8DB9D", "403B38", "1B659D", "B05D54", "4E3B41", "E0B0FF", "915F6D",
+    "EF98AA", "F091A9", "D8C2D5", "47ABCC", "30BFBF", "ACACE6", "5E8C31", "D9E650",
+    "733380", "D92121", "A63A79", "FAFA37", "F2BA49", "4C9141", "73C2FB", "66DDAA",
+    "0000CD", "E2062C", "AF4035", "F3E5AB", "BA55D3", "9370DB", "BB3385", "3CB371",
+    "7B68EE", "00FA9A", "48D1CC", "C71585", "E4C2D5", "300529", "F8B878", "FEBAAD",
+    "C7C1FF", "E5E5E5", "F6F0E6", "413C37", "831923", "49371B", "71291D", "D3AF37",
+    "0A7E8C", "9C7C38", "D07D12", "3C1F76", "E4007C", "A72525", "5F5F6E", "7ED4E6",
+    "8DD9CC", "8B72BE", "4D8C57", "ACBF60", "8B8680", "D982B5", "E58E73", "A55353",
+    "FFEB00", "ECB176", "011635", "702670", "191970", "003366", "004953", "041004",
+    "2D2510", "FFC40C", "FAFFA4", "B81104", "FFF6D4", "594433", "FFDAE9", "F8FDD3",
+    "E3F988", "323232", "3F5D53", "36747D", "F5E050", "3F307F", "3EB489", "F5FFFA",
+    "98FF98", "F1EEC1", "C4F4EB", "161928", "D1D2DD", "C4C4BC", "BBB477", "FFE4E1",
+    "7F7589", "6E1D14", "782D19", "C04737", "FFA194", "8B0723", "4A3C30", "B5A27F",
+    "8A8389", "83D0C6", "C7031E", "7F76D3", "FCFEDA", "DCDDCC", "D6CEF6", "8DA399",
+    "9EDEE0", "441D00", "504351", "036A6E", "ADDFAD", "8A9A5B", "30BA8F", "1AB385",
+    "959396", "997A8D", "18453B", "B78E5C", "AA8B5B", "C54B8C", "C8509B", "5C0536",
+    "8C472F", "4E4562", "FFDB58", "D69188", "FFB31F", "317873", "D65282", "E2EBED",
+    "AD4379", "F6ADC6", "4B5D52", "ACA494", "FADA5E", "EDF9F1", "FFDEAD", "000080",
+    "CBDBD6", "FFE2C5", "4666FF", "FFA343", "FE4164", "39FF14", "8EABC1", "7CB7BB",
+    "140600", "646E75", "F3D69D", "D7837F", "06A189", "727472", "1F120F", "AA375A",
+    "193751", "B7B1B1", "BAB1A2", "A4DDED", "A8BD9F", "C59922", "81422C", "683600",
+    "E9FFDB", "FEEFCE", "02866F", "4F42B5", "41AA78", "48BF91", "CC7722", "E6F8F3",
+    "FEF9E3", "281E15", "901E1E", "43302E", "724A2F", "CFB53B", "FDF5E6", "796878",
+    "673147", "C08081", "808000", "6B8E23", "3C341F", "B5B35C", "8B8470", "716E10",
+    "9AB973", "CDF4FF", "2F270E", "353839", "A8C3BC", "A9C6C2", "B784A7", "8E6F70",
+    "377475", "FF7538", "FF5800", "FFA500", "FF7F00", "FF9F00", "FFA000", "C45719",
+    "FA5B3D", "FEFCED", "FF5349", "FF681F", "F5BD1F", "F8D568", "DA70D6", "E29CD2",
+    "F2BDCD", "FFFDF3", "9B4703", "015E85", "C69191", "F3FBD4", "878D91", "E9F8ED",
+    "841617", "2D383A", "FF6037", "FF6E4A", "4A0000", "002147", "384555", "779E86",
+    "DAFAFF", "E9CECD", "A65529", "776F61", "1CA9C9", "009DC4", "778120", "411F10",
+    "ADE6C4", "006600", "682860", "FFFF99", "9BC4E2", "ED7A9B", "C0D3B9", "988D77",
+    "FADADD", "FDFEB8", "FAE6FA", "FFE1F2", "C9C0BB", "6E7783", "C3BFC1", "ECEBBD",
+    "09230F", "19330E", "F4F2EE", "EAF6EE", "EDCDAB", "78184A", "009B7D", "FFEFD5",
+    "8D0226", "E63E62", "317D82", "F1E9D2", "FFF46E", "26056A", "CADCD4", "134F19",
+    "77DD77", "FFD1DC", "DEA5A4", "639A8F", "800080", "DEF5FF", "260368", "D7C498",
+    "FFE5B4", "FFCBA4", "FFF0DB", "FFCC99", "FFDAB9", "FFDCD6", "FADFAD", "782F16",
+    "D1E231", "E8E0D5", "FCF4DC", "B768A2", "716B56", "3EABBF", "E3F5E1", "A9BEF2",
+    "D0BEF8", "E1E6D6", "C3CDE6", "E12C2C", "1C39BB", "00A693", "32127A", "D99058",
+    "F77FBE", "701C1C", "CC3333", "FE28A2", "FF6B53", "EC5800", "7F3A02", "7C7631",
+    "DB9690", "96A8A1", "8BA8B7", "A3807B", "DF00FF", "000F89", "123524", "FFF39D",
+    "6E4826", "314459", "2E2787", "45B1E8", "C30B4E", "FDD7E4", "AFBDD9", "FDDDE6",
+    "4B0082", "6D5E54", "C7CD90", "01796F", "2A2F23", "171F04", "FFC0CB", "D74894",
+    "FF66FF", "FC74FD", "E1C0C8", "FFDDF4", "FFF1D8", "D8B2D1", "F78FA7", "BEB5B7",
+    "C96323", "FEF4CC", "FFE1DF", "BA7F03", "9DC209", "93C572", "C0D8B6", "FF9000",
+    "C99415", "27504B", "E5E4E2", "843179", "DDA0DD", "8E4585", "5946B2", "8F021C",
+    "E5F9F6", "5DA493", "8DA8CC", "F34723", "86608E", "660045", "BE4F62", "EFF2F3",
+    "EAAE69", "251F4F", "FFFFB4", "8B9FEE", "F9E663", "FF5A36", "F5E7E2", "8C5738",
+    "BCC9C2", "B0E0E6", "9A3820", "D0C0E5", "F0E2EC", "EDEA99", "F58025", "FEF5F1",
+    "003153", "CC8899", "7D2C14", "3FC1AA", "644117", "C2CAC4", "FF7518", "B1610B",
+    "DC4333", "4D3D14", "6A0DAD", "9F00C5", "A020F0", "660099", "652DC1", "9678B6",
+    "4E5180", "FE4EDA", "FF00CC", "9C51B6", "9A4EAE", "E7CD8C", "FFFDF4", "F7F2E1",
+    "436B95", "E8CCD7", "A6A6A6", "BD978E", "D6D6D1", "8E3A59", "623F2D", "0C1911",
+    "FF355E", "EADAB8", "B9C8AC", "242124", "FBAB60", "F7B668", "2E3222", "1C1E13",
+    "E30B5D", "727B89", "D27D46", "D68A59", "734A12", "826644", "FF33CC", "E30B5C",
+    "E3256B", "8D4E85", "663399", "3C1206", "FF0000", "EE204D", "F2003C", "C40233",
+    "ED1C24", "FE2712", "7B3801", "8E0000", "DA6A41", "860111", "FF3F34", "6E0902",
+    "ED0A3F", "80341F", "FD3A4A", "D05F04", "FF4500", "E40078", "922B3E", "C0448F",
+    "5D1E0F", "A45A52", "C9FFA2", "9F821C", "013F6A", "86949F", "AAD6E6", "FEEBF3",
+    "A86515", "002387", "2C1632", "2E3F62", "777696", "FFFEF0", "EEFFE2", "004040",
+    "010B13", "010203", "A85307", "444C38", "BBD009", "F4D81C", "410056", "8BE6D8",
+    "434C59", "EAC674", "00CCCC", "4D3833", "9EB1CD", "BA450C", "8A7F80", "C9B29B",
+    "A91101", "747D83", "DE6360", "795D4C", "838996", "FFFEFD", "FFD2B7", "ECC54E",
+    "A62F20", "8E4D1E", "FF007F", "F9429E", "FBB2A3", "800B47", "9E5E6F", "674846",
+    "E7BCB4", "E32636", "BF5500", "FF66CC", "C21E56", "905D5D", "AB4E52", "FFF6F5",
+    "65000B", "D40000", "BC8F8F", "C6A84B", "A23B6C", "002366", "4169E1", "AB3472",
+    "6B3FA0", "7851A9", "CE4676", "D10056", "E0115F", "9B111E", "A81C07", "796989",
+    "F9F8E4", "80461B", "755A57", "679267", "32174D", "B7410E", "480404", "86560A",
+    "DA2C43", "043927", "4C3024", "8B4513", "583401", "FF7800", "FF6700", "EED202",
+    "F4C430", "F9BF58", "9EA587", "BCB88A", "B7A214", "F1E788", "B8E0F9", "097F4B",
+    "FF8C69", "FA8072", "FF91A4", "FEDB8D", "685E6E", "F1F7F2", "3A2010", "0B6207",
+    "304B6A", "456CAC", "826F65", "AA8D6F", "AB917A", "796D62", "F5E7A2", "FFEAC8",
+    "F4A460", "92000A", "8D3D38", "B16D52", "9FA0B1", "507D2A", "DED4A4", "0F52BA",
+    "2F519E", "0067A5", "555B10", "E6E4D4", "CBA135", "FFF5F3", "FFF4E0", "675FA6",
+    "CFFAF4", "FF2400", "431560", "950015", "585562", "A9B497", "FFD800", "8B847E",
+    "0066CC", "2EBFD4", "695F62", "FFFBDC", "66FF66", "FBA129", "2E8B57", "00FFCD",
+    "C5DBCA", "78A39C", "ED989E", "80CCEA", "59260B", "731E8F", "F1F1F1", "FFF5EE",
+    "1B2F11", "F0EEFD", "FFBA00", "704214", "2B0202", "9E5B40", "FFF4E8", "837050",
+    "8A795D", "778BA5", "9AC2B8", "AAA5A9", "4EABD1", "FBFFBA", "33CC99", "009E60",
+    "25272C", "8FD400", "004950", "02402C", "E8B9B3", "D98695", "6B4E31", "5FA778",
+    "788BBA", "3E3A44", "B20931", "E292C0", "FC0FC0", "FF6FFF", "5F6672", "646A54",
+    "F3E7BB", "BDB1A8", "C0C0C0", "AAA9AD", "ACACAC", "C4AEAD", "BFC1C2", "66B58F",
+    "9FD7D3", "CB410B", "7A013A", "718080", "D3CBBA", "FF3855", "FFDB00", "CAE6DA",
+    "007474", "87CEEB", "76D7EA", "CF71AF", "6A5ACD", "708090", "299617", "003399",
+    "51808F", "C84186", "605B73", "100C08", "FFFAFA", "F7FAF7", "E4FFD1", "D6FFDB",
+    "E2D8ED", "FFFBF9", "D1C6B4", "F5EDEF", "893843", "FEF8E2", "EAF6FF", "757575",
+    "FD7C07", "CEB98F", "6A6051", "1D2951", "807532", "0070B8", "D10047", "989898",
+    "819885", "009150", "E86100", "F7BFBE", "E60026", "4C2882", "007F5C", "2F5A57",
+    "6A442E", "885342", "74640D", "816E71", "B6D1EA", "79DEEC", "A7FC00", "87FF2A",
+    "00FF7F", "578363", "ACCBB1", "F6FFDC", "F8F6F1", "C1D7B0", "AAABB7", "8F8176",
+    "2D569B", "23297A", "8A8F8A", "007BB8", "9F9F9C", "E5D7BD", "ECF245", "4682B4",
+    "262335", "CC33CC", "5F8A8B", "9C3336", "928573", "646463", "717486", "000741",
+    "D4BF8D", "E4D96F", "FA5053", "FF9361", "956387", "325D52", "714AB2", "BAC7C9",
+    "F9FFF6", "914E75", "C1F07C", "96BBAB", "FBAC13", "C9B35B", "FFB1B3", "E4D422",
+    "E16865", "FFCC33", "E3AB57", "FE4C40", "FF9E2C", "CF6BA9", "FFC901", "BBD7C1",
+    "CFE5D2", "0C7A79", "87AB39", "888387", "001B1C", "ACB78E", "DCF0EA", "A83731",
+    "FBEA8C", "FD9FA2", "D3CDC5", "DDD6D5", "908D39", "D44500", "A02712", "EDB381",
+    "D6C562", "E97C07", "EEF0C8", "B32D29", "A8A589", "991613", "341515", "D2B48C",
+    "D99A6C", "FA9D5A", "D9DCC1", "03163C", "F28500", "ED7A1C", "7B7874", "B05E81",
+    "E1F6E8", "073A50", "FB4D46", "CFDCCF", "8B8589", "B3AF95", "692545", "1E433C",
+    "C1BAB0", "D0F0C0", "B19461", "008080", "367588", "044259", "CF3476", "3B000B",
+    "CD5700", "FFE6C7", "E2725B", "F8F99C", "FFB555", "B69D98", "403D19", "D8BFD8",
+    "CCCAA8", "33292F", "C02B18", "C1440E", "C3D1D1", "063537", "FC80A5", "FC89AC",
+    "F1FFAD", "BFB8B0", "81D8D0", "16322C", "D9D6CF", "DBD7D2", "F0EEFF", "EEE600",
+    "9A6E61", "715D47", "3A0020", "1B0245", "3F583B", "FF6347", "E79F8C", "7C778A",
+    "FD0E35", "0F2D9E", "1450AA", "8D3F3F", "991B07", "A9BDBF", "5FB3AC", "E6FFFF",
+    "FFFDE8", "FC9C1D", "3B2820", "7C881A", "8C6495", "E64E03", "C3DDF9", "00755E",
+    "4A4E5A", "2D68C4", "8A73D6", "1C05B3", "363534", "FFDDCD", "3E8EDE", "EAB33B",
+    "DEA681", "DEAA88", "353542", "4A4244", "FAE600", "B57281", "CABB48", "40E0D0",
+    "30D5C8", "6CDAE7", "00FFEF", "A0D6B4", "2A380B", "6F4E37", "7C4848", "C09999",
+    "BD5E2E", "EEF3C3", "C5994B", "FFF1F9", "E4CFDE", "EEFDFF", "8A496B", "C2955D",
+    "66023C", "0033AA", "D9004C", "FC6C85", "120A8F", "3F00FF", "4166F5", "635147",
+    "FFDDCA", "5B92E5", "A50021", "7B1113", "AE2029", "AFDBF5", "004F98", "D84437",
+    "350E42", "2B194F", "49170C", "664228", "D1BEA8", "F38FA9", "F3D9DF", "FFF6DF",
+    "C5B358", "C80815", "72010F", "055989", "928590", "43B3AE", "5D5E37", "495400",
+    "FF4D00", "D9381E", "B14A0B", "534491", "549019", "64CCDB", "983D61", "CB8FA9",
+    "290C5E", "240A40", "7F00FF", "963D7F", "8601AF", "991199", "F75394", "F7468A",
+    "324AB2", "766EC8", "40826D", "678975", "009698", "FFEFA1", "8FD6B4", "FCF8F7",
+    "9F1D35", "00CCFF", "FF9980", "FFA089", "803790", "9F00FF", "CEFF00", "533455",
+    "10121D", "DECBC6", "5A6E9C", "363C0D", "773F1A", "004242", "788A25", "A1E9DE",
+    "056F57", "7B7C94", "DCD747", "FFDDCF", "FFC0A8", "F7DBE6", "4E7F9E", "189BCC",
+    "B43332", "625119", "FF910F", "DCD9D2", "F19BAB", "F5DEB3", "F3EDCF", "D59A6F",
+    "F7F5FA", "FFFFFF", "DDF9F1", "F8F7FC", "F8F0E8", "FEF8FF", "EAE8D4", "7A89B8",
+    "A2ADD0", "D470A2", "ECE090", "F4F4F4", "FF43A4", "FF3399", "FD5B78", "B9C46A",
+    "3A686C", "DFECDA", "65745D", "3C0878", "A75502", "722F37", "591D35", "D5D195",
+    "FF007C", "56887D", "FEF4F8", "9771B5", "A4A6D3", "FFFC99", "261105", "4D5328",
+    "302A0F", "0C0D0F", "483131", "738678", "EEED09", "F1B42F", "00356B", "FFFF00",
+    "FCE883", "EFCC00", "FEDF00", "FEFE33", "9ACD32", "C5E17A", "716338", "FFAE42",
+    "FF9505", "FEA904", "FFF700", "30B21A", "C5E384", "2E5090", "FFC3C0", "7B6608",
+    "CEC291", "0014A8", "685558", "DAECD6", "E5841B", "292319", "BFDBE2", "EBC2AF",
+    "F4F8FF", "E4D69B", "39A78E", "A59B91", "044022", "EDF6FF"
+];
+
+/**
+ * Converts a color or pair key into the database's six-digit, hashless format.
+ * Both hashless keys and regular #rrggbb colors are accepted.
+ * @param {*} value
+ * @returns {string|null}
+ * @private
+ */
+function normalizeColorPairKey(value) {
+    var text = String(value || '').trim();
+    if (text.charAt(0) !== '#') {
+        text = '#' + text;
     }
-]
+    var normalized = normalizeHex(text);
+    return normalized ? normalized.slice(1).toUpperCase() : null;
+}
 
 /**
  * Registered optional language packs. English remains native in this file;
@@ -13686,7 +2615,7 @@ function normalizeNameToColorLanguageText(value) {
  * @param {Object} pack - Language data.
  * @param {string} pack.locale - BCP 47-style locale, such as "pt-BR".
  * @param {string} [pack.name] - Human-readable language name.
- * @param {Object<string,string[]>} [pack.colorNames] - HEX to translated names.
+ * @param {Object<string,string[]>} [pack.colorNames] - Hashless six-digit HEX keys to translated names.
  * @param {Object<string,string[]>} [pack.themeAliases] - Canonical English theme to aliases.
  * @param {Object<string,string>} [pack.moodNames] - Canonical English mood to translated label.
  * @param {Object<string,string[]>} [pack.inputAliases] - Canonical input keyword to aliases.
@@ -13696,7 +2625,7 @@ function normalizeNameToColorLanguageText(value) {
  * registerNameToColorLanguage({
  *     locale: 'example',
  *     name: 'Example language',
- *     colorNames: { '#ff0000': ['Translated Red'] },
+ *     colorNames: { 'ff0000': ['Translated Red'] },
  *     themeAliases: { Nature: ['Translated Nature'] },
  *     moodNames: { Calm: 'Translated Calm' }
  * });
@@ -13726,9 +2655,9 @@ function registerNameToColorLanguage(pack) {
         if (!Object.prototype.hasOwnProperty.call(colorNames, hexKey)) {
             continue;
         }
-        var normalizedHex = normalizeHex(hexKey);
+        var normalizedKey = normalizeColorPairKey(hexKey);
         var names = Array.isArray(colorNames[hexKey]) ? colorNames[hexKey] : [colorNames[hexKey]];
-        if (!normalizedHex) {
+        if (!normalizedKey) {
             continue;
         }
 
@@ -13742,10 +2671,10 @@ function registerNameToColorLanguage(pack) {
             }
             seenColorNames[normalizedName] = true;
             cleanNames.push(displayName);
-            registered.colorAliasRecords.push({ alias: normalizedName, hex: normalizedHex });
+            registered.colorAliasRecords.push({ alias: normalizedName, hex: '#' + normalizedKey.toLowerCase() });
         }
         if (cleanNames.length > 0) {
-            registered.colorNamesByHex[normalizedHex] = cleanNames;
+            registered.colorNamesByHex[normalizedKey] = cleanNames;
         }
     }
 
@@ -13915,7 +2844,9 @@ function getNameToColorLanguageColorNames(hex, locale) {
     var localeKey = normalizeNameToColorLocale(locale);
     var pack = nameToColorLanguageRegistry[localeKey];
     if (!pack) return null;
-    var names = pack.colorNamesByHex[String(hex || '').toLowerCase()];
+    var colorKey = normalizeColorPairKey(hex);
+    if (!colorKey) return null;
+    var names = pack.colorNamesByHex[colorKey];
     return names ? names.slice() : null;
 }
 
@@ -13992,8 +2923,8 @@ function generateColor(input) {
             }
         }
 
-        if (input >= 0 && input < colorDatabase.length) {
-            return colorDatabase[input].Hexadecimal;
+        if (input >= 0 && input < colorDatabaseKeys.length) {
+            return '#' + colorDatabaseKeys[input];
         }
 
         // Index out of range: generate deterministic color from the number itself
@@ -14075,7 +3006,7 @@ function generateColor(input) {
 
 
     // ─── Name lookup in the color database ───
-    // Since each entry can have multiple names (Color array), we search across all names.
+    // Each hashless hexadecimal key maps directly to one or more names.
     // First, save the text with spaces intact for later multi-word detection
     var textForMultipleWords = normalizedText;
 
@@ -14083,22 +3014,24 @@ function generateColor(input) {
 
 
     // 1. Exact match (case-insensitive, ignoring non-alphanumeric chars)
-    for (var ci = 0; ci < colorDatabase.length; ci++) {
-        var entry = colorDatabase[ci];
-        for (var ni = 0; ni < entry.Color.length; ni++) {
-            var normalizedName = entry.Color[ni].toLowerCase().replace(/[^a-z0-9]/g, '');
+    for (var ci = 0; ci < colorDatabaseKeys.length; ci++) {
+        var exactKey = colorDatabaseKeys[ci];
+        var exactNames = colorDatabase[exactKey];
+        for (var ni = 0; ni < exactNames.length; ni++) {
+            var normalizedName = exactNames[ni].toLowerCase().replace(/[^a-z0-9]/g, '');
             if (normalizedName === normalizedText) {
-                return entry.Hexadecimal;
+                return '#' + exactKey;
             }
         }
     }
 
     // 2. Contains match (case-insensitive)
-    for (var ci2 = 0; ci2 < colorDatabase.length; ci2++) {
-        var entry2 = colorDatabase[ci2];
-        for (var ni2 = 0; ni2 < entry2.Color.length; ni2++) {
-            if (entry2.Color[ni2].toLowerCase().indexOf(normalizedText) !== -1) {
-                return entry2.Hexadecimal;
+    for (var ci2 = 0; ci2 < colorDatabaseKeys.length; ci2++) {
+        var containsKey = colorDatabaseKeys[ci2];
+        var containsNames = colorDatabase[containsKey];
+        for (var ni2 = 0; ni2 < containsNames.length; ni2++) {
+            if (containsNames[ni2].toLowerCase().indexOf(normalizedText) !== -1) {
+                return '#' + containsKey;
             }
         }
     }
@@ -14211,21 +3144,22 @@ function generateColor(input) {
     var bestMatch = null;
     var bestDistance = Infinity;
 
-    for (var ci3 = 0; ci3 < colorDatabase.length; ci3++) {
-        var entry3 = colorDatabase[ci3];
-        for (var ni3 = 0; ni3 < entry3.Color.length; ni3++) {
-            var normalizedName3 = entry3.Color[ni3].toLowerCase().replace(/[^a-z0-9]/g, '');
+    for (var ci3 = 0; ci3 < colorDatabaseKeys.length; ci3++) {
+        var fuzzyKey = colorDatabaseKeys[ci3];
+        var fuzzyNames = colorDatabase[fuzzyKey];
+        for (var ni3 = 0; ni3 < fuzzyNames.length; ni3++) {
+            var normalizedName3 = fuzzyNames[ni3].toLowerCase().replace(/[^a-z0-9]/g, '');
             var distance = levenshteinDistance(normalizedText, normalizedName3);
             if (distance < bestDistance) {
                 bestDistance = distance;
-                bestMatch = entry3;
+                bestMatch = fuzzyKey;
             }
         }
     }
 
     var maxDistance = 3;
     if (bestDistance <= maxDistance && bestMatch) {
-        return bestMatch.Hexadecimal;
+        return '#' + bestMatch;
     }
 
     function levenshteinDistance(a, b) {
@@ -15743,14 +4677,15 @@ function generateReadableColor(input) {
  * listColors(2, 10);
  */
 function listColors(pageNumber, pageSize) {
-    // Build a flat list: each name in the Color array becomes its own item
+    // Build a flat list: each name in a hex-to-names pair becomes its own item
     var flatList = [];
-    for (var i = 0; i < colorDatabase.length; i++) {
-        var entry = colorDatabase[i];
-        for (var j = 0; j < entry.Color.length; j++) {
+    for (var i = 0; i < colorDatabaseKeys.length; i++) {
+        var colorKey = colorDatabaseKeys[i];
+        var names = colorDatabase[colorKey];
+        for (var j = 0; j < names.length; j++) {
             flatList.push({
-                Color: entry.Color[j],
-                Hexadecimal: entry.Hexadecimal
+                Color: names[j],
+                Hexadecimal: '#' + colorKey
             });
         }
     }
@@ -15802,17 +4737,12 @@ function colorName(input, locale) {
     var hex = resolveHex(input);
     if (!hex) return null;
 
-    var normalizedHex = hex.toLowerCase();
-    var localizedNames = getNameToColorLanguageColorNames(normalizedHex, locale);
+    var colorKey = normalizeColorPairKey(hex);
+    var localizedNames = getNameToColorLanguageColorNames(colorKey, locale);
     if (localizedNames && localizedNames.length > 0) {
         return localizedNames[0];
     }
-    for (var i = 0; i < colorDatabase.length; i++) {
-        if (colorDatabase[i].Hexadecimal.toLowerCase() === normalizedHex) {
-            return colorDatabase[i].Color[0];
-        }
-    }
-    return null;
+    return colorKey && colorDatabase[colorKey] ? colorDatabase[colorKey][0] : null;
 }
 
 /**
@@ -15834,17 +4764,12 @@ function colorNames(input, locale) {
     var hex = resolveHex(input);
     if (!hex) return [];
 
-    var normalizedHex = hex.toLowerCase();
-    var localizedNames = getNameToColorLanguageColorNames(normalizedHex, locale);
+    var colorKey = normalizeColorPairKey(hex);
+    var localizedNames = getNameToColorLanguageColorNames(colorKey, locale);
     if (localizedNames && localizedNames.length > 0) {
         return localizedNames;
     }
-    for (var i = 0; i < colorDatabase.length; i++) {
-        if (colorDatabase[i].Hexadecimal.toLowerCase() === normalizedHex) {
-            return colorDatabase[i].Color.slice();
-        }
-    }
-    return [];
+    return colorKey && colorDatabase[colorKey] ? colorDatabase[colorKey].slice() : [];
 }
 
 /**
@@ -15870,10 +4795,12 @@ function closestName(input, locale) {
     if (exact !== null) return exact;
 
     // Find the nearest color in the chromatic circle
-    var nearest = findNearestColor(hex);
-    if (!nearest) return null;
-    var localizedNames = getNameToColorLanguageColorNames(nearest.Hexadecimal, locale);
-    return localizedNames && localizedNames.length > 0 ? localizedNames[0] : nearest.Color[0];
+    var nearestKey = findNearestColor(hex);
+    if (!nearestKey) return null;
+    var localizedNames = getNameToColorLanguageColorNames(nearestKey, locale);
+    return localizedNames && localizedNames.length > 0
+        ? localizedNames[0]
+        : colorDatabase[nearestKey][0];
 }
 
 /**
@@ -15899,10 +4826,12 @@ function closestNames(input, locale) {
     if (exact.length > 0) return exact;
 
     // Find the nearest color in the chromatic circle
-    var nearest = findNearestColor(hex);
-    if (!nearest) return [];
-    var localizedNames = getNameToColorLanguageColorNames(nearest.Hexadecimal, locale);
-    return localizedNames && localizedNames.length > 0 ? localizedNames : nearest.Color.slice();
+    var nearestKey = findNearestColor(hex);
+    if (!nearestKey) return [];
+    var localizedNames = getNameToColorLanguageColorNames(nearestKey, locale);
+    return localizedNames && localizedNames.length > 0
+        ? localizedNames
+        : colorDatabase[nearestKey].slice();
 }
 
 /**
@@ -15926,17 +4855,17 @@ function resolveHex(input) {
  * Finds the nearest color in the database by RGB Euclidean distance.
  *
  * @param {string} hex - Target color in #rrggbb format.
- * @returns {Object|null} The closest colorDatabase entry, or null.
+ * @returns {string|null} The closest hashless colorDatabase key, or null.
  * @private
  */
 function findNearestColor(hex) {
     var targetRgb = hexToRgb(hex);
-    var bestEntry = null;
+    var bestKey = null;
     var bestDistance = Infinity;
 
-    for (var i = 0; i < colorDatabase.length; i++) {
-        var entry = colorDatabase[i];
-        var entryHex = entry.Hexadecimal;
+    for (var i = 0; i < colorDatabaseKeys.length; i++) {
+        var colorKey = colorDatabaseKeys[i];
+        var entryHex = '#' + colorKey;
 
         // Skip if it is the exact same color (already checked by caller)
         if (entryHex.toLowerCase() === hex.toLowerCase()) continue;
@@ -15949,11 +4878,11 @@ function findNearestColor(hex) {
 
         if (distance < bestDistance) {
             bestDistance = distance;
-            bestEntry = entry;
+            bestKey = colorKey;
         }
     }
 
-    return bestEntry;
+    return bestKey;
 }
 
 /**
