@@ -29,12 +29,13 @@ The core `NameToColor.js` file remains English and dependency-free. Additional l
 <script src="https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.ptBR.js"></script>
 ```
 
-Loading the Brazilian Portuguese pack adds 139 common Portuguese named-color entries, localized modifiers, all 10 mood labels, and aliases for all 69 semantic themes. Proper names and untranslated database entries continue to fall back to their native English labels. English and Portuguese inputs work at the same time:
+Loading the Brazilian Portuguese pack adds 181 Portuguese named-color entries, including traditional, botanical, mineral, and everyday names, plus localized modifiers, all 10 mood labels, and aliases for all 69 semantic themes. Proper names and untranslated database entries continue to fall back to their native English labels. English and Portuguese inputs work at the same time:
 
 ```js
 generateColor("red");               // "#ff0000"
 generateColor("vermelho");          // "#ff0000"
 generateColor("azul mais escuro");  // Portuguese modifiers work
+generateColor("terracota");         // "#e2725b"
 
 generateThemePalette("Nature");     // English remains available
 generateThemePalette("natureza");   // Same curated Nature palette
@@ -45,6 +46,7 @@ mood("#4682B4", "pt-BR");   // ["Calmo", "Corporativo", "Sofisticado"]
 
 colorName("#ff0000");           // "Red"
 colorName("#ff0000", "pt-BR");  // "Vermelho"
+colorNames("#50c878", "pt-BR"); // ["Esmeralda"]
 ```
 
 Use `listNameToColorLanguages()` to inspect loaded languages:

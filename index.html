@@ -1544,8 +1544,9 @@
             <p>
                 The core <code>NameToColor.js</code> remains English. Data-only language files are loaded after it
                 to add translated color names, input keywords, theme aliases, and localized return labels.
-                The Brazilian Portuguese pack contains 139 common named-color entries, all 10 mood labels, and
-                aliases for all 69 themes. Native English and every loaded language remain available at the same time.
+                The Brazilian Portuguese pack contains 181 named-color entries, including traditional, botanical,
+                mineral, and everyday Portuguese names, all 10 mood labels, and aliases for all 69 themes. Native
+                English and every loaded language remain available at the same time.
             </p>
 
             <pre>&lt;<span class="keyword">script</span> <span class="keyword">src</span>=<span class="string">"NameToColor.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;
@@ -1555,6 +1556,9 @@
 generateColor(<span class="string">"vermelho"</span>);
 <span class="comment">// → both return "#ff0000"</span>
 
+generateColor(<span class="string">"terracota"</span>);
+<span class="comment">// → "#e2725b"</span>
+
 generateThemePalette(<span class="string">"natureza"</span>);
 <span class="comment">// → native Nature palette</span>
 
@@ -1562,7 +1566,10 @@ mood(<span class="string">"#4682B4"</span>, <span class="string">"pt-BR"</span>)
 <span class="comment">// → ["Calmo", "Corporativo", "Sofisticado"]</span>
 
 colorName(<span class="string">"#ff0000"</span>, <span class="string">"pt-BR"</span>);
-<span class="comment">// → "Vermelho"</span></pre>
+<span class="comment">// → "Vermelho"</span>
+
+colorNames(<span class="string">"#50c878"</span>, <span class="string">"pt-BR"</span>);
+<span class="comment">// → ["Esmeralda"]</span></pre>
 
             <p>
                 Omitting the optional locale preserves the original English output. If a translated color name is
