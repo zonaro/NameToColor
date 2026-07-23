@@ -14,7 +14,68 @@ Try all plugin features live — including the paginated color database browser 
 <script src="https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js"></script>
 ```
 
-After including the script, all functions become globally available in the browser — including `generateColor()`, `generateReadableColor()`, `listColors()`, color harmonies, color name lookup, and utility helpers.
+After including the script, all functions become globally available in the browser — including `generateColor()`, `generateReadableColor()`, `generateThemePalette()`, `listColors()`, color harmonies, color name lookup, and utility helpers.
+
+## Optional Language Packs
+
+The core `NameToColor.js` file remains English and dependency-free. Additional language files contain data only and are loaded immediately after the core:
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.ptBR.js"></script>
+```
+
+Loading the Brazilian Portuguese pack adds 139 common Portuguese named-color entries, localized modifiers, all 10 mood labels, and aliases for all 69 semantic themes. Proper names and untranslated database entries continue to fall back to their native English labels. English and Portuguese inputs work at the same time:
+
+```js
+generateColor("red");               // "#ff0000"
+generateColor("vermelho");          // "#ff0000"
+generateColor("azul mais escuro");  // Portuguese modifiers work
+
+generateThemePalette("Nature");     // English remains available
+generateThemePalette("natureza");   // Same curated Nature palette
+generateThemePalette("cafeteria");  // Coffee palette
+
+mood("#4682B4");            // ["Calm", "Corporate", "Sophisticated"]
+mood("#4682B4", "pt-BR");   // ["Calmo", "Corporativo", "Sofisticado"]
+
+colorName("#ff0000");           // "Red"
+colorName("#ff0000", "pt-BR");  // "Vermelho"
+```
+
+Use `listNameToColorLanguages()` to inspect loaded languages:
+
+```js
+listNameToColorLanguages();
+// [
+//   { locale: "en", name: "English", native: true },
+//   { locale: "pt-BR", name: "Português (Brasil)", native: false }
+// ]
+```
+
+Future language packs use the same data-only registration API:
+
+```js
+registerNameToColorLanguage({
+  locale: "example",
+  name: "Example language",
+  inputAliases: {
+    dark: ["translated dark"],
+    random: ["translated random"]
+  },
+  moodNames: {
+    Calm: "Translated Calm"
+  },
+  themeAliases: {
+    Nature: ["translated nature"]
+  },
+  colorNames: {
+    "#ff0000": ["Translated Red"]
+  }
+});
+```
+
+The locale parameter only changes returned labels. Omitting it preserves the original English output. If a requested translation is unavailable, name helpers fall back to the native English color name.
 
 ## Functions
 
@@ -80,37 +141,40 @@ Useful for building color browsers, pickers, or tables. The interactive test pag
 
 ## Color Name Lookup
 
-### `colorName(input)`
+### `colorName(input, locale?)`
 
-Returns the **first** color name from the internal database whose hex exactly matches the generated color for the input. Returns `null` if no exact match is found.
+Returns the **first** color name whose hex exactly matches the generated color for the input. The optional `locale` uses a loaded language pack for the returned label and falls back to English when that hex has no translation. Returns `null` if no exact match is found.
 
 ```js
 colorName("Absolute Zero"); // -> "Absolute Zero"
 colorName(1);               // -> "Absolute Zero"
 colorName("#0048BA");       // -> "Absolute Zero"
+colorName("#ff0000", "pt-BR"); // -> "Vermelho"
 colorName("unknown");       // -> null
 ```
 
-### `colorNames(input)`
+### `colorNames(input, locale?)`
 
 Returns **all** color names (synonyms) for the hex that matches the input. Unlike `colorName()`, this returns the full array for entries with multiple names.
 
 ```js
 colorNames("Aqua");          // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
 colorNames("#00FFFF");       // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
+colorNames("#00FFFF", "pt-BR"); // -> ["Ciano", "Água"]
 colorNames("unknown");       // -> []
 ```
 
-### `closestName(input)`
+### `closestName(input, locale?)`
 
-Like `colorName()`, but when there is no exact match, finds the **nearest color** by RGB Euclidean distance and returns its first name.
+Like `colorName()`, but when there is no exact match, finds the **nearest color** by RGB Euclidean distance and returns its first name, optionally localized.
 
 ```js
 closestName("#ff6348");      // -> "Tomato" (nearest match)
+closestName("#ff6348", "pt-BR"); // -> "Tomate"
 closestName("unknown");      // -> nearest color name in the database
 ```
 
-### `closestNames(input)`
+### `closestNames(input, locale?)`
 
 Like `colorNames()`, but with fuzzy fallback — finds the nearest color by RGB distance and returns all its names.
 
@@ -182,6 +246,62 @@ generateMonochrome("gold", 3);
 generateMonochrome("black", 5);
 // -> ["#cccccc", "#999999", "#666666", "#333333", "#000000"]
 ```
+
+### `generateThemePalette(theme, count?)`
+
+Generates a deterministic semantic palette for a native English or loaded translated theme, mood, industry, audience, material, place, season, or descriptive phrase.
+
+- Returns **5 colors** by default; `count` is clamped to an integer from **2 to 21**.
+- Returns lowercase `#rrggbb` strings.
+- Returns `[]` for `null`, `undefined`, or blank text.
+- Resolves canonical names, aliases, aliases inside phrases, and conservative spelling mistakes.
+- Unknown non-empty themes receive a deterministic analogous palette derived from the text.
+
+```js
+generateThemePalette("Nature");
+// -> ["#1b4332", "#2d6a4f", "#52b788", "#8d6e4f", "#f1faee"]
+
+generateThemePalette("water", 7);
+// -> 7 colors interpolated from the curated Water anchors
+
+generateThemePalette("cofee brand");
+generateThemePalette("café");
+generateThemePalette("espresso");
+// -> all resolve to the same Coffee palette
+
+generateThemePalette("industrial website");
+// -> Industry palette
+
+generateThemePalette("an entirely unknown subject");
+// -> deterministic fallback palette
+```
+
+#### Theme resolution
+
+Input is normalized by separating camelCase, removing accents and punctuation, converting to lowercase, and collapsing whitespace. Resolution then follows this order:
+
+1. Full canonical name or alias.
+2. Longest multi-word alias found in the phrase.
+3. Exact single-word alias.
+4. Conservative typo matching: one edit for 5–7 character words, or two edits for longer words.
+
+When a phrase contains multiple recognized themes, longer aliases win. Concrete themes have priority over moods, followed by the earliest occurrence. For example, `"corporate children"` resolves to `Children`.
+
+Known themes have five curated anchors ordered as a dark primary, primary, accent, soft support, and light background. Other sizes are sampled uniformly across those anchors in HSL using shortest-path hue interpolation.
+
+#### Built-in theme catalog
+
+The catalog contains **69 canonical groups**, each with three to six English aliases:
+
+| Category | Canonical themes |
+| --- | --- |
+| Moods | Vibrant, Futuristic, Fun, Soft Pastel, Calm, Vintage, Organic, Sophisticated, Dark, Corporate |
+| Nature and places | Nature, Forest, Water, Ocean, Beach, Mountain, Desert, Tropical, Floral, Earth, Sky, Sunset, Night, Space, Spring, Summer, Autumn, Winter |
+| Materials | Metal, Gold, Silver, Copper, Wood, Stone, Concrete, Glass |
+| Audiences and occasions | Children, Baby, Youth, Wedding, Romance, Celebration, Wellness, Luxury |
+| Industries and styles | Coffee, Food, Restaurant, Agriculture, Industry, Construction, Automotive, Technology, Gaming, Healthcare, Finance, Education, Science, Energy, Sustainability, Real Estate, Travel, Sports, Music, Fashion, Retail, Security, Beauty, Pets, Minimal |
+
+The existing mood classification rules remain unchanged: `mood(color, locale?)` classifies a color, while `generateThemePalette(theme)` generates colors from a semantic concept.
 
 ### `isReadableForBlindness(colorA, colorB, type)`
 
@@ -259,7 +379,10 @@ These helper functions are also exposed globally for fine-grained control:
 | `temperature(input)`                           | Returns the temperature level as a string: `VeryHot`, `Hot`, `Neutral Hot`, `Neutral`, `Neutral Cold`, `Cold`, or `VeryCold` |
 | `isHot(input)`                                 | Returns `true` if the generated color is warm/hot (delegates to `temperature()`)                                             |
 | `isCold(input)`                                | Returns `true` if the generated color is cold/cool (delegates to `temperature()`)                                            |
-| `mood(input)`                                  | Returns an array of mood/atmosphere names (in English) based on HSL rules, or `[]` if none match                             |
+| `mood(input, locale?)`                         | Returns mood/atmosphere names based on HSL rules, optionally translated by a loaded language pack                           |
+| `generateThemePalette(theme, count?)`          | Returns 2–21 deterministic semantic theme colors; defaults to 5                                                             |
+| `registerNameToColorLanguage(pack)`            | Registers a data-only optional language pack                                                                                |
+| `listNameToColorLanguages()`                   | Lists native English and every loaded optional language                                                                     |
 | `isReadableForBlindness(colorA, colorB, type)` | Checks color readability for protanopia, deuteranopia, tritanopia using Brettel/Vienot simulation + WCAG contrast            |
 
 ### Luminance & Light/Dark helpers
@@ -330,14 +453,15 @@ isCold("#1E90FF");// → true   (temperature("dodgerblue") → "Cold")
 > - `isCold(input)` → returns `true` when `temperature(input)` is `"VeryCold"`, `"Cold"`, or `"Neutral Cold"`
 > - When `temperature()` returns `"Neutral"`, both `isHot()` and `isCold()` return `false`.
 
-### `mood(input)` — Color Mood / Atmosphere Classification
+### `mood(input, locale?)` — Color Mood / Atmosphere Classification
 
-Returns an array of **mood** (atmosphere) names in English that best describe the generated color, based on mathematical rules in HSL space. If no mood matches (exact or by proximity), returns an empty array `[]`.
+Returns an array of **mood** (atmosphere) names that best describe the generated color, based on mathematical rules in HSL space. The optional `locale` translates returned labels through a loaded language pack; omitting it preserves English. If no mood matches (exact or by proximity), returns an empty array `[]`.
 
 ```js
 mood("#FF4500");        // ["Vibrant"]                        — OrangeRed
 mood("#0000FF");        // ["Futuristic"]                     — pure blue
 mood("#4682B4");        // ["Calm","Corporate","Sophisticated"] — Steel Blue
+mood("#4682B4", "pt-BR");// ["Calmo","Corporativo","Sofisticado"]
 mood("#1A1A1A");        // ["Corporate"]                      — near-black gray
 mood("#FFFFFF");        // ["Corporate"]                      — white (S &lt; 10)
 mood("invalid");        // []                                 — invalid
@@ -494,16 +618,17 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 2. Array (recursive)
 3. Number (array index, then deterministic fallback)
 4. Object (converted to string)
-5. Empty input
-6. `"random"`
-7. Valid CSS color
-8. HEX
-9. RGB
-10. RGBA
-11. Exact name match in database
-12. Contains name match in database
-13. Levenshtein fuzzy name match in database
-14. Deterministic hash
+5. Exact color names and input keywords from loaded language packs
+6. Empty input
+7. `"random"`
+8. Valid CSS color
+9. HEX
+10. RGB
+11. RGBA
+12. Exact English name match in database
+13. Contains English name match in database
+14. Levenshtein fuzzy English name match in database
+15. Deterministic hash
 
 ## Features
 
@@ -512,6 +637,8 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 - **Color name lookup**: `colorName()`, `colorNames()`, `closestName()`, `closestNames()` for finding color names from any input.
 - **Color harmonies**: `generateInvertedColor()`, `generateComplementary()`, `generateTriadic()`, `generateSquare()`, `generateSplitComplementary()` for color scheme exploration.
 - **Monochrome palettes**: `generateMonochrome()` creates harmonious single-hue palettes.
+- **Semantic theme palettes**: `generateThemePalette()` maps 69 curated themes and their aliases to deterministic, resizable palettes.
+- **Extensible language packs**: data-only scripts add translated color names, theme aliases, modifiers, and localized mood/name output without replacing English.
 - **Accepts multiple formats**: Arrays (recursive), objects (converted to string), HEX (`#rgb`, `#rrggbb`), RGB, RGBA, CSS color names, `"random"`, numeric indices, and HTML elements.
 - **Smart contrast**: `generateReadableColor` dynamically calculates the necessary blend ratio to guarantee **WCAG AA (4.5:1)**, resulting in text that is always readable and aesthetically harmonious.
 - **Pagination**: `listColors()` allows browsing the color database with page support.
@@ -534,6 +661,12 @@ The page header features a **Typed.js** animation that cycles through random tex
 This creates a live, evolving color preview that changes with every keystroke — demonstrating how `generateColor()` produces different colors for different text inputs, even partial strings.
 
 > **Note:** The Typed.js library (`typed.js@2.0.12`) is loaded from CDN and is only used on the demo page. It is **not** a dependency of the core `NameToColor.js` library.
+
+### Semantic Theme Palette Playground
+
+The semantic playground calls `generateThemePalette()` while you type, supports palette sizes from 2 to 21, and renders each returned HEX value as an accessible swatch. Its catalog table lists all 69 canonical themes plus loaded translated aliases.
+
+The main tester includes a locale selector for `mood()` and color-name output. The color browser also includes and searches names from loaded language packs, so terms such as `vermelho`, `água-marinha`, `saúde`, or `cafeteria` can be tested directly.
 
 ## License
 

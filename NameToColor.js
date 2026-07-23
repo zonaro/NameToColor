@@ -13640,6 +13640,323 @@ const colorDatabase = [
 ]
 
 /**
+ * Registered optional language packs. English remains native in this file;
+ * language scripts only provide data and call registerNameToColorLanguage().
+ * @private
+ */
+var nameToColorLanguageRegistry = {};
+var nameToColorLanguageRevision = 0;
+
+/**
+ * Normalizes a locale identifier for registry lookup.
+ * @param {*} locale
+ * @returns {string}
+ * @private
+ */
+function normalizeNameToColorLocale(locale) {
+    return String(locale || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+/**
+ * Normalizes translated labels and aliases while preserving word boundaries.
+ * @param {*} value
+ * @returns {string}
+ * @private
+ */
+function normalizeNameToColorLanguageText(value) {
+    var text = String(value || '');
+    text = text.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Z])([A-Z][a-z])/g, '$1 $2');
+    if (typeof text.normalize === 'function') {
+        text = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+    return text.toLowerCase()
+        .replace(/&/g, ' and ')
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim()
+        .replace(/\s+/g, ' ');
+}
+
+/**
+ * Registers a data-only language pack.
+ *
+ * A pack can provide translated color names, theme aliases, localized mood
+ * labels, and input keyword aliases. Registering a pack never removes the
+ * native English names, so all loaded languages work at the same time.
+ *
+ * @param {Object} pack - Language data.
+ * @param {string} pack.locale - BCP 47-style locale, such as "pt-BR".
+ * @param {string} [pack.name] - Human-readable language name.
+ * @param {Object<string,string[]>} [pack.colorNames] - HEX to translated names.
+ * @param {Object<string,string[]>} [pack.themeAliases] - Canonical English theme to aliases.
+ * @param {Object<string,string>} [pack.moodNames] - Canonical English mood to translated label.
+ * @param {Object<string,string[]>} [pack.inputAliases] - Canonical input keyword to aliases.
+ * @returns {boolean} True when the pack was registered.
+ *
+ * @example
+ * registerNameToColorLanguage({
+ *     locale: 'example',
+ *     name: 'Example language',
+ *     colorNames: { '#ff0000': ['Translated Red'] },
+ *     themeAliases: { Nature: ['Translated Nature'] },
+ *     moodNames: { Calm: 'Translated Calm' }
+ * });
+ */
+function registerNameToColorLanguage(pack) {
+    if (!pack || typeof pack !== 'object') {
+        return false;
+    }
+
+    var localeKey = normalizeNameToColorLocale(pack.locale);
+    if (!localeKey || localeKey === 'en') {
+        return false;
+    }
+
+    var registered = {
+        locale: String(pack.locale),
+        name: String(pack.name || pack.locale),
+        colorNamesByHex: {},
+        colorAliasRecords: [],
+        themeAliases: {},
+        moodNames: {},
+        inputAliasRecords: []
+    };
+
+    var colorNames = pack.colorNames && typeof pack.colorNames === 'object' ? pack.colorNames : {};
+    for (var hexKey in colorNames) {
+        if (!Object.prototype.hasOwnProperty.call(colorNames, hexKey)) {
+            continue;
+        }
+        var normalizedHex = normalizeHex(hexKey);
+        var names = Array.isArray(colorNames[hexKey]) ? colorNames[hexKey] : [colorNames[hexKey]];
+        if (!normalizedHex) {
+            continue;
+        }
+
+        var cleanNames = [];
+        var seenColorNames = {};
+        for (var nameIndex = 0; nameIndex < names.length; nameIndex++) {
+            var displayName = String(names[nameIndex] || '').trim();
+            var normalizedName = normalizeNameToColorLanguageText(displayName);
+            if (!displayName || !normalizedName || seenColorNames[normalizedName]) {
+                continue;
+            }
+            seenColorNames[normalizedName] = true;
+            cleanNames.push(displayName);
+            registered.colorAliasRecords.push({ alias: normalizedName, hex: normalizedHex });
+        }
+        if (cleanNames.length > 0) {
+            registered.colorNamesByHex[normalizedHex] = cleanNames;
+        }
+    }
+
+    var themeAliases = pack.themeAliases && typeof pack.themeAliases === 'object' ? pack.themeAliases : {};
+    for (var canonicalTheme in themeAliases) {
+        if (!Object.prototype.hasOwnProperty.call(themeAliases, canonicalTheme)) {
+            continue;
+        }
+        var themeValues = Array.isArray(themeAliases[canonicalTheme])
+            ? themeAliases[canonicalTheme]
+            : [themeAliases[canonicalTheme]];
+        var cleanThemeAliases = [];
+        var seenThemeAliases = {};
+        for (var themeAliasIndex = 0; themeAliasIndex < themeValues.length; themeAliasIndex++) {
+            var themeAlias = String(themeValues[themeAliasIndex] || '').trim();
+            var normalizedThemeAlias = normalizeNameToColorLanguageText(themeAlias);
+            if (!themeAlias || !normalizedThemeAlias || seenThemeAliases[normalizedThemeAlias]) {
+                continue;
+            }
+            seenThemeAliases[normalizedThemeAlias] = true;
+            cleanThemeAliases.push(themeAlias);
+        }
+        if (cleanThemeAliases.length > 0) {
+            registered.themeAliases[canonicalTheme] = cleanThemeAliases;
+        }
+    }
+
+    var moodNames = pack.moodNames && typeof pack.moodNames === 'object' ? pack.moodNames : {};
+    for (var canonicalMood in moodNames) {
+        if (Object.prototype.hasOwnProperty.call(moodNames, canonicalMood)) {
+            var translatedMood = String(moodNames[canonicalMood] || '').trim();
+            if (translatedMood) {
+                registered.moodNames[canonicalMood] = translatedMood;
+            }
+        }
+    }
+
+    var inputAliases = pack.inputAliases && typeof pack.inputAliases === 'object' ? pack.inputAliases : {};
+    for (var canonicalInput in inputAliases) {
+        if (!Object.prototype.hasOwnProperty.call(inputAliases, canonicalInput)) {
+            continue;
+        }
+        var inputValues = Array.isArray(inputAliases[canonicalInput])
+            ? inputAliases[canonicalInput]
+            : [inputAliases[canonicalInput]];
+        for (var inputAliasIndex = 0; inputAliasIndex < inputValues.length; inputAliasIndex++) {
+            var normalizedInputAlias = normalizeNameToColorLanguageText(inputValues[inputAliasIndex]);
+            if (normalizedInputAlias) {
+                registered.inputAliasRecords.push({
+                    alias: normalizedInputAlias,
+                    words: normalizedInputAlias.split(' '),
+                    canonical: String(canonicalInput).toLowerCase()
+                });
+            }
+        }
+    }
+    registered.inputAliasRecords.sort(function (a, b) {
+        return b.words.length - a.words.length || b.alias.length - a.alias.length;
+    });
+
+    nameToColorLanguageRegistry[localeKey] = registered;
+    nameToColorLanguageRevision++;
+    return true;
+}
+
+/**
+ * Lists loaded optional language packs. Native English is always first.
+ * @returns {{locale:string,name:string,native:boolean}[]}
+ */
+function listNameToColorLanguages() {
+    var languages = [{ locale: 'en', name: 'English', native: true }];
+    for (var localeKey in nameToColorLanguageRegistry) {
+        if (Object.prototype.hasOwnProperty.call(nameToColorLanguageRegistry, localeKey)) {
+            var pack = nameToColorLanguageRegistry[localeKey];
+            languages.push({ locale: pack.locale, name: pack.name, native: false });
+        }
+    }
+    return languages;
+}
+
+/**
+ * Finds an exact translated color name in any loaded language.
+ * @param {*} value
+ * @returns {string|null}
+ * @private
+ */
+function resolveNameToColorLanguageColor(value) {
+    var normalized = normalizeNameToColorLanguageText(value);
+    if (!normalized) return null;
+
+    for (var localeKey in nameToColorLanguageRegistry) {
+        if (!Object.prototype.hasOwnProperty.call(nameToColorLanguageRegistry, localeKey)) {
+            continue;
+        }
+        var records = nameToColorLanguageRegistry[localeKey].colorAliasRecords;
+        for (var recordIndex = 0; recordIndex < records.length; recordIndex++) {
+            if (records[recordIndex].alias === normalized) {
+                return records[recordIndex].hex;
+            }
+        }
+    }
+    return null;
+}
+
+/**
+ * Replaces translated modifier and special-keyword aliases with their native
+ * English canonical forms. Unmatched text is returned unchanged.
+ * @param {string} value
+ * @returns {string}
+ * @private
+ */
+function translateNameToColorLanguageInput(value) {
+    var normalized = normalizeNameToColorLanguageText(value);
+    if (!normalized) return value;
+
+    var tokens = normalized.split(' ');
+    var translated = [];
+    var changed = false;
+    var position = 0;
+
+    while (position < tokens.length) {
+        var best = null;
+        for (var localeKey in nameToColorLanguageRegistry) {
+            if (!Object.prototype.hasOwnProperty.call(nameToColorLanguageRegistry, localeKey)) {
+                continue;
+            }
+            var records = nameToColorLanguageRegistry[localeKey].inputAliasRecords;
+            for (var recordIndex = 0; recordIndex < records.length; recordIndex++) {
+                var record = records[recordIndex];
+                if (record.words.length > tokens.length - position) {
+                    continue;
+                }
+                var matches = true;
+                for (var wordIndex = 0; wordIndex < record.words.length; wordIndex++) {
+                    if (tokens[position + wordIndex] !== record.words[wordIndex]) {
+                        matches = false;
+                        break;
+                    }
+                }
+                if (matches && (!best || record.words.length > best.words.length)) {
+                    best = record;
+                }
+            }
+        }
+
+        if (best) {
+            translated.push(best.canonical);
+            position += best.words.length;
+            changed = true;
+        } else {
+            translated.push(tokens[position]);
+            position++;
+        }
+    }
+
+    return changed ? translated.join(' ') : value;
+}
+
+/**
+ * Returns translated color names for a hex and locale, or null.
+ * @param {string} hex
+ * @param {*} locale
+ * @returns {string[]|null}
+ * @private
+ */
+function getNameToColorLanguageColorNames(hex, locale) {
+    var localeKey = normalizeNameToColorLocale(locale);
+    var pack = nameToColorLanguageRegistry[localeKey];
+    if (!pack) return null;
+    var names = pack.colorNamesByHex[String(hex || '').toLowerCase()];
+    return names ? names.slice() : null;
+}
+
+/**
+ * Translates canonical mood labels for an explicitly requested locale.
+ * @param {string[]} moods
+ * @param {*} locale
+ * @returns {string[]}
+ * @private
+ */
+function localizeNameToColorMoods(moods, locale) {
+    var localeKey = normalizeNameToColorLocale(locale);
+    var pack = nameToColorLanguageRegistry[localeKey];
+    if (!pack) return moods;
+    return moods.map(function (moodName) {
+        return pack.moodNames[moodName] || moodName;
+    });
+}
+
+/**
+ * Returns registered translated aliases grouped by canonical English theme.
+ * @returns {{canonical:string,aliases:string[]}[]}
+ * @private
+ */
+function getNameToColorLanguageThemeAliases() {
+    var groups = [];
+    for (var localeKey in nameToColorLanguageRegistry) {
+        if (!Object.prototype.hasOwnProperty.call(nameToColorLanguageRegistry, localeKey)) {
+            continue;
+        }
+        var themeAliases = nameToColorLanguageRegistry[localeKey].themeAliases;
+        for (var canonical in themeAliases) {
+            if (Object.prototype.hasOwnProperty.call(themeAliases, canonical)) {
+                groups.push({ canonical: canonical, aliases: themeAliases[canonical].slice() });
+            }
+        }
+    }
+    return groups;
+}
+
+/**
  * Generates a hexadecimal color from various input types.
  * @param {string|number|Array|Object|HTMLElement} input - The input to generate the color from.
  * @returns {string|string[]} - The hexadecimal color code, or an array of codes if input is an array.
@@ -13699,6 +14016,17 @@ function generateColor(input) {
 
     // separate PascalCase and camelCase words with spaces
     normalizedText = normalizedText.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Z])([A-Z][a-z])/g, '$1 $2').toLowerCase();
+
+    // Optional language packs add exact translated color names without
+    // replacing or mutating the native English database.
+    var localizedColor = resolveNameToColorLanguageColor(normalizedText);
+    if (localizedColor) {
+        return localizedColor;
+    }
+
+    // Translate data-provided modifier and special keyword aliases to the
+    // native English tokens used by the existing processing pipeline.
+    normalizedText = translateNameToColorLanguageInput(normalizedText);
 
     // if blank or"random" keyword
     if (normalizedText === '' || normalizedText === 'random') {
@@ -14327,7 +14655,8 @@ function hslToHex(h, s, l) {
  * | Corporate     | Low-saturation blue, or pure grays (professional, business-like)         |
  *
  * @param {*} input - Any value accepted by generateColor().
- * @returns {string[]} Array of mood names in English, or empty array if no mood matches.
+ * @param {string} [locale] - Optional loaded locale for returned mood labels.
+ * @returns {string[]} Array of mood names, or empty array if no mood matches.
  *
  * @example
  * mood('#FF4500');        // ["Vibrant"]               — OrangeRed
@@ -14337,7 +14666,7 @@ function hslToHex(h, s, l) {
  * mood('#FFFFFF');        // ["Corporate"]              — white (S &lt; 10)
  * mood('invalid color');  // []
  */
-function mood(input) {
+function mood(input, locale) {
     // ── 1. Generate normalized hex color ──
     var hex = normalizeHex(generateColor(input));
     if (!hex) {
@@ -14506,7 +14835,7 @@ function mood(input) {
         }
     }
 
-    return moods;
+    return localizeNameToColorMoods(moods, locale);
 }
 
 /**
@@ -14552,6 +14881,452 @@ function dimensionScore(value, ranges) {
     var sigma = nearestWidth / 2;
     return Math.exp(-(minDist * minDist) / (2 * sigma * sigma));
 }
+
+/**
+ * Generates a semantic color palette for a theme, industry, audience,
+ * material, place, season, or mood.
+ *
+ * Known themes use five curated anchor colors. Aliases, multi-word phrases,
+ * common spelling variations, and conservative typo matching resolve to the
+ * same canonical palette. Unknown non-empty themes receive a deterministic
+ * analogous palette derived from the text.
+ *
+ * @param {string} theme - Native English or loaded translated theme name, alias, or phrase.
+ * @param {number} [count=5] - Number of colors (minimum 2, maximum 21).
+ * @returns {string[]} Array of lowercase colors in #rrggbb format.
+ *
+ * @example
+ * generateThemePalette('Nature');
+ * // -> ["#1b4332", "#2d6a4f", "#52b788", "#b7e4c7", "#f1faee"]
+ *
+ * @example
+ * generateThemePalette('cofee brand', 3);
+ * // Resolves the Coffee theme despite the typo.
+ */
+var generateThemePalette = (function () {
+    var catalog = [
+        // Moods
+        { name: 'Vibrant', category: 'mood', priority: 1, aliases: ['bold', 'vivid', 'energetic', 'intense'], colors: ['#9d0208', '#e85d04', '#ffba08', '#52b788', '#f3e9ff'] },
+        { name: 'Futuristic', category: 'mood', priority: 1, aliases: ['future', 'cyber', 'sci fi', 'science fiction', 'neon'], colors: ['#0b1026', '#0066ff', '#00f5ff', '#7a00ff', '#e9f7ff'] },
+        { name: 'Fun', category: 'mood', priority: 1, aliases: ['playful', 'cheerful', 'joyful', 'happy'], colors: ['#d90429', '#ff6b6b', '#ffd93d', '#6bcb77', '#e9dcff'] },
+        { name: 'Soft Pastel', category: 'mood', priority: 1, aliases: ['pastel', 'gentle', 'delicate', 'soft colors'], colors: ['#9f86c0', '#ffc8dd', '#fde2b8', '#d9f2d9', '#f7fbff'] },
+        { name: 'Calm', category: 'mood', priority: 1, aliases: ['peaceful', 'serene', 'tranquil', 'relaxing'], colors: ['#264653', '#2a9d8f', '#8ecae6', '#cdeae5', '#f1f7f6'] },
+        { name: 'Vintage', category: 'mood', priority: 1, aliases: ['retro', 'nostalgic', 'heritage', 'old fashioned'], colors: ['#4f3829', '#8a5a44', '#c49a6c', '#b5a581', '#f0e4d0'] },
+        { name: 'Organic', category: 'mood', priority: 1, aliases: ['earthy style', 'raw', 'handmade', 'organic design'], colors: ['#344e41', '#588157', '#a3b18a', '#9c6644', '#dad7cd'] },
+        { name: 'Sophisticated', category: 'mood', priority: 1, aliases: ['elegant', 'refined', 'premium', 'distinguished'], colors: ['#111827', '#312e81', '#6d214f', '#9c7c38', '#e5e7eb'] },
+        { name: 'Dark', category: 'mood', priority: 1, aliases: ['moody', 'shadow', 'noir', 'low light'], colors: ['#050505', '#161a1d', '#252422', '#403d39', '#b8aaa4'] },
+        { name: 'Corporate', category: 'mood', priority: 1, aliases: ['business', 'professional', 'enterprise', 'office'], colors: ['#0b1f33', '#1f4e79', '#4f81bd', '#a9b7c6', '#f4f6f8'] },
+
+        // Nature and places
+        { name: 'Nature', category: 'nature', priority: 2, aliases: ['outdoors', 'wilderness', 'ecology', 'natural world', 'wildlife'], colors: ['#1b4332', '#2d6a4f', '#52b788', '#8d6e4f', '#f1faee'] },
+        { name: 'Forest', category: 'nature', priority: 2, aliases: ['woods', 'woodland', 'grove', 'pine forest', 'green forest'], colors: ['#0b2e20', '#174d32', '#2f6b3c', '#668f54', '#e3edcf'] },
+        { name: 'Water', category: 'nature', priority: 2, aliases: ['aquatic', 'freshwater', 'river', 'lake', 'rain'], colors: ['#0b4f6c', '#01a7c2', '#5bc0eb', '#a9def9', '#e0fbfc'] },
+        { name: 'Ocean', category: 'nature', priority: 2, aliases: ['sea', 'marine', 'nautical', 'deep sea', 'oceanic'], colors: ['#001f3f', '#003f5c', '#0077b6', '#00b4d8', '#caf0f8'] },
+        { name: 'Beach', category: 'nature', priority: 2, aliases: ['coast', 'coastal', 'seaside', 'shore', 'sand beach'], colors: ['#075985', '#0ea5e9', '#f4d6a0', '#e07a5f', '#fff7df'] },
+        { name: 'Mountain', category: 'nature', priority: 2, aliases: ['alpine', 'summit', 'hiking', 'highlands', 'mountains'], colors: ['#263238', '#455a64', '#78909c', '#8aa17b', '#e4e9ec'] },
+        { name: 'Desert', category: 'nature', priority: 2, aliases: ['arid', 'dunes', 'sandstorm', 'sahara', 'drylands'], colors: ['#7f5539', '#b08968', '#d4a373', '#ddb892', '#f5ebe0'] },
+        { name: 'Tropical', category: 'nature', priority: 2, aliases: ['tropics', 'rainforest', 'island', 'exotic', 'tropical paradise'], colors: ['#006d77', '#2a9d8f', '#80b918', '#ffb703', '#fff1c1'] },
+        { name: 'Floral', category: 'nature', priority: 2, aliases: ['flower', 'flowers', 'blossom', 'bouquet', 'botanical'], colors: ['#7b2cbf', '#c77dff', '#ff8fab', '#ffc2d1', '#fff0f3'] },
+        { name: 'Earth', category: 'nature', priority: 2, aliases: ['soil', 'ground', 'clay', 'terracotta', 'earth tones'], colors: ['#5c3d2e', '#8b5e3c', '#a98467', '#adc178', '#f0ead2'] },
+        { name: 'Sky', category: 'nature', priority: 2, aliases: ['clouds', 'daylight', 'blue sky', 'open air', 'heavens'], colors: ['#1d4ed8', '#38bdf8', '#7dd3fc', '#bae6fd', '#f0f9ff'] },
+        { name: 'Sunset', category: 'nature', priority: 2, aliases: ['dusk', 'twilight', 'golden hour', 'evening sky', 'sundown'], colors: ['#5f0f40', '#9a031e', '#fb8b24', '#ffb703', '#ffd6a5'] },
+        { name: 'Night', category: 'nature', priority: 2, aliases: ['midnight', 'moonlight', 'nocturnal', 'nighttime', 'night sky'], colors: ['#050816', '#11183b', '#243b6b', '#4c5c96', '#dbe4ff'] },
+        { name: 'Space', category: 'nature', priority: 2, aliases: ['cosmos', 'galaxy', 'universe', 'astronomy', 'outer space'], colors: ['#030014', '#14052e', '#3c096c', '#7b2cbf', '#bde0fe'] },
+        { name: 'Spring', category: 'nature', priority: 2, aliases: ['springtime', 'vernal', 'spring season', 'new bloom'], colors: ['#386641', '#6a994e', '#a7c957', '#ffafcc', '#f2f7df'] },
+        { name: 'Summer', category: 'nature', priority: 2, aliases: ['summertime', 'sunny season', 'sunshine', 'summer season'], colors: ['#0077b6', '#00b4d8', '#ffd60a', '#ff9500', '#fff3bf'] },
+        { name: 'Autumn', category: 'nature', priority: 2, aliases: ['fall', 'harvest', 'foliage', 'autumn season', 'fall season'], colors: ['#6f1d1b', '#bb3e03', '#ca6702', '#ee9b00', '#f5deb3'] },
+        { name: 'Winter', category: 'nature', priority: 2, aliases: ['snow', 'ice', 'frost', 'wintertime', 'winter season'], colors: ['#0b3c5d', '#328cc1', '#8ecae6', '#d9edf7', '#f8fbff'] },
+
+        // Materials
+        { name: 'Metal', category: 'material', priority: 2, aliases: ['metallic', 'alloy', 'chrome', 'metalwork', 'polished metal'], colors: ['#1f2933', '#52606d', '#7b8794', '#a7b0ba', '#e7edf3'] },
+        { name: 'Gold', category: 'material', priority: 2, aliases: ['golden', 'gilded', 'gold metal', 'gold leaf'], colors: ['#5c4100', '#996515', '#d4af37', '#f2cf63', '#fff1a8'] },
+        { name: 'Silver', category: 'material', priority: 2, aliases: ['sterling', 'silver metal', 'silverware', 'silvery'], colors: ['#3f4650', '#707984', '#a7afb8', '#d5d9dd', '#f3f4f6'] },
+        { name: 'Copper', category: 'material', priority: 2, aliases: ['bronze', 'brass', 'copper metal', 'coppery'], colors: ['#5d2f1a', '#8f4e2c', '#b87333', '#d99a6c', '#f0c2a2'] },
+        { name: 'Wood', category: 'material', priority: 2, aliases: ['wooden', 'timber', 'lumber', 'wood grain', 'hardwood'], colors: ['#3e2723', '#6d4c41', '#8d6e63', '#bc8f6f', '#ead7c5'] },
+        { name: 'Stone', category: 'material', priority: 2, aliases: ['rock', 'marble', 'granite', 'slate', 'natural stone'], colors: ['#3f3f46', '#6b6b68', '#92928d', '#b8b8b0', '#e5e5df'] },
+        { name: 'Concrete', category: 'material', priority: 2, aliases: ['cement', 'urban concrete', 'masonry', 'raw concrete'], colors: ['#35383b', '#5d6165', '#85898d', '#b0b3b5', '#e4e5e6'] },
+        { name: 'Glass', category: 'material', priority: 2, aliases: ['crystal', 'transparent glass', 'glassware', 'frosted glass'], colors: ['#0e7490', '#22d3ee', '#67e8f9', '#a5f3fc', '#ecfeff'] },
+
+        // Audiences and occasions
+        { name: 'Children', category: 'audience', priority: 2, aliases: ['child', 'kid', 'kids', 'toddler', 'childhood'], colors: ['#c1121f', '#ff595e', '#ffca3a', '#8ac926', '#e5f4ff'] },
+        { name: 'Baby', category: 'audience', priority: 2, aliases: ['infant', 'newborn', 'nursery', 'babies', 'maternity'], colors: ['#8e7dbe', '#a2d2ff', '#cdb4db', '#ffc8dd', '#fff1e6'] },
+        { name: 'Youth', category: 'audience', priority: 2, aliases: ['teen', 'teenager', 'young people', 'young audience', 'generation z'], colors: ['#6a00f4', '#ff006e', '#fb5607', '#3a86ff', '#fff0c2'] },
+        { name: 'Wedding', category: 'occasion', priority: 2, aliases: ['bridal', 'bride', 'marriage', 'wedding ceremony', 'nuptial'], colors: ['#4a3f35', '#9f7e52', '#c9a96e', '#eadbc8', '#fffdf9'] },
+        { name: 'Romance', category: 'occasion', priority: 2, aliases: ['romantic', 'love', 'valentine', 'affection', 'date night'], colors: ['#590d22', '#a4133c', '#ff4d6d', '#ff8fa3', '#fff0f3'] },
+        { name: 'Celebration', category: 'occasion', priority: 2, aliases: ['party', 'festive', 'birthday', 'festival', 'celebrate'], colors: ['#7209b7', '#f72585', '#ffbe0b', '#06d6a0', '#e9faff'] },
+        { name: 'Wellness', category: 'audience', priority: 2, aliases: ['spa', 'meditation', 'yoga', 'mindfulness', 'self care'], colors: ['#355070', '#6d597a', '#84a59d', '#b8c0a8', '#f1eadc'] },
+        { name: 'Luxury', category: 'audience', priority: 2, aliases: ['deluxe', 'opulent', 'exclusive', 'high end', 'prestige'], colors: ['#0b0b0c', '#2b1b3f', '#6f4e7c', '#c9a227', '#f4e4b3'] },
+
+        // Industries and styles
+        { name: 'Coffee', category: 'industry', priority: 2, aliases: ['cofee', 'cafe', 'café', 'espresso', 'cappuccino', 'barista'], colors: ['#2c1810', '#4b2e20', '#6f4e37', '#a67b5b', '#efe2d2'] },
+        { name: 'Food', category: 'industry', priority: 2, aliases: ['culinary', 'cuisine', 'groceries', 'meal', 'food brand'], colors: ['#9b2226', '#d62828', '#f77f00', '#80b918', '#fefae0'] },
+        { name: 'Restaurant', category: 'industry', priority: 2, aliases: ['dining', 'bistro', 'diner', 'eatery', 'restaurant brand'], colors: ['#4a0e0e', '#8c1c13', '#bf4342', '#c9a96e', '#f2efe9'] },
+        { name: 'Agriculture', category: 'industry', priority: 2, aliases: ['farm', 'farming', 'crops', 'agricultural', 'agribusiness'], colors: ['#31572c', '#4f772d', '#90a955', '#8b5a2b', '#ecf39e'] },
+        { name: 'Industry', category: 'industry', priority: 2, aliases: ['industrial', 'factory', 'manufacturing', 'production', 'heavy industry'], colors: ['#1f2937', '#374151', '#6b7280', '#f59e0b', '#e5e7eb'] },
+        { name: 'Construction', category: 'industry', priority: 2, aliases: ['building', 'contractor', 'architecture', 'infrastructure', 'civil engineering'], colors: ['#252525', '#595959', '#f4a261', '#e9c46a', '#eceff1'] },
+        { name: 'Automotive', category: 'industry', priority: 2, aliases: ['car', 'cars', 'vehicle', 'motor', 'racing'], colors: ['#111827', '#374151', '#dc2626', '#f59e0b', '#e2e8f0'] },
+        { name: 'Technology', category: 'industry', priority: 2, aliases: ['tech', 'digital', 'software', 'startup', 'innovation'], colors: ['#0f172a', '#1d4ed8', '#06b6d4', '#8b5cf6', '#e0f2fe'] },
+        { name: 'Gaming', category: 'industry', priority: 2, aliases: ['game', 'gamer', 'esports', 'video game', 'arcade'], colors: ['#09090b', '#581c87', '#7c3aed', '#22d3ee', '#e8ffc2'] },
+        { name: 'Healthcare', category: 'industry', priority: 2, aliases: ['health', 'medical', 'hospital', 'clinic', 'medicine'], colors: ['#115e59', '#0f766e', '#14b8a6', '#5eead4', '#f0fdfa'] },
+        { name: 'Finance', category: 'industry', priority: 2, aliases: ['financial', 'banking', 'bank', 'fintech', 'investment'], colors: ['#0b1f33', '#123b5d', '#1f7a5a', '#a3b18a', '#edf2ed'] },
+        { name: 'Education', category: 'industry', priority: 2, aliases: ['school', 'learning', 'academic', 'university', 'teaching'], colors: ['#1d3557', '#457b9d', '#e9c46a', '#f4a261', '#f1faee'] },
+        { name: 'Science', category: 'industry', priority: 2, aliases: ['scientific', 'laboratory', 'research', 'physics', 'chemistry'], colors: ['#172554', '#1e40af', '#0891b2', '#22c55e', '#e0f2fe'] },
+        { name: 'Energy', category: 'industry', priority: 2, aliases: ['power', 'electric', 'electricity', 'utility', 'solar power'], colors: ['#7c2d12', '#ea580c', '#facc15', '#84cc16', '#e0f2fe'] },
+        { name: 'Sustainability', category: 'industry', priority: 2, aliases: ['sustainable', 'renewable', 'green energy', 'climate friendly', 'eco friendly'], colors: ['#1b4332', '#2d6a4f', '#52b788', '#95d5b2', '#e8f7ee'] },
+        { name: 'Real Estate', category: 'industry', priority: 2, aliases: ['property', 'housing', 'realtor', 'realty', 'home sales'], colors: ['#243447', '#3c6e71', '#c49a6c', '#d9c5b2', '#f4f1de'] },
+        { name: 'Travel', category: 'industry', priority: 2, aliases: ['tourism', 'vacation', 'journey', 'adventure', 'destination'], colors: ['#023e8a', '#0096c7', '#00b4d8', '#ffb703', '#fff1c1'] },
+        { name: 'Sports', category: 'industry', priority: 2, aliases: ['sport', 'fitness', 'athletic', 'training', 'competition'], colors: ['#0f172a', '#dc2626', '#f97316', '#22c55e', '#f8fafc'] },
+        { name: 'Music', category: 'industry', priority: 2, aliases: ['audio', 'sound', 'concert', 'band', 'musical'], colors: ['#120024', '#3a0ca3', '#7209b7', '#f72585', '#dff8ff'] },
+        { name: 'Fashion', category: 'industry', priority: 2, aliases: ['clothing', 'apparel', 'couture', 'wardrobe', 'garment'], colors: ['#18181b', '#7f1d1d', '#be185d', '#d4af37', '#fafafa'] },
+        { name: 'Retail', category: 'industry', priority: 2, aliases: ['shopping', 'store', 'commerce', 'ecommerce', 'marketplace'], colors: ['#1e3a8a', '#2563eb', '#f97316', '#facc15', '#f8fafc'] },
+        { name: 'Security', category: 'industry', priority: 2, aliases: ['safety', 'protection', 'cybersecurity', 'secure', 'defense'], colors: ['#0a0f1c', '#16324f', '#2563eb', '#22d3ee', '#dce5f0'] },
+        { name: 'Beauty', category: 'industry', priority: 2, aliases: ['cosmetics', 'makeup', 'skincare', 'salon', 'aesthetic'], colors: ['#6d214f', '#c44569', '#e88eac', '#f7cad0', '#fff1e6'] },
+        { name: 'Pets', category: 'industry', priority: 2, aliases: ['pet', 'dog', 'cat', 'companion animals', 'veterinary'], colors: ['#6b4f3a', '#c58c6d', '#84a59d', '#f6bd60', '#f7ede2'] },
+        { name: 'Minimal', category: 'style', priority: 1, aliases: ['minimalist', 'clean design', 'simple', 'neutral design', 'essential'], colors: ['#111111', '#666666', '#b3b3b3', '#e5e5e5', '#fafafa'] }
+    ];
+
+    var stopWords = {
+        a: true, an: true, and: true, app: true, brand: true, branding: true,
+        color: true, colors: true, design: true, for: true, in: true, of: true,
+        palette: true, site: true, style: true, the: true, theme: true, to: true,
+        web: true, website: true, with: true
+    };
+
+    function normalizeThemeText(value) {
+        var text = String(value);
+        text = text.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Z])([A-Z][a-z])/g, '$1 $2');
+        if (typeof text.normalize === 'function') {
+            text = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        }
+        return text.toLowerCase()
+            .replace(/&/g, ' and ')
+            .replace(/[^a-z0-9]+/g, ' ')
+            .trim()
+            .replace(/\s+/g, ' ');
+    }
+
+    function buildAliasRecords() {
+        var records = [];
+        var recordKeys = {};
+        for (var themeIndex = 0; themeIndex < catalog.length; themeIndex++) {
+            var definition = catalog[themeIndex];
+            var values = [definition.name].concat(definition.aliases);
+            var seen = {};
+            for (var aliasIndex = 0; aliasIndex < values.length; aliasIndex++) {
+                var alias = normalizeThemeText(values[aliasIndex]);
+                if (!alias || seen[alias]) {
+                    continue;
+                }
+                seen[alias] = true;
+                recordKeys[themeIndex + '|' + alias] = true;
+                records.push({
+                    themeIndex: themeIndex,
+                    alias: alias,
+                    words: alias.split(' '),
+                    priority: definition.priority,
+                    order: records.length
+                });
+            }
+        }
+
+        var languageGroups = getNameToColorLanguageThemeAliases();
+        for (var groupIndex = 0; groupIndex < languageGroups.length; groupIndex++) {
+            var group = languageGroups[groupIndex];
+            var localizedThemeIndex = -1;
+            var normalizedCanonical = normalizeThemeText(group.canonical);
+            for (var catalogIndex = 0; catalogIndex < catalog.length; catalogIndex++) {
+                if (normalizeThemeText(catalog[catalogIndex].name) === normalizedCanonical) {
+                    localizedThemeIndex = catalogIndex;
+                    break;
+                }
+            }
+            if (localizedThemeIndex === -1) {
+                continue;
+            }
+
+            for (var localizedAliasIndex = 0; localizedAliasIndex < group.aliases.length; localizedAliasIndex++) {
+                var localizedAlias = normalizeThemeText(group.aliases[localizedAliasIndex]);
+                var recordKey = localizedThemeIndex + '|' + localizedAlias;
+                if (!localizedAlias || recordKeys[recordKey]) {
+                    continue;
+                }
+                recordKeys[recordKey] = true;
+                records.push({
+                    themeIndex: localizedThemeIndex,
+                    alias: localizedAlias,
+                    words: localizedAlias.split(' '),
+                    priority: catalog[localizedThemeIndex].priority,
+                    order: records.length
+                });
+            }
+        }
+        return records;
+    }
+
+    var aliasRecords = buildAliasRecords();
+    var aliasLanguageRevision = nameToColorLanguageRevision;
+
+    function findSequence(tokens, sequence) {
+        if (sequence.length > tokens.length) {
+            return -1;
+        }
+        for (var start = 0; start <= tokens.length - sequence.length; start++) {
+            var matches = true;
+            for (var offset = 0; offset < sequence.length; offset++) {
+                if (tokens[start + offset] !== sequence[offset]) {
+                    matches = false;
+                    break;
+                }
+            }
+            if (matches) {
+                return start;
+            }
+        }
+        return -1;
+    }
+
+    function isBetterMatch(candidate, current) {
+        if (!current) return true;
+        if (candidate.wordCount !== current.wordCount) return candidate.wordCount > current.wordCount;
+        if (candidate.priority !== current.priority) return candidate.priority > current.priority;
+        if (candidate.position !== current.position) return candidate.position < current.position;
+        return candidate.order < current.order;
+    }
+
+    function wordDistance(a, b) {
+        var previous = [];
+        var current = [];
+        for (var j = 0; j <= b.length; j++) {
+            previous[j] = j;
+        }
+        for (var i = 1; i <= a.length; i++) {
+            current[0] = i;
+            for (var j = 1; j <= b.length; j++) {
+                current[j] = Math.min(
+                    current[j - 1] + 1,
+                    previous[j] + 1,
+                    previous[j - 1] + (a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1)
+                );
+            }
+            var swap = previous;
+            previous = current;
+            current = swap;
+        }
+        return previous[b.length];
+    }
+
+    function resolveTheme(normalized) {
+        var tokens = normalized.split(' ');
+        var best = null;
+
+        // Full canonical name or alias.
+        for (var i = 0; i < aliasRecords.length; i++) {
+            var fullRecord = aliasRecords[i];
+            if (fullRecord.alias === normalized) {
+                var fullCandidate = {
+                    themeIndex: fullRecord.themeIndex,
+                    wordCount: fullRecord.words.length,
+                    priority: fullRecord.priority,
+                    position: 0,
+                    order: fullRecord.order
+                };
+                if (isBetterMatch(fullCandidate, best)) {
+                    best = fullCandidate;
+                }
+            }
+        }
+        if (best) {
+            return catalog[best.themeIndex];
+        }
+
+        // Multi-word aliases inside a descriptive phrase.
+        for (var i = 0; i < aliasRecords.length; i++) {
+            var phraseRecord = aliasRecords[i];
+            if (phraseRecord.words.length < 2) {
+                continue;
+            }
+            var phrasePosition = findSequence(tokens, phraseRecord.words);
+            if (phrasePosition !== -1) {
+                var phraseCandidate = {
+                    themeIndex: phraseRecord.themeIndex,
+                    wordCount: phraseRecord.words.length,
+                    priority: phraseRecord.priority,
+                    position: phrasePosition,
+                    order: phraseRecord.order
+                };
+                if (isBetterMatch(phraseCandidate, best)) {
+                    best = phraseCandidate;
+                }
+            }
+        }
+        if (best) {
+            return catalog[best.themeIndex];
+        }
+
+        // Exact single-word aliases.
+        for (var i = 0; i < aliasRecords.length; i++) {
+            var wordRecord = aliasRecords[i];
+            if (wordRecord.words.length !== 1) {
+                continue;
+            }
+            var wordPosition = tokens.indexOf(wordRecord.alias);
+            if (wordPosition !== -1) {
+                var wordCandidate = {
+                    themeIndex: wordRecord.themeIndex,
+                    wordCount: 1,
+                    priority: wordRecord.priority,
+                    position: wordPosition,
+                    order: wordRecord.order
+                };
+                if (isBetterMatch(wordCandidate, best)) {
+                    best = wordCandidate;
+                }
+            }
+        }
+        if (best) {
+            return catalog[best.themeIndex];
+        }
+
+        // Conservative typo matching for meaningful words only.
+        var fuzzyBest = null;
+        for (var tokenIndex = 0; tokenIndex < tokens.length; tokenIndex++) {
+            var token = tokens[tokenIndex];
+            if (token.length < 5 || stopWords[token]) {
+                continue;
+            }
+            var threshold = token.length >= 8 ? 2 : 1;
+            for (var i = 0; i < aliasRecords.length; i++) {
+                var fuzzyRecord = aliasRecords[i];
+                if (fuzzyRecord.words.length !== 1 || Math.abs(fuzzyRecord.alias.length - token.length) > threshold) {
+                    continue;
+                }
+                var distance = wordDistance(token, fuzzyRecord.alias);
+                if (distance > threshold) {
+                    continue;
+                }
+                var fuzzyCandidate = {
+                    themeIndex: fuzzyRecord.themeIndex,
+                    distance: distance,
+                    priority: fuzzyRecord.priority,
+                    position: tokenIndex,
+                    order: fuzzyRecord.order
+                };
+                if (!fuzzyBest ||
+                    fuzzyCandidate.distance < fuzzyBest.distance ||
+                    (fuzzyCandidate.distance === fuzzyBest.distance && fuzzyCandidate.priority > fuzzyBest.priority) ||
+                    (fuzzyCandidate.distance === fuzzyBest.distance && fuzzyCandidate.priority === fuzzyBest.priority && fuzzyCandidate.position < fuzzyBest.position) ||
+                    (fuzzyCandidate.distance === fuzzyBest.distance && fuzzyCandidate.priority === fuzzyBest.priority && fuzzyCandidate.position === fuzzyBest.position && fuzzyCandidate.order < fuzzyBest.order)) {
+                    fuzzyBest = fuzzyCandidate;
+                }
+            }
+        }
+        return fuzzyBest ? catalog[fuzzyBest.themeIndex] : null;
+    }
+
+    function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+    }
+
+    function deterministicHexFromText(text) {
+        var hash = 0;
+        for (var i = 0; i < text.length; i++) {
+            hash = text.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        var color = '#';
+        for (var channel = 0; channel < 3; channel++) {
+            color += ((hash >> (channel * 8)) & 0xff).toString(16).padStart(2, '0');
+        }
+        return color;
+    }
+
+    function fallbackAnchors(theme, normalized) {
+        var generated = null;
+        var normalizedTokens = normalized.split(' ');
+        var usesRandomModifier = false;
+        for (var tokenIndex = 0; tokenIndex < normalizedTokens.length; tokenIndex++) {
+            if (normalizedTokens[tokenIndex].indexOf('random') === 0) {
+                usesRandomModifier = true;
+                break;
+            }
+        }
+        if (!usesRandomModifier) {
+            try {
+                generated = normalizeHex(generateColor(theme));
+            } catch (_) { }
+        }
+        if (!generated) {
+            generated = deterministicHexFromText(normalized);
+        }
+
+        var base = hexToHsl(generated);
+        var hueOffsets = [-30, -15, 0, 15, 30];
+        var saturationOffsets = [10, 5, 0, -5, -10];
+        var lightness = [30, 45, 60, 72, 86];
+        var anchors = [];
+        for (var i = 0; i < hueOffsets.length; i++) {
+            anchors.push(hslToHex(
+                base.h + hueOffsets[i],
+                clamp(base.s + saturationOffsets[i], 20, 85),
+                lightness[i]
+            ));
+        }
+        return anchors;
+    }
+
+    function interpolateHue(start, end, ratio) {
+        var delta = ((end - start + 540) % 360) - 180;
+        return start + delta * ratio;
+    }
+
+    function resampleAnchors(anchors, count) {
+        if (count === anchors.length) {
+            return anchors.slice();
+        }
+
+        var palette = [];
+        var finalPosition = anchors.length - 1;
+        for (var i = 0; i < count; i++) {
+            var position = count === 1 ? 0 : i * finalPosition / (count - 1);
+            var lowerIndex = Math.floor(position);
+            var upperIndex = Math.min(finalPosition, Math.ceil(position));
+            if (lowerIndex === upperIndex) {
+                palette.push(anchors[lowerIndex]);
+                continue;
+            }
+
+            var ratio = position - lowerIndex;
+            var lower = hexToHsl(anchors[lowerIndex]);
+            var upper = hexToHsl(anchors[upperIndex]);
+            palette.push(hslToHex(
+                interpolateHue(lower.h, upper.h, ratio),
+                lower.s + (upper.s - lower.s) * ratio,
+                lower.l + (upper.l - lower.l) * ratio
+            ));
+        }
+        return palette;
+    }
+
+    return function (theme, count) {
+        if (theme === null || typeof theme === 'undefined') {
+            return [];
+        }
+
+        if (aliasLanguageRevision !== nameToColorLanguageRevision) {
+            aliasRecords = buildAliasRecords();
+            aliasLanguageRevision = nameToColorLanguageRevision;
+        }
+
+        var normalized = normalizeThemeText(theme);
+        if (!normalized) {
+            return [];
+        }
+
+        count = Math.max(2, Math.min(21, Math.floor(Number(count)) || 5));
+        var definition = resolveTheme(normalized);
+        var anchors = definition ? definition.colors : fallbackAnchors(theme, normalized);
+        return resampleAnchors(anchors, count);
+    };
+}());
 
 /**
  * Generates the inverted color (negative) of an input.
@@ -15014,6 +15789,7 @@ function listColors(pageNumber, pageSize) {
  * returns the first one. If no exact match is found, returns null.
  *
  * @param {*} input - Any value accepted by generateColor().
+ * @param {string} [locale] - Optional loaded locale for the returned name.
  * @returns {string|null} The first color name, or null if not found.
  *
  * @example
@@ -15022,11 +15798,15 @@ function listColors(pageNumber, pageSize) {
  * colorName("#0048BA");       // -> "Absolute Zero"
  * colorName("unknown");       // -> null
  */
-function colorName(input) {
+function colorName(input, locale) {
     var hex = resolveHex(input);
     if (!hex) return null;
 
     var normalizedHex = hex.toLowerCase();
+    var localizedNames = getNameToColorLanguageColorNames(normalizedHex, locale);
+    if (localizedNames && localizedNames.length > 0) {
+        return localizedNames[0];
+    }
     for (var i = 0; i < colorDatabase.length; i++) {
         if (colorDatabase[i].Hexadecimal.toLowerCase() === normalizedHex) {
             return colorDatabase[i].Color[0];
@@ -15042,6 +15822,7 @@ function colorName(input) {
  * returns an empty array.
  *
  * @param {*} input - Any value accepted by generateColor().
+ * @param {string} [locale] - Optional loaded locale for the returned names.
  * @returns {string[]} Array of color names, or empty array if not found.
  *
  * @example
@@ -15049,11 +15830,15 @@ function colorName(input) {
  * colorNames("#00FFFF");  // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
  * colorNames("unknown");  // -> []
  */
-function colorNames(input) {
+function colorNames(input, locale) {
     var hex = resolveHex(input);
     if (!hex) return [];
 
     var normalizedHex = hex.toLowerCase();
+    var localizedNames = getNameToColorLanguageColorNames(normalizedHex, locale);
+    if (localizedNames && localizedNames.length > 0) {
+        return localizedNames;
+    }
     for (var i = 0; i < colorDatabase.length; i++) {
         if (colorDatabase[i].Hexadecimal.toLowerCase() === normalizedHex) {
             return colorDatabase[i].Color.slice();
@@ -15069,23 +15854,26 @@ function colorNames(input) {
  * Euclidean distance) and returns its first name.
  *
  * @param {*} input - Any value accepted by generateColor().
+ * @param {string} [locale] - Optional loaded locale for the returned name.
  * @returns {string|null} The first name of the nearest color, or null if database is empty.
  *
  * @example
  * closestName("#ff6348"); // -> "Tomato" (slightly different red, nearest match)
  * closestName("unknown"); // -> nearest color name in the database
  */
-function closestName(input) {
+function closestName(input, locale) {
     var hex = resolveHex(input);
     if (!hex) return null;
 
     // Try exact match first
-    var exact = colorName(input);
+    var exact = colorName(input, locale);
     if (exact !== null) return exact;
 
     // Find the nearest color in the chromatic circle
     var nearest = findNearestColor(hex);
-    return nearest ? nearest.Color[0] : null;
+    if (!nearest) return null;
+    var localizedNames = getNameToColorLanguageColorNames(nearest.Hexadecimal, locale);
+    return localizedNames && localizedNames.length > 0 ? localizedNames[0] : nearest.Color[0];
 }
 
 /**
@@ -15095,23 +15883,26 @@ function closestName(input) {
  * (by RGB Euclidean distance) and returns all its names.
  *
  * @param {*} input - Any value accepted by generateColor().
+ * @param {string} [locale] - Optional loaded locale for the returned names.
  * @returns {string[]} Array of names of the nearest color, or empty array if database is empty.
  *
  * @example
  * closestNames("#ff6348"); // -> ["Tomato"] (nearest match)
  * closestNames("unknown"); // -> names of the nearest color
  */
-function closestNames(input) {
+function closestNames(input, locale) {
     var hex = resolveHex(input);
     if (!hex) return [];
 
     // Try exact match first
-    var exact = colorNames(input);
+    var exact = colorNames(input, locale);
     if (exact.length > 0) return exact;
 
     // Find the nearest color in the chromatic circle
     var nearest = findNearestColor(hex);
-    return nearest ? nearest.Color.slice() : [];
+    if (!nearest) return [];
+    var localizedNames = getNameToColorLanguageColorNames(nearest.Hexadecimal, locale);
+    return localizedNames && localizedNames.length > 0 ? localizedNames : nearest.Color.slice();
 }
 
 /**

@@ -10,9 +10,9 @@
          ═══════════════════════════════════════════ -->
     <title>NameToColor — Convert Text to Hex Color | JavaScript Library</title>
     <meta name="description"
-        content="NameToColor is a zero-dependency JavaScript library that converts text, IDs, HEX, RGB, RGBA, arrays, objects, and color names to hexadecimal. Features WCAG AA contrast calculation, 2000+ named colors with exact, contains and fuzzy matching, and deterministic hash-based color generation. Interactive API tester included.">
+        content="NameToColor is a multilingual, zero-dependency JavaScript library that converts text and translated color names to hexadecimal, generates semantic palettes for 69 curated themes, and provides WCAG AA contrast and color harmonies.">
     <meta name="keywords"
-        content="color converter,hex color,javascript library,color name to hex,text to color,WCAG contrast,accessibility,color picker,css color,generate color,readable color,named colors,color database">
+        content="color converter,hex color,javascript library,multilingual color names,portuguese color names,language pack,color name to hex,text to color,semantic color palette,theme palette generator,mood colors,WCAG contrast">
     <meta name="author" content="zonaro">
     <meta name="application-name" content="NameToColor">
     <meta name="generator" content="NameToColor">
@@ -52,7 +52,7 @@
            ═══════════════════════════════════════════ -->
     <meta property="og:title" content="NameToColor — Convert Text to Colors | JavaScript Library">
     <meta property="og:description"
-        content="Zero-dependency JavaScript library that converts text, IDs, HEX, RGB, RGBA, and CSS color names to hexadecimal. Features WCAG AA contrast, 1000+ named colors, and deterministic hash-based generation.">
+        content="Multilingual, zero-dependency JavaScript library for translated color names, 69 curated semantic theme palettes, WCAG AA contrast, color harmonies, and 2000+ native names.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://zonaro.github.io/NameToColor/">
     <meta property="og:site_name" content="NameToColor">
@@ -64,7 +64,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="NameToColor — Convert Text to Colors | JavaScript Library">
     <meta name="twitter:description"
-        content="Zero-dependency JavaScript library that converts text, IDs, HEX, RGB, RGBA, and CSS color names to hexadecimal. WCAG AA contrast, 1000+ named colors.">
+        content="Generate colors from English or Portuguese names and semantic themes with optional data-only language packs and zero dependencies.">
 
     <!-- ═══════════════════════════════════════════
            PWA / Mobile / Theme
@@ -85,7 +85,7 @@
             "@type": "WebApplication",
             "name": "NameToColor",
             "url": "https://zonaro.github.io/NameToColor/",
-            "description": "JavaScript library that converts text, IDs, HEX, RGB, RGBA, and color names to hexadecimal colors. Features WCAG AA contrast calculation, 1000+ named colors, deterministic hash-based color generation, and fuzzy name matching.",
+            "description": "Multilingual JavaScript library that converts English and translated color names to hexadecimal, generates deterministic semantic palettes for 69 curated themes, and supports optional data-only language packs.",
             "applicationCategory": "UtilityApplication",
             "operatingSystem": "All (browser-based)",
             "browserRequirements": "Requires JavaScript",
@@ -101,7 +101,7 @@
             },
             "softwareVersion": "1.0",
             "license": "https://github.com/zonaro/NameToColor/blob/main/LICENSE",
-            "keywords": "color converter, hex, javascript, WCAG, CSS, named colors"
+            "keywords": "color converter, hex, javascript, multilingual color names, Portuguese color names, language packs, semantic color palette, theme palette generator, mood colors, WCAG"
         }
     </script>
 
@@ -270,6 +270,30 @@
 
         .input-row input::placeholder {
             color: #b5aa9c;
+        }
+
+        .locale-row {
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .locale-row label {
+            margin: 0;
+        }
+
+        .locale-row select {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            font-size: 0.9rem;
+            color: var(--text);
+            background: #ffffff;
+            outline: none;
+        }
+
+        .locale-row select:focus {
+            border-color: var(--focus);
+            box-shadow: 0 0 0 3px rgba(163, 101, 42, 0.12);
         }
 
         .input-hint {
@@ -793,6 +817,111 @@
             transform: scale(1.05);
         }
 
+        /* ─── Semantic theme palette ─── */
+        .theme-controls fieldset {
+            display: grid;
+            grid-template-columns: minmax(180px, 1fr) minmax(120px, 180px);
+            gap: 12px;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        .theme-control {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .theme-control input {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            font-size: 1rem;
+            color: var(--text);
+            background: #ffffff;
+            outline: none;
+        }
+
+        .theme-control input:focus {
+            border-color: var(--focus);
+            box-shadow: 0 0 0 3px rgba(163, 101, 42, 0.12);
+        }
+
+        .theme-palette {
+            display: flex;
+            gap: 6px;
+            margin: 14px 0 0;
+            padding: 0;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .theme-palette-status {
+            display: block;
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .theme-swatch {
+            flex: 1;
+            min-width: 86px;
+            min-height: 82px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: var(--radius-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .theme-swatch code {
+            color: inherit;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .theme-swatch small {
+            opacity: 0.75;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .theme-catalog-search {
+            margin: 24px 0 10px;
+        }
+
+        .theme-catalog-search input {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            color: var(--text);
+            background: #ffffff;
+            outline: none;
+        }
+
+        .theme-catalog-search input:focus {
+            border-color: var(--focus);
+            box-shadow: 0 0 0 3px rgba(163, 101, 42, 0.12);
+        }
+
+        #theme-catalog-table tbody tr[hidden] {
+            display: none;
+        }
+
+        @media (max-width: 620px) {
+            .theme-controls fieldset {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ─── Search bar ─── */
         .search-row {
             display: flex;
@@ -1001,8 +1130,8 @@
             <h2>Yeah, any text just like <kbd class="typed1">Green</kbd> or <kbd class="typed2">Blue</kbd></h2>
             <p>
                 Interactive plugin tester — converts text, IDs, HEX, RGB, RGBA,
-                arrays, objects, and color names to hexadecimal. Results update
-                automatically as you type.
+                arrays, objects, and English or Portuguese color names to hexadecimal.
+                Results update automatically as you type.
             </p>
 
         </section>
@@ -1020,9 +1149,18 @@
                     <input id="value-input" type="text" placeholder="e.g.: Lucas, #00ff7f, rgb(255,0,0), 42, tomato"
                         spellcheck="false">
                 </div>
+                <div class="input-row locale-row">
+                    <label for="locale-select">Returned color names and moods</label>
+                    <select id="locale-select">
+                        <option value="en">English (native)</option>
+                        <option value="pt-BR">Português (Brasil)</option>
+                    </select>
+                </div>
                 <div class="input-hint">
                     💡 Try: <kbd>random</kbd> ·
                     <kbd>tomato</kbd> ·
+                    <kbd>vermelho</kbd> ·
+                    <kbd>azul mais escuro</kbd> ·
                     <kbd>#ff00aa</kbd> ·
                     <kbd>rgb(100,200,50)</kbd> · <kbd>1</kbd> ·
                     <kbd>spanish sky</kbd>
@@ -1119,6 +1257,135 @@
             </div>
         </section>
 
+        <!-- ═══════════ SEMANTIC THEME PALETTE PLAYGROUND ═══════════ -->
+        <section class="card" id="theme-palette-section" aria-labelledby="theme-palette-title">
+            <header class="card-header">
+                <h2 id="theme-palette-title">Semantic Theme Palette</h2>
+                <span class="badge">generateThemePalette</span>
+            </header>
+
+            <p class="input-hint" style="margin-top:-8px">
+                Enter an English or Portuguese mood, place, material, audience, industry, or descriptive phrase.
+                The loaded language pack adds aliases without disabling native English.
+            </p>
+
+            <form id="theme-palette-form" class="theme-controls" autocomplete="off">
+                <fieldset>
+                    <legend>Palette settings</legend>
+                    <label class="theme-control" for="theme-palette-input">
+                        Theme or phrase
+                        <input id="theme-palette-input" type="search" value="Coffee" spellcheck="false"
+                            placeholder="Nature, natureza, water, água, corporate, corporativo">
+                    </label>
+                    <label class="theme-control" for="theme-palette-count">
+                        Number of colors
+                        <input id="theme-palette-count" type="number" min="2" max="21" value="5"
+                            inputmode="numeric">
+                    </label>
+                </fieldset>
+            </form>
+
+            <output id="theme-palette-output" class="theme-palette-status" aria-live="polite"
+                for="theme-palette-input theme-palette-count">Five colors generated for Coffee.</output>
+            <ul id="theme-palette-results" class="theme-palette" aria-label="Generated semantic theme palette">
+            </ul>
+
+            <label class="theme-control theme-catalog-search" for="theme-catalog-search">
+                Search the 69 built-in canonical themes and aliases
+                <input id="theme-catalog-search" type="search" spellcheck="false"
+                    placeholder="Try coffee, water, medical, metallic, or kids">
+            </label>
+
+            <div class="color-table-wrap">
+                <table id="theme-catalog-table">
+                    <caption>Canonical semantic themes with native English and loaded translated aliases</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Category</th>
+                            <th scope="col">Canonical theme</th>
+                            <th scope="col">English aliases</th>
+                            <th scope="col">Loaded translated aliases</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Mood</td><th scope="row">Vibrant</th><td>bold, vivid, energetic, intense</td></tr>
+                        <tr><td>Mood</td><th scope="row">Futuristic</th><td>future, cyber, sci-fi, science fiction, neon</td></tr>
+                        <tr><td>Mood</td><th scope="row">Fun</th><td>playful, cheerful, joyful, happy</td></tr>
+                        <tr><td>Mood</td><th scope="row">Soft Pastel</th><td>pastel, gentle, delicate, soft colors</td></tr>
+                        <tr><td>Mood</td><th scope="row">Calm</th><td>peaceful, serene, tranquil, relaxing</td></tr>
+                        <tr><td>Mood</td><th scope="row">Vintage</th><td>retro, nostalgic, heritage, old-fashioned</td></tr>
+                        <tr><td>Mood</td><th scope="row">Organic</th><td>earthy style, raw, handmade, organic design</td></tr>
+                        <tr><td>Mood</td><th scope="row">Sophisticated</th><td>elegant, refined, premium, distinguished</td></tr>
+                        <tr><td>Mood</td><th scope="row">Dark</th><td>moody, shadow, noir, low light</td></tr>
+                        <tr><td>Mood</td><th scope="row">Corporate</th><td>business, professional, enterprise, office</td></tr>
+
+                        <tr><td>Nature and places</td><th scope="row">Nature</th><td>outdoors, wilderness, ecology, natural world, wildlife</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Forest</th><td>woods, woodland, grove, pine forest, green forest</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Water</th><td>aquatic, freshwater, river, lake, rain</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Ocean</th><td>sea, marine, nautical, deep sea, oceanic</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Beach</th><td>coast, coastal, seaside, shore, sand beach</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Mountain</th><td>alpine, summit, hiking, highlands, mountains</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Desert</th><td>arid, dunes, sandstorm, Sahara, drylands</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Tropical</th><td>tropics, rainforest, island, exotic, tropical paradise</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Floral</th><td>flower, flowers, blossom, bouquet, botanical</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Earth</th><td>soil, ground, clay, terracotta, earth tones</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Sky</th><td>clouds, daylight, blue sky, open air, heavens</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Sunset</th><td>dusk, twilight, golden hour, evening sky, sundown</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Night</th><td>midnight, moonlight, nocturnal, nighttime, night sky</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Space</th><td>cosmos, galaxy, universe, astronomy, outer space</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Spring</th><td>springtime, vernal, spring season, new bloom</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Summer</th><td>summertime, sunny season, sunshine, summer season</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Autumn</th><td>fall, harvest, foliage, autumn season, fall season</td></tr>
+                        <tr><td>Nature and places</td><th scope="row">Winter</th><td>snow, ice, frost, wintertime, winter season</td></tr>
+
+                        <tr><td>Material</td><th scope="row">Metal</th><td>metallic, alloy, chrome, metalwork, polished metal</td></tr>
+                        <tr><td>Material</td><th scope="row">Gold</th><td>golden, gilded, gold metal, gold leaf</td></tr>
+                        <tr><td>Material</td><th scope="row">Silver</th><td>sterling, silver metal, silverware, silvery</td></tr>
+                        <tr><td>Material</td><th scope="row">Copper</th><td>bronze, brass, copper metal, coppery</td></tr>
+                        <tr><td>Material</td><th scope="row">Wood</th><td>wooden, timber, lumber, wood grain, hardwood</td></tr>
+                        <tr><td>Material</td><th scope="row">Stone</th><td>rock, marble, granite, slate, natural stone</td></tr>
+                        <tr><td>Material</td><th scope="row">Concrete</th><td>cement, urban concrete, masonry, raw concrete</td></tr>
+                        <tr><td>Material</td><th scope="row">Glass</th><td>crystal, transparent glass, glassware, frosted glass</td></tr>
+
+                        <tr><td>Audience and occasion</td><th scope="row">Children</th><td>child, kid, kids, toddler, childhood</td></tr>
+                        <tr><td>Audience and occasion</td><th scope="row">Baby</th><td>infant, newborn, nursery, babies, maternity</td></tr>
+                        <tr><td>Audience and occasion</td><th scope="row">Youth</th><td>teen, teenager, young people, young audience, generation Z</td></tr>
+                        <tr><td>Audience and occasion</td><th scope="row">Wedding</th><td>bridal, bride, marriage, wedding ceremony, nuptial</td></tr>
+                        <tr><td>Audience and occasion</td><th scope="row">Romance</th><td>romantic, love, Valentine, affection, date night</td></tr>
+                        <tr><td>Audience and occasion</td><th scope="row">Celebration</th><td>party, festive, birthday, festival, celebrate</td></tr>
+                        <tr><td>Audience and occasion</td><th scope="row">Wellness</th><td>spa, meditation, yoga, mindfulness, self care</td></tr>
+                        <tr><td>Audience and occasion</td><th scope="row">Luxury</th><td>deluxe, opulent, exclusive, high end, prestige</td></tr>
+
+                        <tr><td>Industry and style</td><th scope="row">Coffee</th><td>cofee, café, cafe, espresso, cappuccino, barista</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Food</th><td>culinary, cuisine, groceries, meal, food brand</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Restaurant</th><td>dining, bistro, diner, eatery, restaurant brand</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Agriculture</th><td>farm, farming, crops, agricultural, agribusiness</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Industry</th><td>industrial, factory, manufacturing, production, heavy industry</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Construction</th><td>building, contractor, architecture, infrastructure, civil engineering</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Automotive</th><td>car, cars, vehicle, motor, racing</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Technology</th><td>tech, digital, software, startup, innovation</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Gaming</th><td>game, gamer, esports, video game, arcade</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Healthcare</th><td>health, medical, hospital, clinic, medicine</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Finance</th><td>financial, banking, bank, fintech, investment</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Education</th><td>school, learning, academic, university, teaching</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Science</th><td>scientific, laboratory, research, physics, chemistry</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Energy</th><td>power, electric, electricity, utility, solar power</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Sustainability</th><td>sustainable, renewable, green energy, climate friendly, eco friendly</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Real Estate</th><td>property, housing, realtor, realty, home sales</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Travel</th><td>tourism, vacation, journey, adventure, destination</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Sports</th><td>sport, fitness, athletic, training, competition</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Music</th><td>audio, sound, concert, band, musical</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Fashion</th><td>clothing, apparel, couture, wardrobe, garment</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Retail</th><td>shopping, store, commerce, ecommerce, marketplace</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Security</th><td>safety, protection, cybersecurity, secure, defense</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Beauty</th><td>cosmetics, makeup, skincare, salon, aesthetic</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Pets</th><td>pet, dog, cat, companion animals, veterinary</td></tr>
+                        <tr><td>Industry and style</td><th scope="row">Minimal</th><td>minimalist, clean design, simple, neutral design, essential</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         <!-- ═══════════ CVD ACCESSIBILITY PLAYGROUND ═══════════ -->
         <section class="card" id="cvd-section">
             <div class="card-header">
@@ -1170,7 +1437,8 @@
 
             <!-- Search bar -->
             <div class="search-row">
-                <input id="color-search" type="text" placeholder="🔍 Search colors by name…" spellcheck="false">
+                <input id="color-search" type="text" placeholder="🔍 Search English or loaded translated color names…"
+                    spellcheck="false">
                 <button class="search-clear" id="search-clear-btn" title="Clear search">✕</button>
                 <span class="search-match-count" id="search-match-count"></span>
             </div>
@@ -1203,6 +1471,36 @@
                 Welcome! Here you'll find everything you need to use
                 <strong>NameToColor</strong> in your projects. All functions are
                 exposed globally after including the script — no imports needed.
+            </p>
+
+            <h3 id="language-packs">Optional Language Packs</h3>
+            <p>
+                The core <code>NameToColor.js</code> remains English. Data-only language files are loaded after it
+                to add translated color names, input keywords, theme aliases, and localized return labels.
+                The Brazilian Portuguese pack contains 139 common named-color entries, all 10 mood labels, and
+                aliases for all 69 themes. Native English and every loaded language remain available at the same time.
+            </p>
+
+            <pre>&lt;<span class="keyword">script</span> <span class="keyword">src</span>=<span class="string">"NameToColor.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;
+&lt;<span class="keyword">script</span> <span class="keyword">src</span>=<span class="string">"NameToColor.ptBR.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;</pre>
+
+            <pre>generateColor(<span class="string">"red"</span>);
+generateColor(<span class="string">"vermelho"</span>);
+<span class="comment">// → both return "#ff0000"</span>
+
+generateThemePalette(<span class="string">"natureza"</span>);
+<span class="comment">// → native Nature palette</span>
+
+mood(<span class="string">"#4682B4"</span>, <span class="string">"pt-BR"</span>);
+<span class="comment">// → ["Calmo", "Corporativo", "Sofisticado"]</span>
+
+colorName(<span class="string">"#ff0000"</span>, <span class="string">"pt-BR"</span>);
+<span class="comment">// → "Vermelho"</span></pre>
+
+            <p>
+                Omitting the optional locale preserves the original English output. If a translated color name is
+                unavailable, name lookup falls back to English. Use <code>listNameToColorLanguages()</code> to list
+                loaded packs and <code>registerNameToColorLanguage(pack)</code> to add future data-only languages.
             </p>
 
             <!-- ─── generateColor ─── -->
@@ -1625,6 +1923,66 @@ generateMonochrome(<span class="string">"gold"</span>, <span class="number">3</s
 generateMonochrome(<span class="string">"black"</span>, <span class="number">5</span>);
 <span class="comment">// → ["#cccccc", "#999999", "#666666", "#333333", "#000000"]</span></pre>
 
+            <!-- ─── generateThemePalette ─── -->
+            <h3 id="function-generateThemePalette" data-api-function="generateThemePalette">
+                <code>generateThemePalette(theme, count?)</code>
+            </h3>
+            <div class="func-signature"
+                aria-label="Function signature: generateThemePalette(theme, count) returns Array of strings">
+                generateThemePalette(<span class="param">theme</span>, <span class="param">count?</span>) → <span
+                    class="param">String[]</span>
+            </div>
+            <p>
+                Generates a deterministic semantic palette for a native English or loaded translated mood, place,
+                material, audience, industry, season, or descriptive phrase. The function returns five lowercase
+                <code>#rrggbb</code> colors by default; <code>count</code> is clamped from 2 to 21.
+                Blank input returns <code>[]</code>.
+            </p>
+
+            <h4>Resolution order</h4>
+            <ol>
+                <li>Full canonical name or alias after case, accent, punctuation, whitespace, and camelCase
+                    normalization.</li>
+                <li>The longest recognized multi-word alias inside the phrase.</li>
+                <li>An exact single-word alias.</li>
+                <li>Conservative typo matching: one edit for 5–7 character words and two edits for longer words.</li>
+            </ol>
+            <p>
+                Concrete subjects outrank moods when a phrase contains equally specific matches.
+                Unknown non-empty text receives a deterministic analogous palette rather than an error.
+                Known themes use five curated anchors and other sizes are interpolated in HSL using the
+                shortest path around the hue wheel.
+            </p>
+
+            <h4>Examples</h4>
+            <pre><span class="comment">// Canonical theme</span>
+generateThemePalette(<span class="string">"Nature"</span>);
+<span class="comment">// → ["#1b4332", "#2d6a4f", "#52b788", "#8d6e4f", "#f1faee"]</span>
+
+<span class="comment">// Custom size</span>
+generateThemePalette(<span class="string">"water"</span>, <span class="number">7</span>);
+<span class="comment">// → seven colors sampled from the curated Water anchors</span>
+
+<span class="comment">// Aliases and typo tolerance resolve to the same palette</span>
+generateThemePalette(<span class="string">"café"</span>);
+generateThemePalette(<span class="string">"cofee brand"</span>);
+generateThemePalette(<span class="string">"espresso"</span>);
+<span class="comment">// → Coffee palette</span>
+
+<span class="comment">// Recognized alias inside a descriptive phrase</span>
+generateThemePalette(<span class="string">"industrial website"</span>);
+<span class="comment">// → Industry palette</span>
+
+<span class="comment">// Unknown themes are still deterministic</span>
+generateThemePalette(<span class="string">"an entirely unknown subject"</span>);
+<span class="comment">// → analogous fallback palette</span></pre>
+
+            <div class="note">
+                <strong>Direction matters:</strong> <code>mood(color)</code> classifies a color into one or more
+                moods. <code>generateThemePalette(theme)</code> performs the inverse kind of task by generating
+                colors from a semantic concept. The existing <code>mood()</code> rules remain unchanged.
+            </div>
+
             <!-- ─── isReadableForBlindness ─── -->
             <h3 id="function-isReadableForBlindness" data-api-function="isReadableForBlindness"><span
                     aria-hidden="true">🦾</span> <code>isReadableForBlindness(colorA, colorB, type)</code></h3>
@@ -1837,29 +2195,34 @@ isReadableForBlindness(<span class="string">"tomato"</span>, <span class="string
                             <code>temperature()</code>)</td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>mood(input)</code></td>
-                        <td>Returns an array of mood/atmosphere names (in English) based on HSL color rules, or
+                        <td class="mono"><code>mood(input, locale?)</code></td>
+                        <td>Returns mood/atmosphere names based on HSL color rules, optionally translated, or
                             <code>[]</code> if none match
                         </td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>colorName(input)</code></td>
+                        <td class="mono"><code>generateThemePalette(theme, count?)</code></td>
+                        <td>Returns 2–21 deterministic semantic theme colors from 69 curated groups and their aliases
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>colorName(input, locale?)</code></td>
                         <td>Returns the <strong>first</strong> color name matching the generated hex, or
                             <code>null</code> if not found
                         </td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>colorNames(input)</code></td>
+                        <td class="mono"><code>colorNames(input, locale?)</code></td>
                         <td>Returns <strong>all</strong> color names (synonyms) matching the generated hex, or an empty
                             array</td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>closestName(input)</code></td>
+                        <td class="mono"><code>closestName(input, locale?)</code></td>
                         <td>Returns the nearest color name by RGB Euclidean distance (fuzzy match), or <code>null</code>
                         </td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>closestNames(input)</code></td>
+                        <td class="mono"><code>closestNames(input, locale?)</code></td>
                         <td>Returns all names of the nearest color by RGB Euclidean distance, or empty array</td>
                     </tr>
                     <tr>
@@ -1872,19 +2235,30 @@ isReadableForBlindness(<span class="string">"tomato"</span>, <span class="string
                         <td>Checks color readability for protanopia, deuteranopia, and tritanopia using Brettel/Vienot
                             simulation + WCAG contrast</td>
                     </tr>
+                    <tr>
+                        <td class="mono"><code>registerNameToColorLanguage(pack)</code></td>
+                        <td>Registers translated aliases and labels from a data-only optional language pack</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>listNameToColorLanguages()</code></td>
+                        <td>Lists native English and all currently loaded optional languages</td>
+                    </tr>
                 </tbody>
             </table>
 
             <!-- ─── colorName ─── -->
             <h3 id="function-colorName" data-api-function="colorName"><span aria-hidden="true">🏷️</span>
-                <code>colorName(input)</code>
+                <code>colorName(input, locale?)</code>
             </h3>
-            <div class="func-signature" aria-label="Function signature: colorName(input) returns String or null">
-                colorName(<span class="param">input</span>) → <span class="param">String | null</span>
+            <div class="func-signature"
+                aria-label="Function signature: colorName(input, locale) returns String or null">
+                colorName(<span class="param">input</span>, <span class="param">locale?</span>) → <span
+                    class="param">String | null</span>
             </div>
             <p>
-                Returns the <strong>first</strong> color name from the internal database whose hex exactly matches
-                the generated color for the given input. Accepts any value that <code>generateColor()</code> accepts.
+                Returns the <strong>first</strong> color name whose hex exactly matches the generated color.
+                Pass an optional loaded locale such as <code>"pt-BR"</code> to return its translated name.
+                Omitting the locale preserves English; missing translations fall back to English.
             </p>
 
             <h4>Examples</h4>
@@ -1900,16 +2274,21 @@ colorName(<span class="number">1</span>);
 colorName(<span class="string">"#0048BA"</span>);
 <span class="comment">// → "Absolute Zero"</span>
 
+<span class="comment">// Explicit localized output</span>
+colorName(<span class="string">"#ff0000"</span>, <span class="string">"pt-BR"</span>);
+<span class="comment">// → "Vermelho"</span>
+
 <span class="comment">// Unknown color — returns null</span>
 colorName(<span class="string">"unknown"</span>);
 <span class="comment">// → null</span></pre>
 
             <!-- ─── colorNames ─── -->
             <h3 id="function-colorNames" data-api-function="colorNames"><span aria-hidden="true">🏷️</span>
-                <code>colorNames(input)</code>
+                <code>colorNames(input, locale?)</code>
             </h3>
-            <div class="func-signature" aria-label="Function signature: colorNames(input) returns String[]">
-                colorNames(<span class="param">input</span>) → <span class="param">String[]</span>
+            <div class="func-signature" aria-label="Function signature: colorNames(input, locale) returns String[]">
+                colorNames(<span class="param">input</span>, <span class="param">locale?</span>) → <span
+                    class="param">String[]</span>
             </div>
             <p>
                 Returns <strong>all</strong> color names (synonyms) for the hex that matches the input.
@@ -1926,16 +2305,22 @@ colorNames(<span class="string">"Aqua"</span>);
 colorNames(<span class="string">"#00FFFF"</span>);
 <span class="comment">// → ["Aqua", "Cyan", "Spanish Sky Blue"]</span>
 
+<span class="comment">// Localized synonyms</span>
+colorNames(<span class="string">"#00FFFF"</span>, <span class="string">"pt-BR"</span>);
+<span class="comment">// → ["Ciano", "Água"]</span>
+
 <span class="comment">// Unknown color — returns empty array</span>
 colorNames(<span class="string">"unknown"</span>);
 <span class="comment">// → []</span></pre>
 
             <!-- ─── closestName ─── -->
             <h3 id="function-closestName" data-api-function="closestName"><span aria-hidden="true">🎯</span>
-                <code>closestName(input)</code>
+                <code>closestName(input, locale?)</code>
             </h3>
-            <div class="func-signature" aria-label="Function signature: closestName(input) returns String or null">
-                closestName(<span class="param">input</span>) → <span class="param">String | null</span>
+            <div class="func-signature"
+                aria-label="Function signature: closestName(input, locale) returns String or null">
+                closestName(<span class="param">input</span>, <span class="param">locale?</span>) → <span
+                    class="param">String | null</span>
             </div>
             <p>
                 Like <code>colorName()</code>, but when there is no exact match in the database, it finds the
@@ -1957,10 +2342,12 @@ closestName(<span class="string">"unknown"</span>);
 
             <!-- ─── closestNames ─── -->
             <h3 id="function-closestNames" data-api-function="closestNames"><span aria-hidden="true">🎯</span>
-                <code>closestNames(input)</code>
+                <code>closestNames(input, locale?)</code>
             </h3>
-            <div class="func-signature" aria-label="Function signature: closestNames(input) returns String[]">
-                closestNames(<span class="param">input</span>) → <span class="param">String[]</span>
+            <div class="func-signature"
+                aria-label="Function signature: closestNames(input, locale) returns String[]">
+                closestNames(<span class="param">input</span>, <span class="param">locale?</span>) → <span
+                    class="param">String[]</span>
             </div>
             <p>
                 Like <code>colorNames()</code>, but with fuzzy fallback: if no exact match is found, finds the
@@ -2100,15 +2487,19 @@ isCold(<span class="string">"gray"</span>);
             </div>
 
             <!-- ─── mood ─── -->
-            <h3 id="function-mood" data-api-function="mood"><span aria-hidden="true">🎭</span> <code>mood(input)</code>
+            <h3 id="function-mood" data-api-function="mood"><span aria-hidden="true">🎭</span>
+                <code>mood(input, locale?)</code>
             </h3>
-            <div class="func-signature" aria-label="Function signature: mood(input) returns an array of mood strings">
-                mood(<span class="param">input</span>) → <span class="param">String[]</span>
+            <div class="func-signature"
+                aria-label="Function signature: mood(input, locale) returns an array of mood strings">
+                mood(<span class="param">input</span>, <span class="param">locale?</span>) → <span
+                    class="param">String[]</span>
             </div>
             <p>
-                Returns an array of <strong>mood</strong> (atmosphere) names in English that best describe
-                the generated color, based on mathematical rules in HSL space. If no mood matches
-                — whether by exact rule or proximity — returns an empty array <code>[]</code>.
+                Returns an array of <strong>mood</strong> (atmosphere) names that best describe the generated
+                color, based on mathematical rules in HSL space. Pass an optional loaded locale such as
+                <code>"pt-BR"</code> to translate returned labels. Omitting it preserves English.
+                If no mood matches, returns an empty array <code>[]</code>.
             </p>
 
             <h4>How It Works</h4>
@@ -2198,6 +2589,10 @@ mood(<span class="string">"#0000FF"</span>);
 mood(<span class="string">"#4682B4"</span>);
 <span class="comment">// → ["Calm", "Corporate", "Sophisticated"]</span>
 
+<span class="comment">// The same classification with Brazilian Portuguese labels</span>
+mood(<span class="string">"#4682B4"</span>, <span class="string">"pt-BR"</span>);
+<span class="comment">// → ["Calmo", "Corporativo", "Sofisticado"]</span>
+
 <span class="comment">// Near-black gray — corporate (pure gray)</span>
 mood(<span class="string">"#1A1A1A"</span>);
 <span class="comment">// → ["Corporate"]</span>
@@ -2220,9 +2615,10 @@ mood(<span class="string">"invalid color"</span>);
 
             <!-- ─── CDN & Setup ─── -->
             <h3 id="cdn-installation"><span aria-hidden="true">📦</span> CDN Installation</h3>
-            <p>Add the script to your page and you're ready to go:</p>
+            <p>Add the English core to your page. Optionally load a language data file immediately after it:</p>
 
-            <pre>&lt;<span class="keyword">script</span> <span class="keyword">src</span>=<span class="string">"https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;</pre>
+            <pre>&lt;<span class="keyword">script</span> <span class="keyword">src</span>=<span class="string">"https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;
+&lt;<span class="keyword">script</span> <span class="keyword">src</span>=<span class="string">"https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.ptBR.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;</pre>
 
             <p>
                 No <code>npm install</code>, no bundler, no dependencies —
@@ -2243,6 +2639,12 @@ mood(<span class="string">"invalid color"</span>);
                     </li>
                     <li><strong>Monochrome palettes</strong> — <code>generateMonochrome</code> with alternating
                         light/dark
+                    </li>
+                    <li><strong>Semantic theme palettes</strong> — <code>generateThemePalette</code> with 69 curated
+                        themes, aliases, typo tolerance, and deterministic fallback
+                    </li>
+                    <li><strong>Extensible language packs</strong> — optional data-only scripts add translated color
+                        names, theme aliases, modifiers, and localized mood/name output
                     </li>
                     <li><strong>Multiple formats</strong> — arrays (recursive), objects, HEX, RGB, RGBA, CSS names,
                         indexes, random, and generic text</li>
@@ -2273,6 +2675,7 @@ mood(<span class="string">"invalid color"</span>);
 
     <!-- ═══════════ SCRIPTS ═══════════ -->
     <script src="NameToColor.js"></script>
+    <script src="NameToColor.ptBR.js"></script>
     <script>
         // ═══════════════════════════════════════════════
         //  NameToColor — Interactive test page
@@ -2286,6 +2689,7 @@ mood(<span class="string">"invalid color"</span>);
             /* ─── DOM refs ─── */
             var input = document.getElementById('value-input');
             var form = document.getElementById('test-form');
+            var localeSelect = document.getElementById('locale-select');
             var swatchBg = document.getElementById('swatch-bg');
             var swatchText = document.getElementById('swatch-text');
             var swatchBgValue = document.getElementById('swatch-bg-value');
@@ -2299,6 +2703,26 @@ mood(<span class="string">"invalid color"</span>);
             var infoTemperature = document.getElementById('info-temperature');
             var infoMood = document.getElementById('info-mood');
 
+            function populateLocaleSelect() {
+                var languages = [];
+                try { languages = listNameToColorLanguages(); } catch (_) { }
+                if (languages.length === 0) {
+                    return;
+                }
+                while (localeSelect.firstChild) {
+                    localeSelect.removeChild(localeSelect.firstChild);
+                }
+                for (var languageIndex = 0; languageIndex < languages.length; languageIndex++) {
+                    var option = document.createElement('option');
+                    option.value = languages[languageIndex].locale;
+                    option.textContent = languages[languageIndex].name +
+                        (languages[languageIndex].native ? ' (native)' : '');
+                    localeSelect.appendChild(option);
+                }
+            }
+
+            populateLocaleSelect();
+
             /* ─── Prevent form submit ─── */
             form.addEventListener('submit', function (e) { e.preventDefault(); });
 
@@ -2306,6 +2730,7 @@ mood(<span class="string">"invalid color"</span>);
             function updatePreview() {
                 var value = input.value.trim();
                 var source = value || 'preview';
+                var outputLocale = localeSelect.value === 'en' ? undefined : localeSelect.value;
 
 
                 // Call generateReadableColor ONCE to get both colors,
@@ -2335,7 +2760,7 @@ mood(<span class="string">"invalid color"</span>);
                 hexDisplay.textContent = bgColor;
 
                 // Tenta encontrar nome da cor na base
-                var matchedName = findColorName(bgColor);
+                var matchedName = findColorName(bgColor, outputLocale);
                 colorNameDisplay.textContent = matchedName || '';
 
                 // Info grid
@@ -2365,7 +2790,7 @@ mood(<span class="string">"invalid color"</span>);
                 // Mood (array de humores)
                 var moods = [];
                 try {
-                    moods = mood(source);
+                    moods = mood(source, outputLocale);
                 } catch (_) { }
                 if (moods.length > 0) {
                     infoMood.textContent = moods.join(', ');
@@ -2375,19 +2800,11 @@ mood(<span class="string">"invalid color"</span>);
             }
 
             /* ─── Busca nome da cor pelo hexadecimal ─── */
-            function findColorName(hex) {
+            function findColorName(hex, locale) {
                 if (!hex || typeof hex !== 'string') return '';
-                var normalized = hex.toLowerCase();
-                for (var i = 0; i < colorDatabase.length; i++) {
-                    if (colorDatabase[i].Hexadecimal.toLowerCase() === normalized) {
-                        var names = colorDatabase[i].Color;
-                        if (Array.isArray(names)) {
-                            return '✨ ' + names.join(' / ');
-                        }
-                        return '✨ ' + names;
-                    }
-                }
-                return '';
+                var names = [];
+                try { names = colorNames(hex, locale); } catch (_) { }
+                return names.length > 0 ? '✨ ' + names.join(' / ') : '';
             }
 
             /* ─── Estima taxa de contraste WCAG ─── */
@@ -2430,6 +2847,7 @@ mood(<span class="string">"invalid color"</span>);
 
             /* ─── Events ─── */
             input.addEventListener('input', updatePreview);
+            localeSelect.addEventListener('change', updatePreview);
 
             /* ─── Inicializa preview ─── */
             updatePreview();
@@ -2582,6 +3000,107 @@ mood(<span class="string">"invalid color"</span>);
             renderMonochrome();
 
             // ══════════════════════════════════════════
+            //  SEMANTIC THEME PALETTE PLAYGROUND
+            // ══════════════════════════════════════════
+
+            var themePaletteForm = document.getElementById('theme-palette-form');
+            var themePaletteInput = document.getElementById('theme-palette-input');
+            var themePaletteCount = document.getElementById('theme-palette-count');
+            var themePaletteOutput = document.getElementById('theme-palette-output');
+            var themePaletteResults = document.getElementById('theme-palette-results');
+            var themeCatalogSearch = document.getElementById('theme-catalog-search');
+            var themeCatalogRows = document.querySelectorAll('#theme-catalog-table tbody tr');
+
+            function renderLoadedThemeAliases() {
+                var aliasesByCanonical = {};
+                var groups = [];
+                try { groups = getNameToColorLanguageThemeAliases(); } catch (_) { }
+
+                for (var groupIndex = 0; groupIndex < groups.length; groupIndex++) {
+                    aliasesByCanonical[groups[groupIndex].canonical.toLowerCase()] = groups[groupIndex].aliases;
+                }
+                for (var rowIndex = 0; rowIndex < themeCatalogRows.length; rowIndex++) {
+                    var canonicalCell = themeCatalogRows[rowIndex].querySelector('th[scope="row"]');
+                    var translatedCell = document.createElement('td');
+                    var aliases = canonicalCell
+                        ? aliasesByCanonical[canonicalCell.textContent.trim().toLowerCase()]
+                        : null;
+                    translatedCell.textContent = aliases && aliases.length > 0 ? aliases.join(', ') : '—';
+                    themeCatalogRows[rowIndex].appendChild(translatedCell);
+                }
+            }
+
+            themePaletteForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+            });
+
+            function renderThemePalette() {
+                var theme = themePaletteInput.value;
+                var count = Math.max(2, Math.min(21, parseInt(themePaletteCount.value, 10) || 5));
+                themePaletteCount.value = count;
+
+                var palette = [];
+                try {
+                    palette = generateThemePalette(theme, count);
+                } catch (_) { }
+
+                while (themePaletteResults.firstChild) {
+                    themePaletteResults.removeChild(themePaletteResults.firstChild);
+                }
+
+                if (palette.length === 0) {
+                    var emptyItem = document.createElement('li');
+                    emptyItem.className = 'theme-swatch';
+                    emptyItem.textContent = 'Enter a theme to generate a palette.';
+                    themePaletteResults.appendChild(emptyItem);
+                    themePaletteOutput.textContent = 'No palette generated. Enter a non-empty theme.';
+                    return;
+                }
+
+                themePaletteOutput.textContent = palette.length + ' colors generated for ' + theme.trim() + '.';
+                for (var i = 0; i < palette.length; i++) {
+                    var hex = palette[i];
+                    var item = document.createElement('li');
+                    var code = document.createElement('code');
+                    var label = document.createElement('small');
+                    var luminance = relativeLuminance(
+                        parseInt(hex.slice(1, 3), 16),
+                        parseInt(hex.slice(3, 5), 16),
+                        parseInt(hex.slice(5, 7), 16)
+                    );
+
+                    item.className = 'theme-swatch';
+                    item.style.backgroundColor = hex;
+                    item.style.color = luminance > 0.5 ? '#000000' : '#ffffff';
+                    code.textContent = hex;
+                    label.textContent = 'Color ' + (i + 1);
+                    item.appendChild(code);
+                    item.appendChild(label);
+                    themePaletteResults.appendChild(item);
+                }
+            }
+
+            function filterThemeCatalog() {
+                var query = themeCatalogSearch.value.trim().toLowerCase();
+                if (typeof query.normalize === 'function') {
+                    query = query.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                }
+                for (var i = 0; i < themeCatalogRows.length; i++) {
+                    var searchable = themeCatalogRows[i].textContent.toLowerCase();
+                    if (typeof searchable.normalize === 'function') {
+                        searchable = searchable.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                    }
+                    themeCatalogRows[i].hidden = query !== '' && searchable.indexOf(query) === -1;
+                }
+            }
+
+            themePaletteInput.addEventListener('input', renderThemePalette);
+            themePaletteCount.addEventListener('input', renderThemePalette);
+            themeCatalogSearch.addEventListener('input', filterThemeCatalog);
+            renderLoadedThemeAliases();
+            renderThemePalette();
+
+            // ══════════════════════════════════════════
             //  CVD ACCESSIBILITY PLAYGROUND
             // ══════════════════════════════════════════
 
@@ -2719,16 +3238,54 @@ mood(<span class="string">"invalid color"</span>);
 
             /* ─── Build flat list once (cache) ─── */
             var flatList = null;
+            function normalizeBrowserSearchText(value) {
+                var text = String(value || '').toLowerCase();
+                if (typeof text.normalize === 'function') {
+                    text = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                }
+                return text;
+            }
+
             function getFlatList() {
                 if (flatList) return flatList;
                 flatList = [];
+                var localizedSeen = {};
+                var languages = [];
+                try { languages = listNameToColorLanguages(); } catch (_) { }
                 for (var fi = 0; fi < colorDatabase.length; fi++) {
                     var entry = colorDatabase[fi];
                     for (var fj = 0; fj < entry.Color.length; fj++) {
                         flatList.push({
                             Color: entry.Color[fj],
-                            Hexadecimal: entry.Hexadecimal
+                            Hexadecimal: entry.Hexadecimal,
+                            Language: 'en'
                         });
+                    }
+
+                    for (var languageIndex = 0; languageIndex < languages.length; languageIndex++) {
+                        if (languages[languageIndex].native) {
+                            continue;
+                        }
+                        var localizedNames = getNameToColorLanguageColorNames(
+                            entry.Hexadecimal,
+                            languages[languageIndex].locale
+                        );
+                        if (!localizedNames) {
+                            continue;
+                        }
+                        for (var localizedIndex = 0; localizedIndex < localizedNames.length; localizedIndex++) {
+                            var localizedKey = entry.Hexadecimal.toLowerCase() + '|' +
+                                normalizeBrowserSearchText(localizedNames[localizedIndex]);
+                            if (localizedSeen[localizedKey]) {
+                                continue;
+                            }
+                            localizedSeen[localizedKey] = true;
+                            flatList.push({
+                                Color: localizedNames[localizedIndex],
+                                Hexadecimal: entry.Hexadecimal,
+                                Language: languages[languageIndex].locale
+                            });
+                        }
                     }
                 }
                 return flatList;
@@ -2736,7 +3293,7 @@ mood(<span class="string">"invalid color"</span>);
 
             /* ─── Get current search term ─── */
             function getSearchTerm() {
-                return searchInput.value.trim().toLowerCase();
+                return normalizeBrowserSearchText(searchInput.value.trim());
             }
 
             /* ─── Get filtered flat list ─── */
@@ -2746,7 +3303,7 @@ mood(<span class="string">"invalid color"</span>);
                 if (!term) return { items: all, total: all.length };
                 var filtered = [];
                 for (var fi = 0; fi < all.length; fi++) {
-                    if (all[fi].Color.toLowerCase().indexOf(term) !== -1) {
+                    if (normalizeBrowserSearchText(all[fi].Color).indexOf(term) !== -1) {
                         filtered.push(all[fi]);
                     }
                 }
