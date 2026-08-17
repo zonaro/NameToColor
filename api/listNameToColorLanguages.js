@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/listNameToColorLanguages
  * Response:  { "result": [{ "locale": "en", "name": "English", "native": true }] }
  */
-const { listNameToColorLanguages } = require('../NameToColor.js');
+const { listNameToColorLanguages } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

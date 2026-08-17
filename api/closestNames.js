@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/closestNames?input=spanish%20sky&locale=pt-BR
  * Response:  { "input": "spanish sky", "locale": "pt-BR", "result": ["Aqua", "Cyan", "Spanish Sky Blue"] }
  */
-const { closestNames } = require('../NameToColor.js');
+const { closestNames } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

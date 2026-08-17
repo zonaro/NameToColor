@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/generateSquare?input=tomato
  * Response:  { "input": "tomato", "result": ["#ff6347", "#47ff63", "#6347ff", "#ff47e3"] }
  */
-const { generateSquare } = require('../NameToColor.js');
+const { generateSquare } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/isCold?input=ice
  * Response:  { "input": "ice", "result": true }
  */
-const { isCold } = require('../NameToColor.js');
+const { isCold } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

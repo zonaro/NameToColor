@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/temperature?input=tomato
  * Response:  { "input": "tomato", "result": "VeryHot" }
  */
-const { temperature } = require('../NameToColor.js');
+const { temperature } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

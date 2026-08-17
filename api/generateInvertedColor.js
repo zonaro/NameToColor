@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/generateInvertedColor?input=tomato
  * Response:  { "input": "tomato", "result": "#009cb8" }
  */
-const { generateInvertedColor } = require('../NameToColor.js');
+const { generateInvertedColor } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

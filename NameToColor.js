@@ -4672,6 +4672,7 @@ function generateReadableColor(input) {
  *
  * @param {number} [pageNumber] - Page number (1-based). If omitted, returns all colors.
  * @param {number} [pageSize] - Number of items per page. Required if pageNumber is provided.
+ * @param {string} [locale] - Optional loaded locale for the returned color names. Defaults to English.
  * @returns {Object} Object in the format { items, pageNumber, pageCount, totalItems }.
  *
  * @example
@@ -4681,16 +4682,24 @@ function generateReadableColor(input) {
  * @example
  * // Returns page 2 with 10 items per page
  * listColors(2, 10);
+ *
+ * @example
+ * // Returns page 1 with 10 items, names localized to Brazilian Portuguese
+ * listColors(1, 10, 'pt-BR');
  */
-function listColors(pageNumber, pageSize) {
-    // Build a flat list: each name in a hex-to-names pair becomes its own item
+function listColors(pageNumber, pageSize, locale) {
+    // Build a flat list: each name in a hex-to-names pair becomes its own item.
+    // When a locale is provided, names are localized first and fall back to the
+    // native English names when that locale has no translation for the color.
     var flatList = [];
     for (var i = 0; i < colorDatabaseKeys.length; i++) {
         var colorKey = colorDatabaseKeys[i];
         var names = colorDatabase[colorKey];
-        for (var j = 0; j < names.length; j++) {
+        var localizedNames = getNameToColorLanguageColorNames(colorKey, locale);
+        var displayNames = localizedNames && localizedNames.length > 0 ? localizedNames : names;
+        for (var j = 0; j < displayNames.length; j++) {
             flatList.push({
-                Color: names[j],
+                Color: displayNames[j],
                 Hexadecimal: '#' + colorKey
             });
         }

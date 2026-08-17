@@ -9,7 +9,7 @@
  * NameToColor.js, which lets the same file run in Node.js here and in the
  * browser via a plain <script> tag.
  */
-const { generateColor } = require('../NameToColor.js');
+const { generateColor } = require('../lib/with-ptbr.js');
 
 /**
  * Vercel serverless handler.

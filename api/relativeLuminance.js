@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/relativeLuminance?input=%23ff6347
  * Response:  { "input": "#ff6347", "result": 0.3063861271941505 }
  */
-const { relativeLuminance } = require('../NameToColor.js');
+const { relativeLuminance } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

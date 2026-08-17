@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/isReadableForBlindness?colorA=tomato&colorB=rebeccapurple&type=deuteranopia
  * Response:  { "colorA": "tomato", "colorB": "rebeccapurple", "type": "deuteranopia", "result": { "readable": true, ... } }
  */
-const { isReadableForBlindness } = require('../NameToColor.js');
+const { isReadableForBlindness } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

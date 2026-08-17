@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/generateComplementary?input=tomato
  * Response:  { "input": "tomato", "result": "#47e3ff" }
  */
-const { generateComplementary } = require('../NameToColor.js');
+const { generateComplementary } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

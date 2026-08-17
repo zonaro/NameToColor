@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/colorDatabase
  * Response:  { "result": { "101405": ["Green Waterloo"], ... } }
  */
-const { colorDatabase } = require('../NameToColor.js');
+const { colorDatabase } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

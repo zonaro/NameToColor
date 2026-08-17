@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/generateSplitComplementary?input=tomato
  * Response:  { "input": "tomato", "result": ["#ff6347", "#47e3ff", "#47ffb8"] }
  */
-const { generateSplitComplementary } = require('../NameToColor.js');
+const { generateSplitComplementary } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

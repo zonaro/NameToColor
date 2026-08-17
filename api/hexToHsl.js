@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/hexToHsl?input=%23ff6347
  * Response:  { "input": "#ff6347", "result": { "h": 9, "s": 100, "l": 64 } }
  */
-const { hexToHsl } = require('../NameToColor.js');
+const { hexToHsl } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

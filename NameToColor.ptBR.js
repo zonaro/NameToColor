@@ -4,8 +4,13 @@
  * Load this file after NameToColor.js. It contains data only; all language
  * handling logic remains in the English core library. Color-name keys use
  * six hexadecimal digits without a leading "#".
+ *
+ * Browser:  loaded with a plain <script> tag, it auto-registers itself by
+ *           calling the global registerNameToColorLanguage() from the core.
+ * Node.js:  (e.g. the Vercel serverless API) require() it and call
+ *           .register(lib) with the core module export to enable pt-BR.
  */
-registerNameToColorLanguage({
+var nameToColorPtBRPack = {
     locale: 'pt-BR',
     name: 'Português (Brasil)',
 
@@ -292,4 +297,29 @@ registerNameToColorLanguage({
         'e2725b': ['Terracota'],
         '78866b': ['Verde militar']
     }
-});
+};
+
+// Browser: auto-register using the global function from the core library.
+if (typeof registerNameToColorLanguage === 'function') {
+    registerNameToColorLanguage(nameToColorPtBRPack);
+}
+
+// Node.js / Vercel API: expose the pack for explicit registration.
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        locale: 'pt-BR',
+        name: 'Português (Brasil)',
+        pack: nameToColorPtBRPack,
+        /**
+         * Registers this pack through the core library.
+         * @param {*} lib Core module export (Node) or global object (browser).
+         * @returns {boolean} True when the pack was registered.
+         */
+        register: function (lib) {
+            var registerFn = (lib && typeof lib.registerNameToColorLanguage === 'function')
+                ? lib.registerNameToColorLanguage
+                : (typeof registerNameToColorLanguage === 'function' ? registerNameToColorLanguage : null);
+            return registerFn ? registerFn(nameToColorPtBRPack) : false;
+        }
+    };
+}

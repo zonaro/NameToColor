@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/normalizeHex?input=ff6347
  * Response:  { "input": "ff6347", "result": "#ff6347" }
  */
-const { normalizeHex } = require('../NameToColor.js');
+const { normalizeHex } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

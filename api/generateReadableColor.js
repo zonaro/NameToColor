@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/generateReadableColor?input=tomato
  * Response:  { "input": "tomato", "result": ["#522017", "#FF6347"] }
  */
-const { generateReadableColor } = require('../NameToColor.js');
+const { generateReadableColor } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

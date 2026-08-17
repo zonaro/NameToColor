@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/generateMonochrome?input=tomato&count=6
  * Response:  { "input": "tomato", "count": 6, "result": ["#ffd8d1", ...] }
  */
-const { generateMonochrome } = require('../NameToColor.js');
+const { generateMonochrome } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

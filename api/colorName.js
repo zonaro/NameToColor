@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/colorName?input=tomato&locale=pt-BR
  * Response:  { "input": "tomato", "locale": "pt-BR", "result": "Tomato" }
  */
-const { colorName } = require('../NameToColor.js');
+const { colorName } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

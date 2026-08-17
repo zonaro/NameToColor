@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/isDark?input=%23000000
  * Response:  { "input": "#000000", "result": true }
  */
-const { isDark } = require('../NameToColor.js');
+const { isDark } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

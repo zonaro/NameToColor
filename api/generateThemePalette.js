@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/generateThemePalette?input=Nature&count=7
  * Response:  { "input": "Nature", "count": 7, "result": ["#1b4332", ...] }
  */
-const { generateThemePalette } = require('../NameToColor.js');
+const { generateThemePalette } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {

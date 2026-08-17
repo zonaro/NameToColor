@@ -4,7 +4,7 @@
  * Endpoint:  GET /api/mood?input=tomato&locale=pt-BR
  * Response:  { "input": "tomato", "locale": "pt-BR", "result": ["Vibrante"] }
  */
-const { mood } = require('../NameToColor.js');
+const { mood } = require('../lib/with-ptbr.js');
 const { setCorsHeaders, sendJson, handlePreflight, ensureGet } = require('../lib/api-helpers.js');
 
 module.exports = function handler(req, res) {
