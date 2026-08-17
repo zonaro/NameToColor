@@ -22,36 +22,36 @@ NameToColor is also a **public, free REST API** hosted on **Vercel**. Any websit
 
 Every DOM-free public function of the library is exposed as its **own endpoint** on Vercel. Each endpoint accepts the function's parameters as query parameters and returns `{ ...params, result }`.
 
-| Endpoint | Query parameters | Result |
-| -------- | ---------------- | ------ |
-| `GET /api/color` | `name` | `{ input, color }` |
-| `GET /api/generateReadableColor` | `input` | `{ input, result: [textColor, bgColor] }` |
-| `GET /api/generateThemePalette` | `input`, `count` | `{ input, count, result: string[] }` |
-| `GET /api/listColors` | `page`, `size` | `{ page, size, result: { items, pageNumber, pageCount, totalItems } }` |
-| `GET /api/colorName` | `input`, `locale` | `{ input, locale, result: string \| null }` |
-| `GET /api/colorNames` | `input`, `locale` | `{ input, locale, result: string[] }` |
-| `GET /api/closestName` | `input`, `locale` | `{ input, locale, result: string \| null }` |
-| `GET /api/closestNames` | `input`, `locale` | `{ input, locale, result: string[] }` |
-| `GET /api/generateInvertedColor` | `input` | `{ input, result: string }` |
-| `GET /api/generateComplementary` | `input` | `{ input, result: string }` |
-| `GET /api/generateTriadic` | `input` | `{ input, result: string[] }` |
-| `GET /api/generateSquare` | `input` | `{ input, result: string[] }` |
-| `GET /api/generateSplitComplementary` | `input` | `{ input, result: string[] }` |
-| `GET /api/generateMonochrome` | `input`, `count` | `{ input, count, result: string[] }` |
-| `GET /api/hexToRgb` | `input` | `{ input, result: { r, g, b } }` |
-| `GET /api/hexToHsl` | `input` | `{ input, result: { h, s, l } }` |
-| `GET /api/hslToHex` | `h`, `s`, `l` | `{ h, s, l, result: string }` |
-| `GET /api/relativeLuminance` | `input` | `{ input, result: number }` |
-| `GET /api/normalizeHex` | `input` | `{ input, result: string }` |
-| `GET /api/isLight` | `input` | `{ input, result: boolean }` |
-| `GET /api/isDark` | `input` | `{ input, result: boolean }` |
-| `GET /api/isHot` | `input` | `{ input, result: boolean }` |
-| `GET /api/isCold` | `input` | `{ input, result: boolean }` |
-| `GET /api/temperature` | `input` | `{ input, result: string }` |
-| `GET /api/mood` | `input`, `locale` | `{ input, locale, result: string[] }` |
-| `GET /api/isReadableForBlindness` | `colorA`, `colorB`, `type` | `{ colorA, colorB, type, result: { readable, contrast, ... } }` |
-| `GET /api/listNameToColorLanguages` | — | `{ result: array }` |
-| `GET /api/colorDatabase` | — | `{ result: object }` |
+| Endpoint                              | Query parameters           | Result                                                                 |
+| ------------------------------------- | -------------------------- | ---------------------------------------------------------------------- |
+| `GET /api/color`                      | `name`                     | `{ input, color }`                                                     |
+| `GET /api/generateReadableColor`      | `input`                    | `{ input, result: [textColor, bgColor] }`                              |
+| `GET /api/generateThemePalette`       | `input`, `count`           | `{ input, count, result: string[] }`                                   |
+| `GET /api/listColors`                 | `page`, `size`             | `{ page, size, result: { items, pageNumber, pageCount, totalItems } }` |
+| `GET /api/colorName`                  | `input`, `locale`          | `{ input, locale, result: string \| null }`                            |
+| `GET /api/colorNames`                 | `input`, `locale`          | `{ input, locale, result: string[] }`                                  |
+| `GET /api/closestName`                | `input`, `locale`          | `{ input, locale, result: string \| null }`                            |
+| `GET /api/closestNames`               | `input`, `locale`          | `{ input, locale, result: string[] }`                                  |
+| `GET /api/generateInvertedColor`      | `input`                    | `{ input, result: string }`                                            |
+| `GET /api/generateComplementary`      | `input`                    | `{ input, result: string }`                                            |
+| `GET /api/generateTriadic`            | `input`                    | `{ input, result: string[] }`                                          |
+| `GET /api/generateSquare`             | `input`                    | `{ input, result: string[] }`                                          |
+| `GET /api/generateSplitComplementary` | `input`                    | `{ input, result: string[] }`                                          |
+| `GET /api/generateMonochrome`         | `input`, `count`           | `{ input, count, result: string[] }`                                   |
+| `GET /api/hexToRgb`                   | `input`                    | `{ input, result: { r, g, b } }`                                       |
+| `GET /api/hexToHsl`                   | `input`                    | `{ input, result: { h, s, l } }`                                       |
+| `GET /api/hslToHex`                   | `h`, `s`, `l`              | `{ h, s, l, result: string }`                                          |
+| `GET /api/relativeLuminance`          | `input`                    | `{ input, result: number }`                                            |
+| `GET /api/normalizeHex`               | `input`                    | `{ input, result: string }`                                            |
+| `GET /api/isLight`                    | `input`                    | `{ input, result: boolean }`                                           |
+| `GET /api/isDark`                     | `input`                    | `{ input, result: boolean }`                                           |
+| `GET /api/isHot`                      | `input`                    | `{ input, result: boolean }`                                           |
+| `GET /api/isCold`                     | `input`                    | `{ input, result: boolean }`                                           |
+| `GET /api/temperature`                | `input`                    | `{ input, result: string }`                                            |
+| `GET /api/mood`                       | `input`, `locale`          | `{ input, locale, result: string[] }`                                  |
+| `GET /api/isReadableForBlindness`     | `colorA`, `colorB`, `type` | `{ colorA, colorB, type, result: { readable, contrast, ... } }`        |
+| `GET /api/listNameToColorLanguages`   | —                          | `{ result: array }`                                                    |
+| `GET /api/colorDatabase`              | —                          | `{ result: object }`                                                   |
 
 ### 1. Convert a color — `/api/color`
 
