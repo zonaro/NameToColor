@@ -9,9 +9,11 @@
  * Response:  { "func": "colorName", "input": "tomato", "locale": "pt-BR", "result": "Tomato" }
  *
  * The `func` query parameter selects the library function to call; every
- * other query parameter is passed to that function. For convenience, when
- * `func` is omitted but `name` is present, it defaults to `generateColor`
- * (the original /api/color?name=... URL keeps working).
+ * other query parameter is passed to that function. When `func` is omitted,
+ * ALL basic functions are executed at once and the response is an object
+ * mapping each function name to its result, e.g.
+ * { "generateColor": "#ff0000", "colorName": "Red", ... }. In batch mode
+ * `count` defaults to 5 and `locale` defaults to an empty string (English).
  *
  * The core library is browser-first, so it is imported through CommonJS.
  * Browser-only APIs (HTMLElement, Option, document) are guarded inside
@@ -58,6 +60,35 @@ const FUNCTIONS = {
     colorDatabase: { data: true }
 };
 
+// Basic functions executed together when `func` is omitted. Each entry lists
+// the params it needs; functions whose required params are missing are
+// skipped in batch mode.
+const BASIC_FUNCTIONS = [
+    // generateColor always runs in batch mode: without `name` it produces a
+    // deterministic random color (generateColor("") behavior).
+    { name: 'generateColor', optional: ['name'] },
+    { name: 'generateReadableColor', required: ['input'] },
+    { name: 'generateThemePalette', required: ['input'], optional: ['count'] },
+    { name: 'colorName', required: ['input'], optional: ['locale'] },
+    { name: 'colorNames', required: ['input'], optional: ['locale'] },
+    { name: 'closestName', required: ['input'], optional: ['locale'] },
+    { name: 'closestNames', required: ['input'], optional: ['locale'] },
+    { name: 'generateInvertedColor', required: ['input'] },
+    { name: 'generateComplementary', required: ['input'] },
+    { name: 'generateTriadic', required: ['input'] },
+    { name: 'generateSquare', required: ['input'] },
+    { name: 'generateSplitComplementary', required: ['input'] },
+    { name: 'generateMonochrome', required: ['input'], optional: ['count'] },
+    { name: 'relativeLuminance', required: ['input'] },
+    { name: 'normalizeHex', required: ['input'] },
+    { name: 'isLight', required: ['input'] },
+    { name: 'isDark', required: ['input'] },
+    { name: 'isHot', required: ['input'] },
+    { name: 'isCold', required: ['input'] },
+    { name: 'temperature', required: ['input'] },
+    { name: 'mood', required: ['input'], optional: ['locale'] }
+];
+
 /**
  * Vercel serverless handler.
  * @param {import('http').IncomingMessage} req
@@ -69,18 +100,55 @@ module.exports = function handler(req, res) {
     if (!ensureGet(req, res, '/api/color?func=colorName&input=tomato&locale=pt-BR')) return;
 
     const query = req.query || {};
-    let funcName = typeof query.func === 'string' ? query.func.trim() : '';
+    const funcName = typeof query.func === 'string' ? query.func.trim() : '';
 
-    // Backward compatibility: /api/color?name=... still means generateColor.
-    if (!funcName && query.name !== undefined && query.name !== '') {
-        funcName = 'generateColor';
-    }
-
+    // Batch mode: when `func` is omitted, run every basic function whose
+    // required params are present and return { functionName: result }.
     if (!funcName) {
-        sendJson(res, 400, {
-            error: 'Missing required query parameter "func". Example: /api/color?func=colorName&input=tomato&locale=pt-BR',
-            available: Object.keys(FUNCTIONS)
-        });
+        const results = {};
+        // When there is no explicit input (missing, empty or "random"), resolve
+        // the base color ONCE so every function derives from the same color
+        // instead of each generating its own. A provided `name` anchors the base.
+        const rawInput = query.input;
+        const hasName = query.name !== undefined && query.name !== '';
+        const needsBase = hasName || rawInput === undefined || rawInput === '' || String(rawInput).trim().toLowerCase() === 'random';
+        let baseInput = rawInput;
+        if (needsBase) {
+            baseInput = lib.generateColor(hasName ? query.name : rawInput);
+        }
+        for (let i = 0; i < BASIC_FUNCTIONS.length; i++) {
+            const entry = BASIC_FUNCTIONS[i];
+            const spec = FUNCTIONS[entry.name];
+            const required = entry.required || [];
+            const optional = entry.optional || [];
+            const allParams = required.concat(optional);
+            const params = {};
+            let missing = false;
+
+            for (let j = 0; j < allParams.length; j++) {
+                const key = allParams[j];
+                let raw = query[key];
+                if (key === 'count' && (raw === undefined || raw === '')) raw = '5';
+                if (key === 'locale' && (raw === undefined || raw === '')) raw = '';
+                if (key === 'input' && needsBase) raw = baseInput;
+                if (key === 'name' && (raw === undefined || raw === '') && needsBase) raw = baseInput;
+                if (raw === undefined || raw === '') {
+                    if (required.indexOf(key) !== -1) { missing = true; break; }
+                    continue;
+                }
+                params[key] = NUMERIC_PARAMS.indexOf(key) !== -1 ? Number(raw) : String(raw).trim();
+            }
+
+            if (missing) continue;
+
+            try {
+                const args = allParams.map(function (key) { return params[key]; });
+                results[entry.name] = spec.fn.apply(null, args);
+            } catch (err) {
+                results[entry.name] = null;
+            }
+        }
+        sendJson(res, 200, results);
         return;
     }
 

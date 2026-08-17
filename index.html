@@ -1245,9 +1245,17 @@
             <p>
                 The <code>func</code> query parameter selects the library function to call; every other query
                 parameter is passed to that function. The response mirrors the request:
-                <code>{ func, ...params, result }</code>. For convenience, when <code>func</code> is omitted
-                but <code>name</code> is present, it defaults to <code>generateColor</code> — so the original
-                <code>/api/color?name=palavra</code> URL keeps working.
+                <code>{ func, ...params, result }</code>.
+            </p>
+            <p>
+                When <code>func</code> is omitted, <strong>all basic functions run at once</strong> and the
+                response is an object mapping each function name to its result, e.g.
+                <code>{ "generateColor": "#ff0000", "colorName": "Red", ... }</code>. In batch mode
+                <code>count</code> defaults to <code>5</code> and <code>locale</code> defaults to an empty
+                string (English). When <code>input</code> is missing, empty or <code>"random"</code>,
+                <code>generateColor</code> resolves the base color <strong>once</strong> and it is passed to
+                every other function — so the whole palette matches. A provided <code>name</code> anchors
+                that base color.
             </p>
             <table>
                 <thead>
@@ -1401,30 +1409,36 @@
                     </tr>
                 </tbody>
             </table>
+            <p>
+                <strong>📦 Batch mode:</strong> The conversion functions <code>hexToRgb</code>,
+                <code>hexToHsl</code>, and <code>hslToHex</code> are available via <code>func=</code> but are
+                <strong>not</strong> included in the batch response.
+            </p>
 
             <h3 id="api-endpoint-color">1. Convert a color — <code>/api/color</code></h3>
             <p>Send a <code>GET</code> request with the word you want to convert in the <code>name</code> query
-                parameter. When <code>func</code> is omitted, it defaults to <code>generateColor</code>:</p>
+                parameter. When <code>func</code> is omitted, <code>generateColor</code> runs (along with every
+                other basic function that has its parameters):</p>
             <pre><span class="keyword">GET</span> https://<span class="string">name-to-color</span>.vercel.app/api/color?name=<span class="string">palavra</span></pre>
 
             <h4 id="api-fetch-example">Usage with the Fetch API</h4>
             <pre><span class="keyword">const</span> res = <span class="keyword">await</span> fetch(<span class="string">"https://name-to-color.vercel.app/api/color?name=Lucas"</span>);
 <span class="keyword">const</span> data = <span class="keyword">await</span> res.json();
 
-<span class="built_in">console</span>.log(data.name);    <span class="comment">// "Lucas"</span>
-<span class="built_in">console</span>.log(data.result);  <span class="comment">// "#AF9F1C"</span></pre>
+<span class="built_in">console</span>.log(data.generateColor);  <span class="comment">// "#AF9F1C"</span></pre>
 
             <h4 id="api-response">JSON Response</h4>
             <p>A successful request returns <code>200 OK</code> with the following JSON:</p>
             <pre>{
-  <span class="string">"func"</span>: <span class="string">"generateColor"</span>,
-  <span class="string">"name"</span>: <span class="string">"Lucas"</span>,
-  <span class="string">"result"</span>: <span class="string">"#AF9F1C"</span>
+  <span class="string">"generateColor"</span>: <span class="string">"#AF9F1C"</span>
 }</pre>
 
             <h3 id="api-endpoint-examples">2. Examples for the other functions</h3>
             <p>Each <code>func</code> value above maps to one library function. Here are a few examples:</p>
-            <pre><span class="comment"># Readable text + background pair</span>
+            <pre><span class="comment"># Batch: run all basic functions at once (func omitted)</span>
+<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/color?input=tomato&amp;count=5&amp;locale=pt-BR"</span>
+
+<span class="comment"># Readable text + background pair</span>
 <span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/color?func=generateReadableColor&amp;input=tomato"</span>
 
 <span class="comment"># Theme palette with a custom size</span>

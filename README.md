@@ -26,7 +26,9 @@ The API is a **single endpoint** that dispatches to any library function. The Ve
 GET /api/color?func={function}&param1=value1&param2=value2
 ```
 
-The `func` query parameter selects the library function to call; every other query parameter is passed to that function. The response mirrors the request: `{ func, ...params, result }`. For convenience, when `func` is omitted but `name` is present, it defaults to `generateColor` — so the original `/api/color?name=palavra` URL keeps working.
+The `func` query parameter selects the library function to call; every other query parameter is passed to that function. The response mirrors the request: `{ func, ...params, result }`.
+
+When `func` is omitted, **all basic functions run at once** and the response is an object mapping each function name to its result, e.g. `{ "generateColor": "#ff0000", "colorName": "Red", ... }`. In batch mode `count` defaults to `5` and `locale` defaults to an empty string (English). When `input` is missing, empty or `"random"`, `generateColor` resolves the base color **once** and it is passed to every other function — so the whole palette matches. A provided `name` anchors that base color.
 
 > **🌐 Multilingual:** The API loads the Brazilian Portuguese language pack (`NameToColor.ptBR.js`) alongside the English core. Functions that return names or labels (`colorName`, `colorNames`, `closestName`, `closestNames`, `mood`, `listColors`) accept a `locale` query parameter — defaulting to **English** when omitted. Portuguese inputs (`vermelho`, `azul mais escuro`, `natureza`) work out of the box.
 
@@ -61,9 +63,11 @@ The `func` query parameter selects the library function to call; every other que
 | `listNameToColorLanguages`       | —                          | `{ func, result: array }`                                              |
 | `colorDatabase`                  | —                          | `{ func, result: object }`                                             |
 
+> **📦 Batch mode:** The conversion functions `hexToRgb`, `hexToHsl`, and `hslToHex` are available via `func=` but are **not** included in the batch response.
+
 ### 1. Convert a color — `/api/color`
 
-Send a `GET` request with the word you want to convert in the `name` query parameter. When `func` is omitted, it defaults to `generateColor`:
+Send a `GET` request with the word you want to convert in the `name` query parameter. When `func` is omitted, `generateColor` runs (along with every other basic function that has its parameters):
 
 ```text
 GET https://name-to-color.vercel.app/api/color?name=palavra
@@ -81,8 +85,7 @@ curl "https://name-to-color.vercel.app/api/color?name=Lucas"
 const res = await fetch("https://name-to-color.vercel.app/api/color?name=Lucas");
 const data = await res.json();
 
-console.log(data.name);   // "Lucas"
-console.log(data.result); // "#AF9F1C"
+console.log(data.generateColor); // "#AF9F1C"
 ```
 
 #### JSON Response
@@ -91,9 +94,7 @@ A successful request returns `200 OK` with the following JSON:
 
 ```json
 {
-  "func": "generateColor",
-  "name": "Lucas",
-  "result": "#AF9F1C"
+  "generateColor": "#AF9F1C"
 }
 ```
 
@@ -102,6 +103,9 @@ A successful request returns `200 OK` with the following JSON:
 Each `func` value above maps to one library function. Here are a few examples:
 
 ```bash
+# Batch: run all basic functions at once (func omitted)
+curl "https://name-to-color.vercel.app/api/color?input=tomato&count=5&locale=pt-BR"
+
 # Readable text + background pair
 curl "https://name-to-color.vercel.app/api/color?func=generateReadableColor&input=tomato"
 
