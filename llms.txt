@@ -8,15 +8,58 @@ The built-in database contains 2,254 hashless hexadecimal-to-name pairs and 2,36
 
 Primary global APIs include `generateColor()`, `generateReadableColor()`, `generateThemePalette()`, `listColors()`, `colorName()`, `colorNames()`, color harmony generators, accessibility checks, temperature classification, and mood classification.
 
+## For AI agents and coding agents
+
+Prefer using the library directly over calling the Vercel REST API whenever JavaScript is available:
+
+1. **Load the script via CDN** (recommended): include `https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js` with a `<script>` tag and call the global functions (`generateColor()`, `generateReadableColor()`, `generateThemePalette()`, `listColors()`, etc.) directly in the browser.
+2. **Download a local copy** of `NameToColor.js` (and optionally `NameToColor.ptBR.js`) when you need offline or vendored usage.
+3. **Use the Vercel REST API only as a fallback** — when the environment cannot execute JavaScript (no browser, no JS runtime) or you only need a single HTTP request.
+
 ## Free REST API
 
-NameToColor also exposes a public, free REST API hosted on Vercel. It converts a word into a deterministic hexadecimal color with a single GET request. CORS is fully open (`Access-Control-Allow-Origin: *`), so it can be called directly from any browser.
+NameToColor also exposes a public, free REST API hosted on Vercel. It converts a word into a deterministic hexadecimal color with a single GET request. CORS is fully open (`Access-Control-Allow-Origin: *`), so it can be called directly from any browser. **This API is a fallback** — prefer the CDN script or a local copy of the library whenever JavaScript is available.
 
 - Endpoint: `GET /api/color?name=palavra`
 - Success (`200`): `{"input": "palavra", "color": "#hexadecimal"}`
 - Missing/empty `name` (`400`): `{"error": "Missing required query parameter \"name\"..."}`
 - Non-GET method (`405`): `{"error": "Method not allowed..."}`
 - Implementation: Vercel Serverless Function in `api/color.js`, which imports `generateColor` from the core `NameToColor.js` through CommonJS. The same file remains browser-compatible via a plain `<script>` tag.
+
+### Per-function endpoints
+
+Every DOM-free public function of the library is exposed as its own endpoint on Vercel. Each endpoint accepts the function's parameters as query parameters and returns `{ ...params, result }`.
+
+- `GET /api/color?name=palavra` → `{ input, color }` (the `generateColor` function)
+- `GET /api/generateReadableColor?input=...` → `{ input, result: [textColor, bgColor] }`
+- `GET /api/generateThemePalette?input=...&count=...` → `{ input, count, result: string[] }`
+- `GET /api/listColors?page=...&size=...` → `{ page, size, result: { items, pageNumber, pageCount, totalItems } }`
+- `GET /api/colorName?input=...&locale=...` → `{ input, locale, result: string | null }`
+- `GET /api/colorNames?input=...&locale=...` → `{ input, locale, result: string[] }`
+- `GET /api/closestName?input=...&locale=...` → `{ input, locale, result: string | null }`
+- `GET /api/closestNames?input=...&locale=...` → `{ input, locale, result: string[] }`
+- `GET /api/generateInvertedColor?input=...` → `{ input, result: string }`
+- `GET /api/generateComplementary?input=...` → `{ input, result: string }`
+- `GET /api/generateTriadic?input=...` → `{ input, result: string[] }`
+- `GET /api/generateSquare?input=...` → `{ input, result: string[] }`
+- `GET /api/generateSplitComplementary?input=...` → `{ input, result: string[] }`
+- `GET /api/generateMonochrome?input=...&count=...` → `{ input, count, result: string[] }`
+- `GET /api/hexToRgb?input=...` → `{ input, result: { r, g, b } }`
+- `GET /api/hexToHsl?input=...` → `{ input, result: { h, s, l } }`
+- `GET /api/hslToHex?h=...&s=...&l=...` → `{ h, s, l, result: string }`
+- `GET /api/relativeLuminance?input=...` → `{ input, result: number }`
+- `GET /api/normalizeHex?input=...` → `{ input, result: string }`
+- `GET /api/isLight?input=...` → `{ input, result: boolean }`
+- `GET /api/isDark?input=...` → `{ input, result: boolean }`
+- `GET /api/isHot?input=...` → `{ input, result: boolean }`
+- `GET /api/isCold?input=...` → `{ input, result: boolean }`
+- `GET /api/temperature?input=...` → `{ input, result: string }`
+- `GET /api/mood?input=...&locale=...` → `{ input, locale, result: string[] }`
+- `GET /api/isReadableForBlindness?colorA=...&colorB=...&type=...` → `{ colorA, colorB, type, result: { readable, contrast, ... } }`
+- `GET /api/listNameToColorLanguages` → `{ result: array }`
+- `GET /api/colorDatabase` → `{ result: object }`
+
+All endpoints share the same behavior: CORS fully open (`Access-Control-Allow-Origin: *`), `OPTIONS` preflight returns `204`, non-GET methods return `405`, and missing/unknown parameters return `400` with `{"error": "..."}`. Implementation: one Vercel Serverless Function per function in the `api/` directory, plus shared HTTP helpers in `lib/api-helpers.js`. Each endpoint imports its function from the core `NameToColor.js` through CommonJS; the same file remains browser-compatible via a plain `<script>` tag.
 
 ## Documentation
 
@@ -28,8 +71,9 @@ NameToColor also exposes a public, free REST API hosted on Vercel. It converts a
 - [GitHub repository](https://github.com/zonaro/NameToColor): Canonical source repository and project history.
 - [Core browser library](https://raw.githubusercontent.com/zonaro/NameToColor/main/NameToColor.js): English implementation and built-in color database.
 - [Brazilian Portuguese language pack](https://raw.githubusercontent.com/zonaro/NameToColor/main/NameToColor.ptBR.js): Optional data-only `pt-BR` translations and aliases.
-- [Vercel serverless API](https://raw.githubusercontent.com/zonaro/NameToColor/main/api/color.js): Free REST endpoint that reuses the core library.
+- [Vercel serverless API](https://raw.githubusercontent.com/zonaro/NameToColor/main/api/color.js): Free REST endpoint for `generateColor` that reuses the core library.
+- [Vercel per-function endpoints](https://github.com/zonaro/NameToColor/tree/main/api): One serverless function per DOM-free library function, plus shared HTTP helpers in `lib/api-helpers.js`.
 
-## Optional
+## CDN (preferred)
 
-- [CDN build](https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js): Direct browser-ready core script served from jsDelivr.
+- [CDN build](https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.js): Direct browser-ready core script served from jsDelivr. **Preferred over the REST API** whenever JavaScript is available.

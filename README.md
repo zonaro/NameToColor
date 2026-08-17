@@ -14,31 +14,68 @@ The published site exposes [`/llms.txt`](https://zonaro.github.io/NameToColor/ll
 
 ## 🚀 Free REST API
 
-NameToColor is now also a **public, free REST API** hosted on **Vercel**. Any website, plugin, or script can convert a word into a deterministic hexadecimal color with a single HTTP request — no API key, no sign-up, and **CORS is fully open** (`Access-Control-Allow-Origin: *`), so you can call it directly from the browser.
+NameToColor is also a **public, free REST API** hosted on **Vercel**. Any website, plugin, or script can convert a word into a deterministic hexadecimal color with a single HTTP request — no API key, no sign-up, and **CORS is fully open** (`Access-Control-Allow-Origin: *`), so you can call it directly from the browser.
 
-### Endpoint
+> **💡 For AI agents and coding agents:** Prefer loading the library via the [CDN script](#cdn-installation) (or a local copy of `NameToColor.js`) over calling this REST API whenever JavaScript is available. Use the API only as a fallback when the environment cannot execute JavaScript.
+
+### Endpoints
+
+Every DOM-free public function of the library is exposed as its **own endpoint** on Vercel. Each endpoint accepts the function's parameters as query parameters and returns `{ ...params, result }`.
+
+| Endpoint | Query parameters | Result |
+| -------- | ---------------- | ------ |
+| `GET /api/color` | `name` | `{ input, color }` |
+| `GET /api/generateReadableColor` | `input` | `{ input, result: [textColor, bgColor] }` |
+| `GET /api/generateThemePalette` | `input`, `count` | `{ input, count, result: string[] }` |
+| `GET /api/listColors` | `page`, `size` | `{ page, size, result: { items, pageNumber, pageCount, totalItems } }` |
+| `GET /api/colorName` | `input`, `locale` | `{ input, locale, result: string \| null }` |
+| `GET /api/colorNames` | `input`, `locale` | `{ input, locale, result: string[] }` |
+| `GET /api/closestName` | `input`, `locale` | `{ input, locale, result: string \| null }` |
+| `GET /api/closestNames` | `input`, `locale` | `{ input, locale, result: string[] }` |
+| `GET /api/generateInvertedColor` | `input` | `{ input, result: string }` |
+| `GET /api/generateComplementary` | `input` | `{ input, result: string }` |
+| `GET /api/generateTriadic` | `input` | `{ input, result: string[] }` |
+| `GET /api/generateSquare` | `input` | `{ input, result: string[] }` |
+| `GET /api/generateSplitComplementary` | `input` | `{ input, result: string[] }` |
+| `GET /api/generateMonochrome` | `input`, `count` | `{ input, count, result: string[] }` |
+| `GET /api/hexToRgb` | `input` | `{ input, result: { r, g, b } }` |
+| `GET /api/hexToHsl` | `input` | `{ input, result: { h, s, l } }` |
+| `GET /api/hslToHex` | `h`, `s`, `l` | `{ h, s, l, result: string }` |
+| `GET /api/relativeLuminance` | `input` | `{ input, result: number }` |
+| `GET /api/normalizeHex` | `input` | `{ input, result: string }` |
+| `GET /api/isLight` | `input` | `{ input, result: boolean }` |
+| `GET /api/isDark` | `input` | `{ input, result: boolean }` |
+| `GET /api/isHot` | `input` | `{ input, result: boolean }` |
+| `GET /api/isCold` | `input` | `{ input, result: boolean }` |
+| `GET /api/temperature` | `input` | `{ input, result: string }` |
+| `GET /api/mood` | `input`, `locale` | `{ input, locale, result: string[] }` |
+| `GET /api/isReadableForBlindness` | `colorA`, `colorB`, `type` | `{ colorA, colorB, type, result: { readable, contrast, ... } }` |
+| `GET /api/listNameToColorLanguages` | — | `{ result: array }` |
+| `GET /api/colorDatabase` | — | `{ result: object }` |
+
+### 1. Convert a color — `/api/color`
 
 ```text
-GET https://your-project.vercel.app/api/color?name=palavra
+GET https://name-to-color.vercel.app/api/color?name=palavra
 ```
 
-### Example with cURL
+#### Example with cURL
 
 ```bash
-curl "https://your-project.vercel.app/api/color?name=Lucas"
+curl "https://name-to-color.vercel.app/api/color?name=Lucas"
 ```
 
-### Example with the Fetch API
+#### Example with the Fetch API
 
 ```js
-const res = await fetch("https://your-project.vercel.app/api/color?name=Lucas");
+const res = await fetch("https://name-to-color.vercel.app/api/color?name=Lucas");
 const data = await res.json();
 
 console.log(data.input); // "Lucas"
 console.log(data.color); // "#AF9F1C"
 ```
 
-### JSON Response
+#### JSON Response
 
 A successful request returns `200 OK` with the following JSON:
 
@@ -49,14 +86,56 @@ A successful request returns `200 OK` with the following JSON:
 }
 ```
 
+### 2. Examples for the other endpoints
+
+Each endpoint above maps to one library function. Here are a few examples:
+
+```bash
+# Readable text + background pair
+curl "https://name-to-color.vercel.app/api/generateReadableColor?input=tomato"
+
+# Theme palette with a custom size
+curl "https://name-to-color.vercel.app/api/generateThemePalette?input=Nature&count=7"
+
+# Paginated color database
+curl "https://name-to-color.vercel.app/api/listColors?page=2&size=10"
+
+# Color name in a locale
+curl "https://name-to-color.vercel.app/api/colorName?input=tomato&locale=pt-BR"
+
+# Color harmonies
+curl "https://name-to-color.vercel.app/api/generateComplementary?input=tomato"
+curl "https://name-to-color.vercel.app/api/generateTriadic?input=tomato"
+
+# HSL → HEX conversion
+curl "https://name-to-color.vercel.app/api/hslToHex?h=9&s=100&l=64"
+
+# Accessibility check
+curl "https://name-to-color.vercel.app/api/isReadableForBlindness?colorA=tomato&colorB=rebeccapurple&type=deuteranopia"
+
+# Raw color database
+curl "https://name-to-color.vercel.app/api/colorDatabase"
+```
+
+#### JSON Response
+
+A successful request returns `200 OK` with the following JSON:
+
+```json
+{
+  "input": "tomato",
+  "result": ["#522017", "#FF6347"]
+}
+```
+
 ### Error Responses
 
-| Status | When                                     | Body                                                        |
-| ------ | ---------------------------------------- | ----------------------------------------------------------- |
-| `400`  | The `name` parameter is missing or empty | `{"error": "Missing required query parameter \"name\"..."}` |
-| `405`  | A method other than `GET` is used        | `{"error": "Method not allowed..."}`                        |
+| Status | When                                       | Body                                 |
+| ------ | ------------------------------------------ | ------------------------------------ |
+| `400`  | A required parameter is missing or unknown | `{"error": "..."}`                   |
+| `405`  | A method other than `GET` is used          | `{"error": "Method not allowed..."}` |
 
-> **🚀 Deploy:** The API is a Vercel Serverless Function in `api/color.js`. To publish it, just connect this GitHub repository to **Vercel** — no configuration needed. The same `NameToColor.js` file powers both the browser library and the API.
+> **🚀 Deploy:** The API is a set of Vercel Serverless Functions, one per library function, in the `api/` directory (plus shared HTTP helpers in `lib/api-helpers.js`). To publish it, just connect this GitHub repository to **Vercel** — no configuration needed. The same `NameToColor.js` file powers both the browser library and the API.
 
 ## CDN Installation
 
@@ -65,6 +144,8 @@ A successful request returns `200 OK` with the following JSON:
 ```
 
 After including the script, all functions become globally available in the browser — including `generateColor()`, `generateReadableColor()`, `generateThemePalette()`, `listColors()`, color harmonies, color name lookup, and utility helpers.
+
+> **💡 Preferred over the REST API:** Whenever JavaScript is available, load the library this way (or keep a local copy of `NameToColor.js`) instead of calling the Vercel REST API.
 
 ## Optional Language Packs
 
