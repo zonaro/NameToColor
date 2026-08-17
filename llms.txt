@@ -20,6 +20,8 @@ Prefer using the library directly over calling the Vercel REST API whenever Java
 
 NameToColor also exposes a public, free REST API hosted on Vercel. It converts a word into a deterministic hexadecimal color with a single GET request. CORS is fully open (`Access-Control-Allow-Origin: *`), so it can be called directly from any browser. **This API is a fallback** — prefer the CDN script or a local copy of the library whenever JavaScript is available.
 
+The API loads the Brazilian Portuguese language pack alongside the English core. Functions that return names or labels (`colorName`, `colorNames`, `closestName`, `closestNames`, `mood`, `listColors`) accept a `locale` query parameter — defaulting to **English** when omitted. Portuguese inputs (`vermelho`, `azul mais escuro`, `natureza`) work out of the box.
+
 - Endpoint: `GET /api/color?name=palavra`
 - Success (`200`): `{"input": "palavra", "color": "#hexadecimal"}`
 - Missing/empty `name` (`400`): `{"error": "Missing required query parameter \"name\"..."}`
@@ -33,7 +35,7 @@ Every DOM-free public function of the library is exposed as its own endpoint on 
 - `GET /api/color?name=palavra` → `{ input, color }` (the `generateColor` function)
 - `GET /api/generateReadableColor?input=...` → `{ input, result: [textColor, bgColor] }`
 - `GET /api/generateThemePalette?input=...&count=...` → `{ input, count, result: string[] }`
-- `GET /api/listColors?page=...&size=...` → `{ page, size, result: { items, pageNumber, pageCount, totalItems } }`
+- `GET /api/listColors?page=...&size=...&locale=...` → `{ page, size, locale, result: { items, pageNumber, pageCount, totalItems } }`
 - `GET /api/colorName?input=...&locale=...` → `{ input, locale, result: string | null }`
 - `GET /api/colorNames?input=...&locale=...` → `{ input, locale, result: string[] }`
 - `GET /api/closestName?input=...&locale=...` → `{ input, locale, result: string | null }`

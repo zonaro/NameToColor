@@ -22,12 +22,14 @@ NameToColor is also a **public, free REST API** hosted on **Vercel**. Any websit
 
 Every DOM-free public function of the library is exposed as its **own endpoint** on Vercel. Each endpoint accepts the function's parameters as query parameters and returns `{ ...params, result }`.
 
+> **🌐 Multilingual:** The API loads the Brazilian Portuguese language pack (`NameToColor.ptBR.js`) alongside the English core. Functions that return names or labels (`colorName`, `colorNames`, `closestName`, `closestNames`, `mood`, `listColors`) accept a `locale` query parameter — defaulting to **English** when omitted. Portuguese inputs (`vermelho`, `azul mais escuro`, `natureza`) work out of the box.
+
 | Endpoint                              | Query parameters           | Result                                                                 |
 | ------------------------------------- | -------------------------- | ---------------------------------------------------------------------- |
 | `GET /api/color`                      | `name`                     | `{ input, color }`                                                     |
 | `GET /api/generateReadableColor`      | `input`                    | `{ input, result: [textColor, bgColor] }`                              |
 | `GET /api/generateThemePalette`       | `input`, `count`           | `{ input, count, result: string[] }`                                   |
-| `GET /api/listColors`                 | `page`, `size`             | `{ page, size, result: { items, pageNumber, pageCount, totalItems } }` |
+| `GET /api/listColors`                 | `page`, `size`, `locale`   | `{ page, size, locale, result: { items, pageNumber, pageCount, totalItems } }` |
 | `GET /api/colorName`                  | `input`, `locale`          | `{ input, locale, result: string \| null }`                            |
 | `GET /api/colorNames`                 | `input`, `locale`          | `{ input, locale, result: string[] }`                                  |
 | `GET /api/closestName`                | `input`, `locale`          | `{ input, locale, result: string \| null }`                            |
@@ -97,8 +99,11 @@ curl "https://name-to-color.vercel.app/api/generateReadableColor?input=tomato"
 # Theme palette with a custom size
 curl "https://name-to-color.vercel.app/api/generateThemePalette?input=Nature&count=7"
 
-# Paginated color database
+# Paginated color database (English by default)
 curl "https://name-to-color.vercel.app/api/listColors?page=2&size=10"
+
+# Paginated color database with Portuguese names
+curl "https://name-to-color.vercel.app/api/listColors?page=2&size=10&locale=pt-BR"
 
 # Color name in a locale
 curl "https://name-to-color.vercel.app/api/colorName?input=tomato&locale=pt-BR"
@@ -271,9 +276,9 @@ el.style.color = textColor;
 el.style.backgroundColor = backgroundColor;
 ```
 
-### `listColors(pageNumber?, pageSize?)`
+### `listColors(pageNumber?, pageSize?, locale?)`
 
-Returns the internal hexadecimal-to-names database in a paginated format. Pairs with multiple color names (synonyms) are flattened so each name appears as its own `{ Color, Hexadecimal }` item. This public result keeps `#` in `Hexadecimal`.
+Returns the internal hexadecimal-to-names database in a paginated format. Pairs with multiple color names (synonyms) are flattened so each name appears as its own `{ Color, Hexadecimal }` item. This public result keeps `#` in `Hexadecimal`. The optional `locale` localizes the returned `Color` names (default **English**); colors without a translation fall back to their native English name.
 
 ```js
 // All colors on one page
@@ -283,6 +288,10 @@ listColors();
 // Page 2 with 10 items
 listColors(2, 10);
 // -> { items: [...], pageNumber: 2, pageCount: 237, totalItems: 2362 }
+
+// Page 1 with 10 items, names in Brazilian Portuguese
+listColors(1, 10, 'pt-BR');
+// -> { items: [{ Color: "Vermelho", Hexadecimal: "#FF0000" }, ...], ... }
 ```
 
 Useful for building color browsers, pickers, or tables. The interactive test page uses this function to display the full database with pagination.

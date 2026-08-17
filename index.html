@@ -1225,6 +1225,16 @@
                 when the environment cannot execute JavaScript.
             </div>
 
+            <div class="note">
+                <strong>🌐 Multilingual:</strong> The API loads the Brazilian Portuguese language pack
+                (<code>NameToColor.ptBR.js</code>) alongside the English core. Functions that return names or
+                labels (<code>colorName</code>, <code>colorNames</code>, <code>closestName</code>,
+                <code>closestNames</code>, <code>mood</code>, <code>listColors</code>) accept a
+                <code>locale</code> query parameter — defaulting to <strong>English</strong> when omitted.
+                Portuguese inputs (<code>vermelho</code>, <code>azul mais escuro</code>, <code>natureza</code>)
+                work out of the box.
+            </div>
+
             <h3 id="api-endpoints">Endpoints</h3>
             <p>
                 Every DOM-free public function of the library is exposed as its <strong>own endpoint</strong>
@@ -1257,9 +1267,9 @@
                     </tr>
                     <tr>
                         <td class="mono"><code>GET /api/listColors</code></td>
-                        <td><code>page</code>, <code>size</code></td>
+                        <td><code>page</code>, <code>size</code>, <code>locale</code></td>
                         <td class="mono">
-                            <code>{ page, size, result: { items, pageNumber, pageCount, totalItems } }</code></td>
+                            <code>{ page, size, locale, result: { items, pageNumber, pageCount, totalItems } }</code></td>
                     </tr>
                     <tr>
                         <td class="mono"><code>GET /api/colorName</code></td>
@@ -2326,17 +2336,19 @@ generateReadableColor(<span class="string">"#85d8fd"</span>);
 
             <!-- ─── listColors ─── -->
             <h3 id="function-listColors" data-api-function="listColors"><span aria-hidden="true">📚</span>
-                <code>listColors(pageNumber?, pageSize?)</code>
+                <code>listColors(pageNumber?, pageSize?, locale?)</code>
             </h3>
             <div class="func-signature"
-                aria-label="Function signature: listColors with optional pageNumber and pageSize returns paginated result object">
-                listColors(<span class="param">pageNumber?</span>, <span class="param">pageSize?</span>) → <span
-                    class="param">{ items, pageNumber, pageCount, totalItems }</span>
+                aria-label="Function signature: listColors with optional pageNumber, pageSize and locale returns paginated result object">
+                listColors(<span class="param">pageNumber?</span>, <span class="param">pageSize?</span>, <span
+                    class="param">locale?</span>) → <span class="param">{ items, pageNumber, pageCount, totalItems }</span>
             </div>
             <p>
                 Returns the entire internal hexadecimal-to-names database in a paginated format. Each color name
                 appears as its own item (pairs with multiple names are flattened). Each item contains
                 <code>Color</code> (name) and <code>Hexadecimal</code>, with the regular leading <code>#</code>.
+                The optional <code>locale</code> localizes the returned <code>Color</code> names (default
+                <strong>English</strong>); colors without a translation fall back to their native English name.
             </p>
 
             <h4>Parameters</h4>
@@ -2361,6 +2373,12 @@ generateReadableColor(<span class="string">"#85d8fd"</span>);
                         <td>Number</td>
                         <td><code>all items</code></td>
                         <td>Number of items per page</td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>locale</code></td>
+                        <td>String</td>
+                        <td><code>en</code></td>
+                        <td>Locale for the returned color names (e.g. <code>pt-BR</code>); falls back to English</td>
                     </tr>
                 </tbody>
             </table>
@@ -2406,6 +2424,10 @@ listColors();
 <span class="comment">// Page 2 with 10 items per page</span>
 listColors(<span class="number">2</span>, <span class="number">10</span>);
 <span class="comment">// → { items: [...], pageNumber: 2, pageCount: 237, totalItems: 2362 }</span>
+
+<span class="comment">// Page 1 with 10 items, names in Brazilian Portuguese</span>
+listColors(<span class="number">1</span>, <span class="number">10</span>, <span class="string">'pt-BR'</span>);
+<span class="comment">// → { items: [{ Color: "Vermelho", Hexadecimal: "#FF0000" }, ...], ... }</span>
 
 <span class="comment">// Useful for building color pickers, tables, or browsers</span>
 <span class="keyword">const</span> result = listColors(<span class="number">1</span>, <span class="number">20</span>);
