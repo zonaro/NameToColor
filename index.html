@@ -1207,7 +1207,7 @@
         <section class="card docs-section" id="api-rest" aria-labelledby="api-rest-title">
             <header class="card-header">
                 <h2 id="api-rest-title"><span aria-hidden="true">🚀</span> Free REST API</h2>
-                <span class="badge">GET /api/color · 28 endpoints</span>
+                <span class="badge">GET /api/color · 1 endpoint</span>
             </header>
 
             <p>
@@ -1237,212 +1237,225 @@
 
             <h3 id="api-endpoints">Endpoints</h3>
             <p>
-                Every DOM-free public function of the library is exposed as its <strong>own endpoint</strong>
-                on Vercel. Each endpoint accepts the function's parameters as query parameters and returns
-                <code>{ ...params, result }</code>.
+                The API is a <strong>single endpoint</strong> that dispatches to any library function. The
+                Vercel Hobby plan limits a deployment to 12 Serverless Functions, so all functions share one
+                endpoint instead of one file per function.
+            </p>
+            <pre><span class="keyword">GET</span> https://<span class="string">name-to-color</span>.vercel.app/api/color?func=<span class="string">{function}</span>&amp;param1=<span class="string">value1</span>&amp;param2=<span class="string">value2</span></pre>
+            <p>
+                The <code>func</code> query parameter selects the library function to call; every other query
+                parameter is passed to that function. The response mirrors the request:
+                <code>{ func, ...params, result }</code>. For convenience, when <code>func</code> is omitted
+                but <code>name</code> is present, it defaults to <code>generateColor</code> — so the original
+                <code>/api/color?name=palavra</code> URL keeps working.
             </p>
             <table>
                 <thead>
                     <tr>
-                        <th scope="col">Endpoint</th>
+                        <th scope="col"><code>func</code> value</th>
                         <th scope="col">Query parameters</th>
                         <th scope="col">Result</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="mono"><code>GET /api/color</code></td>
+                        <td class="mono"><code>generateColor</code></td>
                         <td><code>name</code></td>
-                        <td class="mono"><code>{ input, color }</code></td>
+                        <td class="mono"><code>{ func, name, result: "#hex" }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/generateReadableColor</code></td>
+                        <td class="mono"><code>generateReadableColor</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: [textColor, bgColor] }</code></td>
+                        <td class="mono"><code>{ func, input, result: [textColor, bgColor] }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/generateThemePalette</code></td>
+                        <td class="mono"><code>generateThemePalette</code></td>
                         <td><code>input</code>, <code>count</code></td>
-                        <td class="mono"><code>{ input, count, result: string[] }</code></td>
+                        <td class="mono"><code>{ func, input, count, result: string[] }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/listColors</code></td>
+                        <td class="mono"><code>listColors</code></td>
                         <td><code>page</code>, <code>size</code>, <code>locale</code></td>
                         <td class="mono">
-                            <code>{ page, size, locale, result: { items, pageNumber, pageCount, totalItems } }</code></td>
+                            <code>{ func, page, size, locale, result: { items, pageNumber, pageCount, totalItems } }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/colorName</code></td>
+                        <td class="mono"><code>colorName</code></td>
                         <td><code>input</code>, <code>locale</code></td>
-                        <td class="mono"><code>{ input, locale, result: string | null }</code></td>
+                        <td class="mono"><code>{ func, input, locale, result: string | null }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/colorNames</code></td>
+                        <td class="mono"><code>colorNames</code></td>
                         <td><code>input</code>, <code>locale</code></td>
-                        <td class="mono"><code>{ input, locale, result: string[] }</code></td>
+                        <td class="mono"><code>{ func, input, locale, result: string[] }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/closestName</code></td>
+                        <td class="mono"><code>closestName</code></td>
                         <td><code>input</code>, <code>locale</code></td>
-                        <td class="mono"><code>{ input, locale, result: string | null }</code></td>
+                        <td class="mono"><code>{ func, input, locale, result: string | null }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/closestNames</code></td>
+                        <td class="mono"><code>closestNames</code></td>
                         <td><code>input</code>, <code>locale</code></td>
-                        <td class="mono"><code>{ input, locale, result: string[] }</code></td>
+                        <td class="mono"><code>{ func, input, locale, result: string[] }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/generateInvertedColor</code></td>
+                        <td class="mono"><code>generateInvertedColor</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: string }</code></td>
+                        <td class="mono"><code>{ func, input, result: string }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/generateComplementary</code></td>
+                        <td class="mono"><code>generateComplementary</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: string }</code></td>
+                        <td class="mono"><code>{ func, input, result: string }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/generateTriadic</code></td>
+                        <td class="mono"><code>generateTriadic</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: string[] }</code></td>
+                        <td class="mono"><code>{ func, input, result: string[] }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/generateSquare</code></td>
+                        <td class="mono"><code>generateSquare</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: string[] }</code></td>
+                        <td class="mono"><code>{ func, input, result: string[] }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/generateSplitComplementary</code></td>
+                        <td class="mono"><code>generateSplitComplementary</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: string[] }</code></td>
+                        <td class="mono"><code>{ func, input, result: string[] }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/generateMonochrome</code></td>
+                        <td class="mono"><code>generateMonochrome</code></td>
                         <td><code>input</code>, <code>count</code></td>
-                        <td class="mono"><code>{ input, count, result: string[] }</code></td>
+                        <td class="mono"><code>{ func, input, count, result: string[] }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/hexToRgb</code></td>
+                        <td class="mono"><code>hexToRgb</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: { r, g, b } }</code></td>
+                        <td class="mono"><code>{ func, input, result: { r, g, b } }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/hexToHsl</code></td>
+                        <td class="mono"><code>hexToHsl</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: { h, s, l } }</code></td>
+                        <td class="mono"><code>{ func, input, result: { h, s, l } }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/hslToHex</code></td>
+                        <td class="mono"><code>hslToHex</code></td>
                         <td><code>h</code>, <code>s</code>, <code>l</code></td>
-                        <td class="mono"><code>{ h, s, l, result: string }</code></td>
+                        <td class="mono"><code>{ func, h, s, l, result: string }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/relativeLuminance</code></td>
+                        <td class="mono"><code>relativeLuminance</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: number }</code></td>
+                        <td class="mono"><code>{ func, input, result: number }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/normalizeHex</code></td>
+                        <td class="mono"><code>normalizeHex</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: string }</code></td>
+                        <td class="mono"><code>{ func, input, result: string }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/isLight</code></td>
+                        <td class="mono"><code>isLight</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: boolean }</code></td>
+                        <td class="mono"><code>{ func, input, result: boolean }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/isDark</code></td>
+                        <td class="mono"><code>isDark</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: boolean }</code></td>
+                        <td class="mono"><code>{ func, input, result: boolean }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/isHot</code></td>
+                        <td class="mono"><code>isHot</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: boolean }</code></td>
+                        <td class="mono"><code>{ func, input, result: boolean }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/isCold</code></td>
+                        <td class="mono"><code>isCold</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: boolean }</code></td>
+                        <td class="mono"><code>{ func, input, result: boolean }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/temperature</code></td>
+                        <td class="mono"><code>temperature</code></td>
                         <td><code>input</code></td>
-                        <td class="mono"><code>{ input, result: string }</code></td>
+                        <td class="mono"><code>{ func, input, result: string }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/mood</code></td>
+                        <td class="mono"><code>mood</code></td>
                         <td><code>input</code>, <code>locale</code></td>
-                        <td class="mono"><code>{ input, locale, result: string[] }</code></td>
+                        <td class="mono"><code>{ func, input, locale, result: string[] }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/isReadableForBlindness</code></td>
+                        <td class="mono"><code>isReadableForBlindness</code></td>
                         <td><code>colorA</code>, <code>colorB</code>, <code>type</code></td>
-                        <td class="mono"><code>{ colorA, colorB, type, result: { readable, contrast, ... } }</code></td>
+                        <td class="mono"><code>{ func, colorA, colorB, type, result: { readable, contrast, ... } }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/listNameToColorLanguages</code></td>
+                        <td class="mono"><code>listNameToColorLanguages</code></td>
                         <td>—</td>
-                        <td class="mono"><code>{ result: array }</code></td>
+                        <td class="mono"><code>{ func, result: array }</code></td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>GET /api/colorDatabase</code></td>
+                        <td class="mono"><code>colorDatabase</code></td>
                         <td>—</td>
-                        <td class="mono"><code>{ result: object }</code></td>
+                        <td class="mono"><code>{ func, result: object }</code></td>
                     </tr>
                 </tbody>
             </table>
 
             <h3 id="api-endpoint-color">1. Convert a color — <code>/api/color</code></h3>
             <p>Send a <code>GET</code> request with the word you want to convert in the <code>name</code> query
-                parameter:</p>
+                parameter. When <code>func</code> is omitted, it defaults to <code>generateColor</code>:</p>
             <pre><span class="keyword">GET</span> https://<span class="string">name-to-color</span>.vercel.app/api/color?name=<span class="string">palavra</span></pre>
 
             <h4 id="api-fetch-example">Usage with the Fetch API</h4>
             <pre><span class="keyword">const</span> res = <span class="keyword">await</span> fetch(<span class="string">"https://name-to-color.vercel.app/api/color?name=Lucas"</span>);
 <span class="keyword">const</span> data = <span class="keyword">await</span> res.json();
 
-<span class="built_in">console</span>.log(data.input);  <span class="comment">// "Lucas"</span>
-<span class="built_in">console</span>.log(data.color);  <span class="comment">// "#AF9F1C"</span></pre>
+<span class="built_in">console</span>.log(data.name);    <span class="comment">// "Lucas"</span>
+<span class="built_in">console</span>.log(data.result);  <span class="comment">// "#AF9F1C"</span></pre>
 
             <h4 id="api-response">JSON Response</h4>
             <p>A successful request returns <code>200 OK</code> with the following JSON:</p>
             <pre>{
-  <span class="string">"input"</span>: <span class="string">"Lucas"</span>,
-  <span class="string">"color"</span>: <span class="string">"#AF9F1C"</span>
+  <span class="string">"func"</span>: <span class="string">"generateColor"</span>,
+  <span class="string">"name"</span>: <span class="string">"Lucas"</span>,
+  <span class="string">"result"</span>: <span class="string">"#AF9F1C"</span>
 }</pre>
 
-            <h3 id="api-endpoint-examples">2. Examples for the other endpoints</h3>
-            <p>Each endpoint above maps to one library function. Here are a few examples:</p>
+            <h3 id="api-endpoint-examples">2. Examples for the other functions</h3>
+            <p>Each <code>func</code> value above maps to one library function. Here are a few examples:</p>
             <pre><span class="comment"># Readable text + background pair</span>
-<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/generateReadableColor?input=tomato"</span>
+<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/color?func=generateReadableColor&amp;input=tomato"</span>
 
 <span class="comment"># Theme palette with a custom size</span>
-<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/generateThemePalette?input=Nature&amp;count=7"</span>
+<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/color?func=generateThemePalette&amp;input=Nature&amp;count=7"</span>
 
-<span class="comment"># Paginated color database</span>
-<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/listColors?page=2&amp;size=10"</span>
+<span class="comment"># Paginated color database (English by default)</span>
+<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/color?func=listColors&amp;page=2&amp;size=10"</span>
+
+<span class="comment"># Paginated color database with Portuguese names</span>
+<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/color?func=listColors&amp;page=2&amp;size=10&amp;locale=pt-BR"</span>
 
 <span class="comment"># Color name in a locale</span>
-<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/colorName?input=tomato&amp;locale=pt-BR"</span>
+<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/color?func=colorName&amp;input=tomato&amp;locale=pt-BR"</span>
 
 <span class="comment"># Color harmonies</span>
-<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/generateComplementary?input=tomato"</span>
-<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/generateTriadic?input=tomato"</span>
+<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/color?func=generateComplementary&amp;input=tomato"</span>
+<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/color?func=generateTriadic&amp;input=tomato"</span>
 
 <span class="comment"># HSL → HEX conversion</span>
-<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/hslToHex?h=9&amp;s=100&amp;l=64"</span>
+<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/color?func=hslToHex&amp;h=9&amp;s=100&amp;l=64"</span>
 
 <span class="comment"># Accessibility check</span>
-<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/isReadableForBlindness?colorA=tomato&amp;colorB=rebeccapurple&amp;type=deuteranopia"</span>
+<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/color?func=isReadableForBlindness&amp;colorA=tomato&amp;colorB=rebeccapurple&amp;type=deuteranopia"</span>
 
 <span class="comment"># Raw color database</span>
-<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/colorDatabase"</span></pre>
+<span class="keyword">curl</span> <span class="string">"https://name-to-color.vercel.app/api/color?func=colorDatabase"</span></pre>
 
             <h4 id="api-response-example">JSON Response</h4>
             <p>A successful request returns <code>200 OK</code> with the following JSON:</p>
             <pre>{
+  <span class="string">"func"</span>: <span class="string">"generateReadableColor"</span>,
   <span class="string">"input"</span>: <span class="string">"tomato"</span>,
   <span class="string">"result"</span>: [<span class="string">"#522017"</span>, <span class="string">"#FF6347"</span>]
 }</pre>
@@ -1471,11 +1484,13 @@
             </table>
 
             <div class="note">
-                <strong>🚀 Deploy:</strong> The API is a set of Vercel Serverless Functions, one per
-                library function, in the <code>api/</code> directory (plus shared HTTP helpers in
-                <code>lib/api-helpers.js</code>). To deploy, just connect this GitHub repository to
-                <strong>Vercel</strong> — no configuration needed. The same <code>NameToColor.js</code>
-                file powers both the browser library and the API.
+                <strong>🚀 Deploy:</strong> The API is a single Vercel Serverless Function
+                (<code>api/color.js</code>) that dispatches to every library function, plus shared HTTP
+                helpers in <code>lib/api-helpers.js</code>. The Vercel Hobby plan limits a deployment to
+                12 Serverless Functions, so consolidating everything into one endpoint keeps the project
+                on the free plan. To deploy, just connect this GitHub repository to <strong>Vercel</strong>
+                — no configuration needed. The same <code>NameToColor.js</code> file powers both the
+                browser library and the API.
             </div>
         </section>
 

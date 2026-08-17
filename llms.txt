@@ -22,46 +22,46 @@ NameToColor also exposes a public, free REST API hosted on Vercel. It converts a
 
 The API loads the Brazilian Portuguese language pack alongside the English core. Functions that return names or labels (`colorName`, `colorNames`, `closestName`, `closestNames`, `mood`, `listColors`) accept a `locale` query parameter — defaulting to **English** when omitted. Portuguese inputs (`vermelho`, `azul mais escuro`, `natureza`) work out of the box.
 
-- Endpoint: `GET /api/color?name=palavra`
-- Success (`200`): `{"input": "palavra", "color": "#hexadecimal"}`
-- Missing/empty `name` (`400`): `{"error": "Missing required query parameter \"name\"..."}`
+- Endpoint: `GET /api/color?func=generateColor&name=palavra` (or just `GET /api/color?name=palavra` — `func` defaults to `generateColor`)
+- Success (`200`): `{"func": "generateColor", "name": "palavra", "result": "#hexadecimal"}`
+- Missing/empty `func` (`400`): `{"error": "Missing required query parameter \"func\"...", "available": [...]}`
 - Non-GET method (`405`): `{"error": "Method not allowed..."}`
-- Implementation: Vercel Serverless Function in `api/color.js`, which imports `generateColor` from the core `NameToColor.js` through CommonJS. The same file remains browser-compatible via a plain `<script>` tag.
+- Implementation: a single Vercel Serverless Function in `api/color.js` that dispatches to every library function. The Vercel Hobby plan limits a deployment to 12 Serverless Functions, so all functions share one endpoint. The same file remains browser-compatible via a plain `<script>` tag.
 
-### Per-function endpoints
+### Single dispatcher endpoint
 
-Every DOM-free public function of the library is exposed as its own endpoint on Vercel. Each endpoint accepts the function's parameters as query parameters and returns `{ ...params, result }`.
+The API is a single endpoint: `GET /api/color?func={function}&param1=value1&param2=value2`. The `func` query parameter selects the library function to call; every other query parameter is passed to that function. The response mirrors the request: `{ func, ...params, result }`.
 
-- `GET /api/color?name=palavra` → `{ input, color }` (the `generateColor` function)
-- `GET /api/generateReadableColor?input=...` → `{ input, result: [textColor, bgColor] }`
-- `GET /api/generateThemePalette?input=...&count=...` → `{ input, count, result: string[] }`
-- `GET /api/listColors?page=...&size=...&locale=...` → `{ page, size, locale, result: { items, pageNumber, pageCount, totalItems } }`
-- `GET /api/colorName?input=...&locale=...` → `{ input, locale, result: string | null }`
-- `GET /api/colorNames?input=...&locale=...` → `{ input, locale, result: string[] }`
-- `GET /api/closestName?input=...&locale=...` → `{ input, locale, result: string | null }`
-- `GET /api/closestNames?input=...&locale=...` → `{ input, locale, result: string[] }`
-- `GET /api/generateInvertedColor?input=...` → `{ input, result: string }`
-- `GET /api/generateComplementary?input=...` → `{ input, result: string }`
-- `GET /api/generateTriadic?input=...` → `{ input, result: string[] }`
-- `GET /api/generateSquare?input=...` → `{ input, result: string[] }`
-- `GET /api/generateSplitComplementary?input=...` → `{ input, result: string[] }`
-- `GET /api/generateMonochrome?input=...&count=...` → `{ input, count, result: string[] }`
-- `GET /api/hexToRgb?input=...` → `{ input, result: { r, g, b } }`
-- `GET /api/hexToHsl?input=...` → `{ input, result: { h, s, l } }`
-- `GET /api/hslToHex?h=...&s=...&l=...` → `{ h, s, l, result: string }`
-- `GET /api/relativeLuminance?input=...` → `{ input, result: number }`
-- `GET /api/normalizeHex?input=...` → `{ input, result: string }`
-- `GET /api/isLight?input=...` → `{ input, result: boolean }`
-- `GET /api/isDark?input=...` → `{ input, result: boolean }`
-- `GET /api/isHot?input=...` → `{ input, result: boolean }`
-- `GET /api/isCold?input=...` → `{ input, result: boolean }`
-- `GET /api/temperature?input=...` → `{ input, result: string }`
-- `GET /api/mood?input=...&locale=...` → `{ input, locale, result: string[] }`
-- `GET /api/isReadableForBlindness?colorA=...&colorB=...&type=...` → `{ colorA, colorB, type, result: { readable, contrast, ... } }`
-- `GET /api/listNameToColorLanguages` → `{ result: array }`
-- `GET /api/colorDatabase` → `{ result: object }`
+- `func=generateColor&name=...` → `{ func, name, result: "#hex" }`
+- `func=generateReadableColor&input=...` → `{ func, input, result: [textColor, bgColor] }`
+- `func=generateThemePalette&input=...&count=...` → `{ func, input, count, result: string[] }`
+- `func=listColors&page=...&size=...&locale=...` → `{ func, page, size, locale, result: { items, pageNumber, pageCount, totalItems } }`
+- `func=colorName&input=...&locale=...` → `{ func, input, locale, result: string | null }`
+- `func=colorNames&input=...&locale=...` → `{ func, input, locale, result: string[] }`
+- `func=closestName&input=...&locale=...` → `{ func, input, locale, result: string | null }`
+- `func=closestNames&input=...&locale=...` → `{ func, input, locale, result: string[] }`
+- `func=generateInvertedColor&input=...` → `{ func, input, result: string }`
+- `func=generateComplementary&input=...` → `{ func, input, result: string }`
+- `func=generateTriadic&input=...` → `{ func, input, result: string[] }`
+- `func=generateSquare&input=...` → `{ func, input, result: string[] }`
+- `func=generateSplitComplementary&input=...` → `{ func, input, result: string[] }`
+- `func=generateMonochrome&input=...&count=...` → `{ func, input, count, result: string[] }`
+- `func=hexToRgb&input=...` → `{ func, input, result: { r, g, b } }`
+- `func=hexToHsl&input=...` → `{ func, input, result: { h, s, l } }`
+- `func=hslToHex&h=...&s=...&l=...` → `{ func, h, s, l, result: string }`
+- `func=relativeLuminance&input=...` → `{ func, input, result: number }`
+- `func=normalizeHex&input=...` → `{ func, input, result: string }`
+- `func=isLight&input=...` → `{ func, input, result: boolean }`
+- `func=isDark&input=...` → `{ func, input, result: boolean }`
+- `func=isHot&input=...` → `{ func, input, result: boolean }`
+- `func=isCold&input=...` → `{ func, input, result: boolean }`
+- `func=temperature&input=...` → `{ func, input, result: string }`
+- `func=mood&input=...&locale=...` → `{ func, input, locale, result: string[] }`
+- `func=isReadableForBlindness&colorA=...&colorB=...&type=...` → `{ func, colorA, colorB, type, result: { readable, contrast, ... } }`
+- `func=listNameToColorLanguages` → `{ func, result: array }`
+- `func=colorDatabase` → `{ func, result: object }`
 
-All endpoints share the same behavior: CORS fully open (`Access-Control-Allow-Origin: *`), `OPTIONS` preflight returns `204`, non-GET methods return `405`, and missing/unknown parameters return `400` with `{"error": "..."}`. Implementation: one Vercel Serverless Function per function in the `api/` directory, plus shared HTTP helpers in `lib/api-helpers.js`. Each endpoint imports its function from the core `NameToColor.js` through CommonJS; the same file remains browser-compatible via a plain `<script>` tag.
+All endpoints share the same behavior: CORS fully open (`Access-Control-Allow-Origin: *`), `OPTIONS` preflight returns `204`, non-GET methods return `405`, and missing/unknown parameters return `400` with `{"error": "..."}`. Implementation: one Vercel Serverless Function (`api/color.js`) that dispatches to every library function, plus shared HTTP helpers in `lib/api-helpers.js`. The core `NameToColor.js` is imported through CommonJS; the same file remains browser-compatible via a plain `<script>` tag.
 
 ## Documentation
 
@@ -73,8 +73,8 @@ All endpoints share the same behavior: CORS fully open (`Access-Control-Allow-Or
 - [GitHub repository](https://github.com/zonaro/NameToColor): Canonical source repository and project history.
 - [Core browser library](https://raw.githubusercontent.com/zonaro/NameToColor/main/NameToColor.js): English implementation and built-in color database.
 - [Brazilian Portuguese language pack](https://raw.githubusercontent.com/zonaro/NameToColor/main/NameToColor.ptBR.js): Optional data-only `pt-BR` translations and aliases.
-- [Vercel serverless API](https://raw.githubusercontent.com/zonaro/NameToColor/main/api/color.js): Free REST endpoint for `generateColor` that reuses the core library.
-- [Vercel per-function endpoints](https://github.com/zonaro/NameToColor/tree/main/api): One serverless function per DOM-free library function, plus shared HTTP helpers in `lib/api-helpers.js`.
+- [Vercel serverless API](https://raw.githubusercontent.com/zonaro/NameToColor/main/api/color.js): Free REST endpoint that dispatches to every library function and reuses the core library.
+- [Vercel API source](https://github.com/zonaro/NameToColor/tree/main/api): The single dispatcher serverless function, plus shared HTTP helpers in `lib/api-helpers.js`.
 
 ## CDN (preferred)
 

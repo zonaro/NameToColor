@@ -20,42 +20,50 @@ NameToColor is also a **public, free REST API** hosted on **Vercel**. Any websit
 
 ### Endpoints
 
-Every DOM-free public function of the library is exposed as its **own endpoint** on Vercel. Each endpoint accepts the function's parameters as query parameters and returns `{ ...params, result }`.
+The API is a **single endpoint** that dispatches to any library function. The Vercel Hobby plan limits a deployment to 12 Serverless Functions, so all functions share one endpoint instead of one file per function.
+
+```text
+GET /api/color?func={function}&param1=value1&param2=value2
+```
+
+The `func` query parameter selects the library function to call; every other query parameter is passed to that function. The response mirrors the request: `{ func, ...params, result }`. For convenience, when `func` is omitted but `name` is present, it defaults to `generateColor` — so the original `/api/color?name=palavra` URL keeps working.
 
 > **🌐 Multilingual:** The API loads the Brazilian Portuguese language pack (`NameToColor.ptBR.js`) alongside the English core. Functions that return names or labels (`colorName`, `colorNames`, `closestName`, `closestNames`, `mood`, `listColors`) accept a `locale` query parameter — defaulting to **English** when omitted. Portuguese inputs (`vermelho`, `azul mais escuro`, `natureza`) work out of the box.
 
-| Endpoint                              | Query parameters           | Result                                                                 |
-| ------------------------------------- | -------------------------- | ---------------------------------------------------------------------- |
-| `GET /api/color`                      | `name`                     | `{ input, color }`                                                     |
-| `GET /api/generateReadableColor`      | `input`                    | `{ input, result: [textColor, bgColor] }`                              |
-| `GET /api/generateThemePalette`       | `input`, `count`           | `{ input, count, result: string[] }`                                   |
-| `GET /api/listColors`                 | `page`, `size`, `locale`   | `{ page, size, locale, result: { items, pageNumber, pageCount, totalItems } }` |
-| `GET /api/colorName`                  | `input`, `locale`          | `{ input, locale, result: string \| null }`                            |
-| `GET /api/colorNames`                 | `input`, `locale`          | `{ input, locale, result: string[] }`                                  |
-| `GET /api/closestName`                | `input`, `locale`          | `{ input, locale, result: string \| null }`                            |
-| `GET /api/closestNames`               | `input`, `locale`          | `{ input, locale, result: string[] }`                                  |
-| `GET /api/generateInvertedColor`      | `input`                    | `{ input, result: string }`                                            |
-| `GET /api/generateComplementary`      | `input`                    | `{ input, result: string }`                                            |
-| `GET /api/generateTriadic`            | `input`                    | `{ input, result: string[] }`                                          |
-| `GET /api/generateSquare`             | `input`                    | `{ input, result: string[] }`                                          |
-| `GET /api/generateSplitComplementary` | `input`                    | `{ input, result: string[] }`                                          |
-| `GET /api/generateMonochrome`         | `input`, `count`           | `{ input, count, result: string[] }`                                   |
-| `GET /api/hexToRgb`                   | `input`                    | `{ input, result: { r, g, b } }`                                       |
-| `GET /api/hexToHsl`                   | `input`                    | `{ input, result: { h, s, l } }`                                       |
-| `GET /api/hslToHex`                   | `h`, `s`, `l`              | `{ h, s, l, result: string }`                                          |
-| `GET /api/relativeLuminance`          | `input`                    | `{ input, result: number }`                                            |
-| `GET /api/normalizeHex`               | `input`                    | `{ input, result: string }`                                            |
-| `GET /api/isLight`                    | `input`                    | `{ input, result: boolean }`                                           |
-| `GET /api/isDark`                     | `input`                    | `{ input, result: boolean }`                                           |
-| `GET /api/isHot`                      | `input`                    | `{ input, result: boolean }`                                           |
-| `GET /api/isCold`                     | `input`                    | `{ input, result: boolean }`                                           |
-| `GET /api/temperature`                | `input`                    | `{ input, result: string }`                                            |
-| `GET /api/mood`                       | `input`, `locale`          | `{ input, locale, result: string[] }`                                  |
-| `GET /api/isReadableForBlindness`     | `colorA`, `colorB`, `type` | `{ colorA, colorB, type, result: { readable, contrast, ... } }`        |
-| `GET /api/listNameToColorLanguages`   | —                          | `{ result: array }`                                                    |
-| `GET /api/colorDatabase`              | —                          | `{ result: object }`                                                   |
+| `func` value                     | Query parameters           | Result                                                                 |
+| -------------------------------- | -------------------------- | ---------------------------------------------------------------------- |
+| `generateColor`                  | `name`                     | `{ func, name, result: "#hex" }`                                      |
+| `generateReadableColor`          | `input`                    | `{ func, input, result: [textColor, bgColor] }`                        |
+| `generateThemePalette`           | `input`, `count`           | `{ func, input, count, result: string[] }`                             |
+| `listColors`                     | `page`, `size`, `locale`   | `{ func, page, size, locale, result: { items, pageNumber, pageCount, totalItems } }` |
+| `colorName`                      | `input`, `locale`          | `{ func, input, locale, result: string \| null }`                      |
+| `colorNames`                     | `input`, `locale`          | `{ func, input, locale, result: string[] }`                            |
+| `closestName`                    | `input`, `locale`          | `{ func, input, locale, result: string \| null }`                      |
+| `closestNames`                   | `input`, `locale`          | `{ func, input, locale, result: string[] }`                            |
+| `generateInvertedColor`          | `input`                    | `{ func, input, result: string }`                                      |
+| `generateComplementary`          | `input`                    | `{ func, input, result: string }`                                      |
+| `generateTriadic`                | `input`                    | `{ func, input, result: string[] }`                                    |
+| `generateSquare`                 | `input`                    | `{ func, input, result: string[] }`                                    |
+| `generateSplitComplementary`     | `input`                    | `{ func, input, result: string[] }`                                    |
+| `generateMonochrome`             | `input`, `count`           | `{ func, input, count, result: string[] }`                             |
+| `hexToRgb`                       | `input`                    | `{ func, input, result: { r, g, b } }`                                 |
+| `hexToHsl`                       | `input`                    | `{ func, input, result: { h, s, l } }`                                 |
+| `hslToHex`                       | `h`, `s`, `l`              | `{ func, h, s, l, result: string }`                                    |
+| `relativeLuminance`              | `input`                    | `{ func, input, result: number }`                                      |
+| `normalizeHex`                   | `input`                    | `{ func, input, result: string }`                                      |
+| `isLight`                        | `input`                    | `{ func, input, result: boolean }`                                     |
+| `isDark`                         | `input`                    | `{ func, input, result: boolean }`                                     |
+| `isHot`                          | `input`                    | `{ func, input, result: boolean }`                                     |
+| `isCold`                         | `input`                    | `{ func, input, result: boolean }`                                     |
+| `temperature`                    | `input`                    | `{ func, input, result: string }`                                      |
+| `mood`                           | `input`, `locale`          | `{ func, input, locale, result: string[] }`                            |
+| `isReadableForBlindness`         | `colorA`, `colorB`, `type` | `{ func, colorA, colorB, type, result: { readable, contrast, ... } }`  |
+| `listNameToColorLanguages`       | —                          | `{ func, result: array }`                                              |
+| `colorDatabase`                  | —                          | `{ func, result: object }`                                             |
 
 ### 1. Convert a color — `/api/color`
+
+Send a `GET` request with the word you want to convert in the `name` query parameter. When `func` is omitted, it defaults to `generateColor`:
 
 ```text
 GET https://name-to-color.vercel.app/api/color?name=palavra
@@ -73,8 +81,8 @@ curl "https://name-to-color.vercel.app/api/color?name=Lucas"
 const res = await fetch("https://name-to-color.vercel.app/api/color?name=Lucas");
 const data = await res.json();
 
-console.log(data.input); // "Lucas"
-console.log(data.color); // "#AF9F1C"
+console.log(data.name);   // "Lucas"
+console.log(data.result); // "#AF9F1C"
 ```
 
 #### JSON Response
@@ -83,43 +91,44 @@ A successful request returns `200 OK` with the following JSON:
 
 ```json
 {
-  "input": "Lucas",
-  "color": "#AF9F1C"
+  "func": "generateColor",
+  "name": "Lucas",
+  "result": "#AF9F1C"
 }
 ```
 
-### 2. Examples for the other endpoints
+### 2. Examples for the other functions
 
-Each endpoint above maps to one library function. Here are a few examples:
+Each `func` value above maps to one library function. Here are a few examples:
 
 ```bash
 # Readable text + background pair
-curl "https://name-to-color.vercel.app/api/generateReadableColor?input=tomato"
+curl "https://name-to-color.vercel.app/api/color?func=generateReadableColor&input=tomato"
 
 # Theme palette with a custom size
-curl "https://name-to-color.vercel.app/api/generateThemePalette?input=Nature&count=7"
+curl "https://name-to-color.vercel.app/api/color?func=generateThemePalette&input=Nature&count=7"
 
 # Paginated color database (English by default)
-curl "https://name-to-color.vercel.app/api/listColors?page=2&size=10"
+curl "https://name-to-color.vercel.app/api/color?func=listColors&page=2&size=10"
 
 # Paginated color database with Portuguese names
-curl "https://name-to-color.vercel.app/api/listColors?page=2&size=10&locale=pt-BR"
+curl "https://name-to-color.vercel.app/api/color?func=listColors&page=2&size=10&locale=pt-BR"
 
 # Color name in a locale
-curl "https://name-to-color.vercel.app/api/colorName?input=tomato&locale=pt-BR"
+curl "https://name-to-color.vercel.app/api/color?func=colorName&input=tomato&locale=pt-BR"
 
 # Color harmonies
-curl "https://name-to-color.vercel.app/api/generateComplementary?input=tomato"
-curl "https://name-to-color.vercel.app/api/generateTriadic?input=tomato"
+curl "https://name-to-color.vercel.app/api/color?func=generateComplementary&input=tomato"
+curl "https://name-to-color.vercel.app/api/color?func=generateTriadic&input=tomato"
 
 # HSL → HEX conversion
-curl "https://name-to-color.vercel.app/api/hslToHex?h=9&s=100&l=64"
+curl "https://name-to-color.vercel.app/api/color?func=hslToHex&h=9&s=100&l=64"
 
 # Accessibility check
-curl "https://name-to-color.vercel.app/api/isReadableForBlindness?colorA=tomato&colorB=rebeccapurple&type=deuteranopia"
+curl "https://name-to-color.vercel.app/api/color?func=isReadableForBlindness&colorA=tomato&colorB=rebeccapurple&type=deuteranopia"
 
 # Raw color database
-curl "https://name-to-color.vercel.app/api/colorDatabase"
+curl "https://name-to-color.vercel.app/api/color?func=colorDatabase"
 ```
 
 #### JSON Response
@@ -128,6 +137,7 @@ A successful request returns `200 OK` with the following JSON:
 
 ```json
 {
+  "func": "generateReadableColor",
   "input": "tomato",
   "result": ["#522017", "#FF6347"]
 }
@@ -140,7 +150,7 @@ A successful request returns `200 OK` with the following JSON:
 | `400`  | A required parameter is missing or unknown | `{"error": "..."}`                   |
 | `405`  | A method other than `GET` is used          | `{"error": "Method not allowed..."}` |
 
-> **🚀 Deploy:** The API is a set of Vercel Serverless Functions, one per library function, in the `api/` directory (plus shared HTTP helpers in `lib/api-helpers.js`). To publish it, just connect this GitHub repository to **Vercel** — no configuration needed. The same `NameToColor.js` file powers both the browser library and the API.
+> **🚀 Deploy:** The API is a single Vercel Serverless Function (`api/color.js`) that dispatches to every library function, plus shared HTTP helpers in `lib/api-helpers.js`. The Vercel Hobby plan limits a deployment to 12 Serverless Functions, so consolidating everything into one endpoint keeps the project on the free plan. To publish it, just connect this GitHub repository to **Vercel** — no configuration needed. The same `NameToColor.js` file powers both the browser library and the API.
 
 ## CDN Installation
 
