@@ -8,6 +8,16 @@ The built-in database contains 2,254 hashless hexadecimal-to-name pairs and 2,36
 
 Primary global APIs include `generateColor()`, `generateReadableColor()`, `generateThemePalette()`, `listColors()`, `colorName()`, `colorNames()`, color harmony generators, accessibility checks, temperature classification, and mood classification.
 
+## Free REST API
+
+NameToColor also exposes a public, free REST API hosted on Vercel. It converts a word into a deterministic hexadecimal color with a single GET request. CORS is fully open (`Access-Control-Allow-Origin: *`), so it can be called directly from any browser.
+
+- Endpoint: `GET /api/color?name=palavra`
+- Success (`200`): `{"input": "palavra", "color": "#hexadecimal"}`
+- Missing/empty `name` (`400`): `{"error": "Missing required query parameter \"name\"..."}`
+- Non-GET method (`405`): `{"error": "Method not allowed..."}`
+- Implementation: Vercel Serverless Function in `api/color.js`, which imports `generateColor` from the core `NameToColor.js` through CommonJS. The same file remains browser-compatible via a plain `<script>` tag.
+
 ## Documentation
 
 - [README](https://raw.githubusercontent.com/zonaro/NameToColor/main/README.md): Complete installation guide, API reference, examples, input processing rules, language-pack format, and database format.
@@ -18,6 +28,7 @@ Primary global APIs include `generateColor()`, `generateReadableColor()`, `gener
 - [GitHub repository](https://github.com/zonaro/NameToColor): Canonical source repository and project history.
 - [Core browser library](https://raw.githubusercontent.com/zonaro/NameToColor/main/NameToColor.js): English implementation and built-in color database.
 - [Brazilian Portuguese language pack](https://raw.githubusercontent.com/zonaro/NameToColor/main/NameToColor.ptBR.js): Optional data-only `pt-BR` translations and aliases.
+- [Vercel serverless API](https://raw.githubusercontent.com/zonaro/NameToColor/main/api/color.js): Free REST endpoint that reuses the core library.
 
 ## Optional
 

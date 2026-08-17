@@ -1203,6 +1203,71 @@
 
         </section>
 
+        <!-- ═══════════ FREE REST API ═══════════ -->
+        <section class="card docs-section" id="api-rest" aria-labelledby="api-rest-title">
+            <header class="card-header">
+                <h2 id="api-rest-title"><span aria-hidden="true">🚀</span> Free REST API</h2>
+                <span class="badge">GET /api/color?name=palavra</span>
+            </header>
+
+            <p>
+                NameToColor now ships with a <strong>public, free REST API</strong> hosted on
+                <strong>Vercel</strong>. Any website, plugin, or script can convert a word into a
+                deterministic hexadecimal color with a single HTTP request — no API key, no sign-up,
+                and <strong>CORS is fully open</strong> (<code>Access-Control-Allow-Origin: *</code>),
+                so you can call it directly from the browser.
+            </p>
+
+            <h3 id="api-endpoint">Endpoint</h3>
+            <p>Send a <code>GET</code> request with the word you want to convert in the <code>name</code> query
+                parameter:</p>
+            <pre><span class="keyword">GET</span> https://<span class="string">your-project</span>.vercel.app/api/color?name=<span class="string">palavra</span></pre>
+
+            <h3 id="api-fetch-example">Usage with the Fetch API</h3>
+            <pre><span class="keyword">const</span> res = <span class="keyword">await</span> fetch(<span class="string">"https://your-project.vercel.app/api/color?name=Lucas"</span>);
+<span class="keyword">const</span> data = <span class="keyword">await</span> res.json();
+
+<span class="built_in">console</span>.log(data.input);  <span class="comment">// "Lucas"</span>
+<span class="built_in">console</span>.log(data.color);  <span class="comment">// "#AF9F1C"</span></pre>
+
+            <h3 id="api-response">JSON Response</h3>
+            <p>A successful request returns <code>200 OK</code> with the following JSON:</p>
+            <pre>{
+  <span class="string">"input"</span>: <span class="string">"Lucas"</span>,
+  <span class="string">"color"</span>: <span class="string">"#AF9F1C"</span>
+}</pre>
+
+            <h3 id="api-errors">Error Responses</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Status</th>
+                        <th scope="col">When</th>
+                        <th scope="col">Body</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mono"><code>400</code></td>
+                        <td>The <code>name</code> parameter is missing or empty</td>
+                        <td class="mono"><code>{"error": "Missing required query parameter \"name\"..."}</code></td>
+                    </tr>
+                    <tr>
+                        <td class="mono"><code>405</code></td>
+                        <td>A method other than <code>GET</code> is used</td>
+                        <td class="mono"><code>{"error": "Method not allowed..."}</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note">
+                <strong>🚀 Deploy:</strong> The API is a Vercel Serverless Function in
+                <code>api/color.js</code>. To deploy, just connect this GitHub repository to
+                <strong>Vercel</strong> — no configuration needed. The same
+                <code>NameToColor.js</code> file powers both the browser library and the API.
+            </div>
+        </section>
+
         <!-- ═══════════ MAIN TEST ═══════════ -->
         <section class="card" id="test-section">
             <div class="card-header">
@@ -1346,8 +1411,7 @@
                     </label>
                     <label class="theme-control" for="theme-palette-count">
                         Number of colors
-                        <input id="theme-palette-count" type="number" min="2" max="21" value="5"
-                            inputmode="numeric">
+                        <input id="theme-palette-count" type="number" min="2" max="21" value="5" inputmode="numeric">
                     </label>
                 </fieldset>
             </form>
@@ -1375,79 +1439,355 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Mood</td><th scope="row">Vibrant</th><td>bold, vivid, energetic, intense</td></tr>
-                        <tr><td>Mood</td><th scope="row">Futuristic</th><td>future, cyber, sci-fi, science fiction, neon</td></tr>
-                        <tr><td>Mood</td><th scope="row">Fun</th><td>playful, cheerful, joyful, happy</td></tr>
-                        <tr><td>Mood</td><th scope="row">Soft Pastel</th><td>pastel, gentle, delicate, soft colors</td></tr>
-                        <tr><td>Mood</td><th scope="row">Calm</th><td>peaceful, serene, tranquil, relaxing</td></tr>
-                        <tr><td>Mood</td><th scope="row">Vintage</th><td>retro, nostalgic, heritage, old-fashioned</td></tr>
-                        <tr><td>Mood</td><th scope="row">Organic</th><td>earthy style, raw, handmade, organic design</td></tr>
-                        <tr><td>Mood</td><th scope="row">Sophisticated</th><td>elegant, refined, premium, distinguished</td></tr>
-                        <tr><td>Mood</td><th scope="row">Dark</th><td>moody, shadow, noir, low light</td></tr>
-                        <tr><td>Mood</td><th scope="row">Corporate</th><td>business, professional, enterprise, office</td></tr>
+                        <tr>
+                            <td>Mood</td>
+                            <th scope="row">Vibrant</th>
+                            <td>bold, vivid, energetic, intense</td>
+                        </tr>
+                        <tr>
+                            <td>Mood</td>
+                            <th scope="row">Futuristic</th>
+                            <td>future, cyber, sci-fi, science fiction, neon</td>
+                        </tr>
+                        <tr>
+                            <td>Mood</td>
+                            <th scope="row">Fun</th>
+                            <td>playful, cheerful, joyful, happy</td>
+                        </tr>
+                        <tr>
+                            <td>Mood</td>
+                            <th scope="row">Soft Pastel</th>
+                            <td>pastel, gentle, delicate, soft colors</td>
+                        </tr>
+                        <tr>
+                            <td>Mood</td>
+                            <th scope="row">Calm</th>
+                            <td>peaceful, serene, tranquil, relaxing</td>
+                        </tr>
+                        <tr>
+                            <td>Mood</td>
+                            <th scope="row">Vintage</th>
+                            <td>retro, nostalgic, heritage, old-fashioned</td>
+                        </tr>
+                        <tr>
+                            <td>Mood</td>
+                            <th scope="row">Organic</th>
+                            <td>earthy style, raw, handmade, organic design</td>
+                        </tr>
+                        <tr>
+                            <td>Mood</td>
+                            <th scope="row">Sophisticated</th>
+                            <td>elegant, refined, premium, distinguished</td>
+                        </tr>
+                        <tr>
+                            <td>Mood</td>
+                            <th scope="row">Dark</th>
+                            <td>moody, shadow, noir, low light</td>
+                        </tr>
+                        <tr>
+                            <td>Mood</td>
+                            <th scope="row">Corporate</th>
+                            <td>business, professional, enterprise, office</td>
+                        </tr>
 
-                        <tr><td>Nature and places</td><th scope="row">Nature</th><td>outdoors, wilderness, ecology, natural world, wildlife</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Forest</th><td>woods, woodland, grove, pine forest, green forest</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Water</th><td>aquatic, freshwater, river, lake, rain</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Ocean</th><td>sea, marine, nautical, deep sea, oceanic</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Beach</th><td>coast, coastal, seaside, shore, sand beach</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Mountain</th><td>alpine, summit, hiking, highlands, mountains</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Desert</th><td>arid, dunes, sandstorm, Sahara, drylands</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Tropical</th><td>tropics, rainforest, island, exotic, tropical paradise</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Floral</th><td>flower, flowers, blossom, bouquet, botanical</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Earth</th><td>soil, ground, clay, terracotta, earth tones</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Sky</th><td>clouds, daylight, blue sky, open air, heavens</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Sunset</th><td>dusk, twilight, golden hour, evening sky, sundown</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Night</th><td>midnight, moonlight, nocturnal, nighttime, night sky</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Space</th><td>cosmos, galaxy, universe, astronomy, outer space</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Spring</th><td>springtime, vernal, spring season, new bloom</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Summer</th><td>summertime, sunny season, sunshine, summer season</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Autumn</th><td>fall, harvest, foliage, autumn season, fall season</td></tr>
-                        <tr><td>Nature and places</td><th scope="row">Winter</th><td>snow, ice, frost, wintertime, winter season</td></tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Nature</th>
+                            <td>outdoors, wilderness, ecology, natural world, wildlife</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Forest</th>
+                            <td>woods, woodland, grove, pine forest, green forest</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Water</th>
+                            <td>aquatic, freshwater, river, lake, rain</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Ocean</th>
+                            <td>sea, marine, nautical, deep sea, oceanic</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Beach</th>
+                            <td>coast, coastal, seaside, shore, sand beach</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Mountain</th>
+                            <td>alpine, summit, hiking, highlands, mountains</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Desert</th>
+                            <td>arid, dunes, sandstorm, Sahara, drylands</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Tropical</th>
+                            <td>tropics, rainforest, island, exotic, tropical paradise</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Floral</th>
+                            <td>flower, flowers, blossom, bouquet, botanical</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Earth</th>
+                            <td>soil, ground, clay, terracotta, earth tones</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Sky</th>
+                            <td>clouds, daylight, blue sky, open air, heavens</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Sunset</th>
+                            <td>dusk, twilight, golden hour, evening sky, sundown</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Night</th>
+                            <td>midnight, moonlight, nocturnal, nighttime, night sky</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Space</th>
+                            <td>cosmos, galaxy, universe, astronomy, outer space</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Spring</th>
+                            <td>springtime, vernal, spring season, new bloom</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Summer</th>
+                            <td>summertime, sunny season, sunshine, summer season</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Autumn</th>
+                            <td>fall, harvest, foliage, autumn season, fall season</td>
+                        </tr>
+                        <tr>
+                            <td>Nature and places</td>
+                            <th scope="row">Winter</th>
+                            <td>snow, ice, frost, wintertime, winter season</td>
+                        </tr>
 
-                        <tr><td>Material</td><th scope="row">Metal</th><td>metallic, alloy, chrome, metalwork, polished metal</td></tr>
-                        <tr><td>Material</td><th scope="row">Gold</th><td>golden, gilded, gold metal, gold leaf</td></tr>
-                        <tr><td>Material</td><th scope="row">Silver</th><td>sterling, silver metal, silverware, silvery</td></tr>
-                        <tr><td>Material</td><th scope="row">Copper</th><td>bronze, brass, copper metal, coppery</td></tr>
-                        <tr><td>Material</td><th scope="row">Wood</th><td>wooden, timber, lumber, wood grain, hardwood</td></tr>
-                        <tr><td>Material</td><th scope="row">Stone</th><td>rock, marble, granite, slate, natural stone</td></tr>
-                        <tr><td>Material</td><th scope="row">Concrete</th><td>cement, urban concrete, masonry, raw concrete</td></tr>
-                        <tr><td>Material</td><th scope="row">Glass</th><td>crystal, transparent glass, glassware, frosted glass</td></tr>
+                        <tr>
+                            <td>Material</td>
+                            <th scope="row">Metal</th>
+                            <td>metallic, alloy, chrome, metalwork, polished metal</td>
+                        </tr>
+                        <tr>
+                            <td>Material</td>
+                            <th scope="row">Gold</th>
+                            <td>golden, gilded, gold metal, gold leaf</td>
+                        </tr>
+                        <tr>
+                            <td>Material</td>
+                            <th scope="row">Silver</th>
+                            <td>sterling, silver metal, silverware, silvery</td>
+                        </tr>
+                        <tr>
+                            <td>Material</td>
+                            <th scope="row">Copper</th>
+                            <td>bronze, brass, copper metal, coppery</td>
+                        </tr>
+                        <tr>
+                            <td>Material</td>
+                            <th scope="row">Wood</th>
+                            <td>wooden, timber, lumber, wood grain, hardwood</td>
+                        </tr>
+                        <tr>
+                            <td>Material</td>
+                            <th scope="row">Stone</th>
+                            <td>rock, marble, granite, slate, natural stone</td>
+                        </tr>
+                        <tr>
+                            <td>Material</td>
+                            <th scope="row">Concrete</th>
+                            <td>cement, urban concrete, masonry, raw concrete</td>
+                        </tr>
+                        <tr>
+                            <td>Material</td>
+                            <th scope="row">Glass</th>
+                            <td>crystal, transparent glass, glassware, frosted glass</td>
+                        </tr>
 
-                        <tr><td>Audience and occasion</td><th scope="row">Children</th><td>child, kid, kids, toddler, childhood</td></tr>
-                        <tr><td>Audience and occasion</td><th scope="row">Baby</th><td>infant, newborn, nursery, babies, maternity</td></tr>
-                        <tr><td>Audience and occasion</td><th scope="row">Youth</th><td>teen, teenager, young people, young audience, generation Z</td></tr>
-                        <tr><td>Audience and occasion</td><th scope="row">Wedding</th><td>bridal, bride, marriage, wedding ceremony, nuptial</td></tr>
-                        <tr><td>Audience and occasion</td><th scope="row">Romance</th><td>romantic, love, Valentine, affection, date night</td></tr>
-                        <tr><td>Audience and occasion</td><th scope="row">Celebration</th><td>party, festive, birthday, festival, celebrate</td></tr>
-                        <tr><td>Audience and occasion</td><th scope="row">Wellness</th><td>spa, meditation, yoga, mindfulness, self care</td></tr>
-                        <tr><td>Audience and occasion</td><th scope="row">Luxury</th><td>deluxe, opulent, exclusive, high end, prestige</td></tr>
+                        <tr>
+                            <td>Audience and occasion</td>
+                            <th scope="row">Children</th>
+                            <td>child, kid, kids, toddler, childhood</td>
+                        </tr>
+                        <tr>
+                            <td>Audience and occasion</td>
+                            <th scope="row">Baby</th>
+                            <td>infant, newborn, nursery, babies, maternity</td>
+                        </tr>
+                        <tr>
+                            <td>Audience and occasion</td>
+                            <th scope="row">Youth</th>
+                            <td>teen, teenager, young people, young audience, generation Z</td>
+                        </tr>
+                        <tr>
+                            <td>Audience and occasion</td>
+                            <th scope="row">Wedding</th>
+                            <td>bridal, bride, marriage, wedding ceremony, nuptial</td>
+                        </tr>
+                        <tr>
+                            <td>Audience and occasion</td>
+                            <th scope="row">Romance</th>
+                            <td>romantic, love, Valentine, affection, date night</td>
+                        </tr>
+                        <tr>
+                            <td>Audience and occasion</td>
+                            <th scope="row">Celebration</th>
+                            <td>party, festive, birthday, festival, celebrate</td>
+                        </tr>
+                        <tr>
+                            <td>Audience and occasion</td>
+                            <th scope="row">Wellness</th>
+                            <td>spa, meditation, yoga, mindfulness, self care</td>
+                        </tr>
+                        <tr>
+                            <td>Audience and occasion</td>
+                            <th scope="row">Luxury</th>
+                            <td>deluxe, opulent, exclusive, high end, prestige</td>
+                        </tr>
 
-                        <tr><td>Industry and style</td><th scope="row">Coffee</th><td>cofee, café, cafe, espresso, cappuccino, barista</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Food</th><td>culinary, cuisine, groceries, meal, food brand</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Restaurant</th><td>dining, bistro, diner, eatery, restaurant brand</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Agriculture</th><td>farm, farming, crops, agricultural, agribusiness</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Industry</th><td>industrial, factory, manufacturing, production, heavy industry</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Construction</th><td>building, contractor, architecture, infrastructure, civil engineering</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Automotive</th><td>car, cars, vehicle, motor, racing</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Technology</th><td>tech, digital, software, startup, innovation</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Gaming</th><td>game, gamer, esports, video game, arcade</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Healthcare</th><td>health, medical, hospital, clinic, medicine</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Finance</th><td>financial, banking, bank, fintech, investment</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Education</th><td>school, learning, academic, university, teaching</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Science</th><td>scientific, laboratory, research, physics, chemistry</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Energy</th><td>power, electric, electricity, utility, solar power</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Sustainability</th><td>sustainable, renewable, green energy, climate friendly, eco friendly</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Real Estate</th><td>property, housing, realtor, realty, home sales</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Travel</th><td>tourism, vacation, journey, adventure, destination</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Sports</th><td>sport, fitness, athletic, training, competition</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Music</th><td>audio, sound, concert, band, musical</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Fashion</th><td>clothing, apparel, couture, wardrobe, garment</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Retail</th><td>shopping, store, commerce, ecommerce, marketplace</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Security</th><td>safety, protection, cybersecurity, secure, defense</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Beauty</th><td>cosmetics, makeup, skincare, salon, aesthetic</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Pets</th><td>pet, dog, cat, companion animals, veterinary</td></tr>
-                        <tr><td>Industry and style</td><th scope="row">Minimal</th><td>minimalist, clean design, simple, neutral design, essential</td></tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Coffee</th>
+                            <td>cofee, café, cafe, espresso, cappuccino, barista</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Food</th>
+                            <td>culinary, cuisine, groceries, meal, food brand</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Restaurant</th>
+                            <td>dining, bistro, diner, eatery, restaurant brand</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Agriculture</th>
+                            <td>farm, farming, crops, agricultural, agribusiness</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Industry</th>
+                            <td>industrial, factory, manufacturing, production, heavy industry</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Construction</th>
+                            <td>building, contractor, architecture, infrastructure, civil engineering</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Automotive</th>
+                            <td>car, cars, vehicle, motor, racing</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Technology</th>
+                            <td>tech, digital, software, startup, innovation</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Gaming</th>
+                            <td>game, gamer, esports, video game, arcade</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Healthcare</th>
+                            <td>health, medical, hospital, clinic, medicine</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Finance</th>
+                            <td>financial, banking, bank, fintech, investment</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Education</th>
+                            <td>school, learning, academic, university, teaching</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Science</th>
+                            <td>scientific, laboratory, research, physics, chemistry</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Energy</th>
+                            <td>power, electric, electricity, utility, solar power</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Sustainability</th>
+                            <td>sustainable, renewable, green energy, climate friendly, eco friendly</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Real Estate</th>
+                            <td>property, housing, realtor, realty, home sales</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Travel</th>
+                            <td>tourism, vacation, journey, adventure, destination</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Sports</th>
+                            <td>sport, fitness, athletic, training, competition</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Music</th>
+                            <td>audio, sound, concert, band, musical</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Fashion</th>
+                            <td>clothing, apparel, couture, wardrobe, garment</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Retail</th>
+                            <td>shopping, store, commerce, ecommerce, marketplace</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Security</th>
+                            <td>safety, protection, cybersecurity, secure, defense</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Beauty</th>
+                            <td>cosmetics, makeup, skincare, salon, aesthetic</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Pets</th>
+                            <td>pet, dog, cat, companion animals, veterinary</td>
+                        </tr>
+                        <tr>
+                            <td>Industry and style</td>
+                            <th scope="row">Minimal</th>
+                            <td>minimalist, clean design, simple, neutral design, essential</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -1635,7 +1975,8 @@ registerNameToColorLanguage({
                     </tr>
                     <tr>
                         <td class="mono"><strong>Numeric Index</strong></td>
-                        <td>Looks up the hexadecimal key at that declaration-order position; if out of range, generates a deterministic color from the number
+                        <td>Looks up the hexadecimal key at that declaration-order position; if out of range, generates
+                            a deterministic color from the number
                         </td>
                         <td class="mono"><code>generateColor(1)</code> → <code>"#0048BA"</code></td>
                     </tr>
@@ -2279,12 +2620,14 @@ isReadableForBlindness(<span class="string">"tomato"</span>, <span class="string
                     <tr>
                         <td class="mono"><code>isHot(input)</code></td>
                         <td>Returns <code>true</code> if the generated color is warm/hot (delegates to
-                            <code>temperature()</code>)</td>
+                            <code>temperature()</code>)
+                        </td>
                     </tr>
                     <tr>
                         <td class="mono"><code>isCold(input)</code></td>
                         <td>Returns <code>true</code> if the generated color is cold/cool (delegates to
-                            <code>temperature()</code>)</td>
+                            <code>temperature()</code>)
+                        </td>
                     </tr>
                     <tr>
                         <td class="mono"><code>mood(input, locale?)</code></td>
@@ -2436,8 +2779,7 @@ closestName(<span class="string">"unknown"</span>);
             <h3 id="function-closestNames" data-api-function="closestNames"><span aria-hidden="true">🎯</span>
                 <code>closestNames(input, locale?)</code>
             </h3>
-            <div class="func-signature"
-                aria-label="Function signature: closestNames(input, locale) returns String[]">
+            <div class="func-signature" aria-label="Function signature: closestNames(input, locale) returns String[]">
                 closestNames(<span class="param">input</span>, <span class="param">locale?</span>) → <span
                     class="param">String[]</span>
             </div>

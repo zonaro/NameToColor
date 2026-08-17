@@ -12,6 +12,52 @@ Try all plugin features live — including the paginated color database browser 
 
 The published site exposes [`/llms.txt`](https://zonaro.github.io/NameToColor/llms.txt), a concise Markdown guide for language models and coding agents. It summarizes the browser-only runtime, hashless color-pair format, primary APIs, documentation, source files, and optional translation pack.
 
+## 🚀 Free REST API
+
+NameToColor is now also a **public, free REST API** hosted on **Vercel**. Any website, plugin, or script can convert a word into a deterministic hexadecimal color with a single HTTP request — no API key, no sign-up, and **CORS is fully open** (`Access-Control-Allow-Origin: *`), so you can call it directly from the browser.
+
+### Endpoint
+
+```text
+GET https://your-project.vercel.app/api/color?name=palavra
+```
+
+### Example with cURL
+
+```bash
+curl "https://your-project.vercel.app/api/color?name=Lucas"
+```
+
+### Example with the Fetch API
+
+```js
+const res = await fetch("https://your-project.vercel.app/api/color?name=Lucas");
+const data = await res.json();
+
+console.log(data.input); // "Lucas"
+console.log(data.color); // "#AF9F1C"
+```
+
+### JSON Response
+
+A successful request returns `200 OK` with the following JSON:
+
+```json
+{
+  "input": "Lucas",
+  "color": "#AF9F1C"
+}
+```
+
+### Error Responses
+
+| Status | When                                     | Body                                                        |
+| ------ | ---------------------------------------- | ----------------------------------------------------------- |
+| `400`  | The `name` parameter is missing or empty | `{"error": "Missing required query parameter \"name\"..."}` |
+| `405`  | A method other than `GET` is used        | `{"error": "Method not allowed..."}`                        |
+
+> **🚀 Deploy:** The API is a Vercel Serverless Function in `api/color.js`. To publish it, just connect this GitHub repository to **Vercel** — no configuration needed. The same `NameToColor.js` file powers both the browser library and the API.
+
 ## CDN Installation
 
 ```html
@@ -314,13 +360,13 @@ Known themes have five curated anchors ordered as a dark primary, primary, accen
 
 The catalog contains **69 canonical groups**, each with three to six English aliases:
 
-| Category | Canonical themes |
-| --- | --- |
-| Moods | Vibrant, Futuristic, Fun, Soft Pastel, Calm, Vintage, Organic, Sophisticated, Dark, Corporate |
-| Nature and places | Nature, Forest, Water, Ocean, Beach, Mountain, Desert, Tropical, Floral, Earth, Sky, Sunset, Night, Space, Spring, Summer, Autumn, Winter |
-| Materials | Metal, Gold, Silver, Copper, Wood, Stone, Concrete, Glass |
-| Audiences and occasions | Children, Baby, Youth, Wedding, Romance, Celebration, Wellness, Luxury |
-| Industries and styles | Coffee, Food, Restaurant, Agriculture, Industry, Construction, Automotive, Technology, Gaming, Healthcare, Finance, Education, Science, Energy, Sustainability, Real Estate, Travel, Sports, Music, Fashion, Retail, Security, Beauty, Pets, Minimal |
+| Category                | Canonical themes                                                                                                                                                                                                                                     |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Moods                   | Vibrant, Futuristic, Fun, Soft Pastel, Calm, Vintage, Organic, Sophisticated, Dark, Corporate                                                                                                                                                        |
+| Nature and places       | Nature, Forest, Water, Ocean, Beach, Mountain, Desert, Tropical, Floral, Earth, Sky, Sunset, Night, Space, Spring, Summer, Autumn, Winter                                                                                                            |
+| Materials               | Metal, Gold, Silver, Copper, Wood, Stone, Concrete, Glass                                                                                                                                                                                            |
+| Audiences and occasions | Children, Baby, Youth, Wedding, Romance, Celebration, Wellness, Luxury                                                                                                                                                                               |
+| Industries and styles   | Coffee, Food, Restaurant, Agriculture, Industry, Construction, Automotive, Technology, Gaming, Healthcare, Finance, Education, Science, Energy, Sustainability, Real Estate, Travel, Sports, Music, Fashion, Retail, Security, Beauty, Pets, Minimal |
 
 The existing mood classification rules remain unchanged: `mood(color, locale?)` classifies a color, while `generateThemePalette(theme)` generates colors from a semantic concept.
 
@@ -400,10 +446,10 @@ These helper functions are also exposed globally for fine-grained control:
 | `temperature(input)`                           | Returns the temperature level as a string: `VeryHot`, `Hot`, `Neutral Hot`, `Neutral`, `Neutral Cold`, `Cold`, or `VeryCold` |
 | `isHot(input)`                                 | Returns `true` if the generated color is warm/hot (delegates to `temperature()`)                                             |
 | `isCold(input)`                                | Returns `true` if the generated color is cold/cool (delegates to `temperature()`)                                            |
-| `mood(input, locale?)`                         | Returns mood/atmosphere names based on HSL rules, optionally translated by a loaded language pack                           |
-| `generateThemePalette(theme, count?)`          | Returns 2–21 deterministic semantic theme colors; defaults to 5                                                             |
-| `registerNameToColorLanguage(pack)`            | Registers a data-only optional language pack                                                                                |
-| `listNameToColorLanguages()`                   | Lists native English and every loaded optional language                                                                     |
+| `mood(input, locale?)`                         | Returns mood/atmosphere names based on HSL rules, optionally translated by a loaded language pack                            |
+| `generateThemePalette(theme, count?)`          | Returns 2–21 deterministic semantic theme colors; defaults to 5                                                              |
+| `registerNameToColorLanguage(pack)`            | Registers a data-only optional language pack                                                                                 |
+| `listNameToColorLanguages()`                   | Lists native English and every loaded optional language                                                                      |
 | `isReadableForBlindness(colorA, colorB, type)` | Checks color readability for protanopia, deuteranopia, tritanopia using Brettel/Vienot simulation + WCAG contrast            |
 
 ### Luminance & Light/Dark helpers
