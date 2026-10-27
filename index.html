@@ -1229,8 +1229,8 @@
                 <strong>🌐 Multilingual:</strong> The API loads the Brazilian Portuguese language pack
                 (<code>NameToColor.ptBR.js</code>) alongside the English core. Functions that return names or
                 labels (<code>colorName</code>, <code>colorNames</code>, <code>closestName</code>,
-                <code>closestNames</code>, <code>mood</code>, <code>listColors</code>) accept a
-                <code>locale</code> query parameter — defaulting to <strong>English</strong> when omitted.
+                <code>closestNames</code>, <code>mood</code>, <code>temperature</code>, <code>listColors</code>)
+                accept a <code>locale</code> query parameter — defaulting to <strong>English</strong> when omitted.
                 Portuguese inputs (<code>vermelho</code>, <code>azul mais escuro</code>, <code>natureza</code>)
                 work out of the box.
             </div>
@@ -1384,8 +1384,8 @@
                     </tr>
                     <tr>
                         <td class="mono"><code>temperature</code></td>
-                        <td><code>input</code></td>
-                        <td class="mono"><code>{ func, input, result: string }</code></td>
+                        <td><code>input</code>, <code>locale</code></td>
+                        <td class="mono"><code>{ func, input, locale, result: string }</code></td>
                     </tr>
                     <tr>
                         <td class="mono"><code>mood</code></td>
@@ -1522,7 +1522,7 @@
                         spellcheck="false">
                 </div>
                 <div class="input-row locale-row">
-                    <label for="locale-select">Returned color names and moods</label>
+                    <label for="locale-select">Returned color names, moods and temperatures</label>
                     <select id="locale-select">
                         <option value="en">English (native)</option>
                         <option value="pt-BR">Português (Brasil)</option>
@@ -2125,8 +2125,9 @@
                 The core <code>NameToColor.js</code> remains English. Data-only language files are loaded after it
                 to add translated color names, input keywords, theme aliases, and localized return labels.
                 The Brazilian Portuguese pack contains 181 named-color entries, including traditional, botanical,
-                mineral, and everyday Portuguese names, all 10 mood labels, and aliases for all 69 themes. Native
-                English and every loaded language remain available at the same time.
+                mineral, and everyday Portuguese names, all 10 mood labels, all 7 temperature labels (feminine,
+                agreeing with <em>temperatura</em>: <em>Fria</em>, <em>Muito fria</em>, <em>Neutra</em>), and aliases
+                for all 69 themes. Native English and every loaded language remain available at the same time.
             </p>
 
             <pre>&lt;<span class="keyword">script</span> <span class="keyword">src</span>=<span class="string">"NameToColor.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;
@@ -2144,6 +2145,9 @@ generateThemePalette(<span class="string">"natureza"</span>);
 
 mood(<span class="string">"#4682B4"</span>, <span class="string">"pt-BR"</span>);
 <span class="comment">// → ["Calmo", "Corporativo", "Sofisticado"]</span>
+
+temperature(<span class="string">"blue"</span>, <span class="string">"pt-BR"</span>);
+<span class="comment">// → "Muito fria"</span>
 
 colorName(<span class="string">"#ff0000"</span>, <span class="string">"pt-BR"</span>);
 <span class="comment">// → "Vermelho"</span>
@@ -2172,8 +2176,20 @@ registerNameToColorLanguage({
     locale: <span class="string">"example"</span>,
     colorNames: {
         <span class="string">"ff0000"</span>: [<span class="string">"Translated Red"</span>]
+    },
+    moodNames: {
+        Calm: <span class="string">"Translated Calm"</span>
+    },
+    temperatureNames: {
+        Cold: <span class="string">"Translated Cold"</span>
     }
 });</pre>
+            <p>
+                A pack may provide <code>colorNames</code>, <code>themeAliases</code>, <code>moodNames</code>,
+                <code>temperatureNames</code>, and <code>inputAliases</code>. Temperature keys are the canonical
+                English levels: <code>VeryHot</code>, <code>Hot</code>, <code>Neutral Hot</code>, <code>Neutral</code>,
+                <code>Neutral Cold</code>, <code>Cold</code>, <code>VeryCold</code>.
+            </p>
 
             <!-- ─── generateColor ─── -->
             <h3 id="function-generateColor" data-api-function="generateColor"><span aria-hidden="true">🎯</span>
@@ -2863,10 +2879,11 @@ isReadableForBlindness(<span class="string">"tomato"</span>, <span class="string
                         <td>Returns <code>true</code> if the generated color is dark (luminance ≤ 0.5)</td>
                     </tr>
                     <tr>
-                        <td class="mono"><code>temperature(input)</code></td>
+                        <td class="mono"><code>temperature(input, locale?)</code></td>
                         <td>Returns the temperature level as a string: <code>VeryHot</code>, <code>Hot</code>,
                             <code>Neutral Hot</code>, <code>Neutral</code>, <code>Neutral Cold</code>,
-                            <code>Cold</code>, or <code>VeryCold</code>
+                            <code>Cold</code>, or <code>VeryCold</code>; optionally translated by a loaded language
+                            pack
                         </td>
                     </tr>
                     <tr>
@@ -3074,15 +3091,18 @@ isDark(hex);
 
             <h4>Temperature (Warm/Cool) helpers</h4>
 
-            <h5><code>temperature(input)</code> — 7 Temperature Levels</h5>
+            <h5><code>temperature(input, locale?)</code> — 7 Temperature Levels</h5>
             <div class="func-signature"
-                aria-label="Function signature: temperature(input) returns a string with the temperature level">
-                temperature(<span class="param">input</span>) → <span class="param">String</span>
+                aria-label="Function signature: temperature(input, locale) returns a string with the temperature level">
+                temperature(<span class="param">input</span>, <span class="param">locale?</span>) → <span
+                    class="param">String</span>
             </div>
             <p>
                 Returns the <strong>temperature level</strong> of a color as one of 7 strings:
                 <code>VeryHot</code>, <code>Hot</code>, <code>Neutral Hot</code>, <code>Neutral</code>,
                 <code>Neutral Cold</code>, <code>Cold</code>, or <code>VeryCold</code>.
+                The optional <code>locale</code> returns the level translated by a loaded language pack; omitting it
+                preserves English.
             </p>
             <p>
                 Uses a <strong>continuous two-factor scoring system</strong> that averages:
@@ -3132,7 +3152,17 @@ temperature(<span class="string">"blue"</span>);
 <span class="comment">// → "VeryCold"</span>
 
 temperature(<span class="string">"cyan"</span>);
-<span class="comment">// → "VeryCold"</span></pre>
+<span class="comment">// → "VeryCold"</span>
+
+<span class="comment">// 🌎 Optional locale — translated labels (Brazilian Portuguese)</span>
+temperature(<span class="string">"blue"</span>, <span class="string">"pt-BR"</span>);
+<span class="comment">// → "Muito fria" (feminine, agreeing with "temperatura")</span>
+
+temperature(<span class="string">"aquamarine"</span>, <span class="string">"pt-BR"</span>);
+<span class="comment">// → "Fria"</span>
+
+temperature(<span class="string">"gray"</span>, <span class="string">"pt-BR"</span>);
+<span class="comment">// → "Neutra"</span></pre>
 
             <h5><code>isHot(input)</code> / <code>isCold(input)</code> — Boolean helpers</h5>
             <p>Both functions now <strong>delegate to <code>temperature()</code></strong> internally.</p>
@@ -3478,7 +3508,13 @@ mood(<span class="string">"invalid color"</span>);
                 else if (tempLevel === 'Neutral Cold') tempEmoji = '👎';
                 else if (tempLevel === 'Cold') tempEmoji = '❄️';
                 else if (tempLevel === 'VeryCold') tempEmoji = '❄️';
-                infoTemperature.textContent = tempEmoji + ' ' + tempLevel;
+                // The emoji mapping uses the canonical English level, so the
+                // label is requested separately with the selected locale.
+                var tempLabel = tempLevel;
+                try {
+                    tempLabel = temperature(source, outputLocale);
+                } catch (_) { }
+                infoTemperature.textContent = tempEmoji + ' ' + tempLabel;
 
                 // Mood (array de humores)
                 var moods = [];

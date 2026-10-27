@@ -2609,8 +2609,9 @@ function normalizeNameToColorLanguageText(value) {
  * Registers a data-only language pack.
  *
  * A pack can provide translated color names, theme aliases, localized mood
- * labels, and input keyword aliases. Registering a pack never removes the
- * native English names, so all loaded languages work at the same time.
+ * and temperature labels, and input keyword aliases. Registering a pack never
+ * removes the native English names, so all loaded languages work at the same
+ * time.
  *
  * @param {Object} pack - Language data.
  * @param {string} pack.locale - BCP 47-style locale, such as "pt-BR".
@@ -2618,6 +2619,7 @@ function normalizeNameToColorLanguageText(value) {
  * @param {Object<string,string[]>} [pack.colorNames] - Hashless six-digit HEX keys to translated names.
  * @param {Object<string,string[]>} [pack.themeAliases] - Canonical English theme to aliases.
  * @param {Object<string,string>} [pack.moodNames] - Canonical English mood to translated label.
+ * @param {Object<string,string>} [pack.temperatureNames] - Canonical English temperature level to translated label.
  * @param {Object<string,string[]>} [pack.inputAliases] - Canonical input keyword to aliases.
  * @returns {boolean} True when the pack was registered.
  *
@@ -2627,7 +2629,8 @@ function normalizeNameToColorLanguageText(value) {
  *     name: 'Example language',
  *     colorNames: { 'ff0000': ['Translated Red'] },
  *     themeAliases: { Nature: ['Translated Nature'] },
- *     moodNames: { Calm: 'Translated Calm' }
+ *     moodNames: { Calm: 'Translated Calm' },
+ *     temperatureNames: { Cold: 'Translated Cold' }
  * });
  */
 function registerNameToColorLanguage(pack) {
@@ -2647,6 +2650,7 @@ function registerNameToColorLanguage(pack) {
         colorAliasRecords: [],
         themeAliases: {},
         moodNames: {},
+        temperatureNames: {},
         inputAliasRecords: []
     };
 
@@ -2708,6 +2712,16 @@ function registerNameToColorLanguage(pack) {
             var translatedMood = String(moodNames[canonicalMood] || '').trim();
             if (translatedMood) {
                 registered.moodNames[canonicalMood] = translatedMood;
+            }
+        }
+    }
+
+    var temperatureNames = pack.temperatureNames && typeof pack.temperatureNames === 'object' ? pack.temperatureNames : {};
+    for (var canonicalTemperature in temperatureNames) {
+        if (Object.prototype.hasOwnProperty.call(temperatureNames, canonicalTemperature)) {
+            var translatedTemperature = String(temperatureNames[canonicalTemperature] || '').trim();
+            if (translatedTemperature) {
+                registered.temperatureNames[canonicalTemperature] = translatedTemperature;
             }
         }
     }
@@ -2864,6 +2878,20 @@ function localizeNameToColorMoods(moods, locale) {
     return moods.map(function (moodName) {
         return pack.moodNames[moodName] || moodName;
     });
+}
+
+/**
+ * Translates a canonical temperature level for an explicitly requested locale.
+ * @param {string} level
+ * @param {*} locale
+ * @returns {string}
+ * @private
+ */
+function localizeNameToColorTemperature(level, locale) {
+    var localeKey = normalizeNameToColorLocale(locale);
+    var pack = nameToColorLanguageRegistry[localeKey];
+    if (!pack) return level;
+    return pack.temperatureNames[level] || level;
 }
 
 /**
@@ -3394,8 +3422,10 @@ function isCold(input) {
  * | < -0.6            | VeryCold      |
  *
  * @param {*} input - Any value accepted by generateColor().
+ * @param {string} [locale] - Optional loaded locale for the returned temperature label.
  * @returns {string} One of: "VeryHot", "Hot", "Neutral Hot", "Neutral",
- *   "Neutral Cold", "Cold", "VeryCold".
+ *   "Neutral Cold", "Cold", "VeryCold", or the translated label when a locale
+ *   with a `temperatureNames` pack is loaded.
  *
  * @example
  * temperature('red');          // "VeryHot"       — hue 0° (+1), R >> B (≈+1)
@@ -3410,11 +3440,12 @@ function isCold(input) {
  * temperature('#1E90FF');      // "VeryCold"      — hue 210° (-1), R << B (-0.88)
  * temperature('cyan');         // "VeryCold"      — hue 180° (-0.75), R << B (-1)
  * temperature('blue');         // "VeryCold"      — hue 240° (-0.75), R << B (-1)
+ * temperature('blue', 'pt-BR');// "Muito fria"    — translated, feminine
  */
-function temperature(input) {
+function temperature(input, locale) {
     var hex = normalizeHex(generateColor(input));
     if (!hex) {
-        return 'Neutral';
+        return localizeNameToColorTemperature('Neutral', locale);
     }
 
     var rgb = hexToRgb(hex);
@@ -3447,13 +3478,16 @@ function temperature(input) {
     var score = (hueWarmth + rgbWarmth) / 2;
 
     // ── Map to 7 levels ──
-    if (score > 0.6) return 'VeryHot';
-    if (score > 0.25) return 'Hot';
-    if (score > 0.02) return 'Neutral Hot';
-    if (score >= -0.02) return 'Neutral';
-    if (score >= -0.25) return 'Neutral Cold';
-    if (score >= -0.6) return 'Cold';
-    return 'VeryCold';
+    var level;
+    if (score > 0.6) level = 'VeryHot';
+    else if (score > 0.25) level = 'Hot';
+    else if (score > 0.02) level = 'Neutral Hot';
+    else if (score >= -0.02) level = 'Neutral';
+    else if (score >= -0.25) level = 'Neutral Cold';
+    else if (score >= -0.6) level = 'Cold';
+    else level = 'VeryCold';
+
+    return localizeNameToColorTemperature(level, locale);
 }
 
 /**

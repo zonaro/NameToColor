@@ -20,7 +20,7 @@ Prefer using the library directly over calling the Vercel REST API whenever Java
 
 NameToColor also exposes a public, free REST API hosted on Vercel. It converts a word into a deterministic hexadecimal color with a single GET request. CORS is fully open (`Access-Control-Allow-Origin: *`), so it can be called directly from any browser. **This API is a fallback** — prefer the CDN script or a local copy of the library whenever JavaScript is available.
 
-The API loads the Brazilian Portuguese language pack alongside the English core. Functions that return names or labels (`colorName`, `colorNames`, `closestName`, `closestNames`, `mood`, `listColors`) accept a `locale` query parameter — defaulting to **English** when omitted. Portuguese inputs (`vermelho`, `azul mais escuro`, `natureza`) work out of the box.
+The API loads the Brazilian Portuguese language pack alongside the English core. Functions that return names or labels (`colorName`, `colorNames`, `closestName`, `closestNames`, `mood`, `temperature`, `listColors`) accept a `locale` query parameter — defaulting to **English** when omitted. Portuguese inputs (`vermelho`, `azul mais escuro`, `natureza`) work out of the box. Temperature labels follow the feminine noun *temperatura*: `Fria`, `Muito fria`, `Neutra`.
 
 - Endpoint: `GET /api/color?func=generateColor&name=palavra`, or `GET /api/color?name=palavra` (when `func` is omitted, ALL basic functions run and `generateColor` is included)
 - Success (`200`) single: `{"func": "generateColor", "name": "palavra", "result": "#hexadecimal"}`
@@ -58,7 +58,7 @@ When `func` is omitted, **all basic functions run at once** and the response map
 - `func=isDark&input=...` → `{ func, input, result: boolean }`
 - `func=isHot&input=...` → `{ func, input, result: boolean }`
 - `func=isCold&input=...` → `{ func, input, result: boolean }`
-- `func=temperature&input=...` → `{ func, input, result: string }`
+- `func=temperature&input=...&locale=...` → `{ func, input, locale, result: string }`
 - `func=mood&input=...&locale=...` → `{ func, input, locale, result: string[] }`
 - `func=isReadableForBlindness&colorA=...&colorB=...&type=...` → `{ func, colorA, colorB, type, result: { readable, contrast, ... } }`
 - `func=listNameToColorLanguages` → `{ func, result: array }`

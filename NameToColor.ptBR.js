@@ -38,6 +38,18 @@ var nameToColorPtBRPack = {
         Corporate: 'Corporativo'
     },
 
+    // Temperature labels describe "temperatura" (feminine noun), so the
+    // gendered adjectives are feminine: "fria", "muito fria", "neutra".
+    temperatureNames: {
+        VeryHot: 'Muito quente',
+        Hot: 'Quente',
+        'Neutral Hot': 'Levemente quente',
+        Neutral: 'Neutra',
+        'Neutral Cold': 'Levemente fria',
+        Cold: 'Fria',
+        VeryCold: 'Muito fria'
+    },
+
     themeAliases: {
         Vibrant: ['vibrante', 'vivo', 'energético', 'intenso'],
         Futuristic: ['futurista', 'futuro', 'cibernético', 'ficção científica', 'néon'],

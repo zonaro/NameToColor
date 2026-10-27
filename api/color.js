@@ -56,7 +56,7 @@ const FUNCTIONS = {
     isReadableForBlindness: { fn: lib.isReadableForBlindness, required: ['colorA', 'colorB', 'type'] },
     normalizeHex: { fn: lib.normalizeHex, required: ['input'] },
     relativeLuminance: { fn: lib.relativeLuminance, required: ['input'] },
-    temperature: { fn: lib.temperature, required: ['input'] },
+    temperature: { fn: lib.temperature, required: ['input'], optional: ['locale'] },
     colorDatabase: { data: true }
 };
 
@@ -85,7 +85,7 @@ const BASIC_FUNCTIONS = [
     { name: 'isDark', required: ['input'] },
     { name: 'isHot', required: ['input'] },
     { name: 'isCold', required: ['input'] },
-    { name: 'temperature', required: ['input'] },
+    { name: 'temperature', required: ['input'], optional: ['locale'] },
     { name: 'mood', required: ['input'], optional: ['locale'] }
 ];
 

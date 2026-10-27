@@ -30,7 +30,7 @@ The `func` query parameter selects the library function to call; every other que
 
 When `func` is omitted, **all basic functions run at once** and the response is an object mapping each function name to its result, e.g. `{ "generateColor": "#ff0000", "colorName": "Red", ... }`. In batch mode `count` defaults to `5` and `locale` defaults to an empty string (English). When `input` is missing, empty or `"random"`, `generateColor` resolves the base color **once** and it is passed to every other function — so the whole palette matches. A provided `name` anchors that base color.
 
-> **🌐 Multilingual:** The API loads the Brazilian Portuguese language pack (`NameToColor.ptBR.js`) alongside the English core. Functions that return names or labels (`colorName`, `colorNames`, `closestName`, `closestNames`, `mood`, `listColors`) accept a `locale` query parameter — defaulting to **English** when omitted. Portuguese inputs (`vermelho`, `azul mais escuro`, `natureza`) work out of the box.
+> **🌐 Multilingual:** The API loads the Brazilian Portuguese language pack (`NameToColor.ptBR.js`) alongside the English core. Functions that return names or labels (`colorName`, `colorNames`, `closestName`, `closestNames`, `mood`, `temperature`, `listColors`) accept a `locale` query parameter — defaulting to **English** when omitted. Portuguese inputs (`vermelho`, `azul mais escuro`, `natureza`) work out of the box.
 
 | `func` value                     | Query parameters           | Result                                                                 |
 | -------------------------------- | -------------------------- | ---------------------------------------------------------------------- |
@@ -57,7 +57,7 @@ When `func` is omitted, **all basic functions run at once** and the response is 
 | `isDark`                         | `input`                    | `{ func, input, result: boolean }`                                     |
 | `isHot`                          | `input`                    | `{ func, input, result: boolean }`                                     |
 | `isCold`                         | `input`                    | `{ func, input, result: boolean }`                                     |
-| `temperature`                    | `input`                    | `{ func, input, result: string }`                                      |
+| `temperature`                    | `input`, `locale`          | `{ func, input, locale, result: string }`                              |
 | `mood`                           | `input`, `locale`          | `{ func, input, locale, result: string[] }`                            |
 | `isReadableForBlindness`         | `colorA`, `colorB`, `type` | `{ func, colorA, colorB, type, result: { readable, contrast, ... } }`  |
 | `listNameToColorLanguages`       | —                          | `{ func, result: array }`                                              |
@@ -175,7 +175,7 @@ The core `NameToColor.js` file remains English and dependency-free. Additional l
 <script src="https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.ptBR.js"></script>
 ```
 
-Loading the Brazilian Portuguese pack adds 181 Portuguese named-color entries, including traditional, botanical, mineral, and everyday names, plus localized modifiers, all 10 mood labels, and aliases for all 69 semantic themes. Proper names and untranslated database entries continue to fall back to their native English labels. English and Portuguese inputs work at the same time:
+Loading the Brazilian Portuguese pack adds 181 Portuguese named-color entries, including traditional, botanical, mineral, and everyday names, plus localized modifiers, all 10 mood labels, all 7 temperature labels (feminine, agreeing with the feminine noun *temperatura*: `Fria`, `Muito fria`, `Neutra`), and aliases for all 69 semantic themes. Proper names and untranslated database entries continue to fall back to their native English labels. English and Portuguese inputs work at the same time:
 
 ```js
 generateColor("red");               // "#ff0000"
@@ -218,6 +218,9 @@ registerNameToColorLanguage({
   moodNames: {
     Calm: "Translated Calm"
   },
+  temperatureNames: {
+    Cold: "Translated Cold"
+  },
   themeAliases: {
     Nature: ["translated nature"]
   },
@@ -227,9 +230,9 @@ registerNameToColorLanguage({
 });
 ```
 
-The keys inside `colorNames` are always six hexadecimal digits **without** a leading `#`. The library adds `#` when returning a color through its public APIs.
+Temperature keys are the canonical English levels (`VeryHot`, `Hot`, `Neutral Hot`, `Neutral`, `Neutral Cold`, `Cold`, `VeryCold`), so a pack only maps them to its own wording. The keys inside `colorNames` are always six hexadecimal digits **without** a leading `#`. The library adds `#` when returning a color through its public APIs.
 
-The locale parameter only changes returned labels. Omitting it preserves the original English output. If a requested translation is unavailable, name helpers fall back to the native English color name.
+The locale parameter only changes returned labels. Omitting it preserves the original English output. If a requested translation is unavailable, name helpers fall back to the native English color name and `temperature()` falls back to the canonical English level.
 
 ## Color Database Format
 
@@ -547,7 +550,7 @@ These helper functions are also exposed globally for fine-grained control:
 | `normalizeHex(value)`                          | Normalizes `black`, `white`, `#rgb`, `#rrggbbaa` to `#rrggbb`                                                                |
 | `isLight(input)`                               | Returns `true` if the generated color is light (luminance > 0.5)                                                             |
 | `isDark(input)`                                | Returns `true` if the generated color is dark (luminance ≤ 0.5)                                                              |
-| `temperature(input)`                           | Returns the temperature level as a string: `VeryHot`, `Hot`, `Neutral Hot`, `Neutral`, `Neutral Cold`, `Cold`, or `VeryCold` |
+| `temperature(input, locale?)`                  | Returns the temperature level as a string: `VeryHot`, `Hot`, `Neutral Hot`, `Neutral`, `Neutral Cold`, `Cold`, or `VeryCold`, optionally translated by a loaded language pack |
 | `isHot(input)`                                 | Returns `true` if the generated color is warm/hot (delegates to `temperature()`)                                             |
 | `isCold(input)`                                | Returns `true` if the generated color is cold/cool (delegates to `temperature()`)                                            |
 | `mood(input, locale?)`                         | Returns mood/atmosphere names based on HSL rules, optionally translated by a loaded language pack                            |
@@ -576,9 +579,9 @@ isDark(hex);
 
 ### Temperature (Warm/Cool) helpers
 
-#### `temperature(input)` — 7 Temperature Levels
+#### `temperature(input, locale?)` — 7 Temperature Levels
 
-Returns the temperature level of a color as one of 7 strings: `VeryHot`, `Hot`, `Neutral Hot`, `Neutral`, `Neutral Cold`, `Cold`, or `VeryCold`.
+Returns the temperature level of a color as one of 7 strings: `VeryHot`, `Hot`, `Neutral Hot`, `Neutral`, `Neutral Cold`, `Cold`, or `VeryCold`. The optional `locale` returns the level translated by a loaded language pack; omitting it preserves English.
 
 ```js
 temperature("red");       // → "VeryHot"      — hue 0° (+1), R >> B (+1)
@@ -593,6 +596,15 @@ temperature("purple");    // → "Neutral Cold" — hue 270° (-0.5), R = B (0)
 temperature("aquamarine");// → "Cold"         — hue 160° (-0.58), R < B (-0.33)
 temperature("blue");      // → "VeryCold"     — hue 240° (-0.75), R << B (-1)
 temperature("cyan");      // → "VeryCold"     — hue 180° (-0.75), R << B (-1)
+```
+
+With the Brazilian Portuguese pack loaded, labels follow the feminine noun *temperatura*:
+
+```js
+temperature("blue", "pt-BR");      // → "Muito fria"
+temperature("aquamarine", "pt-BR");// → "Fria"
+temperature("gray", "pt-BR");      // → "Neutra"
+temperature("pink", "pt-BR");      // → "Quente"
 ```
 
 #### `isHot(input)` / `isCold(input)` — Boolean helpers
@@ -623,6 +635,7 @@ isCold("#1E90FF");// → true   (temperature("dodgerblue") → "Cold")
 > - `isHot(input)`  → returns `true` when `temperature(input)` is `"VeryHot"`, `"Hot"`, or `"Neutral Hot"`
 > - `isCold(input)` → returns `true` when `temperature(input)` is `"VeryCold"`, `"Cold"`, or `"Neutral Cold"`
 > - When `temperature()` returns `"Neutral"`, both `isHot()` and `isCold()` return `false`.
+- Both helpers read the canonical English levels, so the optional `locale` never changes their boolean result.
 
 ### `mood(input, locale?)` — Color Mood / Atmosphere Classification
 
@@ -809,7 +822,7 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 - **Color harmonies**: `generateInvertedColor()`, `generateComplementary()`, `generateTriadic()`, `generateSquare()`, `generateSplitComplementary()` for color scheme exploration.
 - **Monochrome palettes**: `generateMonochrome()` creates harmonious single-hue palettes.
 - **Semantic theme palettes**: `generateThemePalette()` maps 69 curated themes and their aliases to deterministic, resizable palettes.
-- **Extensible language packs**: data-only scripts add translated color names, theme aliases, modifiers, and localized mood/name output without replacing English.
+- **Extensible language packs**: data-only scripts add translated color names, theme aliases, modifiers, and localized mood/temperature/name output without replacing English.
 - **Accepts multiple formats**: Arrays (recursive), objects (converted to string), HEX (`#rgb`, `#rrggbb`), RGB, RGBA, CSS color names, `"random"`, numeric indices, and HTML elements.
 - **Smart contrast**: `generateReadableColor` dynamically calculates the necessary blend ratio to guarantee **WCAG AA (4.5:1)**, resulting in text that is always readable and aesthetically harmonious.
 - **Pagination**: `listColors()` allows browsing the color database with page support.
@@ -837,7 +850,7 @@ This creates a live, evolving color preview that changes with every keystroke �
 
 The semantic playground calls `generateThemePalette()` while you type, supports palette sizes from 2 to 21, and renders each returned HEX value as an accessible swatch. Its catalog table lists all 69 canonical themes plus loaded translated aliases.
 
-The main tester includes a locale selector for `mood()` and color-name output. The color browser also includes and searches names from loaded language packs, so terms such as `vermelho`, `água-marinha`, `saúde`, or `cafeteria` can be tested directly.
+The main tester includes a locale selector for `mood()`, `temperature()`, and color-name output. The color browser also includes and searches names from loaded language packs, so terms such as `vermelho`, `água-marinha`, `saúde`, or `cafeteria` can be tested directly.
 
 ## License
 
