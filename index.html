@@ -2128,6 +2128,9 @@
                 mineral, and everyday Portuguese names, all 10 mood labels, all 7 temperature labels (feminine,
                 agreeing with <em>temperatura</em>: <em>Fria</em>, <em>Muito fria</em>, <em>Neutra</em>), and aliases
                 for all 69 themes. Native English and every loaded language remain available at the same time.
+                Both catalogs now include descriptive names for everyday objects, food, plants, colored details
+                of national flags, and planets. Each array keeps its original primary name first; all new
+                associations are appended afterward, so canonical labels remain stable.
             </p>
 
             <pre>&lt;<span class="keyword">script</span> <span class="keyword">src</span>=<span class="string">"NameToColor.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;
@@ -2139,6 +2142,14 @@ generateColor(<span class="string">"vermelho"</span>);
 
 generateColor(<span class="string">"terracota"</span>);
 <span class="comment">// → "#e2725b"</span>
+
+generateColor(<span class="string">"Mars Surface"</span>);
+generateColor(<span class="string">"Superfície de Marte"</span>);
+<span class="comment">// → both return "#B22222"</span>
+
+generateColor(<span class="string">"Brazilian Flag Green"</span>);
+generateColor(<span class="string">"Fundo verde da bandeira do Brasil"</span>);
+<span class="comment">// → both return "#008000"</span>
 
 generateThemePalette(<span class="string">"natureza"</span>);
 <span class="comment">// → native Nature palette</span>
@@ -2152,7 +2163,7 @@ temperature(<span class="string">"blue"</span>, <span class="string">"pt-BR"</sp
 colorName(<span class="string">"#ff0000"</span>, <span class="string">"pt-BR"</span>);
 <span class="comment">// → "Vermelho"</span>
 
-colorNames(<span class="string">"#50c878"</span>, <span class="string">"pt-BR"</span>);
+colorNames(<span class="string">"#50c878"</span>, <span class="string">"pt-BR"</span>).slice(<span class="number">0</span>, <span class="number">1</span>);
 <span class="comment">// → ["Esmeralda"]</span></pre>
 
             <p>
@@ -2168,8 +2179,8 @@ colorNames(<span class="string">"#50c878"</span>, <span class="string">"pt-BR"</
                 still return standard <code>#rrggbb</code> colors.
             </p>
             <pre><span class="keyword">const</span> colorDatabase = {
-    <span class="string">"000000"</span>: [<span class="string">"Black"</span>],
-    <span class="string">"00FFFF"</span>: [<span class="string">"Aqua"</span>, <span class="string">"Cyan"</span>, <span class="string">"Spanish Sky Blue"</span>]
+    <span class="string">"000000"</span>: [<span class="string">"Black"</span>, <span class="string">"Coal Lump"</span>, <span class="string">"Black Ink"</span>],
+    <span class="string">"00FFFF"</span>: [<span class="string">"Aqua"</span>, <span class="string">"Cyan"</span>, <span class="string">"Spanish Sky Blue"</span>, <span class="string">"Cyan Neon Tube"</span>]
 };
 
 registerNameToColorLanguage({
@@ -2997,21 +3008,26 @@ colorName(<span class="string">"unknown"</span>);
             <p>
                 Returns <strong>all</strong> color names (synonyms) for the hex that matches the input.
                 Unlike <code>colorName()</code> which returns only the first name, this returns the full
-                array of names for entries with multiple synonyms.
+                array of names for entries with multiple synonyms. The first item is the original canonical name;
+                descriptive object, food, flag, and astronomy aliases follow it.
             </p>
 
             <h4>Examples</h4>
             <pre><span class="comment">// Color with multiple names — returns all synonyms</span>
-colorNames(<span class="string">"Aqua"</span>);
+colorNames(<span class="string">"Aqua"</span>).slice(<span class="number">0</span>, <span class="number">3</span>);
 <span class="comment">// → ["Aqua", "Cyan", "Spanish Sky Blue"]</span>
 
 <span class="comment">// By hex — same result</span>
-colorNames(<span class="string">"#00FFFF"</span>);
+colorNames(<span class="string">"#00FFFF"</span>).slice(<span class="number">0</span>, <span class="number">3</span>);
 <span class="comment">// → ["Aqua", "Cyan", "Spanish Sky Blue"]</span>
 
 <span class="comment">// Localized synonyms</span>
-colorNames(<span class="string">"#00FFFF"</span>, <span class="string">"pt-BR"</span>);
+colorNames(<span class="string">"#00FFFF"</span>, <span class="string">"pt-BR"</span>).slice(<span class="number">0</span>, <span class="number">2</span>);
 <span class="comment">// → ["Ciano", "Água"]</span>
+
+<span class="comment">// A newly added association is included in the same array</span>
+colorNames(<span class="string">"#00FFFF"</span>).includes(<span class="string">"Aquarium Light"</span>);
+<span class="comment">// → true</span>
 
 <span class="comment">// Unknown color — returns empty array</span>
 colorNames(<span class="string">"unknown"</span>);
@@ -3059,11 +3075,11 @@ closestName(<span class="string">"unknown"</span>);
 
             <h4>Examples</h4>
             <pre><span class="comment">// Exact match — works like colorNames()</span>
-closestNames(<span class="string">"#00FFFF"</span>);
+closestNames(<span class="string">"#00FFFF"</span>).slice(<span class="number">0</span>, <span class="number">3</span>);
 <span class="comment">// → ["Aqua", "Cyan", "Spanish Sky Blue"]</span>
 
 <span class="comment">// Near match — finds closest and returns all its names</span>
-closestNames(<span class="string">"#ff6348"</span>);
+closestNames(<span class="string">"#ff6348"</span>).slice(<span class="number">0</span>, <span class="number">1</span>);
 <span class="comment">// → ["Tomato"]</span>
 
 <span class="comment">// Any input — always returns names of the nearest color</span>

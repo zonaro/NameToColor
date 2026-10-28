@@ -175,13 +175,19 @@ The core `NameToColor.js` file remains English and dependency-free. Additional l
 <script src="https://cdn.jsdelivr.net/gh/zonaro/NameToColor@main/NameToColor.ptBR.js"></script>
 ```
 
-Loading the Brazilian Portuguese pack adds 181 Portuguese named-color entries, including traditional, botanical, mineral, and everyday names, plus localized modifiers, all 10 mood labels, all 7 temperature labels (feminine, agreeing with the feminine noun *temperatura*: `Fria`, `Muito fria`, `Neutra`), and aliases for all 69 semantic themes. Proper names and untranslated database entries continue to fall back to their native English labels. English and Portuguese inputs work at the same time:
+Loading the Brazilian Portuguese pack adds 181 Portuguese named-color entries, including traditional, botanical, mineral, and everyday names, plus localized modifiers, all 10 mood labels, all 7 temperature labels (feminine, agreeing with the feminine noun *temperatura*: `Fria`, `Muito fria`, `Neutra`), and aliases for all 69 semantic themes. Proper names and untranslated database entries continue to fall back to their native English labels. English and Portuguese inputs work at the same time.
+
+Both catalogs also recognize descriptive associations with **everyday objects, foods, plants, flags, and astronomy**. Flag aliases identify a specific colored feature (not the entire multicolor flag), and celestial aliases describe a planet's appearance. These extra names are appended after the existing primary color name, so `colorName()` keeps returning the same canonical name:
 
 ```js
 generateColor("red");               // "#ff0000"
 generateColor("vermelho");          // "#ff0000"
 generateColor("azul mais escuro");  // Portuguese modifiers work
 generateColor("terracota");         // "#e2725b"
+generateColor("Mars Surface");       // "#B22222"
+generateColor("Superfície de Marte"); // "#B22222"
+generateColor("Brazilian Flag Green"); // "#008000"
+generateColor("Fundo verde da bandeira do Brasil"); // "#008000"
 
 generateThemePalette("Nature");     // English remains available
 generateThemePalette("natureza");   // Same curated Nature palette
@@ -192,7 +198,8 @@ mood("#4682B4", "pt-BR");   // ["Calmo", "Corporativo", "Sofisticado"]
 
 colorName("#ff0000");           // "Red"
 colorName("#ff0000", "pt-BR");  // "Vermelho"
-colorNames("#50c878", "pt-BR"); // ["Esmeralda"]
+colorNames("#50c878", "pt-BR").slice(0, 1); // ["Esmeralda"]
+colorNames("#50c878", "pt-BR").includes("Joia de esmeralda"); // true
 ```
 
 Use `listNameToColorLanguages()` to inspect loaded languages:
@@ -240,12 +247,12 @@ The English database in `NameToColor.js` uses direct hexadecimal-to-names pairs:
 
 ```js
 const colorDatabase = {
-  "000000": ["Black"],
-  "00FFFF": ["Aqua", "Cyan", "Spanish Sky Blue"]
+  "000000": ["Black", "Coal Lump", "Black Ink", "Raven Feather", "Vinyl Record", "Black Chess Piece", "Black Flag", "Tire Rubber", "Piano Black Key"],
+  "00FFFF": ["Aqua", "Cyan", "Spanish Sky Blue", "Cyan Neon Tube", "Cyan Computer Display", "Aquarium Light", "Tropical Pool Water"]
 };
 ```
 
-Each key is a unique six-digit hexadecimal value without `#`, and each value is an array so synonyms can share the same color. Optional translation packs use the same hashless key format in their `colorNames` object. Public functions such as `generateColor()` and `listColors()` continue to return regular `#rrggbb` values.
+Each key is a unique six-digit hexadecimal value without `#`, and each value is an array so synonyms can share the same color. **The first element is the primary name**; add new aliases only at the end of that array. Optional translation packs use the same hashless key format in their `colorNames` object, keeping Portuguese aliases in `NameToColor.ptBR.js` and English aliases in `NameToColor.js`. Public functions such as `generateColor()` and `listColors()` continue to return regular `#rrggbb` values.
 
 ## Functions
 
@@ -332,9 +339,10 @@ colorName("unknown");       // -> null
 Returns **all** color names (synonyms) for the hex that matches the input. Unlike `colorName()`, this returns the full array for entries with multiple names.
 
 ```js
-colorNames("Aqua");          // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
-colorNames("#00FFFF");       // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
-colorNames("#00FFFF", "pt-BR"); // -> ["Ciano", "Água"]
+colorNames("Aqua").slice(0, 3);    // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
+colorNames("#00FFFF").slice(0, 3); // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
+colorNames("#00FFFF", "pt-BR").slice(0, 2); // -> ["Ciano", "Água"]
+colorNames("#00FFFF").includes("Aquarium Light"); // -> true
 colorNames("unknown");       // -> []
 ```
 
@@ -353,8 +361,8 @@ closestName("unknown");      // -> nearest color name in the database
 Like `colorNames()`, but with fuzzy fallback — finds the nearest color by RGB distance and returns all its names.
 
 ```js
-closestNames("#00FFFF");     // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
-closestNames("#ff6348");     // -> ["Tomato"]
+closestNames("#00FFFF").slice(0, 3); // -> ["Aqua", "Cyan", "Spanish Sky Blue"]
+closestNames("#ff6348").slice(0, 1); // -> ["Tomato"]
 closestNames("unknown");     // -> names of the nearest color
 ```
 
