@@ -824,7 +824,7 @@ document.querySelectorAll(".tag").forEach(el => generateColor(el));
 
 ## Features
 
-- **Deterministic** text fallback — the same input always produces the same color.
+- **Deterministic** text fallback — the same input always produces the same color. If a word clearly evokes a specific color (e.g. `sunflower`/`girassol`, `pool`/`piscina`, `mars`/`marte`, `venus`, `grape`/`uva`, `strawberry`/`morango`), it maps to an existing curated color before falling back to the hash.
 - **Built-in database** with 2000+ named colors (2254+ hashless hexadecimal-to-names pairs), searchable by name (exact, contains, or fuzzy via Levenshtein) or numeric index.
 - **Color name lookup**: `colorName()`, `colorNames()`, `closestName()`, `closestNames()` for finding color names from any input.
 - **Color harmonies**: `generateInvertedColor()`, `generateComplementary()`, `generateTriadic()`, `generateSquare()`, `generateSplitComplementary()` for color scheme exploration.
