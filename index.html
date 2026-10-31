@@ -207,6 +207,46 @@
       </section>
     </div>
 
+    <!-- ═══════════════════════════════════════════
+            Documentation cards by language
+            ═══════════════════════════════════════════ -->
+    <div style="max-width:980px;margin:0 auto;padding:0 1rem 4rem 1rem;color:#c8c8c8">
+      <section aria-label="Language documentation" style="margin-top:1.5rem">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+          <article style="background:#111319;border-radius:14px;border:1px solid #2a2d36;padding:1.1rem 1.2rem;line-height:1.55">
+            <h3 style="margin:0 0 .5rem;color:#e6e6e6;font-size:1.05rem">JavaScript <span style="font-size:.85rem;color:#9aa0a6">(CDN / Vercel)</span></h3>
+            <pre style="margin:0;background:#0f1117;padding:.6rem .8rem;border-radius:8px;font-size:.82rem;overflow-x:auto"><code style="color:#dcdcdc">// Browser / CDN
+&lt;script src="nameToColor.js"&gt;&lt;/script&gt;
+console.log(generateColor("hello"));
+console.log(listColors());
+console.log(mood('#ff6348'));</code></pre>
+            <p style="font-size:.82rem;color:#b0b0b0;margin:.6rem 0 0">DOM interface: <code style="color:#a8ecc8">dom.js</code> with <code>applyToElement()</code>.</p>
+          </article>
+          <article style="background:#111319;border-radius:14px;border:1px solid #2a2d36;padding:1.1rem 1.2rem;line-height:1.55">
+            <h3 style="margin:0 0 .5rem;color:#e6e6e6;font-size:1.05rem">Dart / Flutter <span style="font-size:.85rem;color:#9aa0a6">(core + widget)</span></h3>
+            <pre style="margin:0;background:#0f1117;padding:.6rem .8rem;border-radius:8px;font-size:.82rem;overflow-x:auto"><code style="color:#dcdcdc">import 'lib/nameToColor.dart';
+final hex = NameToColor.generateColor('hello');
+final names = NameToColor.colorNames('#FFBF00');</code></pre>
+            <p style="font-size:.82rem;color:#b0b0b0;margin:.6rem 0 0">Widgets: <code style="color:#a8ecc8">NameToColorWidget</code>, <code>NameToColorText</code> in <code>lib/dom.dart</code>.</p>
+          </article>
+          <article style="background:#111319;border-radius:14px;border:1px solid #2a2d36;padding:1.1rem 1.2rem;line-height:1.55">
+            <h3 style="margin:0 0 .5rem;color:#e6e6e6;font-size:1.05rem">PHP <span style="font-size:.85rem;color:#9aa0a6">(core only)</span></h3>
+            <pre style="margin:0;background:#0f1117;padding:.6rem .8rem;border-radius:8px;font-size:.82rem;overflow-x:auto"><code style="color:#dcdcdc">require 'src/nameToColor.php';
+$hex = NameToColor::generateColor('hello');
+$names = NameToColor::colorNames('#FFBF00');</code></pre>
+            <p style="font-size:.82rem;color:#b0b0b0;margin:.6rem 0 0">No DOM file; pure server-side library.</p>
+          </article>
+          <article style="background:#111319;border-radius:14px;border:1px solid #2a2d36;padding:1.1rem 1.2rem;line-height:1.55">
+            <h3 style="margin:0 0 .5rem;color:#e6e6e6;font-size:1.05rem">C# <span style="font-size:.85rem;color:#9aa0a6">(core only)</span></h3>
+            <pre style="margin:0;background:#0f1117;padding:.6rem .8rem;border-radius:8px;font-size:.82rem;overflow-x:auto"><code style="color:#dcdcdc">using NameToColor;
+var hex = NameToColorCore.GenerateColor("hello");
+var names = NameToColorCore.ColorNames("#FFBF00");</code></pre>
+            <p style="font-size:.82rem;color:#b0b0b0;margin:.6rem 0 0">Library project in <code>cs/NameToColor/</code>; build with <code>dotnet build</code>.</p>
+          </article>
+        </div>
+      </section>
+    </div>
+
     <style>
         /* ═══════════════════════════════════════════
            NameToColor — Interactive test page
