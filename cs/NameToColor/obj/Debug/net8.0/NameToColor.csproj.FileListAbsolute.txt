@@ -1,0 +1,12 @@
+/mnt/GIT/NameToColor/cs/NameToColor/obj/Debug/net8.0/NameToColor.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/GIT/NameToColor/cs/NameToColor/obj/Debug/net8.0/NameToColor.AssemblyInfoInputs.cache
+/mnt/GIT/NameToColor/cs/NameToColor/obj/Debug/net8.0/NameToColor.AssemblyInfo.cs
+/mnt/GIT/NameToColor/cs/NameToColor/obj/Debug/net8.0/NameToColor.csproj.CoreCompileInputs.cache
+/mnt/GIT/NameToColor/cs/NameToColor/obj/Debug/net8.0/NameToColor.sourcelink.json
+/mnt/GIT/NameToColor/cs/NameToColor/bin/Debug/net8.0/NameToColor.deps.json
+/mnt/GIT/NameToColor/cs/NameToColor/bin/Debug/net8.0/NameToColor.dll
+/mnt/GIT/NameToColor/cs/NameToColor/bin/Debug/net8.0/NameToColor.pdb
+/mnt/GIT/NameToColor/cs/NameToColor/obj/Debug/net8.0/NameToColor.dll
+/mnt/GIT/NameToColor/cs/NameToColor/obj/Debug/net8.0/refint/NameToColor.dll
+/mnt/GIT/NameToColor/cs/NameToColor/obj/Debug/net8.0/NameToColor.pdb
+/mnt/GIT/NameToColor/cs/NameToColor/obj/Debug/net8.0/ref/NameToColor.dll
